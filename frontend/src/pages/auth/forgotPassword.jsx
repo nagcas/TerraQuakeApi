@@ -1,5 +1,6 @@
 import axios from '@config/axios.js';
 import Swal from 'sweetalert2';
+import { ImSpinner9 } from 'react-icons/im';
 import { useNavigate, Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,6 +8,7 @@ import * as yup from 'yup';
 import MetaData from '@pages/noPage/metaData';
 
 export default function forgotPassword() {
+  const [loading, setLoading] = useState(false);
   const forgotPasswordSchema = yup
     .object({
       email: yup.string().email().required('Email is required !'),
@@ -22,6 +24,8 @@ export default function forgotPassword() {
   let navigate = useNavigate();
 
   const handleForgotPassword = (data) => {
+    setLoading(true);
+    
     const formData = {
       email: data.email,
     };
@@ -39,6 +43,7 @@ export default function forgotPassword() {
           confirmButtonText: 'Ok',
         }).then(() => {
           navigate('/');
+          setLoading(false);
         });
       })
       .catch((err) => {
@@ -50,6 +55,7 @@ export default function forgotPassword() {
           confirmButtonText: 'Ok',
         }).then(() => {
           navigate('/signup');
+          setLoading(false);
         });
       });
   };
@@ -83,7 +89,13 @@ export default function forgotPassword() {
               type='submit'
               aria-label='Recover your account password'
             >
-              Send reset link
+              {loading ? (
+                <p className='text-white'>
+                  <ImSpinner9 className='text-2xl mx-auto spinner' />
+                </p>
+              ) : (
+                <span>Send reset link</span>
+              )}
             </button>
           </form>
           {/* Divider */}
