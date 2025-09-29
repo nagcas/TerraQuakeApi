@@ -45,7 +45,6 @@ export default function SignIn() {
     axios
        .post('/auth/signin', formData,
     {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
       }
