@@ -21,7 +21,7 @@ export const signUp = ({ User, buildResponse, handleHttpError, matchedData, send
       const user = savedUser.toObject()
       delete user.password
 
-      await sendEmailRegister(user)
+      // await sendEmailRegister(user)
 
       res.status(200).json(buildResponse(req, 'Registration successful', user, null, {}))
     } catch (error) {
