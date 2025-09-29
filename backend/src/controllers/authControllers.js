@@ -31,7 +31,7 @@ export const signUp = ({ User, buildResponse, handleHttpError, matchedData, send
       // Remove password from the user object before sending response
       delete user.password
 
-      await sendEmailRegister(user)
+      // await sendEmailRegister(user)
 
       // Return success response
       return res
@@ -108,7 +108,7 @@ export const forgotPassword = ({ User, buildResponse, matchedData, handleHttpErr
         expiresIn: '15m'
       })
 
-      await sendForgotPassword(user, token)
+      // await sendForgotPassword(user, token)
 
       res.status(200).json(buildResponse(req, 'We’ve sent you an email with instructions to reset your password', user, null, {}))
     } catch (error) {
