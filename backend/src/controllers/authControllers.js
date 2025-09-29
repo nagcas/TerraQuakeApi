@@ -31,7 +31,7 @@ export const signUp = ({ User, buildResponse, handleHttpError, matchedData, send
       // Remove password from the user object before sending response
       delete user.password
 
-      // await sendEmailRegister(user)
+      await sendEmailRegister(user)
 
       // Return success response
       return res
