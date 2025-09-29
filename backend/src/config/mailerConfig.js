@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 export const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -15,13 +15,12 @@ export const transporter = nodemailer.createTransport({
     rejectUnauthorized: false
   },
   connectionTimeout: 10000
-});
+})
 
 transporter.verify()
   .then(() => {
-    console.log("Mailer ready to send emails ✅");
+    console.log("Mailer ready to send emails ✅")
   })
   .catch((err) => {
-    console.error("Mailer connection error ❌", err);
-  });
-
+    console.error("Mailer connection error ❌", err)
+  })
