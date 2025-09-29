@@ -31,7 +31,14 @@ export default function forgotPassword() {
       email: data.email,
     };
     axios
-      .post('/auth/forgot-password', formData)
+      .post('/auth/forgot-password', formData,
+      {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
       .then((res) => {
         localStorage.setItem(
           'passwordChangeRequestingEmail',
