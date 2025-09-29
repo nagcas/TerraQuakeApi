@@ -33,7 +33,6 @@ export default function forgotPassword() {
     axios
       .post('/auth/forgot-password', formData,
       {
-        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
