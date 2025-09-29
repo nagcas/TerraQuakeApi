@@ -69,11 +69,16 @@ export default function SignIn() {
         });
       })
       .catch((err) => {
+        const errorMessage =
+      err?.response?.data?.message ||
+      err?.response?.data?.error ||
+      "Login failed. Please try again.";
+
         Swal.fire({
-          title: 'Error!',
-          text: `${err?.response?.data?.message}`,
-          icon: 'error',
-          confirmButtonText: 'Ok',
+          title: "Error!",
+          text: errorMessage,
+          icon: "error",
+          confirmButtonText: "Ok",
         }).then(() => {
           navigate('/signin');
           setLoading(false);
