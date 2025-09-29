@@ -18,13 +18,21 @@ dotenv.config()
 const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
-// Trust the first proxy (Render)
-// app.set('trust proxy', 1)
+// 🔹 Trust the first proxy (Render)
+app.set('trust proxy', 1) // ← DECOMMENTA QUI
 
 // === MIDDLEWARE ===
 app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// Debug middleware (utile per test)
+app.use((req, res, next) => {
+  console.log("METHOD:", req.method, "URL:", req.originalUrl)
+  console.log("HEADERS:", req.headers)
+  console.log("BODY:", req.body)
+  next()
+})
 
 // === CORS ===
 // Only /v1/earthquakes is public
