@@ -18,6 +18,9 @@ dotenv.config()
 const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
+// Trust the first proxy (Render)
+app.set('trust proxy', 1);
+
 // === MIDDLEWARE ===
 app.use(helmet())
 app.use(express.json())
