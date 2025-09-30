@@ -51,36 +51,47 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js (v18+ recommended)
 - Git
 
 ### Installation
+
 1. Clone the repository:
-   ```
+
+   ```bash
    git clone https://github.com/nagcas/TerraQuakeApi.git
    cd TerraQuakeApi
    ```
+
 2. Install backend dependencies:
-   ```
+
+   ```bash
    cd backend
    npm install
    ```
+
 3. Install frontend dependencies:
-   ```
+
+   ```bash
    cd ../frontend
    npm install
    ```
+
 4. Set up environment variables:
    - Copy `backend/.env-example` to `backend/.env` and fill in required values (e.g., database URL, API keys).
    - Copy `frontend/.env-example` to `frontend/.env` if needed.
 
 5. Run the backend:
-   ```
+
+   ```bash
    cd backend
    npm run dev
    ```
+
 6. Run the frontend (in a new terminal):
-   ```
+
+   ```bash
    cd frontend
    npm run dev
    ```
@@ -96,6 +107,7 @@ The TerraQuake API provides various endpoints for querying earthquake data. For 
 ## 🌍 Earthquake API Endpoints
 
 All endpoints support **pagination**:  
+
 - `page` *(optional, default: 1)* → Page number  
 - `limit` *(optional, default: 50)* → Number of results per page  
 
@@ -111,7 +123,6 @@ All endpoints support **pagination**:
 | GET    | `/v1/earthquakes/range-time`| Fetches earthquakes within a date range.       | `startdate` *(required)*, `enddate` *(required)*, `page`, `limit` |
 | GET    | `/v1/earthquakes/magnitude` | Fetches earthquakes of a specific magnitude or higher. | `mag` *(required)*, `page`, `limit` |
 | GET    | `/v1/earthquakes/eventId`   | Fetches details of a specific earthquake by ID. | `eventId` *(required)* |
-
 
 ---
 
@@ -157,7 +168,7 @@ URL "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"
     }
   ]
 }
-```
+```bash
 ## Response Fields:
 
 | Field                  | Description                                  |

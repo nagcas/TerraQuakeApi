@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import Swal from 'sweetalert2';
 
 export default function ChangePassword() {
   const { isLoggedIn } = useContext(Context);
@@ -76,28 +75,14 @@ export default function ChangePassword() {
     axios
       .post('/auth/change-password', formData, {
         headers: { Authorization: `Bearer ${token}` },
+        meta: { successMessage: 'Password changed' }
       })
-      .then((res) => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Your password has been successfully changed! Please sign in again.',
-          icon: 'success',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          confirmButtonText: 'Ok',
-        }).then(() => {
-          reset(); // clear the form
-          navigate('/profile');
-        });
+      .then(() => {
+        reset();
+        navigate('/profile');
       })
-      .catch((err) => {
-        Swal.fire({
-          title: 'Error!',
-          text: err.response?.data?.message || 'Something went wrong. Please try again.',
-          icon: 'error',
-          confirmButtonText: 'Ok',
-        });
-        reset(); // clear the form
+      .catch(() => {
+        reset();
       });
   };
 
