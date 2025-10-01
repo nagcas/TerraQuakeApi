@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from '@config/axios.js';
-import Swal from 'sweetalert2';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import MetaData from '../noPage/metaData';
 
-export default function resetPassword() {
+export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
 
@@ -23,10 +22,7 @@ export default function resetPassword() {
         .required('Password is required!')
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!')
-        .matches(/[^A-Za-z0-9]/)
-        .withMessage('Password must contain at least one special character.'),
-
+        .matches(/\d/, 'Must contain a number!'),
       confirmPassword: yup
         .string()
         .required('Please confirm your password!')
@@ -49,28 +45,12 @@ export default function resetPassword() {
     };
 
     axios
-      .post(`/auth/reset-password/${token}`, formData)
-      .then((res) => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Your password has been successfully reset! Please sign in again!',
-          icon: 'success',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/signin');
-        });
+      .post(`/auth/reset-password/${token}`, formData, { meta: { successMessage: 'Password reset' } })
+      .then(() => {
+        navigate('/signin');
       })
-      .catch((err) => {
-        Swal.fire({
-          title: 'Error!',
-          text: err.response?.data?.message || 'Something went wrong',
-          icon: 'error',
-          confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/signup');
-        });
+      .catch(() => {
+        navigate('/signup');
       });
   };
 

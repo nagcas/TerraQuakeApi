@@ -1,6 +1,7 @@
 import "./apiDocs.css";
 import { useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
+import { toastError } from "@components/modules/notifyBus";
 
 export default function ApiDocsEarthquakes() {
 	const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
@@ -105,16 +106,26 @@ It allows users to access detailed information about a single earthquake event, 
 
 	const handleTest = async (url) => {
 		console.log(url);
-		try {
-			setLoading(true);
-			const res = await fetch(`${BACKEND_URL}` + url);
-			const data = await res.json();
-			setResponseData(data);
-		} catch (err) {
-			setResponseData({ error: "Request failed" });
-		} finally {
-			setLoading(false);
-		}
+    try {
+      setLoading(true);
+      const res = await fetch(`${BACKEND_URL}` + url);
+      if (!res.ok) {
+        const text = await res.text();
+        try {
+          const json = JSON.parse(text);
+          toastError(json?.message || `Request failed: ${res.status}`);
+        } catch {
+          toastError(`Request failed: ${res.status}`);
+        }
+      }
+      const data = await res.json();
+      setResponseData(data);
+    } catch (err) {
+      toastError(err?.message || "Network error");
+      setResponseData({ error: "Request failed" });
+    } finally {
+      setLoading(false);
+    }
 	};
 
 	return (

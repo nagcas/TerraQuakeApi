@@ -34,7 +34,8 @@ router.get('/me', getCurrentUserData({ User, buildResponse, handleHttpError }))
 router.put('/me/update', validatorUpdateCurrentUserData, updateCurrentUserData({ User, buildResponse, handleHttpError, matchedData }))
 
 // NOTE: aggiorna preferenze (es. notifiche, area geografica)
-router.delete('/preferences/:id')
+// TODO: Implement deletePreferences controller and uncomment
+// router.delete('/preferences/:id', deletePreferences({ User, buildResponse, handleHttpError }))
 
 // NOTE: cancella account utente
 router.delete('/me/delete', deleteCurrentUser({ User, buildResponse, handleHttpError }))

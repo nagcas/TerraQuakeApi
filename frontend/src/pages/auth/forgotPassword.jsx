@@ -2,13 +2,13 @@ import { useState } from 'react';
 import axios from '@config/axios.js';
 import Swal from 'sweetalert2';
 import { ImSpinner9 } from 'react-icons/im';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MetaData from '@pages/noPage/metaData';
 
-export default function forgotPassword() {
+export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const forgotPasswordSchema = yup
     .object({
@@ -35,7 +35,8 @@ export default function forgotPassword() {
       {
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        meta: { successMessage: 'Reset link sent if email exists' }
       }
     )
       .then((res) => {
@@ -43,33 +44,12 @@ export default function forgotPassword() {
           'passwordChangeRequestingEmail',
           res.data.user.email
         );
-        Swal.fire({
-           title: 'Success!',
-          text: 'If the email exists in our system, a password reset link has been sent.',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/');
-          setLoading(false);
-        });
+        navigate('/');
+        setLoading(false);
       })
       .catch((err) => {
-        // Build a reliable error message from several possible shapes
-        const errorMessage =
-          err?.response?.data?.message || // your handleHttpError -> message
-          err?.response?.data?.errors?.[0]?.msg || // express-validator array
-          err?.response?.data?.error || // fallback
-          err?.message || // axios/node error message
-          'An error occurred. Please try again.';
-        Swal.fire({
-          title: 'Error!',
-          text: errorMessage,
-          icon: 'error',
-          confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/signup');
-          setLoading(false);
-        });
+        console.log(err);
+        setLoading(false);
       });
   };
 
