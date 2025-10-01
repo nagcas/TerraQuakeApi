@@ -16,6 +16,18 @@ export default function UseCases() {
         'Assists in disaster prevention and preparedness planning.',
       ],
     },
+    {
+      title: 'Scientific Research Applications',
+      content:
+        'This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -',
+      points: [
+        'Monitor seismic patterns and trends in real-time for academic and applied research.',
+        'Conduct studies on earthquake probability, frequency, and impact modeling.',
+        'Integrate data seamlessly with analytical tools like MATLAB, Python, and R for deeper analysis.',
+        'Support thesis projects, publications, and research reports on seismic activity.',
+        'Assist in modeling and simulation of earthquake scenarios for research purposes.',
+      ],
+    },
   ];
 
   const [expandedIndex, setExpandedIndex] = useState(null);

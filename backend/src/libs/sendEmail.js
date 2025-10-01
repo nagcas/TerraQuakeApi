@@ -4,7 +4,7 @@ import { transporter } from '../config/mailerConfig.js'
 export const sendEmailRegister = async (user) => {
   try {
     const response = await transporter.sendMail({
-      from: '"TerraQuake API" <terraquakeapi@gmail.com>', // deve corrispondere a USER_MAILER
+      from: `"TerraQuake API" <${process.env.USER_MAILER}}>`, // deve corrispondere a USER_MAILER
       to: user.email,
       subject: '🎉 Welcome to TerraQuake API!',
       html: `
@@ -34,8 +34,8 @@ export const sendEmailRegister = async (user) => {
       `
     })
 
-    console.log('Registration email sent:', response.messageId)
-    return response;
+    console.log('Registration email sent:', response)
+    return response
   } catch (error) {
     console.error('Error sending registration email:', error)
     throw new Error('Failed to send registration email')
@@ -53,7 +53,7 @@ export const sendForgotPassword = async (user, token) => {
     }
 
     const response = await transporter.sendMail({
-      from: '"TerraQuake API" <terraquakeapi@gmail.com>', // must match USER_MAILER
+      from: `"TerraQuake API" <${process.env.USER_MAILER}}>`, // must match USER_MAILER
       to: user.email,
       subject: '🔑 Reset Your TerraQuake API Password',
       html: `

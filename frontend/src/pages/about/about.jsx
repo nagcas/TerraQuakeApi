@@ -1,4 +1,5 @@
 import MetaData from '@pages/noPage/metaData';
+import './about.css';
 import { FaGlobeAmericas, FaLightbulb, FaChartLine, FaCode, FaBalanceScale, FaHandsHelping, FaUserAstronaut, FaUsers } from 'react-icons/fa';
 
 export default function About() {
@@ -69,7 +70,7 @@ export default function About() {
           {cardSections.map((item) => (
             <div
               key={item.title}
-              className="bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-10 shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="about-card bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-10 shadow-lg transition-all duration-300"
             >
               <div className="flex flex-col items-start">
                 {item.icon}

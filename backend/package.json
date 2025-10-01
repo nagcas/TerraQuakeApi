@@ -23,7 +23,7 @@
     "express-validator": "7.2.1",
     "express-validators": "1.0.4",
     "haversine-distance": "1.2.4",
-    "helmet": "^8.1.0",
+    "helmet": "8.1.0",
     "jsonwebtoken": "9.0.2",
     "mongoose": "8.18.3",
     "mongoose-delete": "1.0.2",

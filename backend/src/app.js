@@ -28,9 +28,9 @@ app.use(express.urlencoded({ extended: true }))
 
 // Debug middleware (utile per test)
 app.use((req, res, next) => {
-  console.log("METHOD:", req.method, "URL:", req.originalUrl)
-  console.log("HEADERS:", req.headers)
-  console.log("BODY:", req.body)
+  console.log('METHOD:', req.method, 'URL:', req.originalUrl)
+  console.log('HEADERS:', req.headers)
+  console.log('BODY:', req.body)
   next()
 })
 
