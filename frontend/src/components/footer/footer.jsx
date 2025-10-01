@@ -36,7 +36,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20 text-center'>
+    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 text-center'>
       <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden'>
         {/* Logo + Description */}
         <div>

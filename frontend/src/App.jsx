@@ -27,6 +27,7 @@ import PrivacyPolicy from './pages/privacyPolicy/privacyPolicy'
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
+import Newsletter from "./components/newsletter/Newsletter";
 
 function App() {
   return (
@@ -34,32 +35,39 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <main>
-          <div className='max-w-full min-h-screen items-center [background:radial-gradient(140%_140%_at_80%_20%,#000_40%,#63e_100%)] scrollbar-thin scrollbar-thumb-purple-700 scrollbar-track-gray-800'>
-            <div className='sky'>
-              <div className='stars'></div>
+          <div className="max-w-full min-h-screen items-center [background:radial-gradient(140%_140%_at_80%_20%,#000_40%,#63e_100%)] scrollbar-thin scrollbar-thumb-purple-700 scrollbar-track-gray-800">
+            <div className="sky">
+              <div className="stars"></div>
             </div>
             <NavbarMenu />
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/explore-data' element={<ExploreData />} />
-              <Route path='/api-access' element={<ApiAccess />} />
-              <Route path='/docs' element={<Docs />} />
-              <Route path='/use-cases' element={<UseCases />} />
-              <Route path='/about' element={<About />} /> 
-              <Route path='/contact' element={<Contact />} /> 
-              <Route path='/blog' element={<Blog />} />
-              <Route path='/blog/:slug' element={<BlogDetail />} />
-              <Route path='/post/:slug' element={<BlogPost />} />
-              <Route path='/signup' element={<SignUp />} /> 
-              <Route path='/signin' element={<SignIn />} /> 
-              <Route path='/profile' element={<Profile />} /> 
-              <Route path='/forgot-password' element={<ForgotPassword />} /> 
-              <Route path='/change-password' element={<ChangePassword />} /> 
-              <Route path='/reset-password/:token' element={<ResetPassword />} /> 
-              <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
-              <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-              <Route path='*' element={<NoPage />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/explore-data" element={<ExploreData />} />
+              <Route path="/api-access" element={<ApiAccess />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/use-cases" element={<UseCases />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogDetail />} />
+              <Route path="/post/:slug" element={<BlogPost />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/change-password" element={<ChangePassword />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPassword />}
+              />
+              <Route
+                path="/terms-and-conditions"
+                element={<TermsAndConditions />}
+              />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="*" element={<NoPage />} />
             </Routes>
+            <Newsletter />
             <Footer />
           </div>
         </main>
