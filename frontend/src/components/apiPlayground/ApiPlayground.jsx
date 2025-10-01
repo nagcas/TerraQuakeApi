@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
+import EarthquakesMap from "@/components/map/EarthquakesMap.jsx";
 
 export default function ApiPlayground({ title = "API Playground", endpoints = [] }) {
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "";
@@ -192,6 +193,12 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
               <pre className="text-left font-mono break-words">
                 {JSON.stringify(responseData, null, 2)}
               </pre>
+            </div>
+          )}
+
+          {Array.isArray(responseData?.data) && responseData?.data?.length > 0 && (
+            <div className="mt-6">
+              <EarthquakesMap features={responseData.data} height="520px" />
             </div>
           )}
 

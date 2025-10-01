@@ -1,6 +1,7 @@
 import "./apiDocs.css";
 import { useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
+import EarthquakesMap from "@/components/map/EarthquakesMap.jsx";
 
 export default function ApiDocsEarthquakes() {
 	const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
@@ -248,6 +249,12 @@ It allows users to access detailed information about a single earthquake event, 
 							{responseData && (
 								<div className="bg-black/40 rounded-lg p-4 text-sm text-yellow-400 max-h-[400px] overflow-auto">
 									<pre>{JSON.stringify(responseData, null, 2)}</pre>
+								</div>
+							)}
+
+							{Array.isArray(responseData?.data) && responseData?.data?.length > 0 && (
+								<div className="mt-6">
+									<EarthquakesMap features={responseData.data} height="520px" />
 								</div>
 							)}
 						</div>

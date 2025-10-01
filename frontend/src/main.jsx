@@ -3,8 +3,15 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+const root = document.getElementById('root')
+const isDev = import.meta.env.MODE === 'development'
+
+createRoot(root).render(
+  isDev ? (
     <App />
-  </StrictMode>,
+  ) : (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  ),
 )

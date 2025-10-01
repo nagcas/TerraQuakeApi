@@ -1,8 +1,37 @@
 import MetaData from '@pages/noPage/metaData';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground.jsx';
 import '@/components/apiPlayground/apiPlayground.css';
+import EarthquakesMap from '@/components/map/EarthquakesMap.jsx';
+import { useEffect, useState } from 'react';
 
 export default function ExploreData() {
+  const [recentData, setRecentData] = useState([]);
+  const [recentError, setRecentError] = useState('');
+  const [recentLoading, setRecentLoading] = useState(false);
+
+  useEffect(() => {
+    const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || '';
+    const fetchRecent = async () => {
+      setRecentLoading(true);
+      setRecentError('');
+      try {
+        const res = await fetch(`${BACKEND_URL}/v1/earthquakes/recent?limit=200`);
+        const json = await res.json();
+        if (!res.ok) {
+          setRecentError(json?.message || `${res.status}`);
+          setRecentData([]);
+        } else {
+          setRecentData(Array.isArray(json?.data) ? json.data : []);
+        }
+      } catch (e) {
+        setRecentError('Failed to load recent events');
+      } finally {
+        setRecentLoading(false);
+      }
+    }
+    fetchRecent();
+  }, []);
+
   const earthquakesEndpoints = [
     {
       key: 'recent',
@@ -290,6 +319,20 @@ export default function ExploreData() {
             JavaScript (<code>fetch</code> or <code>axios</code>), and Python (
             <code>requests</code>).
           </p>
+        </div>
+
+        {/* Recent map section */}
+        <div className='w-full mt-4'>
+          <h2 className='text-white text-xl mb-3'>Recent earthquakes (map)</h2>
+          {recentLoading && (
+            <div className='text-yellow-300 mb-3'>Loading recent events...</div>
+          )}
+          {recentError && (
+            <div className='text-red-400 mb-3'>Error: {recentError}</div>
+          )}
+          {Array.isArray(recentData) && recentData.length > 0 && (
+            <EarthquakesMap features={recentData} height='520px' />
+          )}
         </div>
 
         <div className='w-full mt-10'>
