@@ -2,12 +2,13 @@ import MetaData from '@pages/noPage/metaData';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground.jsx';
 import '@/components/apiPlayground/apiPlayground.css';
 import EarthquakesMap from '@/components/map/EarthquakesMap.jsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 export default function ExploreData() {
   const [recentData, setRecentData] = useState([]);
   const [recentError, setRecentError] = useState('');
   const [recentLoading, setRecentLoading] = useState(false);
+  const [liveResult, setLiveResult] = useState({ features: [], title: '', url: '' });
 
   useEffect(() => {
     const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || '';
@@ -321,7 +322,7 @@ export default function ExploreData() {
           </p>
         </div>
 
-        {/* Recent map section */}
+i         {/* Recent map section */}
         <div className='w-full mt-4'>
           <h2 className='text-white text-xl mb-3'>Recent earthquakes (map)</h2>
           {recentLoading && (
@@ -330,16 +331,50 @@ export default function ExploreData() {
           {recentError && (
             <div className='text-red-400 mb-3'>Error: {recentError}</div>
           )}
-          {Array.isArray(recentData) && recentData.length > 0 && (
-            <EarthquakesMap features={recentData} height='520px' />
-          )}
         </div>
 
         <div className='w-full mt-10'>
           <ApiPlayground
             title='Earthquakes'
             endpoints={earthquakesEndpoints}
+            onResponse={(payload) => setLiveResult(payload)}
           />
+        </div>
+
+        {/* Live map section (bound to ApiPlayground results) */}
+        <div className='w-full mt-6'>
+          {Array.isArray(liveResult?.features) && liveResult.features.length > 0 && (
+            <div className='bg-white/5 border border-white/10 rounded-2xl p-4 shadow-xl'>
+              <div className='flex items-center justify-between mb-2'>
+                <h2 className='text-white text-lg'>Map preview</h2>
+                <div className='text-xs text-purple-300'>
+                  {liveResult?.title ? `${liveResult.title}` : ''} {`(${liveResult.features.length})`}
+                </div>
+              </div>
+              <div className='text-xs text-gray-300 mb-3 break-words'>
+                {liveResult?.url}
+              </div>
+              <div className='rounded-xl overflow-hidden' style={{ height: '380px' }}>
+                <EarthquakesMap features={liveResult.features} height='100%' />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Recent map section (fallback when no live results) */}
+        <div className='w-full mt-8'>
+          <h2 className='text-white text-xl mb-3'>Recent earthquakes (map)</h2>
+          {recentLoading && (
+            <div className='text-yellow-300 mb-3'>Loading recent events...</div>
+          )}
+          {recentError && (
+            <div className='text-red-400 mb-3'>Error: {recentError}</div>
+          )}
+          {(!Array.isArray(liveResult?.features) || liveResult.features.length === 0) && Array.isArray(recentData) && recentData.length > 0 && (
+            <div className='rounded-xl overflow-hidden border border-white/10'>
+              <EarthquakesMap features={recentData} height='380px' />
+            </div>
+          )}
         </div>
       </section>
     </>

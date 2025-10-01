@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
-import EarthquakesMap from "@/components/map/EarthquakesMap.jsx";
 
-export default function ApiPlayground({ title = "API Playground", endpoints = [] }) {
+export default function ApiPlayground({ title = "API Playground", endpoints = [], onResponse }) {
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "";
 
   const [activeKey, setActiveKey] = useState(endpoints[0]?.key || "");
@@ -58,6 +57,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
     setLoading(true);
     setErrorMessage("");
     setResponseData(null);
+    if (typeof onResponse === 'function') onResponse({ features: [] });
     try {
       const url = buildUrl();
       const res = await fetch(url, { method: active.method || "GET" });
@@ -68,6 +68,17 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
         setErrorMessage(`status: ${res.status} - message: ${data.message}` || `${res.status} - ${res.statusText}`);
       }
       setResponseData(data);
+      if (typeof onResponse === 'function') {
+        const features = Array.isArray(data?.data) ? data.data : [];
+        onResponse({
+          features,
+          title: active?.label || active?.key || 'Results',
+          method: active?.method || 'GET',
+          path: active?.path || '',
+          url,
+          description: active?.description || ''
+        });
+      }
     } catch (err) {
       setErrorMessage("Request failed");
     } finally {
@@ -193,12 +204,6 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
               <pre className="text-left font-mono break-words">
                 {JSON.stringify(responseData, null, 2)}
               </pre>
-            </div>
-          )}
-
-          {Array.isArray(responseData?.data) && responseData?.data?.length > 0 && (
-            <div className="mt-6">
-              <EarthquakesMap features={responseData.data} height="520px" />
             </div>
           )}
 
