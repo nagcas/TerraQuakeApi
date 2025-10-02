@@ -23,14 +23,15 @@
     "express-rate-limit": "8.1.0",
     "express-validator": "7.2.1",
     "express-validators": "1.0.4",
+    "form-data": "4.0.4",
     "haversine-distance": "1.2.4",
     "helmet": "8.1.0",
     "jsonwebtoken": "9.0.2",
+    "mailgun.js": "12.1.0",
     "mongoose": "8.16.2",
     "mongoose-delete": "1.0.2",
     "morgan-body": "2.6.9",
     "multer": "2.0.1",
-    "nodemailer": "7.0.6",
     "ua-parser-js": "2.0.5"
   },
   "devDependencies": {

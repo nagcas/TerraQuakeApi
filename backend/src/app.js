@@ -68,7 +68,7 @@ app.use(
 app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
 
 // Newsletter routes (public for subscription)
-app.use('/api/newsletter', cors(), newsletterRoutes)
+app.use('/newsletter', cors(), newsletterRoutes)
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {

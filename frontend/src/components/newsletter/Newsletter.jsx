@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Newsletter = () => {
+  const URL = import.meta.env.VITE_URL_BACKEND;
+
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +16,7 @@ const Newsletter = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/newsletter/subscribe",
+        `${URL}/newsletter/subscribe`,
         { email }
       );
       setMessage(response.data.message);
@@ -276,40 +278,6 @@ const Newsletter = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(180deg);
-          }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-out;
-        }
-      `}</style>
     </div>
   );
 };
