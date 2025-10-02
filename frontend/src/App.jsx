@@ -28,7 +28,6 @@ import GithubAuth from "./pages/auth/githubAuth"
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
-import Newsletter from "./components/newsletter/Newsletter";
 
 import Contribute from "./pages/contribute/contribute"
 
@@ -100,7 +99,6 @@ function App() {
               <Route path='/contribute' element={ <Contribute />} />
               <Route path='*' element={<NoPage />} />
             </Routes>
-            <Newsletter />
             <Footer />
           </div>
         </main>
