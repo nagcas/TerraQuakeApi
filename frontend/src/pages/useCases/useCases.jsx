@@ -88,6 +88,18 @@ export default function UseCases() {
         "Support predictive models to minimize long-term financial risks.",
       ],
     },
+    {
+      title: "Smart Cities & Structural Monitoring",
+      content:
+        "This section highlights how TerraQuakeAPI can be applied by cities, urban planners, and engineers to enhance safety and resilience of infrastructure. Here is what it enables practitioners to do -",
+      points: [
+        "Integrate with IoT sensors (e.g., Arduino, Raspberry Pi) to collect and stream real-time seismic or structural data.",
+        "Monitor the stability and integrity of buildings, bridges, and other critical infrastructure.",
+        "Visualize seismic and structural data to identify vulnerabilities, track safety trends, and inform decision-making.",
+        "Enable early alerts and risk assessments for city officials and engineers.",
+        "Support long-term planning for safer urban development and disaster resilience.",
+      ],
+    },
   ];
 
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -150,9 +162,7 @@ export default function UseCases() {
 
               <div
                 className={`overflow-hidden transition-all duration-500 ${
-
                   expandedIndex === index ? "max-h-96 mt-4" : "max-h-0"
-
                 }`}
               >
                 <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">
