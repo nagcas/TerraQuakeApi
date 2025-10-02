@@ -29,7 +29,7 @@ const Newsletter = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#27035a] via-[#180726] to-[#000000] relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
@@ -37,23 +37,7 @@ const Newsletter = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-600 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse animation-delay-4000"></div>
       </div>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-purple-400 rounded-full opacity-30 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`,
-            }}
-          ></div>
-        ))}
-      </div>
-
-      <div className="w-full max-w-6xl mx-4 bg-gradient-to-br from-[#1e0341] via-[#180726] to-[#000000] rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-purple-500/30 relative z-10 transform hover:scale-[1.01] transition-transform duration-300">
+      <div className="w-full max-w-6xl mx-4 bg-gradient-to-br from-[#1e0341] via-[#180726] to-[#000000] rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-purple-500/30 relative z-10">
         {/* Left Panel - Enhanced */}
         <div className="md:w-1/2 p-12 flex flex-col justify-center relative">
           {/* Decorative Element */}
@@ -94,7 +78,7 @@ const Newsletter = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 required
-                className="w-full px-6 py-4 rounded-xl border-2 border-purple-600/50 bg-[#2a0d5b]/80 backdrop-blur-sm text-white placeholder-purple-300 focus:outline-none focus:ring-4 focus:ring-purple-500/30 focus:border-purple-500 transition-all duration-300 text-lg"
+                className="w-full px-6 py-4 rounded-full border-2 border-purple-600/50 bg-[#2a0d5b]/80 backdrop-blur-sm text-white placeholder-purple-300 focus:outline-none focus:ring-4 focus:ring-purple-500/30 focus:border-purple-500 transition-all duration-300 text-lg"
                 disabled={isLoading}
               />
               <svg
@@ -115,10 +99,10 @@ const Newsletter = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full py-4 rounded-xl font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
+              className={`w-full py-4 rounded-full font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
                 isLoading
                   ? "bg-purple-600 cursor-not-allowed"
-                  : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:ring-4 focus:ring-purple-500/30 shadow-lg"
+                  : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:ring-4 focus:ring-purple-500/30 shadow-lg cursor-pointer"
               }`}
             >
               {isLoading ? (

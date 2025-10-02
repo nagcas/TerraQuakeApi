@@ -2,6 +2,7 @@ import Hero from '@components/hero/hero'
 import Info from '@components/info/info'
 import MetaData from '@pages/noPage/metaData'
 import ApiDocsEarthquakes from '@components/apiDocs/apiDocsEarthquakes'
+import Newsletter from '@/components/newsletter/Newsletter'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <Info />
       <ApiDocsEarthquakes />
+      <Newsletter />
     </>
   )
 }
