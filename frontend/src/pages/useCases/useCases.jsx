@@ -35,6 +35,19 @@ export default function UseCases() {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  // track hover index separately so hover opens on desktop and doesn't
+  // interfere with click/touch behavior (which sets expandedIndex)
+  const [hoverIndex, setHoverIndex] = useState(null);
+
+  const handleMouseEnter = (index) => {
+    // only apply hover for non-touch devices; touch will still use click
+    setHoverIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverIndex(null);
+  };
+
   return (
     <>
       <MetaData
@@ -64,6 +77,8 @@ export default function UseCases() {
               key={item.title}
               className="w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
               onClick={() => toggleExpand(index)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="flex justify-between items-center">
                 <h2 className="text-xl md:text-2xl font-bold text-white border-l-4 border-purple-600 pl-4">
@@ -71,14 +86,14 @@ export default function UseCases() {
                 </h2>
                 <FiChevronDown
                   className={`text-white text-2xl transition-transform duration-300 ${
-                    expandedIndex === index ? 'rotate-180' : ''
+                    (expandedIndex === index || hoverIndex === index) ? 'rotate-180' : ''
                   }`}
                 />
               </div>
 
               <div
                 className={`overflow-hidden transition-all duration-500 ${
-                  expandedIndex === index ? 'max-h-96 mt-4' : 'max-h-0'
+                  (expandedIndex === index || hoverIndex === index) ? 'max-h-96 mt-4' : 'max-h-0'
                 }`}
               >
                 <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">

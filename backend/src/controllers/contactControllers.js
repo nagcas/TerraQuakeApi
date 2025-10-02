@@ -2,7 +2,14 @@ import mongoose from 'mongoose'
 import Contact from '../models/contactModels.js'
 import handleHttpError from '../utils/handleHttpError.js'
 
-// Helper function to build standard response
+/**
+ * Helper: Builds a standard API response object.
+ *
+ * @param {object} req - Express request object.
+ * @param {string} message - Response message.
+ * @param {object} data - Data payload for the response.
+ * @returns {object} Structured JSON response with meta info.
+ */
 const buildResponse = (req, message, data) => ({
   success: true,
   code: 200,
@@ -16,7 +23,14 @@ const buildResponse = (req, message, data) => ({
   }
 })
 
-// NOTE: Function for creating a new contact message
+/**
+ * Controller: Create a new contact message.
+ *
+ * - Accepts `name`, `lastname`, `email`, `subject`, and `message` from request body.
+ * - Saves a new `Contact` document to the database.
+ * - Responds with `200 OK` and the created contact object on success.
+ * - Returns a structured error response if validation or DB error occurs.
+ */
 export const createContact = async (req, res) => {
   try {
     const { name, lastname, email, subject, message } = req.body
@@ -34,7 +48,15 @@ export const createContact = async (req, res) => {
   }
 }
 
-// NOTE: Function to view all contact messages
+/**
+ * Controller: Retrieve all contact messages.
+ *
+ * - Supports pagination: `page`, `limit`.
+ * - Supports sorting: `sort` field and `sortDirection` (asc/desc).
+ * - Supports case-insensitive filtering by `name`, `lastname`, `email`.
+ * - Returns total count, total pages, and pagination metadata.
+ * - Responds with `200 OK` and an array of contacts on success.
+ */
 export const getAllContacts = async (req, res) => {
   try {
     const { name, lastname, email } = req.body
@@ -92,7 +114,13 @@ export const getAllContacts = async (req, res) => {
   }
 }
 
-// NOTE: Function to display a single contact message with specified id
+/**
+ * Controller: Retrieve a single contact message by ID.
+ *
+ * - Validates that the provided ID is a valid MongoDB ObjectId.
+ * - Responds with `404 Not Found` if no contact exists with the given ID.
+ * - Returns `200 OK` and the contact document on success.
+ */
 export const getOneContact = async (req, res) => {
   try {
     const { contactId } = req.params
@@ -123,14 +151,24 @@ export const getOneContact = async (req, res) => {
   }
 }
 
-// NOTE: Function for creating a reply to a single message with a specific id
+/**
+ * Controller: Answer a specific contact message.
+ *
+ * - To be implemented: should send or log a reply to a contact message.
+ * - Currently returns a placeholder response.
+ */
 export const answerContact = (req, res) => {
   res.json({
     message: 'answer contact'
   })
 }
 
-// NOTE: Function for soft deletion of a contact message with a specific ID
+/**
+ * Controller: Soft-delete a contact message by ID.
+ *
+ * - To be implemented: should mark a message as deleted without removing it from the DB.
+ * - Currently returns a placeholder response.
+ */
 export const deleteContact = (req, res) => {
   res.json({
     message: 'delete contact'
