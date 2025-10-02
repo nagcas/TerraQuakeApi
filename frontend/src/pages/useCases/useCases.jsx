@@ -84,7 +84,7 @@ export default function UseCases() {
         'Twitter/X, Facebook, and Telegram bot integration.',
         'Customizable alert templates and hashtags.',
         'Real-time updates for followers and communities.',
-
+      ],
       title: 'Scientific Research Applications',
       content:
         'This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -',
