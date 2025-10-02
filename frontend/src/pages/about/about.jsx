@@ -121,6 +121,49 @@ export default function About() {
   return (
     <>
       <MetaData title="About" description="About of TerraQuake API" />
+
+      <section className="relative z-30 w-full min-h-screen px-6 py-20 bg-gradient-to-br from-indigo-950 via-violet-900 to-gray-900 overflow-hidden">
+        {/* Floating background shapes for visual interest */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+          <div className="absolute left-10 top-24 w-32 h-32 bg-purple-700/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute right-10 top-40 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute left-1/2 bottom-10 w-40 h-40 bg-violet-500/20 rounded-full blur-2xl animate-pulse" />
+        </div>
+        {/* Elegant header with accent and animation */}
+  <div className="relative max-w-3xl mx-auto text-center mb-20 z-10">
+          <div className="flex justify-center items-center mb-6 animate-fade-in">
+            <span className="bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-500 p-4 rounded-full shadow-xl">
+              <FaGlobeAmericas className="text-white text-5xl" />
+            </span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-violet-400 drop-shadow-lg mb-4">
+            About TerraQuake API
+          </h1>
+          <p className="text-lg md:text-xl text-gray-200 font-medium mb-2">Open-source seismic data for everyone.</p>
+        </div>
+
+        {/* Decorative divider */}
+  <div className="flex justify-center mb-16 z-10">
+          <span className="h-1 w-32 bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-500 rounded-full block opacity-70"></span>
+        </div>
+
+        {/* Grid cards with enhanced gradients and effects */}
+  <div className="relative max-w-6xl mx-auto grid gap-16 md:grid-cols-2 lg:grid-cols-3 mb-24 z-10">
+          {cardSections.map((item) => (
+            <div
+              key={item.title}
+              className="bg-gradient-to-br from-violet-900/80 via-indigo-900/70 to-gray-900/80 border border-violet-700/30 backdrop-blur-xl rounded-2xl p-10 shadow-xl transition-all duration-300 hover:scale-105 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-700 group"
+              style={{ transition: 'transform 0.3s, box-shadow 0.3s, border-color 0.3s' }}
+            >
+              <div className="flex flex-col items-start animate-fade-in group-hover:animate-bounce">
+                {item.icon}
+                <h2 className="text-2xl md:text-3xl font-bold text-purple-300 mb-4 drop-shadow">
+                  {item.title}
+                </h2>
+                <p className="text-gray-200 leading-relaxed text-base md:text-lg">
+                  {item.content}
+                </p>
+
       <section className="relative z-30 w-full min-h-screen px-6 py-16 overflow-hidden">
         <div className="absolute top-24 left-10 w-60 h-60 bg-purple-500/5 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-44 right-16 w-72 h-72 bg-violet-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -189,10 +232,29 @@ export default function About() {
                     {item.content}
                   </p>
                 </div>
+
               </div>
             </div>
           ))}
         </div>
+
+
+        {/* Decorative divider */}
+  <div className="flex justify-center mb-12 z-10">
+          <span className="h-1 w-24 bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-500 rounded-full block opacity-60"></span>
+        </div>
+
+        {/* Text sections with icons and improved spacing/typography */}
+  <div className="relative max-w-4xl mx-auto space-y-16 z-10">
+          {textSections.map((item) => (
+            <div key={item.title} className="pt-12 border-t border-violet-700/20 animate-fade-in">
+              <div className="flex items-center mb-4">
+                {item.icon}
+                <h2 className="text-2xl font-semibold text-purple-300 ml-2 drop-shadow">
+                  {item.title}
+                </h2>
+              </div>
+              <p className="text-gray-200 leading-relaxed text-lg md:text-xl">
 
         <div className="max-w-5xl mx-auto space-y-8">
           {textSections.map((item, index) => (
@@ -214,10 +276,18 @@ export default function About() {
                 </h2>
               </div>
               <p className="text-gray-300 leading-relaxed text-sm md:text-base pl-[60px]">
+
                 {item.content}
               </p>
             </div>
           ))}
+        </div>
+        {/* Inspirational quote / call-to-action */}
+        <div className="relative max-w-2xl mx-auto mt-24 text-center z-10 animate-fade-in">
+          <blockquote className="text-xl md:text-2xl italic text-purple-300 font-semibold mb-4">
+            "Empowering communities with open seismic data for a safer tomorrow."
+          </blockquote>
+          <p className="text-gray-400">Join us, contribute, and make a difference!</p>
         </div>
       </section>
 

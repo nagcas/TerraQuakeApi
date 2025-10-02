@@ -17,6 +17,74 @@ export default function UseCases() {
       ],
     },
     {
+      title: 'Emergency Notification Systems',
+      content:
+        'Integrate real-time earthquake alerts into emergency notification platforms to inform citizens and authorities instantly.',
+      points: [
+        'Push notifications for mobile devices during seismic events.',
+        'Automated SMS and email alerts for registered users.',
+        'Integration with local government emergency response systems.',
+      ],
+    },
+    {
+      title: 'Mapping & Visualization Dashboards',
+      content:
+        'Create interactive dashboards to visualize seismic activity and trends over time and geography.',
+      points: [
+        'Live maps showing recent earthquakes and affected regions.',
+        'Heatmaps and time-series charts for data analysis.',
+        'Customizable filters for magnitude, location, and time.',
+      ],
+    },
+    {
+      title: 'Insurance & Risk Assessment',
+      content:
+        'Use seismic data to assess risk and inform insurance policies for properties and infrastructure.',
+      points: [
+        'Automated risk scoring for insured assets.',
+        'Historical data analysis for premium calculation.',
+        'Integration with property management platforms.',
+      ],
+    },
+    {
+      title: 'Smart City Infrastructure Monitoring',
+      content:
+        'Monitor the impact of seismic events on smart city infrastructure and automate safety protocols.',
+      points: [
+        'IoT sensor integration for bridges, buildings, and utilities.',
+        'Automated shutdown or alerts for critical systems.',
+        'Data-driven maintenance scheduling.',
+      ],
+    },
+    {
+      title: 'Seismic Research & Analysis',
+      content:
+        'Provide researchers with access to raw and processed seismic data for advanced analysis and modeling.',
+      points: [
+        'Downloadable datasets for academic studies.',
+        'API endpoints for custom data queries.',
+        'Collaboration tools for research teams.',
+      ],
+    },
+    {
+      title: 'Citizen Reporting & Mobile Apps',
+      content:
+        'Enable citizens to report felt earthquakes and receive personalized alerts through mobile applications.',
+      points: [
+        'Crowdsourced data collection for felt events.',
+        'Location-based alerting and safety tips.',
+        'Community engagement and feedback features.',
+      ],
+    },
+    {
+      title: 'Automated Social Media Alerts',
+      content:
+        'Automatically post earthquake alerts and updates to social media platforms for broader public awareness.',
+      points: [
+        'Twitter/X, Facebook, and Telegram bot integration.',
+        'Customizable alert templates and hashtags.',
+        'Real-time updates for followers and communities.',
+
       title: 'Scientific Research Applications',
       content:
         'This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -',
@@ -26,6 +94,7 @@ export default function UseCases() {
         'Integrate data seamlessly with analytical tools like MATLAB, Python, and R for deeper analysis.',
         'Support thesis projects, publications, and research reports on seismic activity.',
         'Assist in modeling and simulation of earthquake scenarios for research purposes.',
+
       ],
     },
   ];
