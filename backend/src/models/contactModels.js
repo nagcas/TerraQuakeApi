@@ -9,6 +9,11 @@ const contactsSchema = new Schema(
       required: true,
       trim: true
     },
+    lastname: {
+      type: String,
+      required: true,
+      trim: true
+    },
     email: {
       type: String,
       trim: true,
@@ -27,15 +32,19 @@ const contactsSchema = new Schema(
       type: String,
       required: [true, 'Message is required']
     },
+    answer: {
+      type: String
+    },
     createdAt: {
       type: Date,
       default: Date.now
-    },
+    }
   },
   {
+    timestamps: true,
     versionKey: false,
     collection: 'contacts'
-  },
+  }
 )
 
 // Plugin soft-delete

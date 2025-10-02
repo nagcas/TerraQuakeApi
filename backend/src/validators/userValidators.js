@@ -21,8 +21,12 @@ export const validatorSignUp = [
     .notEmpty()
     .isLength({ min: 8, max: 64 })
     .withMessage('Password must be between 8 and 64 characters long.')
-    .matches(/^[A-Z]/)
-    .withMessage('Password must start with an uppercase letter.')
+    .matches(/[a-z]/)
+    .withMessage('Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/)
+    .withMessage('Password must contain at least one uppercase letter.')
+    .matches(/\d/)
+    .withMessage('Password must contain at least one number.')
     .matches(/[^A-Za-z0-9]/)
     .withMessage('Password must contain at least one special character.'),
 
@@ -49,8 +53,8 @@ export const validatorSignIn = [
   check('password')
     .exists()
     .notEmpty()
-    .isLength({ min: 8, max: 64 })
-    .withMessage('Password must be between 8 and 64 characters long.'),
+    .isLength({ min: 8, max: 16 })
+    .withMessage('Password must be between 8 and 16 characters long.'),
 
   (req, res, next) => validateResults(req, res, next)
 ]
@@ -70,12 +74,16 @@ export const validatorResetPassword = [
     .withMessage('Password is required.')
     .notEmpty()
     .withMessage('Password cannot be empty.')
-    .isLength({ min: 8, max: 64 })
-    .withMessage('Password must be between 8 and 64 characters long.')
+    .isLength({ min: 8, max: 16 })
+    .withMessage('Password must be between 8 and 16 characters long.')
+    .matches(/[a-z]/)
+    .withMessage('Password must contain at least one lowercase letter.')
     .matches(/[A-Z]/)
     .withMessage('Password must contain at least one uppercase letter.')
     .matches(/\d/)
-    .withMessage('Password must contain at least one number.'),
+    .withMessage('Password must contain at least one number.')
+    .matches(/[^A-Za-z0-9]/)
+    .withMessage('Password must contain at least one special character.'),
 
   check('password2')
     .exists()
@@ -92,24 +100,24 @@ export const validatorChangePassword = [
     .withMessage('Current password is required.')
     .notEmpty()
     .withMessage('Current password cannot be empty.')
-    .isLength({ min: 8, max: 64 })
-    .withMessage('Current password must be between 8 and 64 characters long.')
-    .matches(/[A-Z]/)
-    .withMessage('Current password must contain at least one uppercase letter.')
-    .matches(/\d/)
-    .withMessage('Current password must contain at least one number.'),
+    .isLength({ min: 8, max: 16 })
+    .withMessage('Current password must be between 8 and 16 characters long.'),
 
   check('passwordNew')
     .exists()
     .withMessage('New password is required.')
     .notEmpty()
     .withMessage('New password cannot be empty.')
-    .isLength({ min: 8, max: 64 })
-    .withMessage('New password must be between 8 and 64 characters long.')
+    .isLength({ min: 8, max: 16 })
+    .withMessage('New password must be between 8 and 16 characters long.')
+    .matches(/[a-z]/)
+    .withMessage('New password must contain at least one lowercase letter.')
     .matches(/[A-Z]/)
     .withMessage('New password must contain at least one uppercase letter.')
     .matches(/\d/)
-    .withMessage('New password must contain at least one number.'),
+    .withMessage('New password must contain at least one number.')
+    .matches(/[^A-Za-z0-9]/)
+    .withMessage('Password must contain at least one special character.'),
 
   check('confirmPassword')
     .exists()
@@ -130,7 +138,7 @@ export const validatorUpdateCurrentUserData = [
   check('name')
     .optional()
     .isLength({ min: 3, max: 99 })
-    .withMessage('Please enter a valid username (3–99 characters).'),
+    .withMessage('Please enter a valid username (3 – 99 characters).'),
 
   check('email')
     .optional()
@@ -139,10 +147,14 @@ export const validatorUpdateCurrentUserData = [
 
   check('password')
     .optional()
-    .isLength({ min: 8, max: 64 })
-    .withMessage('Password must be between 8 and 64 characters long.')
-    .matches(/^[A-Z]/)
-    .withMessage('Password must start with an uppercase letter.')
+    .isLength({ min: 8, max: 16 })
+    .withMessage('Password must be between 8 and 16 characters long.')
+    .matches(/[a-z]/)
+    .withMessage('Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/)
+    .withMessage('Password must contain at least one uppercase letter.')
+    .matches(/\d/)
+    .withMessage('Password must contain at least one number.')
     .matches(/[^A-Za-z0-9]/)
     .withMessage('Password must contain at least one special character.'),
 

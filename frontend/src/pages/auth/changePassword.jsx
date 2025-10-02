@@ -26,14 +26,18 @@ export default function ChangePassword() {
         .required('Old password is required!')
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!'),
+        .matches(/\d/, 'Must contain a number!')
+        .matches(/[^A-Za-z0-9]/)
+        .withMessage('Password must contain at least one special character.'),
 
       passwordNew: yup
         .string()
         .required('New password is required!')
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!'),
+        .matches(/\d/, 'Must contain a number!')
+        .matches(/[^A-Za-z0-9]/)
+        .withMessage('Password must contain at least one special character.'),
 
       confirmPassword: yup
         .string()

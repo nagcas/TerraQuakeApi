@@ -36,6 +36,13 @@ const usersSchema = new Schema(
     terms: {
       type: Boolean,
       default: false
+    },
+    githubId: {
+      type: String,
+      unique: true
+    },
+    githubProfileUrl: {
+      type: String
     }
   },
   {

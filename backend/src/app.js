@@ -9,6 +9,7 @@ import routeUsers from './routes/usersRoutes.js'
 import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
+import githubAuthRoute from './routes/githubAuthRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
 import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
@@ -28,9 +29,9 @@ app.use(express.urlencoded({ extended: true }))
 
 // Debug middleware (utile per test)
 app.use((req, res, next) => {
-  console.log("METHOD:", req.method, "URL:", req.originalUrl)
-  console.log("HEADERS:", req.headers)
-  console.log("BODY:", req.body)
+  console.log('METHOD:', req.method, 'URL:', req.originalUrl)
+  console.log('HEADERS:', req.headers)
+  console.log('BODY:', req.body)
   next()
 })
 
@@ -54,6 +55,7 @@ const corsAuthOptions = {
 
 app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
 app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
+app.use('/auth/github', cors(corsAuthOptions), authLimiter, githubAuthRoute)
 app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
 app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
 
