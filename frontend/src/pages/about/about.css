@@ -1,0 +1,10 @@
+/* About page card hover effects */
+.about-card {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+}
+.about-card:hover {
+  transform: translateY(-8px) scale(1.07);
+  box-shadow: 0 8px 32px 0 rgba(80,0,180,0.18), 0 1.5px 8px 0 rgba(80,0,180,0.10);
+  background: linear-gradient(120deg, rgba(80,0,180,0.10) 0%, rgba(120,0,255,0.18) 100%);
+  border-color: #a78bfa;
+}
