@@ -36,16 +36,16 @@ export default function Footer() {
   ];
 
   return (
-    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20'>
-      <div className='max-w-7xl mx-auto px-6'>
-        {/* Mobile layout: Navigation + Resources stacked on left, socials centered below */}
-        <div className='md:hidden flex flex-col gap-8'>
-          <div>
-            <h2 className='text-2xl font-bold text-white mb-3'>TerraQuake API</h2>
-            <p className='text-sm leading-relaxed'>
-              Open-source project providing reliable earthquake data for developers, researchers, and communities.
-            </p>
-          </div>
+    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 text-center'>
+      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden'>
+        {/* Logo + Description */}
+        <div>
+          <h2 className='text-2xl font-bold text-white mb-3'>TerraQuake API</h2>
+          <p className='text-sm leading-relaxed'>
+            Open-source project providing reliable earthquake data for
+            developers, researchers, and communities.
+          </p>
+        </div>
 
           <div className='flex w-full gap-6'>
             <div className='flex-1'>
