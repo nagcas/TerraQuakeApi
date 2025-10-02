@@ -1,7 +1,16 @@
 import './about.css';
 import { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
-import { FaGlobeAmericas, FaLightbulb, FaChartLine, FaCode, FaBalanceScale, FaHandsHelping, FaUserAstronaut, FaUsers } from 'react-icons/fa';
+import {
+  FaGlobeAmericas,
+  FaLightbulb,
+  FaChartLine,
+  FaCode,
+  FaBalanceScale,
+  FaHandsHelping,
+  FaUserAstronaut,
+  FaUsers,
+} from 'react-icons/fa';
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -123,14 +132,15 @@ export default function About() {
       <MetaData title="About" description="About of TerraQuake API" />
 
       <section className="relative z-30 w-full min-h-screen px-6 py-20 bg-gradient-to-br from-indigo-950 via-violet-900 to-gray-900 overflow-hidden">
-        {/* Floating background shapes for visual interest */}
+        {/* Floating background shapes */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
           <div className="absolute left-10 top-24 w-32 h-32 bg-purple-700/20 rounded-full blur-2xl animate-pulse" />
           <div className="absolute right-10 top-40 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl animate-pulse" />
           <div className="absolute left-1/2 bottom-10 w-40 h-40 bg-violet-500/20 rounded-full blur-2xl animate-pulse" />
         </div>
-        {/* Elegant header with accent and animation */}
-  <div className="relative max-w-3xl mx-auto text-center mb-20 z-10">
+
+        {/* Header */}
+        <div className="relative max-w-3xl mx-auto text-center mb-20 z-10">
           <div className="flex justify-center items-center mb-6 animate-fade-in">
             <span className="bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-500 p-4 rounded-full shadow-xl">
               <FaGlobeAmericas className="text-white text-5xl" />
@@ -139,16 +149,18 @@ export default function About() {
           <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-violet-400 drop-shadow-lg mb-4">
             About TerraQuake API
           </h1>
-          <p className="text-lg md:text-xl text-gray-200 font-medium mb-2">Open-source seismic data for everyone.</p>
+          <p className="text-lg md:text-xl text-gray-200 font-medium mb-2">
+            Open-source seismic data for everyone.
+          </p>
         </div>
 
-        {/* Decorative divider */}
-  <div className="flex justify-center mb-16 z-10">
+        {/* Divider */}
+        <div className="flex justify-center mb-16 z-10">
           <span className="h-1 w-32 bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-500 rounded-full block opacity-70"></span>
         </div>
 
-        {/* Grid cards with enhanced gradients and effects */}
-  <div className="relative max-w-6xl mx-auto grid gap-16 md:grid-cols-2 lg:grid-cols-3 mb-24 z-10">
+        {/* Cards grid */}
+        <div className="relative max-w-6xl mx-auto grid gap-16 md:grid-cols-2 lg:grid-cols-3 mb-24 z-10">
           {cardSections.map((item) => (
             <div
               key={item.title}
@@ -163,29 +175,18 @@ export default function About() {
                 <p className="text-gray-200 leading-relaxed text-base md:text-lg">
                   {item.content}
                 </p>
-
-      <section className="relative z-30 w-full min-h-screen px-6 py-16 overflow-hidden">
-        <div className="absolute top-24 left-10 w-60 h-60 bg-purple-500/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-44 right-16 w-72 h-72 bg-violet-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
-
-        <div className="relative max-w-4xl mx-auto mb-20">
-          <h1 className="text-3xl md:text-5xl text-white font-extrabold text-center tracking-tight mb-6 animate-fade-in mt-12">
-            About TerraQuake API
-          </h1>
-          <div className="h-1 w-32 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full" />
-          <p className="mt-6 text-center text-gray-300 max-w-2xl mx-auto text-base md:text-lg">
-            A focused platform built to translate raw seismic feeds into
-            developer-friendly endpoints and actionable insights for safety,
-            research, and education.
-          </p>
+              </div>
+            </div>
+          ))}
         </div>
 
+        {/* Metrics */}
         <div className="max-w-5xl mx-auto grid gap-4 md:grid-cols-3 mb-16">
           {highlightMetrics.map((metric) => (
             <div
               key={metric.label}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]">
-
+              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]"
+            >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent" />
               <div className="relative">
                 <span className="text-2xl md:text-3xl font-semibold text-white tracking-tight">
@@ -202,50 +203,8 @@ export default function About() {
           ))}
         </div>
 
-        <div className="max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-24">
-          {cardSections.map((item, index) => (
-            <div
-              key={item.title}
-              className="group relative"
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-              style={{
-                animation: `fadeInUp 0.6s ease-out ${index * 0.08}s both`,
-              }}
-            >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${item.gradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-              />
-
-              <div className="relative bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:border-purple-400/30 h-full">
-                <div className="flex flex-col items-start h-full">
-                  <div className="mb-3">{item.icon}</div>
-                  <h2 className="text-xl md:text-2xl font-bold text-white mb-5 relative">
-                    {item.title}
-                    <div
-                      className={`absolute -bottom-2 left-0 h-0.5 bg-gradient-to-r from-purple-400 to-transparent transition-all duration-500 ${
-                        hoveredCard === index ? "w-full" : "w-0"
-                      }`}
-                    />
-                  </h2>
-                  <p className="text-gray-300 leading-relaxed text-sm md:text-base flex-grow">
-                    {item.content}
-                  </p>
-                </div>
-
-              </div>
-            </div>
-          ))}
-        </div>
-
-
-        {/* Decorative divider */}
-  <div className="flex justify-center mb-12 z-10">
-          <span className="h-1 w-24 bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-500 rounded-full block opacity-60"></span>
-        </div>
-
-        {/* Text sections with icons and improved spacing/typography */}
-  <div className="relative max-w-4xl mx-auto space-y-16 z-10">
+        {/* Text sections */}
+        <div className="relative max-w-4xl mx-auto space-y-16 z-10">
           {textSections.map((item) => (
             <div key={item.title} className="pt-12 border-t border-violet-700/20 animate-fade-in">
               <div className="flex items-center mb-4">
@@ -255,34 +214,13 @@ export default function About() {
                 </h2>
               </div>
               <p className="text-gray-200 leading-relaxed text-lg md:text-xl">
-
-        <div className="max-w-5xl mx-auto space-y-8">
-          {textSections.map((item, index) => (
-            <div
-              key={item.title}
-              className="group relative bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-sm rounded-2xl p-8 hover:border-purple-400/20 transition-all duration-500 hover:shadow-xl hover:scale-[1.02]"
-              style={{
-                animation: `fadeInUp 0.5s ease-out ${index * 0.08}s both`,
-              }}
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500/0 via-purple-500/50 to-purple-500/0 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <div className="flex items-center gap-4 mb-5">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/10 to-violet-500/10 border border-purple-400/20 group-hover:border-purple-400/40 transition-all duration-300">
-                  {item.icon}
-                </div>
-                <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
-                  {item.title}
-                </h2>
-              </div>
-              <p className="text-gray-300 leading-relaxed text-sm md:text-base pl-[60px]">
-
                 {item.content}
               </p>
             </div>
           ))}
         </div>
-        {/* Inspirational quote / call-to-action */}
+
+        {/* Quote */}
         <div className="relative max-w-2xl mx-auto mt-24 text-center z-10 animate-fade-in">
           <blockquote className="text-xl md:text-2xl italic text-purple-300 font-semibold mb-4">
             "Empowering communities with open seismic data for a safer tomorrow."
