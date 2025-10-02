@@ -43,12 +43,11 @@ export default function SignIn() {
     };
 
     axios
-       .post('/auth/signin', formData,
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+      .post('/auth/signin', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setUserLogin(res.data.user);
         setIsLoggedIn(true);
@@ -70,15 +69,15 @@ export default function SignIn() {
       })
       .catch((err) => {
         const errorMessage =
-      err?.response?.data?.message ||
-      err?.response?.data?.error ||
-      "Login failed. Please try again.";
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          'Login failed. Please try again.';
 
         Swal.fire({
-          title: "Error!",
+          title: 'Error!',
           text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Ok",
+          icon: 'error',
+          confirmButtonText: 'Ok',
         }).then(() => {
           navigate('/signin');
           setLoading(false);
@@ -87,6 +86,12 @@ export default function SignIn() {
   };
 
   const togglePassword = () => setShowPassword((prev) => !prev);
+
+  const handleSocialLogin = (type) => {
+    if (type === 'github') {
+      window.location.href = `${import.meta.env.VITE_URL_BACKEND}/auth/github`;
+    }
+  };
 
   return (
     <>

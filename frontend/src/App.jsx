@@ -1,5 +1,4 @@
-import './App.css'
-
+import "./App.css"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import NavbarMenu from '@components/navbar/navbarMenu'
@@ -24,12 +23,22 @@ import ResetPassword from '@pages/auth/resetPassword'
 import ChangePassword from './pages/auth/changePassword'
 import TermsAndConditions from './pages/termsAndConditions/termsAndConditions'
 import PrivacyPolicy from './pages/privacyPolicy/privacyPolicy'
+import Faq from '@components/FAQ/FAQ'
+import GithubAuth from "./pages/auth/githubAuth"
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
 import Newsletter from "./components/newsletter/Newsletter";
 
 function App() {
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     createStar()
+  //   }, 300); // crea una stella ogni 300ms
+
+  //   return () => clearInterval(interval) // pulizia
+  // }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>
