@@ -117,3 +117,37 @@ export const sendChangePassword = async (user) => {
     throw error
   }
 }
+
+export const sendDeleteAccountConfirmation = async (user) => {
+  try {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; color: #333;">
+        <h2 style="color: #A48DC7; text-align: center;">Account Deletion Confirmed</h2>
+        <p>Hello <strong>${user.name}</strong>,</p>
+        <p>Your account associated with <strong>${user.email}</strong> has been successfully deleted from <span style="color: #A48DC7;">TerraQuake API</span>.</p>
+        
+        <p>We’re sorry to see you go, but we respect your decision.  
+        If this was a mistake or you change your mind, you’re always welcome to rejoin us anytime.</p>
+
+        <p style="margin-top: 20px;">Thank you for having been part of our community,  
+        and we wish you all the best in your future projects!</p>
+
+        <hr style="margin: 32px 0; border: none; border-top: 1px solid #ddd;" />
+        <p style="font-weight: bold; text-align: center;">The <span style="color: #A48DC7;">TerraQuake API</span> Team</p>
+      </div>
+    `
+
+    const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
+      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      to: user.email,
+      subject: '👋 Your TerraQuake API Account Has Been Deleted',
+      html
+    })
+
+    console.log('Delete account confirmation email sent:', result)
+    return result
+  } catch (error) {
+    console.error('Error sending delete account confirmation email:', error)
+    throw error
+  }
+}
