@@ -70,7 +70,7 @@ export default function SignUp() {
           icon: 'success',
           confirmButtonText: 'Log In',
         }).then(() => {
-          navigate('/signin');
+          navigate('/signin', { replace: true });
         });
       })
       .catch((err) => {
@@ -88,8 +88,8 @@ export default function SignUp() {
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
-          navigate('/signup');
           setLoading(false);
+          navigate('/signup', { replace: true });
         });
       });
   };

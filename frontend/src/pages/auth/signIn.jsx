@@ -61,10 +61,10 @@ export default function SignIn() {
           title: 'Success!',
           text: `${res.data.message}`,
           icon: 'success',
-          confirmButtonText: 'Ok',
+          confirmButtonText: 'Profile',
         }).then(() => {
-          navigate('/profile'); // navigate to profile page
           setLoading(false);
+          navigate('/profile', { replace: true }); // navigate to profile page
         });
       })
       .catch((err) => {
