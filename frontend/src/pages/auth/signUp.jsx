@@ -22,11 +22,12 @@ export default function SignUp() {
         .required('Email is required!'),
 
       password: yup
-        .string()
-        .required('Password is required !')
-        .min(8, 'Password must be at least 8 characters !')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter !')
-        .matches(/\d/, 'Must contain a number !'),
+      .string()
+      .required('Password is required!')
+      .min(8, 'Password must be at least 8 characters!')
+      .matches(/[A-Z]/, 'Must contain an uppercase letter!')
+      .matches(/\d/, 'Must contain a number!')
+      .matches(/[^A-Za-z0-9]/, 'Password must contain at least one special character!'),
 
       confirmPassword: yup
         .string()
@@ -69,19 +70,26 @@ export default function SignUp() {
           icon: 'success',
           confirmButtonText: 'Log In',
         }).then(() => {
-          navigate('/signin');
+          navigate('/signin', { replace: true });
         });
       })
       .catch((err) => {
-        console.log(err);
+        // Build a reliable error message from several possible shapes
+        const errorMessage =
+          err?.response?.data?.message || // your handleHttpError -> message
+          err?.response?.data?.errors?.[0]?.msg || // express-validator array
+          err?.response?.data?.error || // fallback
+          err?.message || // axios/node error message
+          'An error occurred. Please try again.';
+
         Swal.fire({
           title: 'Error!',
-          text: `${err?.response?.data?.errors[0].msg}`,
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
-          navigate('/signup');
           setLoading(false);
+          navigate('/signup', { replace: true });
         });
       });
   };

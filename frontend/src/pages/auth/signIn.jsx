@@ -43,7 +43,11 @@ export default function SignIn() {
     };
 
     axios
-      .post('/auth/signin', formData)
+      .post('/auth/signin', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setUserLogin(res.data.user);
         setIsLoggedIn(true);
@@ -57,16 +61,21 @@ export default function SignIn() {
           title: 'Success!',
           text: `${res.data.message}`,
           icon: 'success',
-          confirmButtonText: 'Ok',
+          confirmButtonText: 'Profile',
         }).then(() => {
-          navigate('/profile'); // navigate to profile page
           setLoading(false);
+          navigate('/profile', { replace: true }); // navigate to profile page
         });
       })
       .catch((err) => {
+        const errorMessage =
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          'Login failed. Please try again.';
+
         Swal.fire({
           title: 'Error!',
-          text: `${err?.response?.data?.message}`,
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
@@ -77,6 +86,12 @@ export default function SignIn() {
   };
 
   const togglePassword = () => setShowPassword((prev) => !prev);
+
+  const handleSocialLogin = (type) => {
+    if (type === 'github') {
+      window.location.href = `${import.meta.env.VITE_URL_BACKEND}/auth/github`;
+    }
+  };
 
   return (
     <>

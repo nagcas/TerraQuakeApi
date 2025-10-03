@@ -85,7 +85,7 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
    npm run dev
    ```
 
-Visit `http://localhost:3000` for the frontend interface and `http://localhost:5000` for the API endpoints.
+Visit `http://localhost:5173` for the frontend interface and `http://localhost:5001` for the API endpoints.
 
 ---
 
@@ -112,6 +112,67 @@ All endpoints support **pagination**:
 | GET    | `/v1/earthquakes/magnitude` | Fetches earthquakes of a specific magnitude or higher. | `mag` *(required)*, `page`, `limit` |
 | GET    | `/v1/earthquakes/eventId`   | Fetches details of a specific earthquake by ID. | `eventId` *(required)* |
 
+
+---
+
+### Example Request
+
+```bash
+URL "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"
+```
+
+## Example Response
+
+```bash
+{
+  "success": true,
+  "code": 200,
+  "status": "OK",
+  "message": "Recent seismic events",
+  "total": 50,
+  "data": [
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": 44278572,
+        "originId": 140102761,
+        "time": "2025-09-26T19:33:46.440000",
+        "author": "SURVEY-INGV",
+        "magType": "ML",
+        "mag": 1,
+        "magAuthor": "--",
+        "type": "earthquake",
+        "place": "Costa Calabra sud-orientale (Reggio di Calabria)",
+        "version": 100,
+        "geojson_creationTime": "2025-09-26T20:34:27"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.2387,
+          37.9982,
+          10.5
+        ]
+      }
+    }
+  ]
+}
+```
+## Response Fields:
+
+| Field                  | Description                                  |
+| ---------------------- | -------------------------------------------- |
+| `success`              | Indicates whether the request was successful |
+| `code`                 | HTTP status code                             |
+| `status`               | Status message                               |
+| `message`              | Summary of the response                      |
+| `total`                | Total number of events returned              |
+| `data`                 | Array of seismic event objects               |
+| `properties.eventId`   | Unique event ID                              |
+| `properties.time`      | Event timestamp (ISO 8601)                   |
+| `properties.mag`       | Magnitude of the earthquake                  |
+| `properties.place`     | Location description                         |
+| `geometry.coordinates` | `[longitude, latitude, depth]`               |
 
 ---
 

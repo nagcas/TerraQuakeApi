@@ -5,6 +5,7 @@ import {
   FaDiscord,
   FaYoutube,
 } from 'react-icons/fa6';
+import { NavLink } from 'react-router-dom';
 
 export default function Footer() {
   const socials = [
@@ -29,143 +30,110 @@ export default function Footer() {
       icon: <FaDiscord className='text-2xl' />,
     },
     {
-      title: "Youtube",
+      title: 'YouTube',
       url: 'https://www.youtube.com/@TerraQuakeAPI',
-      icon: <FaYoutube className='text-2xl' />
-    }
+      icon: <FaYoutube className='text-2xl' />,
+    },
+  ];
+
+  const navLinks = [
+    { title: 'Home', path: '/' },
+    { title: 'Docs', path: '/docs' },
+    { title: 'FAQ', path: '/faq' },
+    { title: 'About', path: '/about' },
+    { title: 'Contribute', path: '/contribute' },
+  ];
+
+  const resourceLinks = [
+    { title: 'Terms & Conditions', path: '/terms-and-conditions' },
+    { title: 'Privacy Policy', path: '/privacy-policy' },
+    { title: 'Contact', path: '/contact' },
   ];
 
   return (
-    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20 text-center'>
-      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden'>
+    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 text-center'>
+      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
         {/* Logo + Description */}
         <div>
-          <h2 className='text-2xl font-bold text-white mb-3'>TerraQuake API</h2>
-          <p className='text-sm leading-relaxed'>
+          <NavLink
+            className='text-3xl font-bold text-white'
+            aria-label='Visit TerraQuake API home'
+            to={'/'}
+          >
+            TerraQuake API
+          </NavLink>
+          <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full' />
+          <p className='text-sm leading-relaxed mt-4'>
             Open-source project providing reliable earthquake data for
             developers, researchers, and communities.
           </p>
         </div>
 
-        {/* Navigation Link */}
-        <div>
-          <h3 className='text-white font-semibold mb-3'>Navigation</h3>
-          <ul className='space-y-2 text-sm'>
-            <li>
-              <a
-                href='/'
+        {/* Navigation */}
+        <section>
+          <h3 className='text-white font-semibold mb-3 text-center'>
+            Navigation
+          </h3>
+          <div className='flex flex-col gap-2 text-sm text-center'>
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.title}
                 className='hover:text-violet-400 transition'
-                aria-label='Navigate to homepage'
+                aria-label={`Visit TerraQuake API ${link.title}`}
+                to={link.path}
               >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href='/about'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to about page'
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href='/docs'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to docs page'
-              >
-                Docs
-              </a>
-            </li>
-            <li>
-              <a
-                href='/contribute'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to contribute page'
-              >
-                Contribute
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Resources */}
-        <div>
-          <h3 className='text-white font-semibold mb-3'>Resources</h3>
-          <ul className='space-y-2 text-sm'>
-            <li>
-              <a
-                href='https://github.com/nagcas/TerraQuakeApi'
-                target='_blank'
-                className='hover:text-violet-400 transition'
-                aria-label='Visit the TerraQuake API GitHub repositor'
-              >
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href='/faq'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to faq page'
-              >
-                FAQ
-              </a>
-            </li>
-            <li>
-              <a
-                href='/contact'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to contact page'
-              >
-                Contact
-              </a>
-            </li>
-            <li>
-              <a
-                href='/terms-and-conditions'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to contact page'
-              >
-                Terms and conditios
-              </a>
-            </li>
-            <li>
-              <a
-                href='/privacy-policy'
-                className='hover:text-violet-400 transition'
-                aria-label='Navigate to contact page'
-              >
-                Privacy Policy
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Social / Sponsor */}
-        <div>
-          <h3 className='text-white font-semibold mb-6'>Community & Socials</h3>
-          <div className='flex space-x-4 justify-center'>
-            {socials.map((item) => (
-              <div key={item.title}>
-                <a
-                  href={item.url}
-                  target='_blank'
-                  className='hover:text-violet-400 transition'
-                  aria-label={`Visit the TerraQuake API ${item.title} profile`}
-                >
-                  {item.icon}
-                </a>
-              </div>
+                {link.title}
+              </NavLink>
             ))}
           </div>
-        </div>
+        </section>
+
+        {/* Resources */}
+        <section>
+          <h3 className='text-white font-semibold mb-3 text-center'>
+            Resources
+          </h3>
+          <div className='flex flex-col gap-2 text-sm text-center'>
+            {resourceLinks.map((link) => (
+              <NavLink
+                key={link.title}
+                className='hover:text-violet-400 transition'
+                aria-label={`Visit TerraQuake API ${link.title}`}
+                to={link.path}
+              >
+                {link.title}
+              </NavLink>
+            ))}
+          </div>
+        </section>
+
+        {/* Social Media */}
+        <section>
+          <h3 className='text-white font-semibold mb-3 text-center'>
+            Community & Socials
+          </h3>
+          <div className='flex justify-center space-x-4'>
+            {socials.map((item) => (
+              <a
+                key={item.title}
+                href={item.url}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={`Visit TerraQuake API ${item.title} profile`}
+                className='hover:text-violet-400 transition'
+              >
+                {item.icon}
+              </a>
+            ))}
+          </div>
+        </section>
       </div>
 
-      {/* Copyright + Extended License */}
+      {/* Copyright */}
       <div className='border-t border-white/10 mt-10 pt-6 px-6 text-center text-sm text-slate-400 space-y-4'>
-        <p>&copy; {new Date().getFullYear()} TerraQuake API · All rights reserved</p>
+        <p>
+          &copy; {new Date().getFullYear()} TerraQuake API · All rights reserved
+        </p>
         <p className='max-w-3xl mx-auto leading-relaxed px-4'>
           TerraQuake API is free software: you can redistribute it and/or modify
           it under the terms of the{' '}
@@ -174,12 +142,11 @@ export default function Footer() {
             target='_blank'
             rel='noopener noreferrer'
             className='hover:text-violet-400 transition'
-            aria-label='Visit the TerraQuake API licence'
           >
             GNU Affero General Public License
-          </a>{' '}
-          as published by the Free Software Foundation, either version 3 of the
-          License, or (at your option) any later version.
+          </a>
+          , either version 3 of the License, or (at your option) any later
+          version.
         </p>
       </div>
     </footer>

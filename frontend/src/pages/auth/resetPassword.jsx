@@ -23,7 +23,8 @@ export default function resetPassword() {
         .required('Password is required!')
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!'),
+        .matches(/\d/, 'Must contain a number!')
+        .matches(/[^A-Za-z0-9]/),
 
       confirmPassword: yup
         .string()
@@ -66,9 +67,7 @@ export default function resetPassword() {
           text: err.response?.data?.message || 'Something went wrong',
           icon: 'error',
           confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/signup');
-        });
+        })
       });
   };
 

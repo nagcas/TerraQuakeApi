@@ -13,7 +13,6 @@ A developer-friendly REST API for exploring seismic events across Italy and beyo
 
 </div>
 
-
 ## Features & Tech Stack
 
 ### Core Features

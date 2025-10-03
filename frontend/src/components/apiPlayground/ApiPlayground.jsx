@@ -20,8 +20,8 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
   const [responseData, setResponseData] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [copiedKey, setCopiedKey] = useState("");
-  const [langTab, setLangTab] = useState('javascript'); // 'shell' | 'javascript' | 'python'
-  const [variantTab, setVariantTab] = useState('fetch'); // depends on lang
+  const [langTab, setLangTab] = useState("javascript"); // 'shell' | 'javascript' | 'python'
+  const [variantTab, setVariantTab] = useState("fetch"); // depends on lang
 
   // reset form when endpoint changes
   const onChangeActive = (key) => {
@@ -63,7 +63,11 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       const res = await fetch(url, { method: active.method || "GET" });
       const text = await res.text();
       let data;
-      try { data = JSON.parse(text); } catch { data = { raw: text }; }
+      try {
+        data = JSON.parse(text);
+      } catch {
+        data = { raw: text };
+      }
       if (!res.ok) {
         setErrorMessage(`status: ${res.status} - message: ${data.message}` || `${res.status} - ${res.statusText}`);
       }
@@ -88,7 +92,8 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
 
   const sampleCurl = () => `curl -s -X ${active.method || "GET"} \"${buildUrl()}\"`;
 
-  const sampleFetch = () => `fetch('${buildUrl()}', { method: '${active.method || "GET"}' })\n  .then(r => r.json())\n  .then(console.log)\n  .catch(console.error)`;
+  const sampleFetch = () =>
+    `fetch('${buildUrl()}', { method: '${active.method || "GET"}' })\n  .then(r => r.json())\n  .then(console.log)\n  .catch(console.error)`;
 
   const sampleAxios = () => {
     const base = `${BACKEND_URL}${active.path}`;
@@ -108,22 +113,17 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       const v = values[p.name];
       if (v !== undefined && v !== null && String(v).length > 0) paramsObj[p.name] = v;
     });
-    const paramsJson = JSON.stringify(paramsObj, null, 2)
-      .replace(/"([^("]+)":/g, '$1:') // lighten look, though still valid after replacement below
-      .replace(/\{/g, '{')
-      .replace(/\}/g, '}');
-    // Compose Python dict manually to ensure correct syntax
     const dict = Object.entries(paramsObj).length
-      ? '{\n' + Object.entries(paramsObj).map(([k, v]) => `  '${k}': '${v}'`).join(',\n') + '\n}'
-      : '{}';
+      ? "{\n" + Object.entries(paramsObj).map(([k, v]) => `  '${k}': '${v}'`).join(",\n") + "\n}"
+      : "{}";
     return `import requests\n\nurl = '${base}'\nparams = ${dict}\n\nresp = requests.get(url, params=params)\nprint(resp.json())`;
   };
 
   const currentSnippet = () => {
-    if (langTab === 'shell') return sampleCurl();
-    if (langTab === 'python') return samplePythonRequests();
+    if (langTab === "shell") return sampleCurl();
+    if (langTab === "python") return samplePythonRequests();
     // javascript
-    if (variantTab === 'axios') return sampleAxios();
+    if (variantTab === "axios") return sampleAxios();
     return sampleFetch();
   };
 
@@ -139,18 +139,19 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
     <section className="w-full text-white px-6 py-10">
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-4xl font-bold">{title}</h2>
-        {active?.description && (
-          <p className="text-gray-400 text-base max-w-2xl mx-auto mt-2">{active.description}</p>
-        )}
       </div>
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-6">
-          {endpoints.map(ep => (
+          {endpoints.map((ep) => (
             <button
               key={ep.key}
               onClick={() => onChangeActive(ep.key)}
-              className={`py-2 px-4 rounded-full font-semibold transition-colors ${activeKey === ep.key ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white cursor-pointer" : "bg-white/10 hover:bg-pink-500 text-white cursor-pointer"}`}
+              className={`py-2 px-4 rounded-full font-semibold transition-colors ${
+                activeKey === ep.key
+                  ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white cursor-pointer"
+                  : "bg-white/10 hover:bg-pink-500 text-white cursor-pointer"
+              }`}
             >
               {ep.label}
             </button>
@@ -159,21 +160,38 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
 
         <div className="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl">
           <div className="flex flex-col gap-2 mb-4">
-            <div className="text-purple-300 text-sm">{active.method} {active.path}</div>
-            <div className="overflow-auto whitespace-pre text-sm text-gray-300">URL: {buildUrl()}</div>
+            <div className="text-purple-300 text-sm">
+              {active.method} {active.path}
+            </div>
+            <div className="overflow-auto whitespace-pre text-sm text-gray-300">
+              URL: {buildUrl()}
+            </div>
+            {active?.description && (
+              <>
+                <h2 className="mt-2 py-4 text-2xl">{active?.subtitle}</h2>
+                <p className="text-gray-400 text-sm  whitespace-pre-wrap">
+                  {active.description}
+                </p>
+              </>
+            )}
           </div>
 
-          {(active?.params?.length > 0) && (
+          {active?.params?.length > 0 && (
             <div className="mb-6">
               <p className="text-white text-xl font-medium mb-3">Parameters</p>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {active.params.map(p => (
+                {active.params.map((p) => (
                   <div key={p.name} className="text-left">
-                    <label className="block text-sm text-gray-300 mb-1">{p.label || p.name}{p.required ? <span className="text-pink-500"> *</span> : null}</label>
+                    <label className="block text-sm text-gray-300 mb-1">
+                      {p.label || p.name}
+                      {p.required ? <span className="text-pink-500"> *</span> : null}
+                    </label>
                     <input
                       className="w-full px-3 py-2 border border-white/10 bg-black/20 rounded-2xl text-white focus:border-purple-600 focus:outline-none"
                       value={values[p.name] ?? ""}
-                      onChange={(e) => setValues(v => ({ ...v, [p.name]: e.target.value }))}
+                      onChange={(e) =>
+                        setValues((v) => ({ ...v, [p.name]: e.target.value }))
+                      }
                       placeholder={p.placeholder || ""}
                     />
                   </div>
@@ -192,11 +210,15 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
           </div>
 
           {loading && (
-            <p className="text-yellow-400 mb-4 flex items-center gap-2"><ImSpinner9 className="spinner" /> Loading...</p>
+            <p className="text-yellow-400 mb-4 flex items-center gap-2">
+              <ImSpinner9 className="spinner" /> Loading...
+            </p>
           )}
 
           {errorMessage && (
-            <div className="bg-red-900/40 border border-red-700/40 rounded-lg p-3 text-sm text-red-200 mb-4">{errorMessage}</div>
+            <div className="bg-red-900/40 border border-red-700/40 rounded-lg p-3 text-sm text-red-200 mb-4">
+              {errorMessage}
+            </div>
           )}
 
           {responseData && (
@@ -210,53 +232,73 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
           <div className="bg-black/30 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center gap-2">
-                {['shell','javascript','python'].map(l => (
+                {["shell", "javascript", "python"].map((l) => (
                   <button
                     key={l}
                     onClick={() => {
                       setLangTab(l);
-                      setVariantTab(l === 'javascript' ? 'fetch' : (l === 'shell' ? 'curl' : 'requests'));
+                      setVariantTab(
+                        l === "javascript" ? "fetch" : l === "shell" ? "curl" : "requests"
+                      );
                     }}
-                    className={`text-md py-1 px-3 rounded-full ${langTab === l ? 'bg-gradient-to-r from-pink-500 to-purple-600' : 'bg-white/10 hover:bg-white/20'} cursor-pointer`}
-                  >{l}</button>
+                    className={`text-sm lg:text-md py-1 px-3 rounded-full ${
+                      langTab === l
+                        ? "bg-gradient-to-r from-pink-500 to-purple-600"
+                        : "bg-white/10 hover:bg-white/20"
+                    } cursor-pointer`}
+                  >
+                    {l}
+                  </button>
                 ))}
               </div>
 
-              {langTab === 'javascript' && (
+              {langTab === "javascript" && (
                 <div className="flex flex-wrap items-center gap-2">
-                  {['fetch','axios'].map(v => (
+                  {["fetch", "axios"].map((v) => (
                     <button
                       key={v}
                       onClick={() => setVariantTab(v)}
-                      className={`text-md py-1 px-3 rounded-full ${variantTab === v ? 'bg-pink-500' : 'bg-white/10 hover:bg-white/20'} cursor-pointer`}
-                    >{v}</button>
+                      className={`text-md py-1 px-3 rounded-full ${
+                        variantTab === v
+                          ? "bg-pink-500"
+                          : "bg-white/10 hover:bg-white/20"
+                      } cursor-pointer`}
+                    >
+                      {v}
+                    </button>
                   ))}
                 </div>
               )}
 
-              {langTab === 'shell' && (
+              {langTab === "shell" && (
                 <div className="flex items-center gap-2">
-                  <span className="text-md bg-pink-500 py-1 px-3 rounded-full">curl</span>
+                  <span className="text-md bg-pink-500 py-1 px-3 rounded-full">
+                    curl
+                  </span>
                 </div>
               )}
 
-              {langTab === 'python' && (
+              {langTab === "python" && (
                 <div className="flex items-center gap-2">
-                  <span className="text-md bg-pink-500 py-1 px-3 rounded-full">requests</span>
+                  <span className="text-md bg-pink-500 py-1 px-3 rounded-full">
+                    requests
+                  </span>
                 </div>
               )}
 
               <div className="flex items-center justify-between mt-2">
                 <p className="text-white font-medium text-sm">Code Sample</p>
-                <button onClick={() => copyToClipboard('code', currentSnippet())} className="text-md bg-white/10 hover:bg-white/20 px-2 py-1 rounded cursor-pointer">
-                  {copiedKey === 'code' ? 'Copied' : 'Copy'}
+                <button
+                  onClick={() => copyToClipboard("code", currentSnippet())}
+                  className="text-sm lg:text-md bg-white/10 hover:bg-white/20 px-4 py-1 rounded-full cursor-pointer"
+                >
+                  {copiedKey === "code" ? "Copied" : "Copy"}
                 </button>
               </div>
 
               <pre className="text-left font-mono text-green-400 text-sm overflow-auto break-words p-3 bg-black/60 rounded-lg">
                 {currentSnippet()}
               </pre>
-
             </div>
           </div>
         </div>
@@ -264,5 +306,3 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
     </section>
   );
 }
-
-

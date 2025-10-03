@@ -1,0 +1,285 @@
+import React, { useState } from "react";
+import axios from "axios";
+
+const Newsletter = () => {
+  const URL = import.meta.env.VITE_URL_BACKEND;
+
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      const response = await axios.post(
+        `${URL}/newsletter/subscribe`,
+        { email }
+      );
+      setMessage(response.data.message);
+      setIsSuccess(true);
+      setEmail("");
+    } catch (error) {
+      setMessage(error.response?.data?.error || "Something went wrong");
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-600 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse animation-delay-4000"></div>
+      </div>
+
+      <div className="w-full max-w-6xl mx-4 bg-gradient-to-br from-[#1e0341] via-[#180726] to-[#000000] rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-purple-500/30 relative z-10">
+        {/* Left Panel - Enhanced */}
+        <div className="md:w-1/2 p-12 flex flex-col justify-center relative">
+          {/* Decorative Element */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-600/20 to-transparent rounded-bl-full"></div>
+
+          <div className="mb-8 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start mb-4">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mr-3">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                TerraQuake API
+              </h2>
+            </div>
+            <p className="text-purple-200 text-xl leading-relaxed">
+              Stay ahead with real-time updates, exclusive insights, and
+              cutting-edge features from the TerraQuake ecosystem.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="relative">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                required
+                className="w-full px-6 py-4 rounded-full border-2 border-purple-600/50 bg-[#2a0d5b]/80 backdrop-blur-sm text-white placeholder-purple-300 focus:outline-none focus:ring-4 focus:ring-purple-500/30 focus:border-purple-500 transition-all duration-300 text-lg"
+                disabled={isLoading}
+              />
+              <svg
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-purple-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full py-4 rounded-full font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
+                isLoading
+                  ? "bg-purple-600 cursor-not-allowed"
+                  : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:ring-4 focus:ring-purple-500/30 shadow-lg cursor-pointer"
+              }`}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-3">
+                  <svg
+                    className="animate-spin h-6 w-6 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  <span className="text-lg">Subscribing...</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-lg">Get Updates</span>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </div>
+              )}
+            </button>
+          </form>
+
+          {message && (
+            <div
+              className={`mt-6 p-4 rounded-xl border-2 backdrop-blur-sm ${
+                isSuccess
+                  ? "bg-green-500/10 border-green-400/50 text-green-200"
+                  : "bg-red-500/10 border-red-400/50 text-red-200"
+              } transition-all duration-300 animate-fade-in`}
+            >
+              <div className="flex items-center">
+                {isSuccess ? (
+                  <svg
+                    className="w-6 h-6 mr-3 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-6 h-6 mr-3 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+                <span className="text-sm font-medium">{message}</span>
+              </div>
+            </div>
+          )}
+
+          <p className="mt-8 text-sm text-purple-300/80 text-center md:text-left leading-relaxed">
+            🔒 We respect your privacy. No spam, just value. Unsubscribe at any
+            time with one click.
+          </p>
+        </div>
+
+        {/* Right Panel - Enhanced */}
+        <div className="md:w-1/2 p-12 text-white flex flex-col justify-center bg-gradient-to-br from-purple-900/20 to-pink-900/10 backdrop-blur-sm relative">
+          {/* Decorative Element */}
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-pink-600/20 to-transparent rounded-tr-full"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center mb-8">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-cyan-400 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+                Why Join Us?
+              </h3>
+            </div>
+
+            <ul className="space-y-6">
+              {[
+                {
+                  title: "Real-time Alerts",
+                  description:
+                    "Instant notifications about seismic activities and API updates",
+                },
+                {
+                  title: "Exclusive Access",
+                  description:
+                    "Early beta features and premium content before public release",
+                },
+                {
+                  title: "Expert Insights",
+                  description:
+                    "Weekly analysis and tips from geoscience professionals",
+                },
+                {
+                  title: "Community Perks",
+                  description:
+                    "Special discounts and priority support for subscribers",
+                },
+              ].map((item, index) => (
+                <li
+                  key={index}
+                  className="flex items-start p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white text-lg mb-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-purple-200 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Newsletter;
