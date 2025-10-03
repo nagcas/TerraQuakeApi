@@ -16,11 +16,46 @@ export const signUp = ({
 }) => {
   return async (req, res) => {
     try {
+      // Extract validated data from request
       const data = matchedData(req)
 
-      // Check if user already exists
-      const existingUser = await User.findOne({ email: data.email })
+      // Check if a user already exists, including soft-deleted ones
+      const existingUser = await User.findOneWithDeleted({ email: data.email })
+
       if (existingUser) {
+        if (existingUser.deleted) {
+          // Restore soft-deleted account and update with new data
+          existingUser.deleted = false
+          existingUser.deletedAt = null
+          existingUser.name = data.name
+          existingUser.password = data.password // hashed in pre-save hook
+          existingUser.role = data.role || 'user'
+          existingUser.experience = data.experience || ''
+          existingUser.student = data.student || false
+          existingUser.terms = data.terms || false
+
+          const restoredUser = await existingUser.save()
+
+          const user = restoredUser.toObject()
+          delete user.password // Remove sensitive data
+
+          // Send registration confirmation email
+          await sendEmailRegister(user)
+
+          return res
+            .status(200)
+            .json(
+              buildResponse(
+                req,
+                'Registration successful',
+                user,
+                null,
+                {}
+              )
+            )
+        }
+
+        // If user exists and is active, return conflict error
         return handleHttpError(
           res,
           'User with this email already exists!',
@@ -28,12 +63,13 @@ export const signUp = ({
         )
       }
 
-      // Create new user
+      // Create a new user
       const newUser = new User(data)
       const savedUser = await newUser.save()
       const user = savedUser.toObject()
-      delete user.password
+      delete user.password // Remove sensitive data
 
+      // Send registration confirmation email
       await sendEmailRegister(user)
 
       return res
@@ -82,7 +118,9 @@ export const signIn = ({
       }
 
       const isPasswordValid = await compare(req.body.password, user.password)
-      if (!isPasswordValid) { return handleHttpError(res, 'Incorrect password.', 401) }
+      if (!isPasswordValid) {
+        return handleHttpError(res, 'Incorrect password.', 401)
+      }
 
       delete user.password
 
@@ -150,7 +188,9 @@ export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
       const { token } = req.params
       const { password1, password2 } = req.body
 
-      if (password1 !== password2) { return handleHttpError(res, 'Passwords must match', 400) }
+      if (password1 !== password2) {
+        return handleHttpError(res, 'Passwords must match', 400)
+      }
 
       let decoded
       try {
@@ -209,16 +249,22 @@ export const changePassword = ({ User, handleHttpError, buildResponse }) => {
     try {
       const { passwordOld, passwordNew, confirmPassword } = req.body
 
-      if (!passwordOld || !passwordNew || !confirmPassword) { return handleHttpError(res, 'All password fields are required', 400) }
+      if (!passwordOld || !passwordNew || !confirmPassword) {
+        return handleHttpError(res, 'All password fields are required', 400)
+      }
 
-      if (passwordNew !== confirmPassword) { return handleHttpError(res, 'Passwords must match', 400) }
+      if (passwordNew !== confirmPassword) {
+        return handleHttpError(res, 'Passwords must match', 400)
+      }
 
       const userId = req.user._id || req.user.id
       const user = await User.findById(userId).select('+password')
       if (!user) return handleHttpError(res, 'User not found', 404)
 
       const isMatch = await bcrypt.compare(passwordOld, user.password)
-      if (!isMatch) { return handleHttpError(res, 'Current password is incorrect', 400) }
+      if (!isMatch) {
+        return handleHttpError(res, 'Current password is incorrect', 400)
+      }
 
       const isSame = await bcrypt.compare(passwordNew, user.password)
       if (isSame) {
