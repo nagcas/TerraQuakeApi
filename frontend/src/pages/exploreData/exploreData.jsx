@@ -364,12 +364,13 @@ It allows users to access detailed information about a single earthquake event, 
       />
       <section className='relative z-30 w-full min-h-screen px-6 py-20'>
         <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-2xl md:text-4xl text-white font-extrabold text-center my-25 tracking-tight'>
+          <h1 className="text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-6 animate-fade-in mt-12">
             Explore Data for TerraQuake API
           </h1>
+          <div className="h-1 w-1/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full" />
 
           {/* Descrizione visibile */}
-          <p className='text-white text-lg w-[95%] lg:w-6xl'>
+          <p className='mt-16 text-white text-lg w-[95%] lg:w-6xl'>
             Welcome to the <strong>TerraQuake API Playground</strong>! Here, you
             can explore and interact with earthquake data in real time. Use the
             playground to test API queries with different parameters such as
