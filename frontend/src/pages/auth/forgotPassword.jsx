@@ -26,25 +26,23 @@ export default function forgotPassword() {
 
   const handleForgotPassword = (data) => {
     setLoading(true);
-    
+
     const formData = {
       email: data.email,
     };
     axios
-      .post('/auth/forgot-password', formData,
-      {
+      .post('/auth/forgot-password', formData, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         localStorage.setItem(
           'passwordChangeRequestingEmail',
           res.data.user.email
         );
         Swal.fire({
-           title: 'Success!',
+          title: 'Success!',
           text: 'If the email exists in our system, a password reset link has been sent.',
           icon: 'success',
           confirmButtonText: 'Ok',
@@ -80,10 +78,14 @@ export default function forgotPassword() {
         description='Forgot Password Page of TerraQuake'
       />
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
-        <div className='p-8 rounded-lg w-full max-w-md'>
-          <h2 className='text-3xl text-center text-white font-bold mb-6'>
-            Forgot Password ?
-          </h2>
+        <div className='rounded-lg w-full max-w-md'>
+          <div className='flex flex-col justify-center items-center mb-16'>
+            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+              Forgot Password ?
+              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+            </h1>
+          </div>
+
           <form onSubmit={handleSubmit(handleForgotPassword)}>
             <div className='mb-6'>
               <label className='block text-white text-sm font-semibold mb-2'>

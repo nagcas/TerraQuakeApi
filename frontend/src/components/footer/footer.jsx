@@ -61,8 +61,8 @@ export default function Footer() {
             to={'/'}
           >
             TerraQuake API
+            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full' />
           </NavLink>
-          <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full' />
           <p className='text-sm leading-relaxed mt-4'>
             Open-source project providing reliable earthquake data for
             developers, researchers, and communities.
