@@ -10,7 +10,7 @@ const generateMockPosts = (page, limit) => {
   const totalMockPosts = 25 // Total mock posts
   const startIndex = (page - 1) * limit
   const endIndex = Math.min(startIndex + limit, totalMockPosts)
-  
+
   const mockPosts = []
   for (let i = startIndex; i < endIndex; i++) {
     mockPosts.push({
@@ -121,14 +121,14 @@ export default function Blog() {
     try {
       setLoading(true)
       setError(null)
-      
+
       // Since the backend doesn't have a blog endpoint yet, we'll create mock data
       // TODO: Replace with actual API call when backend blog endpoint is ready
       // const response = await api.get(`/blog?page=${page}&limit=${postsPerPage}`)
-      
+
       // Mock data for demonstration
       const mockResponse = generateMockPosts(page, postsPerPage)
-      
+
       setPosts(mockResponse.data)
       setTotalPages(mockResponse.totalPages)
       setTotalPosts(mockResponse.total)
@@ -212,11 +212,11 @@ export default function Blog() {
 
   return (
     <>
-      <MetaData 
-        title="Blog - TerraQuake API" 
-        description="Stay updated with the latest insights on earthquake science, seismology research, and seismic safety from the TerraQuake API blog." 
+      <MetaData
+        title="Blog - TerraQuake API"
+        description="Stay updated with the latest insights on earthquake science, seismology research, and seismic safety from the TerraQuake API blog."
       />
-      
+
       <div className="min-h-screen pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Header Section */}
@@ -235,7 +235,7 @@ export default function Blog() {
           {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {posts.map((post) => (
-              <article 
+              <article
                 key={post.id}
                 className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 group"
               >
@@ -249,17 +249,17 @@ export default function Blog() {
                       {post.readTime} min read
                     </span>
                   </div>
-                  
+
                   <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors duration-200 line-clamp-2">
                     <Link to={`/blog/${post.slug}`} className="hover:underline">
                       {post.title}
                     </Link>
                   </h2>
-                  
+
                   <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
-                  
+
                   {/* Post Meta */}
                   <div className="flex items-center justify-between text-xs text-gray-500 border-t border-gray-800 pt-4">
                     <div className="flex items-center space-x-4">
@@ -274,7 +274,7 @@ export default function Blog() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Read More Link */}
                 <div className="px-6 pb-6">
                   <Link
@@ -293,57 +293,60 @@ export default function Blog() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex flex-col items-center space-y-4">
-              <div className="flex items-center space-x-2">
-                {/* Previous Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                    currentPage === 1
+            <div>
+              <div className="flex flex-col items-center space-y-4">
+                <div className="flex items-center space-x-2">
+                  {/* Previous Button */}
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                      currentPage === 1
                       ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
                       : 'bg-gray-800 text-white hover:bg-purple-600 hover:scale-105'
-                  }`}
-                >
-                  <FaChevronLeft className="w-4 h-4" />
-                  <span>Previous</span>
-                </button>
+                      }`}
+                  >
 
-                {/* Page Numbers */}
-                <div className="flex items-center space-x-1">
-                  {generatePageNumbers().map((pageNum) => (
-                    <button
-                      key={pageNum}
-                      onClick={() => handlePageChange(pageNum)}
-                      className={`w-10 h-10 rounded-lg transition-all duration-200 ${
-                        currentPage === pageNum
+                    <FaChevronLeft className="w-4 h-4" />
+                    <span className='hidden sm:inline'>Previous</span>
+                  </button>
+
+                  {/* Page Numbers */}
+                  <div className="flex items-center space-x-1">
+                    {generatePageNumbers().map((pageNum) => (
+                      <button
+                        key={pageNum}
+                        onClick={() => handlePageChange(pageNum)}
+                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-all duration-200 ${
+                          currentPage === pageNum
                           ? 'bg-purple-600 text-white font-bold scale-110'
                           : 'bg-gray-800 text-gray-400 hover:bg-purple-600 hover:text-white hover:scale-105'
-                      }`}
-                    >
-                      {pageNum}
-                    </button>
-                  ))}
-                </div>
+                          }`}
+                      >
+                        {pageNum}
+                      </button>
+                    ))}
+                  </div>
 
-                {/* Next Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                    currentPage === totalPages
+                  {/* Next Button */}
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                      currentPage === totalPages
                       ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
                       : 'bg-gray-800 text-white hover:bg-purple-600 hover:scale-105'
-                  }`}
-                >
-                  <span>Next</span>
-                  <FaChevronRight className="w-4 h-4" />
-                </button>
-              </div>
+                      }`}
+                  >
+                    <span className='hidden sm:inline'>Next</span>
+                    <FaChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
 
-              {/* Page Info */}
-              <div className="text-sm text-gray-500">
-                Showing {((currentPage - 1) * postsPerPage) + 1} to {Math.min(currentPage * postsPerPage, totalPosts)} of {totalPosts} posts
+                {/* Page Info */}
+                <div className="text-sm text-gray-500">
+                  Showing {((currentPage - 1) * postsPerPage) + 1} to {Math.min(currentPage * postsPerPage, totalPosts)} of {totalPosts} posts
+                </div>
               </div>
             </div>
           )}
