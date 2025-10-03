@@ -100,6 +100,18 @@ export default function UseCases() {
         'Support long-term planning for safer urban development and disaster resilience.',
       ],
     },
+    {
+      title: "Education & Learning",
+      content:
+        "This section highlights how TerraQuakeAPI can be applied by students, educators, and educational institutions to enhance learning and practical understanding of earthquakes and earth sciences. Here is what it enables learners to do -",
+      points: [
+        "Conduct classroom experiments using real earthquake data to analyze seismic patterns and effects.",
+        "Integrate TerraQuakeAPI into geography or earth science lessons to teach concepts like tectonic movements, fault lines, and earthquake impact.",
+        "Use open-source apps and tools powered by TerraQuakeAPI to explore seismology basics in an interactive way.",
+        "Visualize seismic events over time and space to understand real-world implications and scientific methods.",
+        "Enable project-based learning where students can collect, analyze, and present seismic data insights.",
+      ],
+    },
   ];
 
   const [expandedIndex, setExpandedIndex] = useState(null);
