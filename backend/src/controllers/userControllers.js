@@ -1,3 +1,4 @@
+import { sendDeleteAccountConfirmation } from '../libs/mailerService.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
 
 /**
@@ -131,7 +132,7 @@ export const updateCurrentUserData = ({
 }
 
 /**
- * Controller: Delete current authenticated user's account.
+ * Controller: Soft delete the currently authenticated user's account.
  */
 export const deleteCurrentUser = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
@@ -140,14 +141,21 @@ export const deleteCurrentUser = ({ User, buildResponse, handleHttpError }) => {
         return handleHttpError(res, 'Unauthorized', 400)
       }
 
-      const deletion = await User.deleteOne({ _id: req.user._id })
-      if (!deletion?.deletedCount) { return handleHttpError(res, 'User not found', 400) }
+      // Find user first to use its data for email
+      const user = await User.findById(req.user._id).select('email name')
+      if (!user) {
+        return handleHttpError(res, 'User not found', 400)
+      }
 
-      return res
-        .status(200)
-        .json(
-          buildResponse(req, 'Account deleted successfully', deletion, null, {})
-        )
+      // Perform soft delete with mongoose-delete
+      await User.delete({ _id: req.user._id })
+
+      // Send confirmation email with user data
+      await sendDeleteAccountConfirmation(user)
+
+      return res.status(200).json(
+        buildResponse(req, 'Account deleted successfully', { _id: user._id, email: user.email, name: user.name }, null, {})
+      )
     } catch (error) {
       console.error('Error in deleteCurrentUser:', error.message)
       handleHttpError(
