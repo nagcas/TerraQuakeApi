@@ -113,7 +113,7 @@ export const forgotPassword = ({
       req.body = matchedData(req)
 
       const user = await User.findOne({ email: req.body.email })
-        .select('email')
+        .select('email name')
         .lean()
       if (!user) return handleHttpError(res, 'User not found.', 404)
 
