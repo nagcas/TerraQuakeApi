@@ -22,8 +22,8 @@ function ClientFeedback() {
     };
   
   return (
-    <main className="w-full bg-black">
-      <section className="relative  h-full container text-white mx-auto  rounded-lg  py-14 bg-black" ref={testimonialRef}>
+    <main className="w-ful h-screen mt-4">
+      <section className="max-w-screen relative h-screen container text-white  rounded-lg  py-14" ref={testimonialRef}>
         <article className={"max-w-screen-md mx-auto text-center space-y-2 "} >
           <TimelineContent as="h1" className={"xl:text-4xl text-3xl  font-medium  bg-gradient-to-r from-[#C137D0] to-[#F035A1] bg-clip-text text-transparent pb-2"} animationNum={0} customVariants={revealVariants} timelineRef={testimonialRef}>
             Trusted by Researchers, Developers & Disaster-Response Teams
@@ -51,7 +51,7 @@ function ClientFeedback() {
                     <p className="text-gray-400">Seismologist, Global Quake Institute</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=687&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -72,7 +72,7 @@ function ClientFeedback() {
                     <p className="text-gray-400">Director, EarthSafe Foundation</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1512485694743-9c9538b4e6e0?q=80&w=687&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -97,7 +97,7 @@ function ClientFeedback() {
                     <p className="lg:text-base text-sm text-gray-400">Data Scientist, QuakeSense Labs</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1021&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -118,7 +118,7 @@ function ClientFeedback() {
                     <p className="lg:text-base text-sm text-gray-400">  Full-Stack Engineer, QuakeAlert</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=687&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -141,7 +141,7 @@ function ClientFeedback() {
                     <p className="lg:text-base text-sm text-gray-400">Open Source Contributor</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1740102074295-c13fae3e4f8a?q=80&w=687&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -164,7 +164,7 @@ function ClientFeedback() {
                     <p className="text-gray-400">Geospatial Engineer</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1563237023-b1e970526dcb?q=80&w=765&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -186,7 +186,7 @@ function ClientFeedback() {
                     <p className="text-gray-400">Geophysics Dept, Stanford University</p>
                   </div>
                   <img
-                    src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?q=80&w=687&auto=format&fit=crop"
+                    src="https://avatar.iran.liara.run/public/15"
                     alt="logo"
                     width={200}
                     height={200}
@@ -196,10 +196,6 @@ function ClientFeedback() {
               </article>
             </TimelineContent>
           </div>
-        </div>
-
-        <div className="absolute border-b-2 border-[#e6e6e6] bottom-4 h-16 z-[2] md:w-full w-[90%] md:left-0 left-[5%]">
-          <div className="container mx-auto w-full h-full relative before:absolute before:-left-2 before:-bottom-2 before:w-4 before:h-4 before:bg-white before:shadow-sm before:border border-gray-200 before:border-gray-300 after:absolute after:-right-2 after:-bottom-2 after:w-4 after:h-4 after:bg-white after:shadow-sm after:border after:border-gray-300 "></div>
         </div>
       </section>
     </main>
