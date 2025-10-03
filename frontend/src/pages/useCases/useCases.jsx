@@ -122,20 +122,25 @@ export default function UseCases() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
         title='Use Cases'
-        description='Use Cases for TerraQuake API'
+        description='Use Cases - TerraQuake API'
+        ogTitle='Use Cases - TerraQuake API'
+        twitterTitle='Use Cases - TerraQuake API'
       />
-      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
-        {/* Page header */}
-        <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-6 animate-fade-in mt-12'>
-            Use Cases for TerraQuake API
-          </h1>
-          <div className='h-1 w-1/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full' />
+      {/* SEO Stuff */}
 
-          {/* Descrizione visibile */}
-          <p className='mt-16 text-white text-lg w-[95%] lg:w-6xl'>
+      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
+        {/* Header Section */}
+        <div className='flex flex-col justify-center items-center mb-16'>
+          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+            Use Cases for TerraQuake API
+            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+          </h1>
+
+          {/* Description */}
+          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
             Use Cases describe real-world scenarios where TerraQuake API can be
             applied. By providing fast, reliable access to seismic data, the API
             enables developers, researchers, institutions, and organizations to

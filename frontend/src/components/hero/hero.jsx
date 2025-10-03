@@ -37,9 +37,9 @@ export default function Hero() {
   return (
     <section className="relative z-30 w-full min-h-screen flex flex-col lg:flex-row justify-center items-center text-center px-6 py-20 text-white animate-fadeIn">
       
-      {/* Testo Hero */}
+      {/* Page header */}
       <div className="flex flex-col max-w-2xl gap-6">
-        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight bg-clip-text text-white/80">
           Practice with Real Seismic Data
         </h1>
 
@@ -49,7 +49,7 @@ export default function Hero() {
           looking to learn by working with real-world data.
         </p>
 
-        {/* Pulsanti */}
+        {/* Button */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-6 mt-4">
           {!isLoggedIn && (
             <button
@@ -68,7 +68,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Immagine Hero */}
+      {/* Image Hero */}
       <div
         className="flex justify-center items-center mt-10 lg:mt-0"
         onMouseMove={handleMouseMove}
