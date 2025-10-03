@@ -76,7 +76,7 @@ app.use(cors(corsOptions))
 
 // === ROUTES ===
 // Solo /v1/earthquakes è pubblico
-app.use('/v1/earthquakes', apiLimiter, routeEarthquakes)
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
 
 // Rotte protette/autenticate
 app.use('/v1/test', apiLimiter, routeGetStart)
