@@ -43,12 +43,11 @@ export default function SignIn() {
     };
 
     axios
-       .post('/auth/signin', formData,
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+      .post('/auth/signin', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setUserLogin(res.data.user);
         setIsLoggedIn(true);
@@ -62,23 +61,23 @@ export default function SignIn() {
           title: 'Success!',
           text: `${res.data.message}`,
           icon: 'success',
-          confirmButtonText: 'Ok',
+          confirmButtonText: 'Profile',
         }).then(() => {
-          navigate('/profile'); // navigate to profile page
           setLoading(false);
+          navigate('/profile', { replace: true }); // navigate to profile page
         });
       })
       .catch((err) => {
         const errorMessage =
-      err?.response?.data?.message ||
-      err?.response?.data?.error ||
-      "Login failed. Please try again.";
+          err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          'Login failed. Please try again.';
 
         Swal.fire({
-          title: "Error!",
+          title: 'Error!',
           text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Ok",
+          icon: 'error',
+          confirmButtonText: 'Ok',
         }).then(() => {
           navigate('/signin');
           setLoading(false);
@@ -88,17 +87,36 @@ export default function SignIn() {
 
   const togglePassword = () => setShowPassword((prev) => !prev);
 
+  const handleSocialLogin = (type) => {
+    if (type === 'github') {
+      window.location.href = `${import.meta.env.VITE_URL_BACKEND}/auth/github`;
+    }
+  };
+
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
         title='Sign In'
-        description='Sign In Page of TerraQuake'
+        description='Sign In - TerraQuake API'
+        ogTitle='Sign In - TerraQuake API'
+        twitterTitle='Sign In - TerraQuake API'
       />
+      {/* SEO Stuff */}
+
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
-        <div className='p-8 rounded-lg w-full max-w-md'>
-          <h2 className='text-3xl text-center text-white font-bold mb-6'>
+        <div className='rounded-lg w-full max-w-md'>
+          <div className='flex flex-col justify-center items-center mb-16'>
+          <h1 className="text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12">
             Sign In
-          </h2>
+          <div className="h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full" />
+          </h1>
+
+          {/* Description */}
+          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-2xl'>
+            Access your TerraQuake account to explore real seismic data, manage your preferences, and engage with our training environment.
+          </p>
+        </div>
           <form onSubmit={handleSubmit(handleLoginSubmit)}>
             <div className='mb-8'>
               <label className='block text-white text-sm font-semibold mb-2'>

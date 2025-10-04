@@ -29,21 +29,26 @@ export default function NavbarMenu() {
     { name: 'Blog', path: '/blog' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
+    {
+      name: 'FAQ',
+      path: '/faq',
+      // icon: QuestionMarkCircleIcon, // Import this from @heroicons/react if using Heroicons
+    },
   ];
 
   const handleLogout = () => {
-    setUserLogin({});
-    setIsLoggedIn(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
     Swal.fire({
       title: 'Success!',
       text: 'Logged Out Successfully!',
       icon: 'success',
-      confirmButtonText: 'Ok',
+      confirmButtonText: 'Home page',
     }).then(() => {
       setIsOpen(false);
-      navigate('/');
+      setUserLogin({});
+      setIsLoggedIn(false);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      navigate('/', { replace: true });
     });
   };
 
@@ -70,15 +75,16 @@ export default function NavbarMenu() {
   return (
     <header className='fixed top-0 left-0 w-full backdrop-blur-2xl bg-black/60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50'>
       {/* Logo */}
-      <div className='flex items-center text-2xl font-bold w-fit h-12 relative'>
-        <img
-          src={Sismic}
-          alt='Logo'
-          className='absolute z-10 w-36 h-20 opacity-80 object-cover'
-        />
-        <span className='text-white z-20'>TerraQuake</span>
-      </div>
-
+      <a href = "https://terraquakeapi.com/">
+        <div className='flex items-center text-2xl font-bold w-fit h-12 relative'>
+          <img
+            src={Sismic}
+            alt='Logo'
+            className='absolute z-10 w-36 h-20 opacity-80 object-cover'
+          />
+          <span className='text-white z-20'>TerraQuake</span>
+        </div>
+      </a>
       {/* Menu Desktop */}
       <nav className='hidden lg:flex justify-center gap-6 gap-lg-8 text-[14px] xl:text-[16px]'>
         {listItems.map((item) => (

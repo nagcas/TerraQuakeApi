@@ -3,66 +3,105 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
+import mongoSanitize from 'express-mongo-sanitize'
+import xss from 'xss-clean'
+import hpp from 'hpp'
 
 import routeAuth from './routes/authRoutes.js'
 import routeUsers from './routes/usersRoutes.js'
 import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
+import routeGitHub from './routes/githubAuthRoutes.js'
+import newsletterRoutes from './routes/newsletterRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
-import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
+import {
+  apiLimiter,
+  authLimiter,
+  contactLimiter
+} from './middleware/rateLimiter.js'
+import { metricsMiddleware } from './middleware/metrics.js'
+import routeMetrics from './routes/metricsRouters.js'
 
 dotenv.config()
 
 const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
-// 🔹 Trust the first proxy (Render)
+// 🔹 Trust proxy (Render/Heroku/NGINX)
 app.set('trust proxy', 1)
 
-// === MIDDLEWARE ===
-app.use(helmet())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-// Debug middleware (utile per test)
-app.use((req, res, next) => {
-  console.log("METHOD:", req.method, "URL:", req.originalUrl)
-  console.log("HEADERS:", req.headers)
-  console.log("BODY:", req.body)
-  next()
-})
-
-// === CORS ===
-// Only /v1/earthquakes is public
+// === SECURITY MIDDLEWARE ===
+// Helmet con Content Security Policy
 app.use(
-  '/v1/earthquakes',
-  cors(), // Allow requests from any origin
-  apiLimiter,
-  routeEarthquakes
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://apis.google.com'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        connectSrc: [
+          "'self'",
+          process.env.FRONTEND_PRODUCTION,
+          process.env.FRONTEND_DEVELOPMENT
+        ],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: []
+      }
+    },
+    crossOriginEmbedderPolicy: false
+  })
 )
 
-// Authenticated routes
-const corsAuthOptions = {
+// Sanitizzazione input contro injection e XSS
+app.use(mongoSanitize())
+app.use(xss())
+app.use(hpp())
+
+// === METRICS MIDDLEWARE ===
+app.use(metricsMiddleware)
+
+// Body parser
+app.use(express.json({ limit: '10kb' })) // evita payload enormi
+app.use(express.urlencoded({ extended: true }))
+
+// === GLOBAL CORS ===
+const corsOptions = {
   origin: [
-    process.env.FRONTEND_PRODUCTION,
-    process.env.FRONTEND_DEVELOPMENT
+    process.env.FRONTEND_PRODUCTION, // es: https://terraquakeapi.com
+    process.env.FRONTEND_DEVELOPMENT // es: http://localhost:5173
   ],
   credentials: true
 }
+app.use(cors(corsOptions))
 
-app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
-app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
-app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
-app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
+// === ROUTES ===
+// Solo /v1/earthquakes è pubblico
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
+
+// Rotte protette/autenticate
+app.use('/v1/test', apiLimiter, routeGetStart)
+app.use('/v1', routeMetrics)
+app.use('/auth', authLimiter, routeAuth)
+app.use('/auth/github', authLimiter, routeGitHub)
+app.use('/users', authLimiter, authenticateUser, routeUsers)
+app.use('/contact', contactLimiter, routeContact)
+
+// Newsletter (pubblica)
+app.use('/newsletter', newsletterRoutes)
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
   console.error('🔥 Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Internal Server Error'
+    message: devEnv === 'development'
+      ? err.message
+      : 'Internal Server Error'
   })
 })
 
@@ -84,7 +123,7 @@ const startServer = async () => {
       console.table(endPoints)
     })
   } catch (error) {
-    console.log('Server startup error:', error.message)
+    console.error('Server startup error:', error.message)
     process.exit(1)
   }
 }

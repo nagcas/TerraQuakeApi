@@ -1,5 +1,5 @@
-import './App.css'
-
+import { Analytics } from '@vercel/analytics/react'
+import "./App.css"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import NavbarMenu from '@components/navbar/navbarMenu'
@@ -24,22 +24,59 @@ import ResetPassword from '@pages/auth/resetPassword'
 import ChangePassword from './pages/auth/changePassword'
 import TermsAndConditions from './pages/termsAndConditions/termsAndConditions'
 import PrivacyPolicy from './pages/privacyPolicy/privacyPolicy'
+import Faq from '@components/FAQ/FAQ'
+import GithubAuth from "./pages/auth/githubAuth"
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
 
+import Contribute from "./pages/contribute/contribute"
+
 function App() {
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     createStar()
+  //   }, 300); // crea una stella ogni 300ms
+
+  //   return () => clearInterval(interval) // pulizia
+  // }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
         <main>
-          <div className='max-w-full min-h-screen items-center [background:radial-gradient(140%_140%_at_80%_20%,#000_40%,#63e_100%)] scrollbar-thin scrollbar-thumb-purple-700 scrollbar-track-gray-800'>
-            <div className='sky'>
-              <div className='stars'></div>
+          <div className="max-w-full min-h-screen items-center [background:radial-gradient(140%_140%_at_80%_20%,#000_40%,#63e_100%)] scrollbar-thin scrollbar-thumb-purple-700 scrollbar-track-gray-800">
+            <div className="sky">
+              <div className="stars"></div>
             </div>
             <NavbarMenu />
             <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/explore-data" element={<ExploreData />} />
+              <Route path="/api-access" element={<ApiAccess />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/use-cases" element={<UseCases />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogDetail />} />
+              <Route path="/post/:slug" element={<BlogPost />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/change-password" element={<ChangePassword />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPassword />}
+              />
+              <Route
+                path="/terms-and-conditions"
+                element={<TermsAndConditions />}
+              />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="*" element={<NoPage />} />
               <Route path='/' element={<Home />} />
               <Route path='/explore-data' element={<ExploreData />} />
               <Route path='/api-access' element={<ApiAccess />} />
@@ -51,16 +88,21 @@ function App() {
               <Route path='/blog/:slug' element={<BlogDetail />} />
               <Route path='/post/:slug' element={<BlogPost />} />
               <Route path='/signup' element={<SignUp />} /> 
-              <Route path='/signin' element={<SignIn />} /> 
+              <Route path='/signin' element={<SignIn />} />
+              <Route path="/auth/callback" element={<GithubAuth />} />
               <Route path='/profile' element={<Profile />} /> 
               <Route path='/forgot-password' element={<ForgotPassword />} /> 
               <Route path='/change-password' element={<ChangePassword />} /> 
               <Route path='/reset-password/:token' element={<ResetPassword />} /> 
               <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
               <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+              <Route path='/faq' element={<Faq />} />
+              <Route path='/contribute' element={ <Contribute />} />
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />
+             {/* Vercel Analytics */}
+            <Analytics />
           </div>
         </main>
       </BrowserRouter>

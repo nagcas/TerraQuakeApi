@@ -198,6 +198,7 @@ export default function UseCases() {
 
   return (
     <>
+     {/* SEO Stuff */}
       <MetaData
         title="Use Cases - TerraQuake API"
         description="Discover real-world applications of TerraQuake API: early warning systems, educational tools, infrastructure monitoring, and disaster preparedness solutions."
@@ -302,7 +303,7 @@ export default function UseCases() {
         {/* Use Cases Cards Grid with staggered animations */}
         <div className="relative z-10 w-full mt-16 grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
           {useCaseDocs.map((item, index) => (
-            <div
+            <AccordionItem
               key={item.title}
               className={`group relative bg-gradient-to-br from-gray-900/90 to-gray-800/90 border-2 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-700 ${
                 visibleCards.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
