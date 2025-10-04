@@ -73,6 +73,18 @@ export default function resetPassword() {
 
   return (
     <>
+      {/* SEO Stuff */}
+      <MetaData
+        title='Reset Password | TerraQuake API - Secure Account Access'
+        description='Reset your TerraQuake API password securely to regain access to your earthquake monitoring dashboard. Easy, fast, and safe.'
+        ogTitle='Reset Password | TerraQuake API'
+        ogDescription='Securely reset your TerraQuake API password and continue accessing earthquake monitoring data without interruptions.'
+        twitterTitle='Reset Password | TerraQuake API'
+        twitterDescription='Reset your password for TerraQuake API to restore access to earthquake monitoring features.'
+        keywords='reset password TerraQuake API, password reset, account recovery, earthquake API'
+      />
+      {/* SEO Stuff */}
+
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         <div className='rounded-lg w-full max-w-md'>
           <div className='flex flex-col justify-center items-center mb-16'>

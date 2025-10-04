@@ -6,10 +6,13 @@ export default function TermsAndConditions() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Terms and Conditions'
-        description='Terms and Conditions - TerraQuake API'
+        title='Terms and Conditions - TerraQuake API'
+        description='Read the Terms and Conditions for using the TerraQuake API, including guidelines, usage rules, and legal information.'
         ogTitle='Terms and Conditions - TerraQuake API'
+        ogDescription='Understand the rules, guidelines, and legal terms for using the TerraQuake API.'
         twitterTitle='Terms and Conditions - TerraQuake API'
+        twitterDescription='Official Terms and Conditions for the TerraQuake API, including user obligations and legal information.'
+        keywords='TerraQuake API terms, API usage policy, legal terms, API guidelines'
       />
       {/* SEO Stuff */}
 

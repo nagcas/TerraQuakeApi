@@ -36,9 +36,9 @@ export default function GithubAuth() {
               title: "Success!",
               text: message || "Login with GitHub successful!",
               icon: "success",
-              confirmButtonText: "Ok",
+              confirmButtonText: "Profile",
             }).then(() => {
-              navigate("/profile")
+              navigate("/profile", { replace: true })
             })
           } else {
             throw new Error("No user returned from backend")
@@ -51,7 +51,7 @@ export default function GithubAuth() {
             icon: "error",
             confirmButtonText: "Ok",
           }).then(() => {
-            navigate("/signin")
+            navigate("/signin", { replace: true })
           })
         })
     } else {
@@ -61,7 +61,7 @@ export default function GithubAuth() {
         icon: "error",
         confirmButtonText: "Ok",
       }).then(() => {
-        navigate("/signin")
+        navigate("/signin", { replace: true })
       })
     }
   }, [search, navigate, BACKEND_URL, setUserLogin, setIsLoggedIn])

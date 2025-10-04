@@ -5,10 +5,13 @@ export default function ApiAccess() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='API Access'
-        description='API Access - TerraQuake API'
-        ogTitle='API Access - TerraQuake API'
-        twitterTitle='API Access - TerraQuake API'
+        title='API Access | TerraQuake API - Real-Time Earthquake Data'
+        description='Access TerraQuake API to integrate real-time earthquake monitoring and seismic data into your applications. Explore our documentation and start building earthquake-aware solutions.'
+        ogTitle='API Access | TerraQuake API - Real-Time Earthquake Monitoring'
+        ogDescription='Get API access to TerraQuake — the real-time earthquake data platform. Integrate seismic monitoring into your projects with our easy-to-use API.'
+        twitterTitle='API Access | TerraQuake API - Earthquake Data API'
+        twitterDescription='Access TerraQuake API for real-time earthquake data, seismic analysis, and monitoring capabilities. Start your integration today.'
+        keywords='TerraQuake API access, earthquake data API, real-time earthquake API, seismic monitoring API, API documentation, earthquake detection'
       />
       {/* SEO Stuff */}
 
