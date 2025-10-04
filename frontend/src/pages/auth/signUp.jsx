@@ -73,10 +73,17 @@ export default function SignUp() {
         });
       })
       .catch((err) => {
-        console.log(err);
+        // Build a reliable error message from several possible shapes
+        const errorMessage =
+          err?.response?.data?.message || // your handleHttpError -> message
+          err?.response?.data?.errors?.[0]?.msg || // express-validator array
+          err?.response?.data?.error || // fallback
+          err?.message || // axios/node error message
+          'An error occurred. Please try again.';
+
         Swal.fire({
           title: 'Error!',
-          text: `${err?.response?.data?.errors[0].msg}`,
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {

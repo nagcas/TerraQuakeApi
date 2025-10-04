@@ -16,20 +16,41 @@ export const signUp = ({ User, buildResponse, handleHttpError, matchedData, send
   return async (req, res) => {
     try {
       const data = matchedData(req)
+
+      // Check if the email is already registered before creating a new user
+      const existingUser = await User.findOne({ email: data.email })
+      if (existingUser) {
+        return handleHttpError(res, 'User with this email already exists !', 409)
+      }
+
+      // Create a new user
       const newUser = new User(data)
       const savedUser = await newUser.save()
       const user = savedUser.toObject()
+
+      // Remove password from the user object before sending response
       delete user.password
 
-      await sendEmailRegister(user)
+      // await sendEmailRegister(user)
 
-      res.status(200).json(buildResponse(req, 'Registration successful', user, null, {}))
+      // Return success response
+      return res
+        .status(201)
+        .json(buildResponse(req, 'Registration successful', user, null, {}))
     } catch (error) {
-      console.error(error.message)
-      handleHttpError(res, 'User with this email already exists !', 409)
+      console.error('Signup error:', error)
+
+      // Handle duplicate key error from MongoDB
+      if (error.code === 11000) {
+        return handleHttpError(res, 'User with this email already exists !', 409)
+      }
+
+      // Fallback for unexpected errors
+      return handleHttpError(res, 'Internal server error', 500)
     }
   }
 }
+
 
 /**
  * Controller: Authenticate user (sign in).
@@ -87,7 +108,7 @@ export const forgotPassword = ({ User, buildResponse, matchedData, handleHttpErr
         expiresIn: '15m'
       })
 
-      await sendForgotPassword(user, token)
+      // await sendForgotPassword(user, token)
 
       res.status(200).json(buildResponse(req, 'We’ve sent you an email with instructions to reset your password', user, null, {}))
     } catch (error) {

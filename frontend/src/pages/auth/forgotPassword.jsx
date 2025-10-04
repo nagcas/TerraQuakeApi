@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import axios from '@config/axios.js';
 import Swal from 'sweetalert2';
+import { ImSpinner9 } from 'react-icons/im';
 import { useNavigate, Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,6 +9,7 @@ import * as yup from 'yup';
 import MetaData from '@pages/noPage/metaData';
 
 export default function forgotPassword() {
+  const [loading, setLoading] = useState(false);
   const forgotPasswordSchema = yup
     .object({
       email: yup.string().email().required('Email is required !'),
@@ -22,11 +25,19 @@ export default function forgotPassword() {
   let navigate = useNavigate();
 
   const handleForgotPassword = (data) => {
+    setLoading(true);
+    
     const formData = {
       email: data.email,
     };
     axios
-      .post('/auth/forgot-password', formData)
+      .post('/auth/forgot-password', formData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
       .then((res) => {
         localStorage.setItem(
           'passwordChangeRequestingEmail',
@@ -39,17 +50,25 @@ export default function forgotPassword() {
           confirmButtonText: 'Ok',
         }).then(() => {
           navigate('/');
+          setLoading(false);
         });
       })
       .catch((err) => {
-        console.log(err);
+        // Build a reliable error message from several possible shapes
+        const errorMessage =
+          err?.response?.data?.message || // your handleHttpError -> message
+          err?.response?.data?.errors?.[0]?.msg || // express-validator array
+          err?.response?.data?.error || // fallback
+          err?.message || // axios/node error message
+          'An error occurred. Please try again.';
         Swal.fire({
           title: 'Error!',
-          text: err.response?.data?.message || 'Something went wrong',
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
           navigate('/signup');
+          setLoading(false);
         });
       });
   };
@@ -83,7 +102,13 @@ export default function forgotPassword() {
               type='submit'
               aria-label='Recover your account password'
             >
-              Send reset link
+              {loading ? (
+                <p className='text-white'>
+                  <ImSpinner9 className='text-2xl mx-auto spinner' />
+                </p>
+              ) : (
+                <span>Send reset link</span>
+              )}
             </button>
           </form>
           {/* Divider */}

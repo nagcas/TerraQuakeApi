@@ -4,15 +4,17 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  service: 'gmail',
   auth: {
-    user: process.env.USER_MAILER,
+    user: process.env.USER_MAILER, 
     pass: process.env.PASS_MAILER
-  }
+  },
+  pool: true,
+  rateLimit: true,
+  maxConnections: 5,
+  connectionTimeout: 20000
 })
 
-transporter.verify().then(() => {
-  console.log('Ready to send email!')
-})
+transporter.verify()
+  .then(() => console.log("Mailer ready to send emails ✅"))
+  .catch(err => console.error("Mailer connection error ❌", err))
