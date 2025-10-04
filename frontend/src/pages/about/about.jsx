@@ -14,11 +14,12 @@ import {
 import axios from 'axios';
 
 export default function About() {
+  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
   const [hoveredCard, setHoveredCard] = useState(null);
   const [highlightMetrics, setHighlightMetrics] = useState([]);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [metricsError, setMetricsError] = useState(null);
-  
+
   const cardSections = [
     {
       title: 'Project Introduction',
@@ -92,46 +93,28 @@ export default function About() {
     },
   ];
 
- /*  const highlightMetrics = [
-    {
-      value: '180K+',
-      label: 'Events processed',
-      description: 'Real-time earthquakes normalized and accessible',
-    },
-    {
-      value: '<120ms',
-      label: 'API latency',
-      description: 'Average response across global regions',
-    },
-    {
-      value: '24/7',
-      label: 'Data monitoring',
-      description: 'Continuous ingestion from trusted observatories',
-    },
-  ]; */
-
-    useEffect(() => {
+  useEffect(() => {
     const fetchMetrics = async () => {
       try {
         setLoadingMetrics(true);
-        const res = await axios.get('http://localhost:5001/v1/metrics/json');
+        const res = await axios.get(`${BACKEND_URL}/v1/metrics/json`);
         const data = res.data.data;
 
         setHighlightMetrics([
           {
-            value: data.eventsProcessed?.toLocaleString() || "N/A",
-            label: "Events Processed",
-            description: "Real-time earthquakes normalized and accessible",
+            value: data.eventsProcessed?.toLocaleString() || 'N/A',
+            label: 'Events Processed',
+            description: 'Real-time earthquakes normalized and accessible',
           },
           {
             value: `${(data.apiLatencyAvg || 0).toFixed(3)} s`,
-            label: "API Latency",
-            description: "Average response time across global regions",
+            label: 'API Latency',
+            description: 'Average response time across global regions',
           },
           {
             value: `${Math.floor(data.uptime)} s`,
-            label: "Uptime",
-            description: "Time since last server restart",
+            label: 'Uptime',
+            description: 'Time since last server restart',
           },
           {
             value: '24/7',
@@ -140,8 +123,8 @@ export default function About() {
           },
         ]);
       } catch (error) {
-        console.error("Error fetching metrics:", error);
-        setMetricsError("Unable to load metrics.");
+        console.error('Error fetching metrics:', error);
+        setMetricsError('Unable to load metrics.');
       } finally {
         setLoadingMetrics(false);
       }
@@ -151,7 +134,6 @@ export default function About() {
     const interval = setInterval(fetchMetrics, 10000); // refresh ogni 10s
     return () => clearInterval(interval);
   }, []);
-
 
   return (
     <>
