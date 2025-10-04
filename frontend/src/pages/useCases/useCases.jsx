@@ -1,209 +1,54 @@
-import { useState } from 'react';
+import React, { useState} from 'react';
 import MetaData from '@pages/noPage/metaData';
-import { FiChevronDown } from 'react-icons/fi';
+import { motion} from 'framer-motion';
+import { useCaseDocs } from '@/data/USE_CASE_DOCS';
+import AccordionItem from '@/utils/useCases/AccordionItem';
+
 
 export default function UseCases() {
-  const useCaseDocs = [
-    {
-      title: 'Introduction',
-      content:
-        'This section describes the real-world applications of TerraQuake API. Here is what it does:',
-      points: [
-        'Open to developers, researchers, and organizations.',
-        'Enables building applications for earthquake early warning systems.',
-        'Supports educational tools to teach about seismic activity.',
-        'Helps monitor infrastructure and safety in real-time.',
-        'Assists in disaster prevention and preparedness planning.',
-      ],
-    },
-    {
-      title: 'Scientific Research Applications',
-      content:
-        'This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -',
-      points: [
-        'Monitor seismic patterns and trends in real-time for academic and applied research.',
-        'Conduct studies on earthquake probability, frequency, and impact modeling.',
-        'Integrate data seamlessly with analytical tools like MATLAB, Python, and R for deeper analysis.',
-        'Support thesis projects, publications, and research reports on seismic activity.',
-        'Assist in modeling and simulation of earthquake scenarios for research purposes.',
-      ],
-    },
-    {
-      title: 'Civil Protection Applications',
-      content:
-        'This section describes how TerraQuakeAPI can be utilized by civil protection agencies to improve preparedness, response, and public safety. Here is what it enables authorities to do -',
-      points: [
-        'Receive real-time earthquake alerts to initiate rapid emergency response measures.',
-        'Integrate live seismic data into dashboards for operators to monitor events and coordinate actions effectively.',
-        'Use map-based visualizations to identify high-risk areas and prioritize resource deployment.',
-        'Support early warning systems that notify communities and infrastructure operators.',
-        'Enhance disaster planning, drills, and situational awareness for emergency teams.',
-      ],
-    },
-    {
-      title: 'Government & Policy Making',
-      content:
-        'Governments and policymakers can leverage TerraQuake API to ensure safety, compliance, and better disaster response:',
-      points: [
-        'Develop public dashboards for earthquake activity and alerts.',
-        'Enable national disaster management agencies to make faster, data-driven decisions.',
-        'Assist in zoning and land-use policies with earthquake risk maps.',
-        'Provide transparency through open data access for citizens.',
-        'Support law enforcement and emergency protocols in high-risk areas.',
-      ],
-    },
-    {
-      title: 'Educational Platforms',
-      content:
-        'The API can help build interactive and engaging learning tools for schools, universities, and online platforms:',
-      points: [
-        'Create simulations that demonstrate seismic waves and fault lines.',
-        'Enable students to track live earthquake activity globally.',
-        'Integrate into e-learning platforms to teach natural disaster management.',
-        'Provide datasets for academic assignments and experiments.',
-        'Gamify seismic learning with quizzes and real-time earthquake data.',
-      ],
-    },
-    {
-      title: 'Smart Cities & Infrastructure Monitoring',
-      content:
-        'TerraQuake API can be integrated with IoT and smart city applications to improve safety and infrastructure resilience:',
-      points: [
-        'Enable smart building systems to react automatically to seismic activity (e.g., shut off gas lines).',
-        'Provide city planners with long-term seismic trend insights.',
-        'Integrate with traffic and transport systems for emergency rerouting.',
-        'Assist in monitoring structural health of bridges, tunnels, and skyscrapers.',
-        'Support smart city resilience planning against natural disasters.',
-      ],
-    },
-    {
-      title: 'Insurance & Risk Management',
-      content:
-        'Insurance companies and financial institutions can benefit from seismic data for better planning and claims processing:',
-      points: [
-        'Assess risk exposure for properties and infrastructure in earthquake-prone areas.',
-        'Enable dynamic adjustment of insurance policies based on seismic activity.',
-        'Provide real-time alerts for faster claim validation after earthquakes.',
-        'Assist in financial forecasting related to natural disaster damages.',
-        'Support predictive models to minimize long-term financial risks.',
-      ],
-    },
-    {
-      title: 'Smart Cities & Structural Monitoring',
-      content:
-        'This section highlights how TerraQuakeAPI can be applied by cities, urban planners, and engineers to enhance safety and resilience of infrastructure. Here is what it enables practitioners to do -',
-      points: [
-        'Integrate with IoT sensors (e.g., Arduino, Raspberry Pi) to collect and stream real-time seismic or structural data.',
-        'Monitor the stability and integrity of buildings, bridges, and other critical infrastructure.',
-        'Visualize seismic and structural data to identify vulnerabilities, track safety trends, and inform decision-making.',
-        'Enable early alerts and risk assessments for city officials and engineers.',
-        'Support long-term planning for safer urban development and disaster resilience.',
-      ],
-    },
-    {
-      title: "Education & Learning",
-      content:
-        "This section highlights how TerraQuakeAPI can be applied by students, educators, and educational institutions to enhance learning and practical understanding of earthquakes and earth sciences. Here is what it enables learners to do -",
-      points: [
-        "Conduct classroom experiments using real earthquake data to analyze seismic patterns and effects.",
-        "Integrate TerraQuakeAPI into geography or earth science lessons to teach concepts like tectonic movements, fault lines, and earthquake impact.",
-        "Use open-source apps and tools powered by TerraQuakeAPI to explore seismology basics in an interactive way.",
-        "Visualize seismic events over time and space to understand real-world implications and scientific methods.",
-        "Enable project-based learning where students can collect, analyze, and present seismic data insights.",
-      ],
-    },
-  ];
+  const [expandedIndex, setExpandedIndex] = useState(0); 
 
-  const [expandedIndex, setExpandedIndex] = useState(null);
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  // track hover index separately so hover opens on desktop and doesn't
-  // interfere with click/touch behavior (which sets expandedIndex)
-  const [hoverIndex, setHoverIndex] = useState(null);
-
-  const handleMouseEnter = (index) => {
-    // only apply hover for non-touch devices; touch will still use click
-    setHoverIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverIndex(null);
-  };
-
   return (
     <>
-      {/* SEO Stuff */}
       <MetaData
-        title='Use Cases'
-        description='Use Cases - TerraQuake API'
-        ogTitle='Use Cases - TerraQuake API'
-        twitterTitle='Use Cases - TerraQuake API'
+        title="Use Cases"
+        description="Explore real-world applications and interactive examples for the TerraQuake API."
       />
-      {/* SEO Stuff */}
+      <section className="relative z-10 w-full min-h-screen px-4 sm:px-6 py-20 bg-[#080810] text-white">
+        <div className="absolute inset-0 z-0 opacity-20 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_80%)]">
+          <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-purple-800 to-pink-700 rounded-full blur-3xl" />
+        </div>
 
-      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
-        {/* Header Section */}
-        <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
-            Use Cases for TerraQuake API
-            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+        <div className="relative z-20 flex flex-col justify-center items-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-center tracking-tight mb-4 mt-12 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+            TerraQuake API Use Cases
           </h1>
-
-          {/* Description */}
-          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
-            Use Cases describe real-world scenarios where TerraQuake API can be
-            applied. By providing fast, reliable access to seismic data, the API
-            enables developers, researchers, institutions, and organizations to
-            create applications focused on safety, monitoring, education, and
-            disaster prevention.
+          <div className="h-1 w-48 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-4 rounded-full" />
+          <p className="mt-6 text-gray-300 text-center text-lg max-w-3xl">
+            Explore real-world scenarios powered by our API. Run live requests and copy code snippets to get started instantly.
           </p>
         </div>
 
-        {/* Accordion section */}
-        <div className='w-full mt-10 flex flex-col items-center'>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+          className="w-full mt-10 flex flex-col items-center space-y-6"
+        >
           {useCaseDocs.map((item, index) => (
-            <div
+            <AccordionItem
               key={item.title}
-              className='w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer'
-              onClick={() => toggleExpand(index)}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className='flex justify-between items-center'>
-                <h2 className='text-xl md:text-2xl font-bold text-white border-l-4 border-purple-600 pl-4'>
-                  {item.title}
-                </h2>
-                <FiChevronDown
-                  className={`text-white text-2xl transition-transform duration-300 ${
-                    expandedIndex === index ? 'rotate-180' : ''
-                  }`}
-                />
-              </div>
-
-              <div
-                className={`overflow-hidden transition-all duration-500 ${
-                  expandedIndex === index ? 'max-h-96 mt-4' : 'max-h-0'
-                }`}
-              >
-                <p className='text-gray-300 leading-relaxed text-sm md:text-base mb-1'>
-                  {item.content}
-                </p>
-                <ul className='text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4'>
-                  {item.points.map((point, idx) => (
-                    <li
-                      key={idx}
-                      className='mb-1'
-                    >
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              item={item}
+              index={index}
+              expandedIndex={expandedIndex}
+              toggleExpand={toggleExpand}
+            />
           ))}
-        </div>
+        </motion.div>
       </section>
     </>
   );
