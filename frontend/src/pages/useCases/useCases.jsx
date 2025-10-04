@@ -1,44 +1,40 @@
-import { useState } from "react";
-import MetaData from "@pages/noPage/metaData";
-import { FiChevronDown } from "react-icons/fi";
+import React, { useState } from 'react';
+import MetaData from '@pages/noPage/metaData';
+import { motion } from 'framer-motion';
+import { useCaseDocs } from '@/data/USE_CASE_DOCS';
+import AccordionItem from '@/utils/useCases/AccordionItem';
 
 export default function UseCases() {
-  const useCaseDocs = [
-    {
-      id: "introduction",
-      title: "Introduction",
-      content:
-        "This section describes the real-world applications of TerraQuake API. Here is what it does:",
-      points: [
-        "Open to developers, researchers, and organizations.",
-        "Enables building applications for earthquake early warning systems.",
-        "Supports educational tools to teach about seismic activity.",
-        "Helps monitor infrastructure and safety in real-time.",
-        "Assists in disaster prevention and preparedness planning.",
-      ],
-    },
-  ];
-
-  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [expandedIndex, setExpandedIndex] = useState(0);
 
   const toggleExpand = (index) => {
-    setExpandedIndex((prev) => (prev === index ? null : index));
+    setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title="Use Cases - TerraQuake API"
-        description="Explore real-world applications of TerraQuake API for developers, researchers, and organizations."
-        keywords="TerraQuake API, earthquake monitoring, seismic data, early warning systems, disaster prevention"
+        title='Use Cases'
+        description='Explore practical applications of TerraQuake API for earthquake monitoring, seismic data analysis, early warning systems, and disaster prevention — designed for developers, researchers, and organizations.'
+        ogTitle='Use Cases - TerraQuake API'
+        ogDescription='Discover how developers, researchers, and organizations use TerraQuake API to monitor earthquakes, analyze seismic data, and improve disaster preparedness.'
+        twitterTitle='Use Cases - TerraQuake API'
+        twitterDescription='Explore real-world applications of TerraQuake API for earthquake monitoring, seismic data, early warning systems, and disaster prevention.'
+        keywords='TerraQuake API, use cases, earthquake monitoring API, seismic data, early warning systems, disaster prevention'
       />
+      {/* SEO Stuff */}
 
-      <section className="relative z-30 w-full min-h-screen px-6 py-20">
-        <div className="flex flex-col justify-center items-center mb-16 text-center">
-          <h1 className="text-2xl md:text-4xl text-white font-extrabold tracking-tight">
+      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
+        {/* Header Section */}
+        <div className='flex flex-col justify-center items-center mb-16'>
+          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
             Use Cases for TerraQuake API
+            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
           </h1>
-          <p className="text-white text-lg w-[95%] lg:w-6xl mt-4">
+
+          {/* Description */}
+          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
             Use Cases describe real-world scenarios where TerraQuake API can be
             applied. By providing fast, reliable access to seismic data, the API
             enables developers, researchers, institutions, and organizations to
@@ -47,60 +43,22 @@ export default function UseCases() {
           </p>
         </div>
 
-        {/* Accordion section */}
-        <div className="w-full mt-10 flex flex-col items-center">
+        <motion.div
+          initial='hidden'
+          animate='visible'
+          variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+          className='w-full mt-10 flex flex-col items-center space-y-6'
+        >
           {useCaseDocs.map((item, index) => (
-            <div
-              key={item.id}
-              className="w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
-            >
-              <h2 className="text-xl md:text-2xl font-bold text-white border-l-4 border-purple-600 pl-4">
-                <button
-                  type="button"
-                  className="flex justify-between items-center w-full p-4 md:p-6 cursor-pointer"
-                  aria-expanded={expandedIndex === index}
-                  aria-controls={`content-${item.id}`}
-                  onClick={() => toggleExpand(index)}
-                  onKeyDown={(e) => e.key === "Enter" && toggleExpand(index)}
-                >
-                  <span className="text-left">{item.title}</span>
-                  <FiChevronDown
-                    className={`text-white text-2xl transition-transform duration-300 min-w-fit ${
-                      expandedIndex === index ? "rotate-180" : ""
-                    }`}
-                    role="img"
-                    aria-label={
-                      expandedIndex === index
-                        ? "Collapse section"
-                        : "Expand section"
-                    }
-                  />
-                </button>
-              </h2>
-
-              <div
-                id={`content-${item.id}`}
-                className={`overflow-hidden transition-[max-height,padding] duration-500 ease-in-out ${
-                  expandedIndex === index
-                    ? "max-h-[500px] p-4 md:p-6 pt-0"
-                    : "max-h-0"
-                }`}
-              >
-                <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-4">
-                  {item.content}
-                </p>
-                <h3 className="text-lg font-semibold text-gray-200 mb-2">
-                  Key Applications
-                </h3>
-                <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside space-y-1">
-                  {item.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <AccordionItem
+              key={item.title}
+              item={item}
+              index={index}
+              expandedIndex={expandedIndex}
+              toggleExpand={toggleExpand}
+            />
           ))}
-        </div>
+        </motion.div>
       </section>
     </>
   );
