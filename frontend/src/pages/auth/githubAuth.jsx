@@ -8,10 +8,12 @@ export default function GithubAuth() {
   const navigate = useNavigate()
   const { search } = useLocation()
   const { setUserLogin, setIsLoggedIn } = useContext(Context)
+  const [loading, setLoading] = useState(false);
 
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND
 
   useEffect(() => {
+    setLoading(true);
     const params = new URLSearchParams(search)
     const token = params.get("token")
     const message = params.get("message")
@@ -38,6 +40,7 @@ export default function GithubAuth() {
               icon: "success",
               confirmButtonText: "Profile",
             }).then(() => {
+              setLoading(false);
               navigate("/profile", { replace: true })
             })
           } else {
@@ -51,6 +54,7 @@ export default function GithubAuth() {
             icon: "error",
             confirmButtonText: "Ok",
           }).then(() => {
+            setLoading(false);
             navigate("/signin", { replace: true })
           })
         })
@@ -61,6 +65,7 @@ export default function GithubAuth() {
         icon: "error",
         confirmButtonText: "Ok",
       }).then(() => {
+        setLoading(false);
         navigate("/signin", { replace: true })
       })
     }
