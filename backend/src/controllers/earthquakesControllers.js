@@ -1,3 +1,5 @@
+import { eventsProcessed, apiLatencyHistogram } from '../middleware/metrics.js'
+
 import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import handleHttpError from '../utils/handleHttpError.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
@@ -54,6 +56,8 @@ const fetchINGV = async (url) => {
  * @param {import('express').Response} res - Express response object.
  */
 export const getEarthquakesByRecent = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
@@ -75,6 +79,7 @@ export const getEarthquakesByRecent = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -101,6 +106,8 @@ export const getEarthquakesByRecent = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -112,6 +119,8 @@ export const getEarthquakesByRecent = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByToday = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
@@ -131,6 +140,7 @@ export const getEarthquakesByToday = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -156,6 +166,8 @@ export const getEarthquakesByToday = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -167,6 +179,8 @@ export const getEarthquakesByToday = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByLastWeek = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
@@ -190,6 +204,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -219,6 +234,8 @@ export const getEarthquakesByLastWeek = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -232,6 +249,8 @@ export const getEarthquakesByLastWeek = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByMonth = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { year, month } = req.query
@@ -264,6 +283,7 @@ export const getEarthquakesByMonth = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -290,6 +310,8 @@ export const getEarthquakesByMonth = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -302,6 +324,8 @@ export const getEarthquakesByMonth = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByRegion = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { region } = req.query
@@ -331,6 +355,7 @@ export const getEarthquakesByRegion = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -357,6 +382,8 @@ export const getEarthquakesByRegion = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -369,6 +396,8 @@ export const getEarthquakesByRegion = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByDepth = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { depth } = req.query
@@ -398,6 +427,7 @@ export const getEarthquakesByDepth = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     let { features } = data
 
     // Filtro per profondità maggiore di depthValue
@@ -421,6 +451,8 @@ export const getEarthquakesByDepth = async (req, res) => {
   } catch (error) {
     console.error('Error in the earthquakes/depth controller:', error.message)
     handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -434,6 +466,8 @@ export const getEarthquakesByDepth = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByDateRange = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { startdate, enddate } = req.query
@@ -468,6 +502,7 @@ export const getEarthquakesByDateRange = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -497,6 +532,8 @@ export const getEarthquakesByDateRange = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -509,6 +546,8 @@ export const getEarthquakesByDateRange = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesByMagnitude = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { mag } = req.query
@@ -550,6 +589,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
     url += `&minmagnitude=${magValue}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
 
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
@@ -580,6 +620,8 @@ export const getEarthquakesByMagnitude = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -592,6 +634,8 @@ export const getEarthquakesByMagnitude = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesById = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { eventId } = req.query
@@ -603,6 +647,7 @@ export const getEarthquakesById = async (req, res) => {
 
     const url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&format=geojson`
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const { features } = data
 
     const filteredEvent = features.filter(
@@ -635,6 +680,8 @@ export const getEarthquakesById = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }
 
@@ -649,6 +696,8 @@ export const getEarthquakesById = async (req, res) => {
  * @param {import('express').Response} res
  */
 export const getEarthquakesLocation = async (req, res) => {
+  const end = apiLatencyHistogram.startTimer() // start timer
+
   try {
     const urlINGV = process.env.URL_INGV
     const { latitude, longitude } = req.query
@@ -692,6 +741,7 @@ export const getEarthquakesLocation = async (req, res) => {
     }
 
     const data = await response.json()
+    eventsProcessed.inc(data.features.length || 0)
     let { features } = data
 
     // Precise local filtering using haversine
@@ -729,5 +779,7 @@ export const getEarthquakesLocation = async (req, res) => {
       res,
       error.message.includes('HTTP error') ? error.message : undefined
     )
+  } finally {
+    end() // stop timer
   }
 }

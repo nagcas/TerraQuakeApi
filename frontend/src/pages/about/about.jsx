@@ -1,5 +1,5 @@
 import './about.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
 import {
   FaGlobeAmericas,
@@ -11,10 +11,14 @@ import {
   FaUserAstronaut,
   FaUsers,
 } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
-
+  const [highlightMetrics, setHighlightMetrics] = useState([]);
+  const [loadingMetrics, setLoadingMetrics] = useState(true);
+  const [metricsError, setMetricsError] = useState(null);
+  
   const cardSections = [
     {
       title: 'Project Introduction',
@@ -88,7 +92,7 @@ export default function About() {
     },
   ];
 
-  const highlightMetrics = [
+ /*  const highlightMetrics = [
     {
       value: '180K+',
       label: 'Events processed',
@@ -104,28 +108,50 @@ export default function About() {
       label: 'Data monitoring',
       description: 'Continuous ingestion from trusted observatories',
     },
-  ];
+  ]; */
 
-  const timelineSteps = [
-    {
-      year: '2021',
-      title: 'Project inception',
-      description:
-        'Initial prototype launched to simplify seismic data exploration for students and researchers.',
-    },
-    {
-      year: '2022',
-      title: 'Open collaboration',
-      description:
-        'Community contributions expanded features, documentation, and automated testing pipelines.',
-    },
-    {
-      year: '2024',
-      title: 'Global adoption',
-      description:
-        'Teams across five continents integrated the API into dashboards, alerting tools, and learning apps.',
-    },
-  ];
+    useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        setLoadingMetrics(true);
+        const res = await axios.get('http://localhost:5001/v1/metrics/json');
+        const data = res.data.data;
+
+        setHighlightMetrics([
+          {
+            value: data.eventsProcessed?.toLocaleString() || "N/A",
+            label: "Events Processed",
+            description: "Real-time earthquakes normalized and accessible",
+          },
+          {
+            value: `${(data.apiLatencyAvg || 0).toFixed(3)} s`,
+            label: "API Latency",
+            description: "Average response time across global regions",
+          },
+          {
+            value: `${Math.floor(data.uptime)} s`,
+            label: "Uptime",
+            description: "Time since last server restart",
+          },
+          {
+            value: '24/7',
+            label: 'Data monitoring',
+            description: 'Continuous ingestion from trusted observatories',
+          },
+        ]);
+      } catch (error) {
+        console.error("Error fetching metrics:", error);
+        setMetricsError("Unable to load metrics.");
+      } finally {
+        setLoadingMetrics(false);
+      }
+    };
+
+    fetchMetrics();
+    const interval = setInterval(fetchMetrics, 10000); // refresh ogni 10s
+    return () => clearInterval(interval);
+  }, []);
+
 
   return (
     <>
@@ -154,7 +180,7 @@ export default function About() {
           </p>
         </div>
 
-        <div className='max-w-5xl mx-auto grid gap-4 md:grid-cols-3 mb-16'>
+        <div className='max-w-6xl mx-auto grid gap-4 md:grid-cols-4 mb-16'>
           {highlightMetrics.map((metric) => (
             <div
               key={metric.label}
@@ -240,4 +266,3 @@ export default function About() {
     </>
   );
 }
-

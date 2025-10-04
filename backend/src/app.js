@@ -21,6 +21,8 @@ import {
   authLimiter,
   contactLimiter
 } from './middleware/rateLimiter.js'
+import { metricsMiddleware } from './middleware/metrics.js'
+import routeMetrics from './routes/metricsRouters.js'
 
 dotenv.config()
 
@@ -60,6 +62,9 @@ app.use(mongoSanitize())
 app.use(xss())
 app.use(hpp())
 
+// === METRICS MIDDLEWARE ===
+app.use(metricsMiddleware)
+
 // Body parser
 app.use(express.json({ limit: '10kb' })) // evita payload enormi
 app.use(express.urlencoded({ extended: true }))
@@ -80,6 +85,7 @@ app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
 
 // Rotte protette/autenticate
 app.use('/v1/test', apiLimiter, routeGetStart)
+app.use('/v1', routeMetrics)
 app.use('/auth', authLimiter, routeAuth)
 app.use('/auth/github', authLimiter, routeGitHub)
 app.use('/users', authLimiter, authenticateUser, routeUsers)
