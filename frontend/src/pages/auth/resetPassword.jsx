@@ -23,7 +23,8 @@ export default function resetPassword() {
         .required('Password is required!')
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!'),
+        .matches(/\d/, 'Must contain a number!')
+        .matches(/[^A-Za-z0-9]/),
 
       confirmPassword: yup
         .string()
@@ -66,23 +67,21 @@ export default function resetPassword() {
           text: err.response?.data?.message || 'Something went wrong',
           icon: 'error',
           confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/signup');
         });
       });
   };
 
   return (
     <>
-      <MetaData
-        title='Reset Password'
-        description='Reset Password Page of TerraQuake'
-      />
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
-        <div className='p-8 rounded-lg w-full max-w-md'>
-          <h2 className='text-3xl text-center text-white font-bold'>
-            Reset Password
-          </h2>
+        <div className='rounded-lg w-full max-w-md'>
+          <div className='flex flex-col justify-center items-center mb-16'>
+            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+              Reset Password
+              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+            </h1>
+          </div>
+
           <form onSubmit={handleSubmit(handleForgotPassword)}>
             {/* New Password */}
             <div className='relative mb-6'>

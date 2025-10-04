@@ -23,10 +23,14 @@ export default function SignUp() {
 
       password: yup
         .string()
-        .required('Password is required !')
-        .min(8, 'Password must be at least 8 characters !')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter !')
-        .matches(/\d/, 'Must contain a number !'),
+        .required('Password is required!')
+        .min(8, 'Password must be at least 8 characters!')
+        .matches(/[A-Z]/, 'Must contain an uppercase letter!')
+        .matches(/\d/, 'Must contain a number!')
+        .matches(
+          /[^A-Za-z0-9]/,
+          'Password must contain at least one special character!'
+        ),
 
       confirmPassword: yup
         .string()
@@ -69,7 +73,7 @@ export default function SignUp() {
           icon: 'success',
           confirmButtonText: 'Log In',
         }).then(() => {
-          navigate('/signin');
+          navigate('/signin', { replace: true });
         });
       })
       .catch((err) => {
@@ -87,8 +91,8 @@ export default function SignUp() {
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
-          navigate('/signup');
           setLoading(false);
+          navigate('/signup', { replace: true });
         });
       });
   };
@@ -100,10 +104,21 @@ export default function SignUp() {
         description='Sign Up Page of TerraQuake'
       />
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
-        <div className='p-8 rounded-lg w-full max-w-md'>
-          <h2 className='text-3xl text-center text-white font-bold mb-6'>
-            Create account
-          </h2>
+        <div className='rounded-lg w-full max-w-md'>
+          <div className='flex flex-col justify-center items-center mb-16'>
+            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+              Create account
+              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+            </h1>
+
+            {/* Description */}
+            <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-2xl'>
+              Create your TerraQuake account to start exploring real seismic
+              events, customize your experience, and join our interactive
+              training platform.
+            </p>
+          </div>
+
           <form onSubmit={handleSubmit(handleSignUp)}>
             <div className='mb-8'>
               <label className='block text-white text-sm font-semibold mb-2'>
