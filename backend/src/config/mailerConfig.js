@@ -6,7 +6,7 @@ dotenv.config()
 export const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.USER_MAILER, 
+    user: process.env.USER_MAILER,
     pass: process.env.PASS_MAILER
   },
   pool: true,
@@ -16,5 +16,5 @@ export const transporter = nodemailer.createTransport({
 })
 
 transporter.verify()
-  .then(() => console.log("Mailer ready to send emails ✅"))
-  .catch(err => console.error("Mailer connection error ❌", err))
+  .then(() => console.log('Mailer ready to send emails ✅'))
+  .catch(err => console.error('Mailer connection error ❌', err))

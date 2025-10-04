@@ -85,7 +85,7 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
    npm run dev
    ```
 
-Visit `http://localhost:3000` for the frontend interface and `http://localhost:5000` for the API endpoints.
+Visit `http://localhost:5173` for the frontend interface and `http://localhost:5001` for the API endpoints.
 
 ---
 

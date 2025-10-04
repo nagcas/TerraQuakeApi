@@ -4,143 +4,291 @@ import MetaData from '../noPage/metaData';
 export default function Docs() {
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
         title='Docs'
-        description='Documentation Page of TerraQuake'
+        description='Docs - TerraQuake API'
+        ogTitle='Docs - TerraQuake API'
+        twitterTitle='Docs - TerraQuake API'
       />
+      {/* SEO Stuff */}
 
-      <section className='relative z-30 w-full min-h-screen px-6 py-20 bg-gradient-to-br from-indigo-950 via-gray-900 to-black text-white overflow-hidden'>
-        {/* Floating gradient background orbs */}
-        <div className="absolute -top-32 -left-20 w-72 h-72 bg-indigo-700/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 right-0 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl animate-bounce"></div>
+      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
+        {/* Header Section */}
+        <div className='flex flex-col justify-center items-center mb-16'>
+          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+            TerraQuake API Documentation
+            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+          </h1>
 
-        <div className='relative max-w-5xl mx-auto'>
-          {/* Header Section */}
-          <div className='flex flex-col items-center justify-center mb-16 text-center'>
-            <div className='bg-gradient-to-br from-indigo-700 to-violet-700 rounded-full p-5 shadow-[0_0_25px_rgba(139,92,246,0.6)] mb-5 animate-pulse'>
-              <svg width='42' height='42' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='text-white'>
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 8v4l3 3m6 1a9 9 0 11-18 0 9 9 0 0118 0z' />
-              </svg>
-            </div>
+          {/* Description */}
+          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
+            Learn how to use the TerraQuake API with guides, examples, and
+            reference documentation.
+          </p>
+        </div>
 
-            <h1 className='text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-lg animate-fade-in'>
-              TerraQuake API Docs
-            </h1>
-            <p className='text-lg text-gray-300 max-w-2xl mt-4 leading-relaxed'>
-              Welcome to the TerraQuake API documentation — your complete guide to endpoints, authentication, and usage examples.
+        <div className='max-w-5xl mx-auto space-y-16 text-left text-white'>
+          {/* Introduction */}
+          <section id='intro'>
+            <h2 className='text-2xl font-bold mb-4'>Introduction</h2>
+            <p>
+              TerraQuake API provides real-time and historical earthquake data,
+              including magnitude, depth, location, and timestamps. You can use
+              it to build earthquake trackers, visualization dashboards, or
+              research tools.
+            </p>
+          </section>
+
+          {/* Getting Started */}
+          <section id='getting-started'>
+            <h2 className='text-2xl font-bold mb-4'>Getting Started</h2>
+            <p>Make your first request:</p>
+            <pre className='bg-black text-green-300 p-4 rounded-md overflow-x-auto mt-2'>
+              {`curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=10&page=1"`}
+            </pre>
+          </section>
+
+          {/* Authentication */}
+          <section id='auth'>
+            <h2 className='text-2xl font-bold mb-4'>Authentication</h2>
+            <p>
+              If authentication is required, include your API key in the header:
+            </p>
+            <pre className='bg-black text-green-300 p-4 rounded-md overflow-x-auto mt-2'>
+              {`curl -H "Authorization: Bearer YOUR_API_KEY" \\
+"https://api.terraquakeapi.com/v1/earthquakes/recent"`}
+            </pre>
+          </section>
+
+          {/* API Reference */}
+          <section id='endpoints'>
+            <h2 className='text-2xl font-bold mb-6'>
+              🌍 Earthquake API Endpoints
+            </h2>
+
+            <p className='mb-4'>
+              All endpoints support pagination with <code>page</code> (default:
+              1) and <code>limit</code> (default: 50).
             </p>
 
-            {/* Navigation */}
-            <nav className='flex flex-wrap justify-center gap-5 mt-10 bg-indigo-800/20 backdrop-blur-lg px-6 py-3 rounded-full border border-indigo-600/30 shadow-lg'>
-              {[
-                { href: '#overview', label: 'Overview' },
-                { href: '#auth', label: 'Authentication' },
-                { href: '#endpoints', label: 'Endpoints' },
-                { href: '#example', label: 'Example' },
-                { href: '#reading', label: 'Further Reading' },
-              ].map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className='text-indigo-300 hover:text-white font-semibold transition-all duration-300 hover:scale-105 underline-offset-4 hover:underline'
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* Content Cards */}
-          <div className='grid gap-12 md:grid-cols-2 mb-12'>
-            {[
-              {
-                id: 'overview',
-                title: 'API Overview',
-                content: [
-                  'The TerraQuake API provides earthquake data, geospatial queries, and user management features.',
-                  'All endpoints are RESTful and return JSON.',
-                  'Designed for reliability, speed, and ease of integration.',
-                ],
-              },
-              {
-                id: 'auth',
-                title: 'Authentication',
-                content: [
-                  'Register or log in to obtain a JWT token.',
-                  'Include your token in the Authorization header as Bearer <token>.',
-                  'Most endpoints require authentication for access.',
-                ],
-                ordered: true,
-              },
-            ].map((section) => (
-              <div
-                key={section.id}
-                id={section.id}
-                className='bg-gradient-to-br from-gray-900/80 via-gray-950/90 to-indigo-950/70 rounded-2xl shadow-lg border border-indigo-700/40 p-8 transition-all hover:shadow-indigo-600/60 hover:scale-[1.04] hover:border-indigo-500 duration-300'
-              >
-                <h2 className='text-2xl font-bold mb-4 text-indigo-400 tracking-wide'>{section.title}</h2>
-                {section.ordered ? (
-                  <ol className='list-decimal list-inside text-gray-300 space-y-2'>
-                    {section.content.map((c, i) => (
-                      <li key={i}>{c}</li>
-                    ))}
-                  </ol>
-                ) : (
-                  <ul className='list-disc list-inside text-gray-300 space-y-2'>
-                    {section.content.map((c, i) => (
-                      <li key={i}>{c}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Endpoints */}
-          <div
-            id='endpoints'
-            className='bg-gradient-to-br from-gray-900 via-gray-950 to-indigo-950 rounded-2xl shadow-lg p-8 mb-12 border border-indigo-700/40 hover:shadow-indigo-600/60 hover:scale-[1.03] transition-all duration-300'
-          >
-            <h2 className='text-2xl font-bold mb-4 text-indigo-400 tracking-wide'>Endpoints</h2>
-            <ul className='list-disc list-inside text-gray-300 space-y-2'>
-              <li><span className='font-semibold text-indigo-300'>/api/earthquakes</span> — Get earthquake data</li>
-              <li><span className='font-semibold text-indigo-300'>/api/users</span> — User management</li>
-              <li><span className='font-semibold text-indigo-300'>/api/contact</span> — Contact form</li>
-              <li><span className='font-semibold text-indigo-300'>/api/auth</span> — Authentication</li>
-            </ul>
-          </div>
-
-          {/* Example */}
-          <div
-            id='example'
-            className='bg-gradient-to-br from-gray-900 via-gray-950 to-indigo-950 rounded-2xl shadow-lg p-8 mb-12 border border-indigo-700/40 hover:shadow-indigo-600/60 hover:scale-[1.03] transition-all duration-300'
-          >
-            <h2 className='text-2xl font-bold mb-4 text-indigo-400 tracking-wide'>Example Request</h2>
-            <div className='bg-gray-950/80 rounded p-4 text-sm overflow-x-auto border border-indigo-800 text-green-300 font-mono shadow-inner'>
-              <span className='block'>GET /api/earthquakes?region=California</span>
-              <span className='block'>Authorization: Bearer &lt;token&gt;</span>
+            <div className='overflow-x-auto'>
+              <table className='w-full border border-gray-600 text-sm'>
+                <thead className='bg-gray-800'>
+                  <tr>
+                    <th className='p-2 text-left'>Method</th>
+                    <th className='p-2 text-left'>Endpoint</th>
+                    <th className='p-2 text-left'>Description</th>
+                    <th className='p-2 text-left'>Query Parameters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/recent</td>
+                    <td className='p-2'>Recent earthquakes (year to today)</td>
+                    <td className='p-2'>page, limit</td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/today</td>
+                    <td className='p-2'>Earthquakes that occurred today</td>
+                    <td className='p-2'>page, limit</td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/last-week</td>
+                    <td className='p-2'>Earthquakes from the last 7 days</td>
+                    <td className='p-2'>page, limit</td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/month</td>
+                    <td className='p-2'>
+                      Earthquakes for a specific month/year
+                    </td>
+                    <td className='p-2'>
+                      year (req), month (req), page, limit
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/location</td>
+                    <td className='p-2'>
+                      Earthquakes near a latitude/longitude
+                    </td>
+                    <td className='p-2'>
+                      latitude (req), longitude (req), radius, page, limit
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/region</td>
+                    <td className='p-2'>Earthquakes in an Italian region</td>
+                    <td className='p-2'>region (req), page, limit</td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/depth</td>
+                    <td className='p-2'>Earthquakes at/below a depth</td>
+                    <td className='p-2'>depth (req), page, limit</td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/range-time</td>
+                    <td className='p-2'>Earthquakes within date range</td>
+                    <td className='p-2'>
+                      startdate (req), enddate (req), page, limit
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/magnitude</td>
+                    <td className='p-2'>Earthquakes with magnitude ≥ value</td>
+                    <td className='p-2'>mag (req), page, limit</td>
+                  </tr>
+                  <tr>
+                    <td className='p-2'>GET</td>
+                    <td className='p-2'>/v1/earthquakes/eventId</td>
+                    <td className='p-2'>Details of a specific earthquake</td>
+                    <td className='p-2'>eventId (req)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p className='text-base text-gray-300 mt-3'>
-              Replace <code className='bg-gray-700 px-2 py-1 rounded text-indigo-300'>&lt;token&gt;</code> with your JWT.
-            </p>
-          </div>
 
-          {/* Further Reading */}
-          <div
-            id='reading'
-            className='bg-gradient-to-br from-gray-900 via-gray-950 to-indigo-950 rounded-2xl shadow-lg p-8 border border-indigo-700/40 hover:shadow-indigo-600/60 hover:scale-[1.03] transition-all duration-300'
-          >
-            <h2 className='text-2xl font-bold mb-4 text-indigo-400 tracking-wide'>Further Reading</h2>
-            <ul className='list-disc list-inside text-gray-300 space-y-2'>
+            <h3 className='text-xl font-semibold mt-8'>Example Request</h3>
+            <pre className='bg-black text-green-300 p-4 rounded-md overflow-x-auto'>
+              {`curl "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"`}
+            </pre>
+
+            <h3 className='text-xl font-semibold mt-6'>Example Response</h3>
+            <pre className='bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto'>
+              {`{
+  "success": true,
+  "code": 200,
+  "status": "OK",
+  "message": "Recent seismic events",
+  "total": 50,
+  "data": [
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": 44278572,
+        "originId": 140102761,
+        "time": "2025-09-26T19:33:46.440000",
+        "author": "SURVEY-INGV",
+        "magType": "ML",
+        "mag": 1,
+        "type": "earthquake",
+        "place": "Costa Calabra sud-orientale (Reggio di Calabria)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [16.2387, 37.9982, 10.5]
+      }
+    }
+  ]
+}`}
+            </pre>
+
+            <h3 className='text-xl font-semibold mt-6'>Response Fields</h3>
+            <ul className='list-disc list-inside'>
               <li>
-                See the <a href='/README.md' className='text-indigo-300 hover:text-white underline'>README</a> for more details.
+                <code>success</code> – Whether the request was successful
               </li>
-              <li>Contact support for help or questions.</li>
               <li>
-                Explore the <a href='/docs' className='text-indigo-300 hover:text-white underline'>API documentation</a> for advanced usage.
+                <code>code</code> – HTTP status code
+              </li>
+              <li>
+                <code>status</code> – Status message
+              </li>
+              <li>
+                <code>message</code> – Summary of the response
+              </li>
+              <li>
+                <code>total</code> – Total number of events returned
+              </li>
+              <li>
+                <code>data</code> – Array of seismic event objects
+              </li>
+              <li>
+                <code>properties.eventId</code> – Unique event ID
+              </li>
+              <li>
+                <code>properties.time</code> – Event timestamp (ISO 8601)
+              </li>
+              <li>
+                <code>properties.mag</code> – Magnitude of the earthquake
+              </li>
+              <li>
+                <code>properties.place</code> – Location description
+              </li>
+              <li>
+                <code>geometry.coordinates</code> – [longitude, latitude, depth]
               </li>
             </ul>
-          </div>
+          </section>
+
+          {/* Error Codes */}
+          <section id='errors'>
+            <h2 className='text-2xl font-bold mb-4'>Error Codes</h2>
+            <table className='w-full border border-gray-600 text-sm'>
+              <thead className='bg-gray-800'>
+                <tr>
+                  <th className='p-2 text-left'>Code</th>
+                  <th className='p-2 text-left'>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className='p-2'>200</td>
+                  <td className='p-2'>Success</td>
+                </tr>
+                <tr>
+                  <td className='p-2'>400</td>
+                  <td className='p-2'>Bad Request</td>
+                </tr>
+                <tr>
+                  <td className='p-2'>401</td>
+                  <td className='p-2'>Unauthorized</td>
+                </tr>
+                <tr>
+                  <td className='p-2'>404</td>
+                  <td className='p-2'>Not Found</td>
+                </tr>
+                <tr>
+                  <td className='p-2'>429</td>
+                  <td className='p-2'>Too Many Requests</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          {/* Rate Limits */}
+          <section id='limits'>
+            <h2 className='text-2xl font-bold mb-4'>Rate Limits</h2>
+            <p>
+              Default limit: <strong>60 requests/minute per IP</strong>. If
+              exceeded, the API returns <code>429 Too Many Requests</code>.
+            </p>
+          </section>
+
+          {/* FAQ */}
+          <section id='faq'>
+            <h2 className='text-2xl font-bold mb-4'>FAQ</h2>
+            <p>
+              <strong>Q: Do I need an API key?</strong>
+              <br />
+              A: Not for basic usage, but some endpoints may require it.
+            </p>
+            <p className='mt-4'>
+              <strong>Q: How often is data updated?</strong>
+              <br />
+              A: Near real-time, within a few minutes of seismic event
+              detection.
+            </p>
+          </section>
         </div>
       </section>
     </>
