@@ -139,10 +139,13 @@ export default function About() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='About'
-        description='About - TerraQuake API'
-        ogTitle='About - TerraQuake API'
-        twitterTitle='About - TerraQuake API'
+        title='About TerraQuake API | Real-Time Earthquake Data & Monitoring'
+        description='Learn about TerraQuake API — a powerful platform for real-time earthquake monitoring, seismic data analysis, and early warning systems. Discover our mission, vision, and use cases.'
+        ogTitle='About TerraQuake API | Real-Time Seismic Data Platform'
+        ogDescription="Discover TerraQuake API's mission and capabilities in delivering real-time earthquake data and monitoring solutions for developers, researchers, and safety organizations."
+        twitterTitle='About TerraQuake API | Earthquake Monitoring API'
+        twitterDescription='Explore TerraQuake API — your resource for real-time earthquake data, seismic analysis, and disaster prevention solutions.'
+        keywords='TerraQuake API, earthquake monitoring, seismic data, earthquake detection API, real-time earthquake data, disaster prevention, seismic analysis'
       />
       {/* SEO Stuff */}
 

@@ -6,9 +6,12 @@ export default function PrivacyPolicy() {
       {/* SEO Stuff */}
       <MetaData
         title='Privacy Policy'
-        description='Privacy Policy - TerraQuake API'
+        description='Read the Privacy Policy of TerraQuake API to learn how we handle your data and protect your privacy.'
         ogTitle='Privacy Policy - TerraQuake API'
+        ogDescription='Learn how TerraQuake API manages your data with transparency and security. Read our Privacy Policy.'
         twitterTitle='Privacy Policy - TerraQuake API'
+        twitterDescription='Understand TerraQuake API’s approach to privacy and data protection in our Privacy Policy.'
+        keywords='TerraQuake API, privacy policy, data protection, GDPR, seismic data privacy'
       />
       {/* SEO Stuff */}
 

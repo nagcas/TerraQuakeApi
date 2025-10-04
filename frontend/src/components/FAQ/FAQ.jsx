@@ -63,10 +63,13 @@ const Faq = () => {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='FAQ - TerraQuake API'
-        description='Find answers to frequently asked questions about TerraQuake API, including data access, endpoints, and usage guidelines.'
+        title='FAQ'
+        description='Find answers to frequently asked questions about TerraQuake API, including data access, endpoints, usage guidelines, and best practices for integrating seismic data into your projects.'
         ogTitle='FAQ - TerraQuake API'
+        ogDescription='Explore our comprehensive FAQ for TerraQuake API covering data access, API endpoints, usage guidelines, and tips for developers and researchers.'
         twitterTitle='FAQ - TerraQuake API'
+        twitterDescription='Get answers to common questions about TerraQuake API, including how to access data, use endpoints, and follow best practices.'
+        keywords='TerraQuake API, FAQ, earthquake API questions, API usage guidelines, seismic data access'
       />
       {/* SEO Stuff */}
 

@@ -99,10 +99,18 @@ export default function SignUp() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Sign Up'
-        description='Sign Up Page of TerraQuake'
+        title='Sign Up | TerraQuake API - Create Your Account'
+        description='Sign up for TerraQuake API to start accessing real-time earthquake monitoring, seismic data, and powerful API tools for developers and researchers.'
+        ogTitle='Sign Up | TerraQuake API'
+        ogDescription='Create your TerraQuake API account to access earthquake data, API integrations, and advanced monitoring tools.'
+        twitterTitle='Sign Up | TerraQuake API'
+        twitterDescription='Join TerraQuake API today and gain access to earthquake monitoring data, API tools, and developer resources.'
+        keywords='Sign up TerraQuake API, register earthquake API, create account earthquake monitoring, earthquake API access'
       />
+      {/* SEO Stuff */}
+
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         <div className='rounded-lg w-full max-w-md'>
           <div className='flex flex-col justify-center items-center mb-16'>

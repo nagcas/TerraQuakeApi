@@ -227,10 +227,13 @@ export default function Blog() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Blog - TerraQuake API'
-        description='Stay updated with the latest insights on earthquake science, seismology research, and seismic safety from the TerraQuake API blog.'
-        ogTitle='Blog - TerraQuake API'
-        twitterTitle='Blog - TerraQuake API'
+        title='Blog | TerraQuake API - Earthquake News, Insights & Research'
+        description='Explore the TerraQuake API Blog for expert insights on earthquake science, seismic monitoring, safety tips, and the latest in seismology research.'
+        ogTitle='Blog | TerraQuake API - Earthquake News, Insights & Research'
+        ogDescription='Stay informed with TerraQuake API’s blog. Discover earthquake science, seismology updates, safety tips, and cutting-edge research for developers and researchers.'
+        twitterTitle='Blog | TerraQuake API'
+        twitterDescription='Read the TerraQuake API blog for news, research insights, and seismic safety tips. Stay updated on earthquake monitoring and technology.'
+        keywords='TerraQuake API blog, earthquake science, seismology research, earthquake monitoring, seismic safety, disaster prevention blog'
       />
       {/* SEO Stuff */}
 

@@ -67,10 +67,13 @@ export default function Contact() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Contact Us - TerraQuake API'
-        description='Get in touch with the TerraQuake API team for support or inquiries.'
-        ogTitle='Contact Us - TerraQuake API'
-        twitterTitle='Contact Us - TerraQuake API'
+        title='Contact Us | TerraQuake API - Earthquake Monitoring Support'
+        description='Reach out to the TerraQuake API team for inquiries, support, and collaboration opportunities. Your gateway to advanced earthquake monitoring and seismic data.'
+        ogTitle='Contact Us | TerraQuake API - Earthquake Monitoring Support'
+        ogDescription='Connect with TerraQuake API for support, questions, and collaboration on earthquake monitoring and seismic research.'
+        twitterTitle='Contact Us | TerraQuake API - Earthquake Monitoring Support'
+        twitterDescription='Get in touch with TerraQuake API for inquiries and support related to earthquake data and seismic safety.'
+        keywords='TerraQuake API contact, earthquake monitoring support, seismic data inquiries, earthquake research collaboration'
       />
       {/* SEO Stuff */}
 
