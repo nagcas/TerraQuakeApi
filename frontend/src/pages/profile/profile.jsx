@@ -11,22 +11,20 @@ export default function Profile() {
     useContext(Context);
   const navigate = useNavigate();
 
-  // Stato unico per gestire la sezione attiva
   const [activeSection, setActiveSection] = useState(null);
-  // valori possibili: "edit", "delete", "password", oppure null
 
   const handleLogout = () => {
-    setUserLogin({});
-    setIsLoggedIn(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
     Swal.fire({
       title: 'Success!',
       text: 'Logged Out Successfully!',
       icon: 'success',
-      confirmButtonText: 'Okay',
+      confirmButtonText: 'Home page',
     }).then(() => {
-      navigate('/');
+      setUserLogin({});
+      setIsLoggedIn(false);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      navigate('/', { replace: true });
     });
   };
 

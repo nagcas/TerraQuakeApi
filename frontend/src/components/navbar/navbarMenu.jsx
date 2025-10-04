@@ -37,18 +37,18 @@ export default function NavbarMenu() {
   ];
 
   const handleLogout = () => {
-    setUserLogin({});
-    setIsLoggedIn(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
     Swal.fire({
       title: 'Success!',
       text: 'Logged Out Successfully!',
       icon: 'success',
-      confirmButtonText: 'Ok',
+      confirmButtonText: 'Home page',
     }).then(() => {
       setIsOpen(false);
-      navigate('/');
+      setUserLogin({});
+      setIsLoggedIn(false);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      navigate('/', { replace: true });
     });
   };
 
