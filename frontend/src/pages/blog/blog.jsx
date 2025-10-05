@@ -251,7 +251,8 @@ export default function Blog() {
           <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
-        <div className='container mx-auto px-4 max-w-7xl'>
+        {/* Content Container */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70">
           {/* Header Section */}
           <motion.div
             className='mb-16 text-center lg:text-left'
