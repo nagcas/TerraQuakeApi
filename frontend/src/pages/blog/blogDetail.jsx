@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, NavLink } from 'react-router-dom';
 // import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
 import MetaData from '@pages/noPage/metaData';
 import {
@@ -445,7 +445,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
             <p className='text-gray-300 mb-4'>{error}</p>
             <button
               onClick={() => navigate('/blog')}
-              className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200'
+              className='bg-purple-600 hover:bg-purple-700 text-white/70 font-bold py-2 px-4 rounded transition-colors duration-200 cursor-pointer'
             >
               Back to Blog
             </button>
@@ -472,7 +472,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
             </p>
             <button
               onClick={() => navigate('/blog')}
-              className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200'
+              className='bg-purple-600 hover:bg-purple-700 text-white/70 font-bold py-2 px-4 rounded transition-colors duration-200 cursor-pointer'
             >
               Back to Blog
             </button>
@@ -520,16 +520,16 @@ The study of seismic waves continues to evolve with new technologies, providing 
       <div className='min-h-screen pt-24 pb-16'>
         <div className='container mx-auto px-4 max-w-4xl'>
           {/* Back to Blog Button */}
-          <Link
+          <NavLink
             to='/blog'
-            className='inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200'
+            className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
           >
             <FaArrowLeft className='mr-2' />
             Back to Blog
-          </Link>
+          </NavLink>
 
           {/* Article Header */}
-          <article className='bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden'>
+          <article className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 overflow-hidden'>
             <div className='p-8'>
               {/* Category and Share */}
               <div className='flex items-center justify-between mb-6'>
@@ -541,7 +541,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
                   className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors duration-200'
                 >
                   <FaShare className='w-4 h-4' />
-                  <span className='text-sm'>Share</span>
+                  <span className='text-sm cursor-pointer'>Share</span>
                 </button>
               </div>
 
@@ -574,17 +574,17 @@ The study of seismic waves continues to evolve with new technologies, providing 
                   components={{
                     // Custom components for better styling
                     h1: ({ children }) => (
-                      <h1 className='text-3xl font-bold text-white mb-6 border-b-2 border-purple-500 pb-3'>
+                      <h1 className='text-3xl font-bold text-white/70 mb-6 border-b-2 border-purple-500 pb-3'>
                         {children}
                       </h1>
                     ),
                     h2: ({ children }) => (
-                      <h2 className='text-2xl font-bold text-white mb-4 mt-8 border-b border-purple-400 pb-2'>
+                      <h2 className='text-2xl font-bold text-white/70 mb-4 mt-8 border-b border-purple-400 pb-2'>
                         {children}
                       </h2>
                     ),
                     h3: ({ children }) => (
-                      <h3 className='text-xl font-semibold text-white mb-3 mt-6'>
+                      <h3 className='text-xl font-semibold text-white/70 mb-3 mt-6'>
                         {children}
                       </h3>
                     ),
@@ -708,18 +708,18 @@ The study of seismic waves continues to evolve with new technologies, providing 
                 <div className='mt-8 pt-6 border-t border-gray-800'>
                   <div className='flex items-center mb-4'>
                     <FaTag className='text-purple-400 mr-2' />
-                    <h4 className='text-white font-semibold'>Related Topics</h4>
+                    <h4 className='text-white/70 font-semibold'>Related Topics</h4>
                   </div>
                   <div className='flex flex-wrap gap-3'>
                     {post.tags.map((tag, index) => (
                       <button
                         key={tag}
-                        className={`group relative overflow-hidden text-sm px-4 py-2 rounded-full border transition-all duration-300 hover:scale-105 ${
+                        className={`group relative overflow-hidden text-sm px-4 py-2 rounded-full border transition-all duration-300 hover:scale-105 cursor-pointer ${
                           index % 3 === 0
-                            ? 'bg-gradient-to-r from-purple-600 to-purple-700 border-purple-500 text-white hover:from-purple-500 hover:to-purple-600'
+                            ? 'bg-gradient-to-r from-purple-600 to-purple-700 border-purple-500 text-white/70 hover:from-purple-500 hover:to-purple-600'
                             : index % 3 === 1
-                            ? 'bg-gradient-to-r from-blue-600 to-blue-700 border-blue-500 text-white hover:from-blue-500 hover:to-blue-600'
-                            : 'bg-gradient-to-r from-green-600 to-green-700 border-green-500 text-white hover:from-green-500 hover:to-green-600'
+                            ? 'bg-gradient-to-r from-blue-600 to-blue-700 border-blue-500 text-white/70 hover:from-blue-500 hover:to-blue-600'
+                            : 'bg-gradient-to-r from-green-600 to-green-700 border-green-500 text-white/70 hover:from-green-500 hover:to-green-600'
                         }`}
                         onClick={() => {
                           // TODO: Navigate to tag filter page
@@ -745,7 +745,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
             <div className='mt-12'>
-              <h3 className='text-2xl font-bold text-white mb-6'>
+              <h3 className='text-2xl font-bold text-white/70 mb-6'>
                 Related Articles
               </h3>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
@@ -763,7 +763,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
                       </span>
                     </div>
 
-                    <h4 className='text-lg font-bold text-white mb-3 line-clamp-2'>
+                    <h4 className='text-lg font-bold text-white/70 mb-3 line-clamp-2'>
                       <Link
                         to={`/blog/${relatedPost.slug}`}
                         className='hover:text-purple-400 transition-colors duration-200'
