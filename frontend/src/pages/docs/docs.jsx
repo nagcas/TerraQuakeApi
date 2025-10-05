@@ -16,6 +16,12 @@ export default function Docs() {
       />
       {/* SEO Stuff */}
 
+      {/* Background Gradient/Mesh (for a classy, dark theme) */}
+      <div className='absolute inset-0 z-0'>
+        <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+        <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+      </div>
+
       <section className='relative z-30 w-full min-h-screen px-6 py-20'>
         {/* Header Section */}
         <div className='flex flex-col justify-center items-center mb-16'>
@@ -47,7 +53,7 @@ export default function Docs() {
           <section id='getting-started'>
             <h2 className='text-2xl font-bold mb-4'>Getting Started</h2>
             <p>Make your first request:</p>
-            <pre className='bg-black text-green-300 p-4 rounded-md overflow-x-auto mt-2'>
+            <pre className='text-green-300 p-4 rounded-md overflow-x-auto mt-2'>
               {`curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=10&page=1"`}
             </pre>
           </section>
@@ -58,7 +64,7 @@ export default function Docs() {
             <p>
               If authentication is required, include your API key in the header:
             </p>
-            <pre className='bg-black text-green-300 p-4 rounded-md overflow-x-auto mt-2'>
+            <pre className='text-green-300 p-4 rounded-md overflow-x-auto mt-2'>
               {`curl -H "Authorization: Bearer YOUR_API_KEY" \\
 "https://api.terraquakeapi.com/v1/earthquakes/recent"`}
             </pre>
@@ -161,12 +167,12 @@ export default function Docs() {
             </div>
 
             <h3 className='text-xl font-semibold mt-8'>Example Request</h3>
-            <pre className='bg-black text-green-300 p-4 rounded-md overflow-x-auto'>
+            <pre className='text-green-300 p-4 rounded-md overflow-x-auto'>
               {`curl "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"`}
             </pre>
 
             <h3 className='text-xl font-semibold mt-6'>Example Response</h3>
-            <pre className='bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto'>
+            <pre className=' text-gray-100 p-4 rounded-md overflow-x-auto'>
               {`{
   "success": true,
   "code": 200,
