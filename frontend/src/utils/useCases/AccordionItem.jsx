@@ -21,6 +21,16 @@ const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
     }
   };
 
+  const goToDocs = (exampleUrl) => {
+    try {
+      const url = new URL(exampleUrl);
+      const path = url.pathname.replace('/v1/', '').replace(/\//g, '-');
+      navigate(`/api-docs#${path}`);
+    } catch {
+      navigate('/api-docs');
+    }
+  };
+
   return (
     <motion.article
       variants={{
@@ -66,6 +76,14 @@ const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
               </ul>
               <ApiPlayground url={item.exampleUrl} />
               <LanguageTabs snippets={item.snippets} />
+              <div className="mt-6 text-right">
+                <button
+                  onClick={() => goToDocs(item.exampleUrl)}
+                  className="text-purple-400 hover:text-purple-300 text-sm underline transition-all cursor-pointer"
+                >
+                  View API Documentation →
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

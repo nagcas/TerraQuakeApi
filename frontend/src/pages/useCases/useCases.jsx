@@ -50,7 +50,6 @@ export default function UseCases() {
           className="w-full mt-10 flex flex-col items-center space-y-6"
         >
           {useCaseDocs.map((item, index) => (
-            <div key={item.title} className="w-full">
               <AccordionItem
                 key={item.title}
                 item={item}
@@ -58,16 +57,6 @@ export default function UseCases() {
                 expandedIndex={expandedIndex}
                 toggleExpand={toggleExpand}
               />
-              {/* Internal Link to API Docs */}
-              <div className="text-right mt-2 mr-4">
-                <button
-                  onClick={() => goToDocs(item.exampleUrl)}
-                  className="text-purple-400 hover:text-purple-300 text-sm underline transition-all"
-                >
-                  View API Documentation →
-                </button>
-              </div>
-            </div>
           ))}
         </motion.div>
       </section>
