@@ -9,7 +9,7 @@ import axios from '@config/axios.js';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 // Import new icons for the 'Connect' section
-import { FiMail, FiMapPin, FiPhone, FiGithub } from 'react-icons/fi';
+import { FiGithub } from 'react-icons/fi';
 
 const contactSchema = yup.object({
   name: yup.string().required('Name is required!'),
@@ -19,9 +19,18 @@ const contactSchema = yup.object({
   message: yup.string().required('Message is required!'),
 });
 
-const InputField = ({ label, name, type = 'text', placeholder, register, errors, rows }) => {
+const InputField = ({
+  label,
+  name,
+  type = 'text',
+  placeholder,
+  register,
+  errors,
+  rows,
+}) => {
   const isTextarea = rows > 0;
-  const commonClasses = 'w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50';
+  const commonClasses =
+    'w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50';
 
   return (
     <div className='relative z-10'>
@@ -57,7 +66,6 @@ const InputField = ({ label, name, type = 'text', placeholder, register, errors,
   );
 };
 
-
 export default function Contact() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -79,16 +87,15 @@ export default function Contact() {
 
       Swal.fire({
         title: 'Success!',
-        text: res.data.message || 'Message sent successfully! We\'ll be in touch.',
+        text:
+          res.data.message || "Message sent successfully! We'll be in touch.",
         icon: 'success',
         confirmButtonText: 'Great!',
         customClass: {
-          container: 'z-50' // Ensure Swal is above other elements
-        }
+          container: 'z-50', // Ensure Swal is above other elements
+        },
       }).then(() => {
         reset();
-        // Option to navigate or just stay on the page
-        // navigate('/'); 
       });
     } catch (err) {
       const errorMessage =
@@ -104,8 +111,8 @@ export default function Contact() {
         icon: 'error',
         confirmButtonText: 'Try Again',
         customClass: {
-          container: 'z-50'
-        }
+          container: 'z-50',
+        },
       });
     } finally {
       setLoading(false);
@@ -113,11 +120,18 @@ export default function Contact() {
   };
 
   const contactInfo = [
-    { icon: <FiGithub className="w-6 h-6" />, title: 'Open an Issue', detail: 'github.com/terraquake-api', href: 'https://github.com/nagcas/TerraQuakeApi', target: '_blank' }
+    {
+      icon: <FiGithub className='w-6 h-6' />,
+      title: 'Open an Issue',
+      detail: 'github.com/terraquake-api',
+      href: 'https://github.com/nagcas/TerraQuakeApi',
+      target: '_blank',
+    },
   ];
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
         title='Contact | TerraQuake API - Professional Support'
         description='Connect with the TerraQuake API engineering and support teams. Dedicated channels for technical inquiries, partnerships, and seismic data collaboration.'
@@ -127,6 +141,7 @@ export default function Contact() {
         twitterDescription='Get in touch for inquiries and support related to earthquake data and seismic safety.'
         keywords='TerraQuake API contact, professional support, seismic data inquiries, API collaboration'
       />
+      {/* SEO Stuff */}
 
       <motion.section
         className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
@@ -135,13 +150,12 @@ export default function Contact() {
         transition={{ duration: 0.8 }}
       >
         {/* Background Gradient/Mesh (for a classy, dark theme) */}
-        <div className="absolute inset-0 bg-gray-900 z-0">
-          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
         <div className='relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12'>
-
           {/* Header Section */}
           <motion.div
             className='mb-16 text-center lg:text-left'
@@ -149,20 +163,20 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h1 className='text-4xl md:text-6xl text-white font-extrabold tracking-tighter mb-4'>
+            <h1 className='text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
               Let's Connect.
+              <div className='h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-white/70 max-w-3xl lg:mx-0 mx-auto'>
-              At TerraQuake API, we’re committed to making seismic
-              data accessible and insightful. Whether you’re a researcher, developer,
-              or enthusiast, your ideas and feedback help us improve the platform every
-              day.
+              At TerraQuake API, we’re committed to making seismic data
+              accessible and insightful. Whether you’re a researcher, developer,
+              or enthusiast, your ideas and feedback help us improve the
+              platform every day.
             </p>
           </motion.div>
-          
+
           {/* Main Content: Split Layout */}
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-12'>
-            
             {/* Left Column: Form Section */}
             <motion.div
               className='lg:col-span-2 p-8 md:p-12 bg-gray-800/60 backdrop-blur-md rounded-3xl shadow-2xl border border-white/10'
@@ -170,7 +184,7 @@ export default function Contact() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <h2 className="text-3xl font-bold text-white mb-8 border-b border-purple-500/50 pb-3">
+              <h2 className='text-3xl font-bold text-white mb-8 border-b border-purple-500/50 pb-3'>
                 Send a Direct Message
               </h2>
 
@@ -181,18 +195,50 @@ export default function Contact() {
               >
                 {/* Name + Lastname */}
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
-                  <InputField label='First Name' name='name' placeholder='Your first name' register={register} errors={errors} />
-                  <InputField label='Last Name' name='lastname' placeholder='Your last name' register={register} errors={errors} />
+                  <InputField
+                    label='First Name'
+                    name='name'
+                    placeholder='Your first name'
+                    register={register}
+                    errors={errors}
+                  />
+                  <InputField
+                    label='Last Name'
+                    name='lastname'
+                    placeholder='Your last name'
+                    register={register}
+                    errors={errors}
+                  />
                 </div>
 
                 {/* Email + Subject */}
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
-                  <InputField label='Work Email' name='email' type='email' placeholder='name@company.com' register={register} errors={errors} />
-                  <InputField label='Subject' name='subject' placeholder='Brief purpose of your message' register={register} errors={errors} />
+                  <InputField
+                    label='Work Email'
+                    name='email'
+                    type='email'
+                    placeholder='name@company.com'
+                    register={register}
+                    errors={errors}
+                  />
+                  <InputField
+                    label='Subject'
+                    name='subject'
+                    placeholder='Brief purpose of your message'
+                    register={register}
+                    errors={errors}
+                  />
                 </div>
 
                 {/* Message */}
-                <InputField label='Message' name='message' placeholder='Detailed message...' register={register} errors={errors} rows={6} />
+                <InputField
+                  label='Message'
+                  name='message'
+                  placeholder='Detailed message...'
+                  register={register}
+                  errors={errors}
+                  rows={6}
+                />
 
                 {/* Submit Button */}
                 <motion.button
@@ -202,13 +248,12 @@ export default function Contact() {
                     w-full
                     bg-gradient-to-r from-purple-600 to-pink-500 
                     text-white font-semibold 
-                    py-4 px-6 rounded-xl 
-                    shadow-xl shadow-purple-500/30
-                    hover:from-pink-500 hover:to-purple-600 
-                    hover:scale-[1.01] hover:shadow-2xl hover:shadow-pink-500/40
+                    py-4 px-6 rounded-full
+                    hover:scale-[1.01] hover:shadow-2xl
                     active:scale-[0.99]
                     transform transition-all duration-300 ease-in-out
                     flex items-center justify-center gap-2
+                    cursor-pointer
                   '
                   disabled={loading}
                   whileTap={{ scale: 0.98 }}
@@ -233,34 +278,33 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <div>
-                <h2 className="text-3xl font-bold text-purple-400 mb-6">
+                <h2 className='text-3xl font-bold text-purple-400 mb-6'>
                   Other Channels
                 </h2>
-                <p className="text-white/80 mb-8">
-                  For immediate support or specific inquiries, you might find these direct channels more suitable.
+                <p className='text-white/80 mb-8'>
+                  For immediate support or specific inquiries, you might find
+                  these direct channels more suitable.
                 </p>
 
-                <div className="space-y-6">
+                <div className='space-y-6'>
                   {contactInfo.map((item, index) => (
                     <motion.a
                       key={index}
                       href={item.href}
                       target={item.target}
-                      className="flex items-start p-4 bg-gray-900/40 rounded-xl hover:bg-gray-700/50 transition duration-200 group"
+                      className='flex items-start p-4 bg-gray-900/40 rounded-xl hover:bg-gray-700/50 transition duration-200 group'
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                     >
-                      <div className="text-purple-400 group-hover:text-pink-400 transition-colors mr-4 mt-1">
+                      <div className='text-purple-400 group-hover:text-pink-400 transition-colors mr-4 mt-1'>
                         {item.icon}
                       </div>
                       <div>
-                        <p className="text-lg font-semibold text-white group-hover:underline">
+                        <p className='text-lg font-semibold text-white group-hover:underline'>
                           {item.title}
                         </p>
-                        <p className="text-sm text-white/60">
-                          {item.detail}
-                        </p>
+                        <p className='text-sm text-white/60'>{item.detail}</p>
                       </div>
                     </motion.a>
                   ))}
@@ -268,12 +312,11 @@ export default function Contact() {
               </div>
 
               {/* Optional: Add a subtle logo or API tagline here */}
-              <div className="mt-10 pt-6 border-t border-purple-500/50">
-                  <p className="text-sm text-white/50 italic">
-                      Powered by TerraQuake API
-                  </p>
+              <div className='mt-10 pt-6 border-t border-purple-500/50'>
+                <p className='text-sm text-white/50 italic'>
+                  Powered by TerraQuake API
+                </p>
               </div>
-
             </motion.div>
           </div>
         </div>
