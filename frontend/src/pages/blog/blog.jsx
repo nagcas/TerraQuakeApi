@@ -320,7 +320,7 @@ export default function Blog() {
                 <div className='px-6 pb-6'>
                   <Link
                     to={`/blog/${post.slug}`}
-                    className='inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
+                    className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
                   >
                     Read More
                     <svg
@@ -351,7 +351,7 @@ export default function Blog() {
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                    className={`relative z-30 flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                       currentPage === 1
                         ? 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 cursor-not-allowed'
                         : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:scale-105 cursor-pointer'
@@ -362,7 +362,7 @@ export default function Blog() {
                   </button>
 
                   {/* Page Numbers */}
-                  <div className='flex items-center space-x-1'>
+                  <div className='relative z-30 flex items-center space-x-1'>
                     {generatePageNumbers().map((pageNum) => (
                       <button
                         key={pageNum}
@@ -382,7 +382,7 @@ export default function Blog() {
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                    className={`relative z-30 flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                       currentPage === totalPages
                         ? 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 cursor-not-allowed'
                         : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:scale-105 cursor-pointer'
