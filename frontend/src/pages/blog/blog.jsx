@@ -238,17 +238,18 @@ export default function Blog() {
       />
       {/* SEO Stuff */}
 
-      <motion.section 
+      <motion.section
         className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-      {/* Background Gradient/Mesh (for a classy, dark theme) */}
-      <div className='absolute inset-0 z-0'>
-        <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
-        <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
-      </div>
+        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+        </div>
+
         <div className='container mx-auto px-4 max-w-7xl'>
           {/* Header Section */}
           <motion.div
