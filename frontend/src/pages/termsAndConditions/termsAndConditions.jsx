@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import MetaData from '../noPage/metaData';
 import BackToTopButton from '@/components/utils/backToTopButton';
+import { motion } from 'framer-motion';
 
 export default function TermsAndConditions() {
   return (
@@ -17,26 +18,36 @@ export default function TermsAndConditions() {
       />
       {/* SEO Stuff */}
 
-      {/* Background Gradient/Mesh (for a classy, dark theme) */}
-      <div className='absolute inset-0 z-0'>
-        <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
-        <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
-      </div>
+      <motion.section 
+        className="relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+         {/* Background Gradient */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        </div>
 
-      <section className='relative z-30 w-full min-h-screen px-6 py-16 flex justify-center'>
-        <div className='max-w-5xl w-full bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md shadow-2xl rounded-2xl p-10 space-y-10'>
+        {/* Content Container */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70">
           {/* Header Section */}
-          <div className='flex flex-col justify-center items-center mb-16'>
-            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
-              Terms & Conditions
-              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+          <motion.div
+            className="mb-16 text-center lg:text-left"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h1 className="text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4">
+              Terms & Conditions.
+              <div className="h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
             </h1>
-
-            {/* Updated */}
-            <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
-              Last updated: 22-09-2025
+            <p className="text-xl text-white/70 max-w-3xl">
+             Last updated: 22-09-2025.
             </p>
-          </div>
+          </motion.div>
+
 
           <section className='space-y-6'>
             <p className='text-gray-300 leading-relaxed'>
@@ -206,9 +217,9 @@ export default function TermsAndConditions() {
             </p>
           </section>
         </div>
-      </section>
-      {/* Floating Back-to-Top Button Component */}
-      <BackToTopButton />
+        {/* Floating Back-to-Top Button Component */}
+        <BackToTopButton />
+      </motion.section>
     </>
   );
 }
