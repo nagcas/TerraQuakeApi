@@ -6,10 +6,13 @@ export default function Docs() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Docs'
-        description='Docs - TerraQuake API'
-        ogTitle='Docs - TerraQuake API'
-        twitterTitle='Docs - TerraQuake API'
+        title='Documentation | TerraQuake API - Earthquake Monitoring API'
+        description='Explore the TerraQuake API documentation to learn how to access real-time seismic data, integrate earthquake monitoring features, and use our API efficiently.'
+        ogTitle='Documentation | TerraQuake API - Earthquake Monitoring API'
+        ogDescription='Comprehensive TerraQuake API documentation to guide developers in accessing seismic data, integrating earthquake alerts, and building powerful applications.'
+        twitterTitle='Documentation | TerraQuake API'
+        twitterDescription='Access TerraQuake API documentation to integrate real-time seismic data and earthquake monitoring into your projects.'
+        keywords='TerraQuake API docs, earthquake API documentation, seismic data API, earthquake monitoring API, API integration guide'
       />
       {/* SEO Stuff */}
 

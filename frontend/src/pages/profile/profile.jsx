@@ -26,6 +26,17 @@ export default function Profile() {
       confirmButtonColor: "#9333ea",
     }).then(() => {
       navigate("/");
+    Swal.fire({
+      title: 'Success!',
+      text: 'Logged Out Successfully!',
+      icon: 'success',
+      confirmButtonText: 'Home page',
+    }).then(() => {
+      setUserLogin({});
+      setIsLoggedIn(false);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      navigate('/', { replace: true });
     });
   };
 
@@ -44,6 +55,17 @@ export default function Profile() {
 
       <section className="relative min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] px-6 py-20 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+      {/* SEO Stuff */}
+      <MetaData
+        title='User Profile'
+        description='View your TerraQuake API profile, including your activity, settings, and preferences.'
+        ogTitle='User Profile - TerraQuake API'
+        ogDescription='Access and manage your TerraQuake API account information and preferences.'
+        twitterTitle='User Profile - TerraQuake API'
+        twitterDescription='Manage your account and view your profile details on TerraQuake API.'
+        keywords='TerraQuake API, user profile, account settings, seismic data'
+      />
+      {/* SEO Stuff */}
 
         {isLoggedIn ? (
           <motion.div

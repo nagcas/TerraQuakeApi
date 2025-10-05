@@ -27,8 +27,7 @@ export default function ChangePassword() {
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
         .matches(/\d/, 'Must contain a number!')
-        .matches(/[^A-Za-z0-9]/)
-        .withMessage('Password must contain at least one special character.'),
+        .matches(/[^A-Za-z0-9]/),
 
       passwordNew: yup
         .string()
@@ -36,8 +35,7 @@ export default function ChangePassword() {
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
         .matches(/\d/, 'Must contain a number!')
-        .matches(/[^A-Za-z0-9]/)
-        .withMessage('Password must contain at least one special character.'),
+        .matches(/[^A-Za-z0-9]/),
 
       confirmPassword: yup
         .string()
@@ -52,12 +50,13 @@ export default function ChangePassword() {
     handleSubmit,
     reset, // used to reset form fields
     formState: { errors },
-  } = useForm({ resolver: yupResolver(changePasswordSchema), 
+  } = useForm({
+    resolver: yupResolver(changePasswordSchema),
     defaultValues: {
       passwordOld: '',
       passwordNew: '',
       confirmPassword: '',
-    }, 
+    },
   });
 
   // Reset form fields whenever the component mounts
@@ -97,7 +96,9 @@ export default function ChangePassword() {
       .catch((err) => {
         Swal.fire({
           title: 'Error!',
-          text: err.response?.data?.message || 'Something went wrong. Please try again.',
+          text:
+            err.response?.data?.message ||
+            'Something went wrong. Please try again.',
           icon: 'error',
           confirmButtonText: 'Ok',
         });
@@ -107,15 +108,34 @@ export default function ChangePassword() {
 
   return (
     <>
-      <MetaData title='Change Password' description='Change password Page of TerraQuake' />
+      {/* SEO Stuff */}
+      <MetaData
+        title='Change Password | TerraQuake API - Secure Account Management'
+        description='Change your TerraQuake API account password securely. Protect your account and manage your access to real-time earthquake data.'
+        ogTitle='Change Password | TerraQuake API'
+        ogDescription='Securely change your TerraQuake API account password to protect access to your earthquake data and API keys.'
+        twitterTitle='Change Password | TerraQuake API'
+        twitterDescription='Manage your TerraQuake API account securely by updating your password. Keep your earthquake monitoring data safe.'
+        keywords='change password TerraQuake API, account security, update password, earthquake data API security'
+      />
+      {/* SEO Stuff */}
+
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         {isLoggedIn ? (
-          <div className='p-8 rounded-lg w-full max-w-md'>
-            <h2 className='text-3xl text-center text-white font-bold mb-6'>Change Password</h2>
+          <div className='rounded-lg w-full max-w-md'>
+            <div className='flex flex-col justify-center items-center mb-16'>
+              <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+                Change Password
+                <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+              </h1>
+            </div>
+
             <form onSubmit={handleSubmit(handleChangePassword)}>
               {/* Old Password */}
               <div className='relative mb-6'>
-                <label className='block text-white text-sm font-semibold mb-2'>Old Password</label>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  Old Password
+                </label>
                 <input
                   className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                   {...register('passwordOld')}
@@ -130,12 +150,16 @@ export default function ChangePassword() {
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
-                <p className='text-red-600 pt-1'>{errors.passwordOld?.message}</p>
+                <p className='text-red-600 pt-1'>
+                  {errors.passwordOld?.message}
+                </p>
               </div>
 
               {/* New Password */}
               <div className='relative mb-6'>
-                <label className='block text-white text-sm font-semibold mb-2'>New Password</label>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  New Password
+                </label>
                 <input
                   className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                   {...register('passwordNew')}
@@ -150,12 +174,16 @@ export default function ChangePassword() {
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
-                <p className='text-red-600 pt-1'>{errors.passwordNew?.message}</p>
+                <p className='text-red-600 pt-1'>
+                  {errors.passwordNew?.message}
+                </p>
               </div>
 
               {/* Confirm New Password */}
               <div className='relative mb-6'>
-                <label className='block text-white text-sm font-semibold mb-2'>Confirm New Password</label>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  Confirm New Password
+                </label>
                 <input
                   className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                   {...register('confirmPassword')}
@@ -170,7 +198,9 @@ export default function ChangePassword() {
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
-                <p className='text-red-600 pt-1'>{errors.confirmPassword?.message}</p>
+                <p className='text-red-600 pt-1'>
+                  {errors.confirmPassword?.message}
+                </p>
               </div>
 
               {/* Submit */}
@@ -186,7 +216,9 @@ export default function ChangePassword() {
             {/* Divider */}
             <div className='flex items-center my-6'>
               <div className='flex-grow border-t border-gray-600 opacity-50'></div>
-              <span className='mx-3 text-gray-300 text-sm font-medium'>Or go back to your account</span>
+              <span className='mx-3 text-gray-300 text-sm font-medium'>
+                Or go back to your account
+              </span>
               <div className='flex-grow border-t border-gray-600 opacity-50'></div>
             </div>
 
@@ -201,7 +233,8 @@ export default function ChangePassword() {
         ) : (
           <div className='flex flex-col items-center gap-4'>
             <p className='text-2xl text-center text-gray-300 max-w-lg'>
-              To change your password, you need to be logged in. Please sign in or create a new account to continue.
+              To change your password, you need to be logged in. Please sign in
+              or create a new account to continue.
             </p>
             <div className='flex gap-4 mt-4'>
               <button

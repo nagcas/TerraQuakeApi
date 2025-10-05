@@ -1,5 +1,5 @@
 import { Context } from "@/components/modules/context"
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import Swal from "sweetalert2"
 
@@ -8,10 +8,12 @@ export default function GithubAuth() {
   const navigate = useNavigate()
   const { search } = useLocation()
   const { setUserLogin, setIsLoggedIn } = useContext(Context)
+  const [loading, setLoading] = useState(false);
 
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND
 
   useEffect(() => {
+    setLoading(true);
     const params = new URLSearchParams(search)
     const token = params.get("token")
     const message = params.get("message")
@@ -36,9 +38,10 @@ export default function GithubAuth() {
               title: "Success!",
               text: message || "Login with GitHub successful!",
               icon: "success",
-              confirmButtonText: "Ok",
+              confirmButtonText: "Profile",
             }).then(() => {
-              navigate("/profile")
+              setLoading(false);
+              navigate("/profile", { replace: true })
             })
           } else {
             throw new Error("No user returned from backend")
@@ -51,7 +54,8 @@ export default function GithubAuth() {
             icon: "error",
             confirmButtonText: "Ok",
           }).then(() => {
-            navigate("/signin")
+            setLoading(false);
+            navigate("/signin", { replace: true })
           })
         })
     } else {
@@ -61,7 +65,8 @@ export default function GithubAuth() {
         icon: "error",
         confirmButtonText: "Ok",
       }).then(() => {
-        navigate("/signin")
+        setLoading(false);
+        navigate("/signin", { replace: true })
       })
     }
   }, [search, navigate, BACKEND_URL, setUserLogin, setIsLoggedIn])

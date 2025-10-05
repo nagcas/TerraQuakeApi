@@ -24,8 +24,7 @@ export default function resetPassword() {
         .min(8, 'Password must be at least 8 characters!')
         .matches(/[A-Z]/, 'Must contain an uppercase letter!')
         .matches(/\d/, 'Must contain a number!')
-        .matches(/[^A-Za-z0-9]/)
-        .withMessage('Password must contain at least one special character.'),
+        .matches(/[^A-Za-z0-9]/),
 
       confirmPassword: yup
         .string()
@@ -68,23 +67,33 @@ export default function resetPassword() {
           text: err.response?.data?.message || 'Something went wrong',
           icon: 'error',
           confirmButtonText: 'Ok',
-        }).then(() => {
-          navigate('/signup');
         });
       });
   };
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Reset Password'
-        description='Reset Password Page of TerraQuake'
+        title='Reset Password | TerraQuake API - Secure Account Access'
+        description='Reset your TerraQuake API password securely to regain access to your earthquake monitoring dashboard. Easy, fast, and safe.'
+        ogTitle='Reset Password | TerraQuake API'
+        ogDescription='Securely reset your TerraQuake API password and continue accessing earthquake monitoring data without interruptions.'
+        twitterTitle='Reset Password | TerraQuake API'
+        twitterDescription='Reset your password for TerraQuake API to restore access to earthquake monitoring features.'
+        keywords='reset password TerraQuake API, password reset, account recovery, earthquake API'
       />
+      {/* SEO Stuff */}
+
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
-        <div className='p-8 rounded-lg w-full max-w-md'>
-          <h2 className='text-3xl text-center text-white font-bold'>
-            Reset Password
-          </h2>
+        <div className='rounded-lg w-full max-w-md'>
+          <div className='flex flex-col justify-center items-center mb-16'>
+            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+              Reset Password
+              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+            </h1>
+          </div>
+
           <form onSubmit={handleSubmit(handleForgotPassword)}>
             {/* New Password */}
             <div className='relative mb-6'>

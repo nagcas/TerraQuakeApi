@@ -6,6 +6,7 @@ import {
   FaYoutube,
 } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
+import { NavLink } from 'react-router-dom';
 
 export default function Footer() {
   const socials = [
@@ -53,6 +54,36 @@ export default function Footer() {
             TerraQuake <span className='text-violet-400'>API</span>
           </motion.h2>
           <p className='text-sm leading-relaxed text-slate-400'>
+  ];
+
+  const navLinks = [
+    { title: 'Home', path: '/' },
+    { title: 'Docs', path: '/docs' },
+    { title: 'FAQ', path: '/faq' },
+    { title: 'About', path: '/about' },
+    { title: 'Contribute', path: '/contribute' },
+  ];
+
+  const resourceLinks = [
+    { title: 'Terms & Conditions', path: '/terms-and-conditions' },
+    { title: 'Privacy Policy', path: '/privacy-policy' },
+    { title: 'Contact', path: '/contact' },
+  ];
+
+  return (
+    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 text-center'>
+      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+        {/* Logo + Description */}
+        <div>
+          <NavLink
+            className='text-3xl font-bold text-white'
+            aria-label='Visit TerraQuake API home'
+            to={'/'}
+          >
+            TerraQuake API
+            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto rounded-full' />
+          </NavLink>
+          <p className='text-sm leading-relaxed mt-4'>
             Open-source project providing reliable earthquake data for
             developers, researchers, and communities.
           </p>
@@ -94,12 +125,24 @@ export default function Footer() {
                 href='/contribute'
                 className='hover:text-violet-400 transition duration-200'
                 aria-label='Navigate to contribute page'
+        {/* Navigation */}
+        <section>
+          <h3 className='text-white font-semibold mb-3 text-center'>
+            Navigation
+          </h3>
+          <div className='flex flex-col gap-2 text-sm text-center'>
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.title}
+                className='hover:text-violet-400 transition'
+                aria-label={`Visit TerraQuake API ${link.title}`}
+                to={link.path}
               >
-                Contribute
-              </a>
-            </li>
-          </ul>
-        </div>
+                {link.title}
+              </NavLink>
+            ))}
+          </div>
+        </section>
 
         {/* Resources */}
         <div>
@@ -147,8 +190,40 @@ export default function Footer() {
                 href='/privacy-policy'
                 className='hover:text-violet-400 transition duration-200'
                 aria-label='Navigate to privacy policy page'
+        <section>
+          <h3 className='text-white font-semibold mb-3 text-center'>
+            Resources
+          </h3>
+          <div className='flex flex-col gap-2 text-sm text-center'>
+            {resourceLinks.map((link) => (
+              <NavLink
+                key={link.title}
+                className='hover:text-violet-400 transition'
+                aria-label={`Visit TerraQuake API ${link.title}`}
+                to={link.path}
               >
-                Privacy Policy
+                {link.title}
+              </NavLink>
+            ))}
+          </div>
+        </section>
+
+        {/* Social Media */}
+        <section>
+          <h3 className='text-white font-semibold mb-3 text-center'>
+            Community & Socials
+          </h3>
+          <div className='flex justify-center space-x-4'>
+            {socials.map((item) => (
+              <a
+                key={item.title}
+                href={item.url}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={`Visit TerraQuake API ${item.title} profile`}
+                className='hover:text-violet-400 transition'
+              >
+                {item.icon}
               </a>
             </li>
           </ul>
@@ -174,11 +249,13 @@ export default function Footer() {
               </motion.a>
             ))}
           </div>
-        </div>
+        </section>
       </div>
 
       {/* Copyright + Extended License */}
       <div className='relative border-t border-white/10 mt-10 pt-6 px-6 text-center text-sm text-slate-400 space-y-4'>
+      {/* Copyright */}
+      <div className='border-t border-white/10 mt-10 pt-6 px-6 text-center text-sm text-slate-400 space-y-4'>
         <p>
           &copy; {new Date().getFullYear()} TerraQuake API · All rights reserved
         </p>
@@ -191,11 +268,12 @@ export default function Footer() {
             rel='noopener noreferrer'
             className='hover:text-violet-400 transition duration-200'
             aria-label='Visit the TerraQuake API licence'
+            className='hover:text-violet-400 transition'
           >
             GNU Affero General Public License
-          </a>{' '}
-          as published by the Free Software Foundation, either version 3 of the
-          License, or (at your option) any later version.
+          </a>
+          , either version 3 of the License, or (at your option) any later
+          version.
         </p>
       </div>
 
