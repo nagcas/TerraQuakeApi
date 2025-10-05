@@ -1,40 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useCaseDocs } from '@/data/USE_CASE_DOCS';
 import AccordionItem from '@/utils/useCases/AccordionItem';
-import { FaArrowUp } from 'react-icons/fa6';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function UseCases() {
   const [expandedIndex, setExpandedIndex] = useState(0);
-  const [showButton, setShowButton] = useState(false);
-  const [isSticky, setIsSticky] = useState(true);
-  const sectionRef = useRef(null);
 
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const sectionBottom = section.offsetTop + section.offsetHeight;
-      const viewportHeight = window.innerHeight;
-
-      setShowButton(scrollY > 280);
-      setIsSticky(scrollY + viewportHeight < sectionBottom);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [showButton]);
 
   return (
     <>
@@ -51,7 +27,6 @@ export default function UseCases() {
 
       {/* Main Section */}
       <motion.section
-        ref={sectionRef}
         className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -77,10 +52,11 @@ export default function UseCases() {
               <div className='h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-white/70 max-w-3xl'>
-              Use Cases describe real-world scenarios where TerraQuake API can be applied.
-              By providing fast, reliable access to seismic data, the API enables developers,
-              researchers, institutions, and organizations to create applications focused on
-              safety, monitoring, education, and disaster prevention.
+              Use Cases describe real-world scenarios where TerraQuake API can
+              be applied. By providing fast, reliable access to seismic data,
+              the API enables developers, researchers, institutions, and
+              organizations to create applications focused on safety,
+              monitoring, education, and disaster prevention.
             </p>
           </motion.div>
 
@@ -102,32 +78,8 @@ export default function UseCases() {
             ))}
           </motion.div>
         </div>
-
-        {/* Back to Top Button */}
-        <AnimatePresence>
-          {showButton && (
-            <motion.button
-              layout
-              initial={{ opacity: 0, y: 40 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                position: isSticky ? 'fixed' : 'absolute',
-                bottom: isSticky ? 24 : 0,
-                right: 24,
-              }}
-              exit={{ opacity: 0, y: 40 }}
-              transition={{ duration: 0.4, ease: 'easeInOut' }}
-              onClick={scrollToTop}
-              className='bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 
-              text-white p-3 mb-3 rounded-full shadow-lg hover:scale-110 
-              transition-all duration-300 z-50 cursor-pointer flex gap-1 justify-center items-center'
-            >
-              <FaArrowUp size={20} />
-              <span className='hidden sm:inline'>Back to top</span>
-            </motion.button>
-          )}
-        </AnimatePresence>
+        {/* Floating Back-to-Top Button Component */}
+        <BackToTopButton />
       </motion.section>
     </>
   );

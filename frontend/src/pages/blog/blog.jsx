@@ -10,6 +10,7 @@ import {
   FaChevronRight,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 // Mock data generation functions
 const generateMockPosts = (page, limit) => {
@@ -404,6 +405,8 @@ export default function Blog() {
             </div>
           )}
         </div>
+        {/* Floating Back-to-Top Button Component */}
+        <BackToTopButton />
       </motion.section>
     </>
   );

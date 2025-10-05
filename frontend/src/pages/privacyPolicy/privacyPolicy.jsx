@@ -1,3 +1,4 @@
+import BackToTopButton from '@/components/utils/backToTopButton';
 import MetaData from '../noPage/metaData';
 
 export default function PrivacyPolicy() {
@@ -178,6 +179,8 @@ export default function PrivacyPolicy() {
           </section>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

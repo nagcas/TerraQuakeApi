@@ -1,5 +1,6 @@
 import MetaData from '@/pages/noPage/metaData';
 import { useState } from 'react';
+import BackToTopButton from '../utils/backToTopButton';
 
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,6 +107,8 @@ const Faq = () => {
           </div>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 };

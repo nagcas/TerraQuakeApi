@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function ChangePassword() {
   const { isLoggedIn } = useContext(Context);
@@ -261,6 +262,8 @@ export default function ChangePassword() {
           </div>
         )}
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

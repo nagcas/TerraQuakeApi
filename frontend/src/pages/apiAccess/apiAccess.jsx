@@ -1,3 +1,4 @@
+import BackToTopButton from '@/components/utils/backToTopButton';
 import MetaData from '@pages/noPage/metaData';
 
 export default function ApiAccess() {
@@ -33,6 +34,8 @@ export default function ApiAccess() {
           <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'></p>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

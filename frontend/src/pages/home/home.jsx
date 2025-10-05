@@ -4,6 +4,7 @@ import MetaData from '@pages/noPage/metaData';
 import ApiDocsEarthquakes from '@components/apiDocs/apiDocsEarthquakes';
 import Newsletter from '@/components/newsletter/Newsletter';
 import Testimonials from '@/components/testimonials/Testimonials';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function Home() {
   return (
@@ -24,6 +25,8 @@ export default function Home() {
       <Info />
       <ApiDocsEarthquakes />
       <Newsletter />
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }
