@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MetaData from "@pages/noPage/metaData";
-import { motion } from "framer-motion";
+import { motion,AnimatePresence } from "framer-motion";
 import { useCaseDocs } from "@/data/USE_CASE_DOCS";
 import AccordionItem from "@/utils/useCases/AccordionItem";
 import { useNavigate } from "react-router-dom";
@@ -8,16 +8,40 @@ import { FaArrowUp } from "react-icons/fa6";
 
 export default function UseCases() {
   const [expandedIndex, setExpandedIndex] = useState(0);
-  const [showButton, setShowButton] = useState(true);
+  const [showButton, setShowButton] = useState(false);
   const navigate = useNavigate();
+  const [isSticky, setIsSticky] = useState(true);
+
+  const sectionRef = useRef(null);
 
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+   
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const sectionBottom = section.offsetTop + section.offsetHeight; 
+      const viewportHeight = window.innerHeight;
+
+      
+      setShowButton(scrollY > 280);
+
+      
+      setIsSticky(scrollY + viewportHeight < sectionBottom);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [showButton]);
 
   return (
     <>
@@ -33,7 +57,10 @@ export default function UseCases() {
       />
       {/* SEO Stuff */}
 
-      <section className="relative z-30 w-full min-h-screen px-6 py-20">
+      <section
+        ref={sectionRef}
+        className="relative z-30 w-full min-h-screen px-6 py-20"
+      >
         {/* Header Section */}
         <div className="flex flex-col justify-center items-center mb-16">
           <h1 className="text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12">
@@ -66,18 +93,31 @@ export default function UseCases() {
               toggleExpand={toggleExpand}
             />
           ))}
+
           {/* Back to Top Button */}
-          {showButton && (
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={scrollToTop}
-              className="fixed bottom-6 right-6 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 text-white p-3 rounded-full shadow-lg hover:scale-105 transition-transform z-50"
-            >
-              <FaArrowUp size={20} />
-            </motion.button>
-          )}
+          <AnimatePresence>
+            {showButton && (
+              <motion.button
+                layout
+                initial={{ opacity: 0, y: 40 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  position: isSticky ? "fixed" : "absolute",
+                  bottom: isSticky ? 24 : 0, // smooth stop earlier
+                  right: 24,
+                }}
+                exit={{ opacity: 0, y: 40 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                onClick={scrollToTop}
+                className="bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 
+                text-white p-3 mb-3 rounded-full shadow-lg hover:scale-110 
+                transition-all duration-300 z-50 cursor-pointer flex gap-1 justify-center items-center"
+              >
+                <FaArrowUp size={20} /> Back to top
+              </motion.button>
+            )}
+          </AnimatePresence>
         </motion.div>
       </section>
     </>
