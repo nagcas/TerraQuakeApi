@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from '@config/axios.js';
 import MetaData from '@pages/noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function SignIn() {
   let navigate = useNavigate();
@@ -227,6 +228,8 @@ export default function SignIn() {
           </form>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

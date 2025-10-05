@@ -1,5 +1,6 @@
 import React from 'react';
 import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function Contribute() {
   const GITHUB_REPO = 'https://github.com/nagcas/TerraQuakeApi';
@@ -120,6 +121,8 @@ export default function Contribute() {
           </p>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

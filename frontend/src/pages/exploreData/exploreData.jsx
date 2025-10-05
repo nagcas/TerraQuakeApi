@@ -1,6 +1,7 @@
 import MetaData from '@pages/noPage/metaData';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground.jsx';
 import '@/components/apiPlayground/apiPlayground.css';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function ExploreData() {
   const earthquakesEndpoints = [
@@ -403,6 +404,8 @@ It allows users to access detailed information about a single earthquake event, 
           />
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

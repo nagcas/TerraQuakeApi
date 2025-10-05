@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MetaData from '@pages/noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function forgotPassword() {
   const [loading, setLoading] = useState(false);
@@ -150,6 +151,8 @@ export default function forgotPassword() {
           </Link>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

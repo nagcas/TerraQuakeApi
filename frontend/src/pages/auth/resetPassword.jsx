@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useParams } from 'react-router';
 import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function resetPassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -173,6 +174,8 @@ export default function resetPassword() {
           </Link>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

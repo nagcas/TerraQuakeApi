@@ -1,5 +1,6 @@
 import React from 'react';
 import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function Docs() {
   return (
@@ -300,6 +301,8 @@ export default function Docs() {
           </section>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

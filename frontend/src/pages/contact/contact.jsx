@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 // Import new icons for the 'Connect' section
 import { FiGithub } from 'react-icons/fi';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 const contactSchema = yup.object({
   name: yup.string().required('Name is required!'),
@@ -320,6 +321,8 @@ export default function Contact() {
             </motion.div>
           </div>
         </div>
+        {/* Floating Back-to-Top Button Component */}
+        <BackToTopButton />
       </motion.section>
     </>
   );

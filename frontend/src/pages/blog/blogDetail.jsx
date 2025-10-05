@@ -15,6 +15,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -708,7 +709,9 @@ The study of seismic waves continues to evolve with new technologies, providing 
                 <div className='mt-8 pt-6 border-t border-gray-800'>
                   <div className='flex items-center mb-4'>
                     <FaTag className='text-purple-400 mr-2' />
-                    <h4 className='text-white/70 font-semibold'>Related Topics</h4>
+                    <h4 className='text-white/70 font-semibold'>
+                      Related Topics
+                    </h4>
                   </div>
                   <div className='flex flex-wrap gap-3'>
                     {post.tags.map((tag, index) => (
@@ -782,6 +785,8 @@ The study of seismic waves continues to evolve with new technologies, providing 
           )}
         </div>
       </div>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

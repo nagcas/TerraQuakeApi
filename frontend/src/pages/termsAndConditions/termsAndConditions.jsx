@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function TermsAndConditions() {
   return (
@@ -206,6 +207,8 @@ export default function TermsAndConditions() {
           </section>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }
