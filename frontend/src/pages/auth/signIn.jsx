@@ -97,26 +97,30 @@ export default function SignIn() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Sign In'
-        description='Sign In - TerraQuake API'
-        ogTitle='Sign In - TerraQuake API'
-        twitterTitle='Sign In - TerraQuake API'
+        title='Sign In | TerraQuake API - Secure Access to Earthquake Data'
+        description='Sign in to your TerraQuake API account to access real-time earthquake monitoring, seismic data, and powerful API tools.'
+        ogTitle='Sign In | TerraQuake API'
+        ogDescription='Log in securely to TerraQuake API and gain access to earthquake monitoring data and API tools for developers, researchers, and organizations.'
+        twitterTitle='Sign In | TerraQuake API'
+        twitterDescription='Access your TerraQuake API account to manage earthquake data and API settings securely.'
+        keywords='Sign in TerraQuake API, login earthquake API, secure API access, earthquake monitoring'
       />
       {/* SEO Stuff */}
 
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         <div className='rounded-lg w-full max-w-md'>
           <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className="text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12">
-            Sign In
-          <div className="h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full" />
-          </h1>
+            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
+              Sign In
+              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
+            </h1>
 
-          {/* Description */}
-          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-2xl'>
-            Access your TerraQuake account to explore real seismic data, manage your preferences, and engage with our training environment.
-          </p>
-        </div>
+            {/* Description */}
+            <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-2xl'>
+              Access your TerraQuake account to explore real seismic data,
+              manage your preferences, and engage with our training environment.
+            </p>
+          </div>
           <form onSubmit={handleSubmit(handleLoginSubmit)}>
             <div className='mb-8'>
               <label className='block text-white text-sm font-semibold mb-2'>

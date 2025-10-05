@@ -21,6 +21,8 @@ import {
   authLimiter,
   contactLimiter
 } from './middleware/rateLimiter.js'
+import { metricsMiddleware } from './middleware/metrics.js'
+import routeMetrics from './routes/metricsRouters.js'
 
 dotenv.config()
 
@@ -74,12 +76,16 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
+// === METRICS MIDDLEWARE ===
+app.use(metricsMiddleware)
+
 // === ROUTES ===
 // Solo /v1/earthquakes è pubblico
 app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
 
 // Rotte protette/autenticate
 app.use('/v1/test', apiLimiter, routeGetStart)
+app.use('/v1', routeMetrics)
 app.use('/auth', authLimiter, routeAuth)
 app.use('/auth/github', authLimiter, routeGitHub)
 app.use('/users', authLimiter, authenticateUser, routeUsers)

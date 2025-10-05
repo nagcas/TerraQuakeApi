@@ -34,10 +34,17 @@ export default function Profile() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Profile'
-        description='Profile Page of TerraQuake'
+        title='User Profile'
+        description='View your TerraQuake API profile, including your activity, settings, and preferences.'
+        ogTitle='User Profile - TerraQuake API'
+        ogDescription='Access and manage your TerraQuake API account information and preferences.'
+        twitterTitle='User Profile - TerraQuake API'
+        twitterDescription='Manage your account and view your profile details on TerraQuake API.'
+        keywords='TerraQuake API, user profile, account settings, seismic data'
       />
+      {/* SEO Stuff */}
 
       <section className='relative z-30 w-full flex flex-col items-center justify-center text-center px-6 py-30 text-white'>
         {isLoggedIn ? (

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@/components/modules/context';
+import MetaData from '../noPage/metaData';
 
 export default function DeleteProfile() {
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
@@ -71,6 +72,18 @@ export default function DeleteProfile() {
 
   return (
     <>
+      {/* SEO Stuff */}
+      <MetaData
+        title='Use Cases'
+        description='Explore practical applications of TerraQuake API for earthquake monitoring, seismic data analysis, early warning systems, and disaster prevention — designed for developers, researchers, and organizations.'
+        ogTitle='Use Cases - TerraQuake API'
+        ogDescription='Discover how developers, researchers, and organizations use TerraQuake API to monitor earthquakes, analyze seismic data, and improve disaster preparedness.'
+        twitterTitle='Use Cases - TerraQuake API'
+        twitterDescription='Explore real-world applications of TerraQuake API for earthquake monitoring, seismic data, early warning systems, and disaster prevention.'
+        keywords='TerraQuake API, use cases, earthquake monitoring API, seismic data, early warning systems, disaster prevention'
+      />
+      {/* SEO Stuff */}
+
       <section className='text-left py-4'>
         <p className='text-xl text-red-500'>
           We’re truly sorry to see you go. Deleting your account is a permanent

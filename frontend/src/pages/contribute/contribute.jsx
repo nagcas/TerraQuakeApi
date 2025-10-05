@@ -28,10 +28,13 @@ export default function Contribute() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Contribute'
-        description='Help improve the TerraQuake API by contributing code, data, or documentation.'
-        ogTitle='Contribute- TerraQuake API'
-        twitterTitle='Contribute - TerraQuake API'
+        title='Contribute | TerraQuake API - Open Source Earthquake Monitoring'
+        description='Join the TerraQuake API community to contribute code, seismic data, or documentation and help advance earthquake monitoring technology.'
+        ogTitle='Contribute | TerraQuake API - Open Source Earthquake Monitoring'
+        ogDescription='Become part of the TerraQuake API open source project. Contribute code, data, or documentation to improve earthquake monitoring and seismic safety.'
+        twitterTitle='Contribute | TerraQuake API - Open Source Earthquake Monitoring'
+        twitterDescription='Help enhance TerraQuake API by contributing code, seismic data, or documentation. Join our earthquake monitoring open source community.'
+        keywords='TerraQuake API contribute, open source earthquake monitoring, seismic data contribution, earthquake API collaboration'
       />
       {/* SEO Stuff */}
 

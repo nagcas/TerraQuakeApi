@@ -101,6 +101,8 @@ function App() {
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />
+             {/* Vercel Analytics */}
+            <Analytics />
           </div>
         </main>
       </BrowserRouter>

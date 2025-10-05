@@ -108,10 +108,18 @@ export default function ChangePassword() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Change Password'
-        description='Change password - TerraQuake API'
+        title='Change Password | TerraQuake API - Secure Account Management'
+        description='Change your TerraQuake API account password securely. Protect your account and manage your access to real-time earthquake data.'
+        ogTitle='Change Password | TerraQuake API'
+        ogDescription='Securely change your TerraQuake API account password to protect access to your earthquake data and API keys.'
+        twitterTitle='Change Password | TerraQuake API'
+        twitterDescription='Manage your TerraQuake API account securely by updating your password. Keep your earthquake monitoring data safe.'
+        keywords='change password TerraQuake API, account security, update password, earthquake data API security'
       />
+      {/* SEO Stuff */}
+
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         {isLoggedIn ? (
           <div className='rounded-lg w-full max-w-md'>
