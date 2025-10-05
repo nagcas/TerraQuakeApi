@@ -6,6 +6,8 @@ import AccordionItem from "@/utils/useCases/AccordionItem";
 
 export default function UseCases() {
   const [expandedIndex, setExpandedIndex] = useState(0);
+  const [showButton, setShowButton] = useState(false);
+  const navigate = useNavigate();
 
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -50,14 +52,26 @@ export default function UseCases() {
           className="w-full mt-10 flex flex-col items-center space-y-6"
         >
           {useCaseDocs.map((item, index) => (
-              <AccordionItem
-                key={item.title}
-                item={item}
-                index={index}
-                expandedIndex={expandedIndex}
-                toggleExpand={toggleExpand}
-              />
+            <AccordionItem
+              key={item.title}
+              item={item}
+              index={index}
+              expandedIndex={expandedIndex}
+              toggleExpand={toggleExpand}
+            />
           ))}
+          {/* Back to Top Button */}
+          {showButton && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={scrollToTop}
+              className="fixed bottom-6 right-6 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 text-white p-3 rounded-full shadow-lg hover:scale-105 transition-transform z-50"
+            >
+              <ArrowUp size={20} />
+            </motion.button>
+          )}
         </motion.div>
       </section>
     </>
