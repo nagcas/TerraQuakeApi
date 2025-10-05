@@ -3,14 +3,20 @@ import MetaData from "@pages/noPage/metaData";
 import { motion } from "framer-motion";
 import { useCaseDocs } from "@/data/USE_CASE_DOCS";
 import AccordionItem from "@/utils/useCases/AccordionItem";
+import { useNavigate } from "react-router-dom";
+import { FaArrowUp } from "react-icons/fa6";
 
 export default function UseCases() {
   const [expandedIndex, setExpandedIndex] = useState(0);
-  const [showButton, setShowButton] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const navigate = useNavigate();
 
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -69,7 +75,7 @@ export default function UseCases() {
               onClick={scrollToTop}
               className="fixed bottom-6 right-6 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 text-white p-3 rounded-full shadow-lg hover:scale-105 transition-transform z-50"
             >
-              <ArrowUp size={20} />
+              <FaArrowUp size={20} />
             </motion.button>
           )}
         </motion.div>
