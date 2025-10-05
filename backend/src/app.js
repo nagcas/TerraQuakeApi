@@ -62,9 +62,6 @@ app.use(mongoSanitize())
 app.use(xss())
 app.use(hpp())
 
-// === METRICS MIDDLEWARE ===
-app.use(metricsMiddleware)
-
 // Body parser
 app.use(express.json({ limit: '10kb' })) // evita payload enormi
 app.use(express.urlencoded({ extended: true }))
@@ -78,6 +75,9 @@ const corsOptions = {
   credentials: true
 }
 app.use(cors(corsOptions))
+
+// === METRICS MIDDLEWARE ===
+app.use(metricsMiddleware)
 
 // === ROUTES ===
 // Solo /v1/earthquakes è pubblico
