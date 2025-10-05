@@ -25,6 +25,12 @@ export default function UseCases() {
       />
       {/* SEO Stuff */}
 
+      {/* Background Gradient/Mesh (for a classy, dark theme) */}
+      <div className='absolute inset-0 z-0'>
+        <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+        <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+      </div>
+
       <section className='relative z-30 w-full min-h-screen px-6 py-20'>
         {/* Header Section */}
         <div className='flex flex-col justify-center items-center mb-16'>
