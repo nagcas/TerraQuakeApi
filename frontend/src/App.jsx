@@ -1,4 +1,4 @@
-import { Analytics } from '@vercel/analytics/react'
+// import { Analytics } from '@vercel/analytics/react'
 import "./App.css"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -102,7 +102,7 @@ function App() {
             </Routes>
             <Footer />
              {/* Vercel Analytics */}
-            <Analytics />
+            {/* <Analytics /> */}
           </div>
         </main>
       </BrowserRouter>
