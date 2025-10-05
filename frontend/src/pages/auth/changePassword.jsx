@@ -127,7 +127,7 @@ export default function ChangePassword() {
         <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
       </div>
 
-      <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
+      <section className='relative z-30 min-h-screen flex items-center justify-center p-6 rounded-lg'>
         {isLoggedIn ? (
           <div className='rounded-lg w-full max-w-md'>
             <div className='flex flex-col justify-center items-center mb-16'>
