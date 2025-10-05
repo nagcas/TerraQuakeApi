@@ -114,7 +114,7 @@ export default function UseCases() {
                 text-white p-3 mb-3 rounded-full shadow-lg hover:scale-110 
                 transition-all duration-300 z-50 cursor-pointer flex gap-1 justify-center items-center"
               >
-                <FaArrowUp size={20} /> Back to top
+                <FaArrowUp size={20} /> <span className="hidden sm:inline">Back to top</span>
               </motion.button>
             )}
           </AnimatePresence>
