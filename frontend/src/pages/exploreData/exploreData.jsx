@@ -1,8 +1,13 @@
 import MetaData from '@pages/noPage/metaData';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground.jsx';
 import '@/components/apiPlayground/apiPlayground.css';
+import ViewMap from '@/components/map/viewMap';
+import { useState } from 'react';
 
 export default function ExploreData() {
+
+  const [earthquakeData, setEarthquakeData] = useState(null);
+  
   const earthquakesEndpoints = [
     {
       key: 'recent',
@@ -391,7 +396,9 @@ It allows users to access detailed information about a single earthquake event, 
           <ApiPlayground
             title='Earthquakes'
             endpoints={earthquakesEndpoints}
+            setEarthquakeData={setEarthquakeData}
           />
+          <ViewMap earthquakeData={earthquakeData}/>
         </div>
       </section>
     </>
