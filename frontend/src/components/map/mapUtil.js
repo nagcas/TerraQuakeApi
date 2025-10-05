@@ -7,17 +7,14 @@
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import Feature from "ol/Feature";
-import Map from "ol/Map";
-import View from "ol/View";
 import Point from "ol/geom/Point";
 import { circular } from "ol/geom/Polygon";
 import Control from "ol/control/Control";
 import { fromLonLat } from "ol/proj";
-import GeoJSON from "ol/format/GeoJSON";
 import { Fill, Icon, Style } from "ol/style";
 import kompas from "kompas";
-import compassIcon from "@/assets/svg/compass.svg";
-import { Stroke, Text } from "ol/style";
+import compassIcon from "@/assets/svgs/compass.svg";
+import { Stroke } from "ol/style";
 import CircleStyle from "ol/style/Circle";
 
 /**
