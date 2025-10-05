@@ -107,10 +107,11 @@ export default function About() {
             description: 'Real-time earthquakes normalized and accessible',
           },
           {
-            value: `${(data.apiLatencyAvg || 0).toFixed(3)} s`,
+            value: `${data.apiLatencyAvgMs} ms`,
             label: 'API Latency',
-            description: 'Average response time across global regions',
+            description: 'Average API response time',
           },
+
           {
             value: `${Math.floor(data.uptime)} s`,
             label: 'Uptime',
