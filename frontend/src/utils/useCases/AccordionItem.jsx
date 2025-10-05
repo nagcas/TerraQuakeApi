@@ -3,9 +3,11 @@ import { FiChevronDown} from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageTabs from './LanguageTabs';
 import ApiPlayground from './ApiPlayground';
+import { useNavigate } from 'react-router-dom';
 
 const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
   const isOpen = index === expandedIndex;
+  const navigate = useNavigate();
 
   const [showSnippets, setShowSnippets] = useState(false);
   useEffect(() => {
@@ -25,9 +27,9 @@ const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
     try {
       const url = new URL(exampleUrl);
       const path = url.pathname.replace('/v1/', '').replace(/\//g, '-');
-      navigate(`/api-docs#${path}`);
+      navigate(`/docs`);
     } catch {
-      navigate('/api-docs');
+      navigate('/404-page')
     }
   };
 
