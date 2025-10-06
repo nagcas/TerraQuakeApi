@@ -231,10 +231,7 @@ export default function Contribute() {
           >
             <div className="flex items-center gap-5">
           
-              {/* <div className="text-5xl">
-                <HF_SVG className="text-4xl w-full h-full"/>
-              </div> */}
-
+            
               <img className="pt-3 w-48 h-25" src={hacktoberfest}/>
 
 
