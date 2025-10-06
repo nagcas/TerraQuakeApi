@@ -5,13 +5,8 @@ import BackToTopButton from "@/components/utils/backToTopButton";
 import MetaData from "@pages/noPage/metaData";
 import { FaDiscord } from "react-icons/fa";
 import { IoIosGitPullRequest } from "react-icons/io";
+import { API_DOCS, CODE_OF_CONDUCT, DISCORD_LINK, ISSUE_TRACKER, PULL_REQUESTS } from "@/data/CONTRIBUTE";
 
-const PULL_REQUESTS = "https://github.com/nagcas/TerraQuakeApi/pulls";
-const ISSUE_TRACKER = "https://github.com/nagcas/TerraQuakeApi/issues";
-const GITHUB_REPO = "https://github.com/nagcas/TerraQuakeApi";
-const DISCORD_LINK = "https://discord.com/invite/RDBp8KJB';";
-const CODE_OF_CONDUCT = "https://github.com/nagcas/TerraQuakeApi/blob/main/CODE_OF_CONDUCT.md";
-const API_DOCS="https://github.com/nagcas/TerraQuakeApi/blob/main/API_DOCS.md";
 
 const ContributionCard = ({ icon, title, description, link, linkText }) => {
   const [transformStyle, setTransformStyle] = useState(
@@ -179,7 +174,7 @@ export default function Contribute() {
             icon={<FaBook />}
             title="Improve Documentation"
             description="Clear guides are essential for a great developer experience. If you spot a typo or can explain something better, we welcome your input."
-            link={`${GITHUB_REPO}/tree/main/docs`}
+            link={`${API_DOCS}`}
             linkText="Update the Docs"
           />
         </motion.div>
@@ -227,7 +222,7 @@ export default function Contribute() {
           className="mt-20 max-w-3xl mx-auto p-6 bg-gradient-to-r from-slate-900 to-slate-800/70 backdrop-blur-sm border border-white/10 rounded-2xl shadow-lg cursor-pointer"
         >
           <a
-            href="https://dummy"
+            href="https://hacktoberfest.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col sm:flex-row items-center justify-between gap-4 text-decoration-none"
