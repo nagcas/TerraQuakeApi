@@ -6,11 +6,12 @@ import MetaData from "@pages/noPage/metaData";
 import { FaDiscord } from "react-icons/fa";
 import { IoIosGitPullRequest } from "react-icons/io";
 
-const PULL_REQUESTS = "https://github.com/dummy/pulls";
-const ISSUE_TRACKER = "https://github.com/dummy/issues";
-const GITHUB_REPO = "https://github.com/dummy";
-const DISCORD_LINK = "https://discord.gg/dummy";
-const CODE_OF_CONDUCT = "https://github.com/dummy/blob/main/CODE_OF_CONDUCT.md";
+const PULL_REQUESTS = "https://github.com/nagcas/TerraQuakeApi/pulls";
+const ISSUE_TRACKER = "https://github.com/nagcas/TerraQuakeApi/issues";
+const GITHUB_REPO = "https://github.com/nagcas/TerraQuakeApi";
+const DISCORD_LINK = "https://discord.com/invite/RDBp8KJB';";
+const CODE_OF_CONDUCT = "https://github.com/nagcas/TerraQuakeApi/blob/main/CODE_OF_CONDUCT.md";
+const API_DOCS="https://github.com/nagcas/TerraQuakeApi/blob/main/API_DOCS.md";
 
 const ContributionCard = ({ icon, title, description, link, linkText }) => {
   const [transformStyle, setTransformStyle] = useState(
@@ -201,9 +202,9 @@ export default function Contribute() {
               href={DISCORD_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg flex justify-center items-center gap-3 bounce-on-hover"
+              className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg flex justify-center items-center gap-3 group"
             >
-              <FaDiscord className="text-xl" />
+              <FaDiscord className="text-2xl icon-bounces" />
               Join our Discord
             </a>
             <a
@@ -251,12 +252,12 @@ export default function Contribute() {
                 </p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-0 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all duration-300 transform group">
+            <a href={ISSUE_TRACKER} className="mt-4 sm:mt-0 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all duration-300 transform group">
               <div className="flex gap-2 justify-center items-center">
-                <IoIosGitPullRequest size={25} className="transition-transform duration-500 origin-top dangle-on-hover" />
+                <IoIosGitPullRequest size={25} className="transition-transform duration-500 origin-top dangle-on-hover text-2xl" />
                 <span>Find an Issue</span>
               </div>
-            </div>
+            </a>
           </a>
         </motion.div>
       </section>

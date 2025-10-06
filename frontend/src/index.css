@@ -83,7 +83,7 @@ body {
 
 @keyframes subtle-bounce {
   0%, 100% {
-    transform: translateY(-10%);
+    transform: translateY(-15%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
   50% {
@@ -92,7 +92,6 @@ body {
   }
 }
 
-
-.bounce-on-hover:hover {
-  animation: subtle-bounce 0.6s;
+.group:hover .icon-bounces {
+  animation: subtle-bounce 0.8s infinite;
 }
