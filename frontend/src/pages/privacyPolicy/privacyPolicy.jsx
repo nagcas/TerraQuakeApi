@@ -7,12 +7,12 @@ export default function PrivacyPolicy() {
         title="Privacy Policy"
         description="Privacy Policy Page of TerraQuake"
       />
-      <section className="relative z-30 w-full min-h-screen px-6 py-16 flex justify-center">
-        <div className="max-w-5xl w-full bg-gradient-to-br from-white/5 to-violet-950/20 border border-white/10 backdrop-blur-md shadow-2xl rounded-2xl p-10 space-y-10">
-          
+      <section className="relative z-30 w-full min-h-screen px-6 py-16 flex justify-center bg-gradient-to-br from-gray-950 via-indigo-950 to-purple-900">
+        <div className="max-w-5xl w-full bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl rounded-2xl p-10 space-y-10 transition-all hover:shadow-purple-900/40">
+
           {/* Titolo */}
           <div className="text-center space-y-3">
-            <h1 className="text-2xl md:text-4xl text-white font-extrabold text-center my-10 tracking-tight">
+            <h1 className="text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-purple-400 to-indigo-400 font-extrabold text-center my-10 tracking-tight drop-shadow-lg">
               Privacy Policy
             </h1>
             <p className="text-sm text-gray-400 italic">
@@ -30,8 +30,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              1. Data We Collect
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 1. Data We Collect
             </h2>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
               <li>Personal data: name, email, account information.</li>
@@ -45,8 +45,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              2. How We Use Your Data
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 2. How We Use Your Data
             </h2>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
               <li>Provide and maintain our services.</li>
@@ -57,8 +57,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              3. Legal Basis (GDPR)
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 3. Legal Basis (GDPR)
             </h2>
             <p className="text-gray-300 leading-relaxed">
               We process your data based on your consent, contractual necessity,
@@ -67,8 +67,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              4. Sharing Your Data
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 4. Sharing Your Data
             </h2>
             <p className="text-gray-300 leading-relaxed">
               Data may be shared with service providers, hosting platforms, and
@@ -78,8 +78,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              5. User Rights (GDPR & CCPA)
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 5. User Rights (GDPR & CCPA)
             </h2>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
               <li>Access, rectify, or delete your data.</li>
@@ -90,7 +90,7 @@ export default function PrivacyPolicy() {
             </ul>
             <p className="text-gray-300 leading-relaxed">
               To exercise these rights, contact us at{" "}
-              <span className="text-pink-400 font-semibold">
+              <span className="text-pink-400 font-semibold hover:underline decoration-pink-500/50">
                 terraquakeapi@gmail.com
               </span>
               .
@@ -98,8 +98,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              6. Data Retention
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 6. Data Retention
             </h2>
             <p className="text-gray-300 leading-relaxed">
               We retain personal data only as long as necessary to provide
@@ -108,8 +108,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              7. Cookies & Tracking
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 7. Cookies & Tracking
             </h2>
             <p className="text-gray-300 leading-relaxed">
               TerraQuake uses cookies and similar technologies for analytics and
@@ -119,8 +119,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              8. International Transfers
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 8. International Transfers
             </h2>
             <p className="text-gray-300 leading-relaxed">
               Your data may be processed or stored outside your country. We take
@@ -130,8 +130,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              9. Security
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 9. Security
             </h2>
             <p className="text-gray-300 leading-relaxed">
               We implement reasonable technical and organizational measures to
@@ -140,8 +140,8 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              10. Changes to this Policy
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 10. Changes to this Policy
             </h2>
             <p className="text-gray-300 leading-relaxed">
               We may update this Privacy Policy periodically. Continued use of
@@ -150,12 +150,12 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-6 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold text-purple-500">
-              11. Contact Information
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 11. Contact Information
             </h2>
             <p className="text-gray-300 leading-relaxed">
               Questions or requests regarding privacy? Contact us at{" "}
-              <span className="text-pink-400 font-semibold">
+              <span className="text-pink-400 font-semibold hover:underline decoration-pink-500/50">
                 terraquakeapi@gmail.com
               </span>
               .
@@ -166,4 +166,3 @@ export default function PrivacyPolicy() {
     </>
   );
 }
-
