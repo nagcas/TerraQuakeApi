@@ -252,7 +252,7 @@ export default function Blog() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70">
+        <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70'>
           {/* Header Section */}
           <motion.div
             className='mb-16 text-center lg:text-left'
@@ -264,7 +264,7 @@ export default function Blog() {
               Seismic Insights Blog.
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-             <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
               Explore the latest research, insights, and developments in
               earthquake science and seismology.
             </p>
@@ -406,9 +406,9 @@ export default function Blog() {
             </div>
           )}
         </div>
-        {/* Floating Back-to-Top Button Component */}
-        <BackToTopButton />
       </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

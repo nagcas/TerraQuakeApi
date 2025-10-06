@@ -78,9 +78,9 @@ export default function UseCases() {
             ))}
           </motion.div>
         </div>
-        {/* Floating Back-to-Top Button Component */}
-        <BackToTopButton />
       </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

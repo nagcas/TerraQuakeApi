@@ -55,10 +55,9 @@ export default function ApiAccess() {
           {/* Description */}
           <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'></p>
         </div>
-
-        {/* Floating Back-to-Top Button Component */}
-        <BackToTopButton />
       </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

@@ -436,9 +436,9 @@ export default function SignUp() {
             </motion.div>
           </div>
         </div>
-        {/* Floating Back-to-Top Button Component */}
-        <BackToTopButton />
       </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

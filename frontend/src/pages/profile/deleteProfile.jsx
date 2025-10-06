@@ -129,7 +129,6 @@ export default function DeleteProfile() {
             </div>
           </div>
         )}
-        ;
       </section>
     </>
   );

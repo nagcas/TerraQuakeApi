@@ -152,59 +152,58 @@ export default function About() {
       />
       {/* SEO Stuff */}
 
-      <motion.section 
-        className="relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden"
+      <motion.section
+        className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-         {/* Background Gradient */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        {/* Background Gradient */}
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70">
+        <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70'>
           {/* Header Section */}
           <motion.div
-            className="mb-16 text-center lg:text-left"
+            className='mb-16 text-center lg:text-left'
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h1 className="text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4">
+            <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
               About TerraQuake API.
-              <div className="h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
+              <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-             <p className='text-xl text-left text-white/70 max-w-7xl'>
-             A focused platform built to translate raw seismic feeds into
-            developer-friendly endpoints and actionable insights for safety,
-            research, and education.
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
+              A focused platform built to translate raw seismic feeds into
+              developer-friendly endpoints and actionable insights for safety,
+              research, and education.
             </p>
           </motion.div>
 
-        
           <div className='max-w-6xl mx-auto grid gap-4 md:grid-cols-4 mb-6 md:mb-16'>
-          {highlightMetrics.map((metric) => (
-            <div
-              key={metric.label}
-              className='group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]'
-            >
-              <div className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent' />
-              <div className='relative'>
-                <span className='text-2xl md:text-3xl font-semibold text-white tracking-tight'>
-                  {metric.value}
-                </span>
-                <p className='mt-1 text-sm uppercase tracking-[0.2em] text-purple-200/70'>
-                  {metric.label}
-                </p>
-                <p className='mt-3 text-sm text-gray-300 leading-relaxed'>
-                  {metric.description}
-                </p>
+            {highlightMetrics.map((metric) => (
+              <div
+                key={metric.label}
+                className='group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]'
+              >
+                <div className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent' />
+                <div className='relative'>
+                  <span className='text-2xl md:text-3xl font-semibold text-white tracking-tight'>
+                    {metric.value}
+                  </span>
+                  <p className='mt-1 text-sm uppercase tracking-[0.2em] text-purple-200/70'>
+                    {metric.label}
+                  </p>
+                  <p className='mt-3 text-sm text-gray-300 leading-relaxed'>
+                    {metric.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
 
@@ -268,9 +267,9 @@ export default function About() {
             </div>
           ))}
         </div>
-        {/* Floating Back-to-Top Button Component */}
-        <BackToTopButton />
       </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

@@ -71,15 +71,6 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const contactSchema = yup.object({
-    name: yup.string().required('Name is required!'),
-    lastname: yup.string().required('Lastname is required!'),
-    email: yup.string().email('Invalid email!').required('Email is required!'),
-    subject: yup.string().required('Subject is required!'),
-    message: yup.string().required('Message is required!'),
-  });
-
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
   const {
     register,
     handleSubmit,
@@ -91,13 +82,11 @@ export default function Contact() {
 
   const handleContact = async (data) => {
     setLoading(true);
+
     try {
       const res = await axios.post('/contact/create-contact', data);
+
       Swal.fire({
-        title: '✅ Message Sent!',
-        text: res.data.message || 'Your message has been delivered successfully!',
-        icon: 'success',
-        confirmButtonText: 'Awesome!',
         title: 'Success!',
         text:
           res.data.message || "Message sent successfully! We'll be in touch.",
@@ -116,6 +105,7 @@ export default function Contact() {
         err?.response?.data?.error ||
         err?.message ||
         'An error occurred. Please try again.';
+
       Swal.fire({
         title: 'Error!',
         text: errorMessage,
@@ -141,12 +131,6 @@ export default function Contact() {
   ];
 
   return (
-    <section className="relative flex flex-col min-h-screen justify-center overflow-hidden bg-gradient-to-br from-black via-violet-950 to-purple-900">
-      <MetaData
-        title="Contact Us - TerraQuake API"
-        description="Get in touch with the TerraQuake API team for support or inquiries."
-        ogTitle="Contact Us - TerraQuake API"
-        twitterTitle="Contact Us - TerraQuake API"
     <>
       {/* SEO Stuff */}
       <MetaData
@@ -160,156 +144,6 @@ export default function Contact() {
       />
       {/* SEO Stuff */}
 
-      {/* Decorative gradient blur effects */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-purple-600/30 blur-[120px] rounded-full animate-pulse" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-pink-600/20 blur-[100px] rounded-full animate-pulse delay-300" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="z-20 max-w-5xl mx-auto px-6 py-20"
-      >
-        <h1 className="text-4xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 drop-shadow-lg">
-          Get in Touch 💌
-        </h1>
-        <p className="text-gray-300 text-center mt-4 max-w-2xl mx-auto">
-          Have a question, idea, or feedback? We’d love to hear from you!  
-          Let’s build something amazing together with <span className="text-purple-400 font-semibold">TerraQuake API</span>.
-        </p>
-
-        {/* Contact Info Section */}
-        <div className="mt-12 grid md:grid-cols-2 gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="bg-white/10 border border-white/20 backdrop-blur-lg rounded-2xl p-8 shadow-xl hover:shadow-purple-500/20 transition"
-          >
-            <h2 className="text-xl text-purple-300 font-semibold mb-4">Reach Us</h2>
-            <p className="text-gray-300 mb-3">
-              Email:{' '}
-              <a
-                href="mailto:support@terraquakeapi.com"
-                className="text-indigo-400 hover:text-pink-400 transition"
-              >
-                support@terraquakeapi.com
-              </a>
-            </p>
-            <p className="text-gray-300 mb-3">
-              Twitter:{' '}
-              <a
-                href="https://twitter.com/terraquakeapi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-indigo-400 hover:text-pink-400 transition"
-              >
-                @TerraQuakeAPI
-              </a>
-            </p>
-            <p className="text-gray-300 mb-3">
-              GitHub:{' '}
-              <a
-                href="https://github.com/nagcas/TerraQuakeApi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-indigo-400 hover:text-pink-400 transition"
-              >
-                TerraQuakeApi Repo
-              </a>
-            </p>
-            <p className="text-gray-400 mt-4 text-sm">
-              We respect your privacy. Your info will never be shared. Read our{' '}
-              <a href="/privacyPolicy" className="text-indigo-400 hover:text-pink-400 underline">
-                Privacy Policy
-              </a>
-              .
-            </p>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="bg-white/10 border border-white/20 backdrop-blur-lg rounded-2xl p-8 shadow-xl hover:shadow-pink-500/20 transition"
-          >
-            <form onSubmit={handleSubmit(handleContact)} noValidate>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                {[{ label: 'Name', name: 'name' }, { label: 'Lastname', name: 'lastname' }].map(field => (
-                  <div key={field.name}>
-                    <label className="block text-gray-200 font-semibold mb-2">{field.label}</label>
-                    <input
-                      type="text"
-                      {...register(field.name)}
-                      className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-                    />
-                    {errors[field.name] && (
-                      <p className="text-red-400 text-sm mt-1">{errors[field.name].message}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                {[{ label: 'Email', name: 'email', type: 'email' }, { label: 'Subject', name: 'subject' }].map(field => (
-                  <div key={field.name}>
-                    <label className="block text-gray-200 font-semibold mb-2">{field.label}</label>
-                    <input
-                      type={field.type || 'text'}
-                      {...register(field.name)}
-                      className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition"
-                    />
-                    {errors[field.name] && (
-                      <p className="text-red-400 text-sm mt-1">{errors[field.name].message}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-gray-200 font-semibold mb-2">Message</label>
-                <textarea
-                  {...register('message')}
-                  rows="5"
-                  className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 transition"
-                />
-                {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message.message}</p>}
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full mt-4 bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 hover:opacity-90 text-white font-bold py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <ImSpinner9 className="animate-spin" />
-                    Sending...
-                  </div>
-                ) : (
-                  'Send Message ✨'
-                )}
-              </button>
-            </form>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
-        {/* Header Section */}
-        <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
-            Contact Us
-            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
-          </h1>
-
-          {/* Description */}
-          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
-            We’re here to help you make the most of the TerraQuake API. Whether
-            you have a question about our endpoints, need technical support, or
-            want to share feedback, our team is ready to assist.
-          </p>
       <motion.section
         className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
         initial={{ opacity: 0 }}
@@ -334,7 +168,7 @@ export default function Contact() {
               Let's Connect.
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-             <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
               At TerraQuake API, we’re committed to making seismic data
               accessible and insightful. Whether you’re a researcher, developer,
               or enthusiast, your ideas and feedback help us improve the
@@ -487,9 +321,9 @@ export default function Contact() {
             </motion.div>
           </div>
         </div>
-        {/* Floating Back-to-Top Button Component */}
-        <BackToTopButton />
       </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }
