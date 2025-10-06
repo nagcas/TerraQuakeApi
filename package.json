@@ -1,0 +1,20 @@
+{
+  "name": "terraquakeapi",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "homepage": "https://github.com/PATILYASHH/TerraQuakeApi#readme",
+  "bugs": {
+    "url": "https://github.com/PATILYASHH/TerraQuakeApi/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PATILYASHH/TerraQuakeApi.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

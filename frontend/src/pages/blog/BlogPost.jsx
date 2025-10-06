@@ -1,77 +1,88 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 // import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
-import MetaData from '@pages/noPage/metaData'
-import { FaCalendarAlt, FaUser, FaClock, FaArrowLeft, FaShare, FaTag, FaHeart, FaBookmark, FaEye } from 'react-icons/fa'
-import ReactMarkdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeRaw from 'rehype-raw'
-import remarkGfm from 'remark-gfm'
-import './blog.css'
-import 'prismjs/themes/prism-tomorrow.css'
+import MetaData from '@pages/noPage/metaData';
+import {
+  FaCalendarAlt,
+  FaUser,
+  FaClock,
+  FaArrowLeft,
+  FaShare,
+  FaTag,
+  FaHeart,
+  FaBookmark,
+  FaEye,
+} from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import './blog.css';
+import 'prismjs/themes/prism-tomorrow.css';
 
 export default function BlogPost() {
-  const { slug } = useParams()
-  const navigate = useNavigate()
-  const [post, setPost] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [relatedPosts, setRelatedPosts] = useState([])
-  const [isLiked, setIsLiked] = useState(false)
-  const [isBookmarked, setIsBookmarked] = useState(false)
-  const [viewCount, setViewCount] = useState(0)
-  const [readingProgress, setReadingProgress] = useState(0)
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [viewCount, setViewCount] = useState(0);
+  const [readingProgress, setReadingProgress] = useState(0);
 
   const fetchPost = useCallback(async () => {
     try {
-      setLoading(true)
-      setError(null)
-      
+      setLoading(true);
+      setError(null);
+
       // Since the backend doesn't have a blog endpoint yet, we'll create mock data
       // TODO: Replace with actual API call when backend blog endpoint is ready
       // const response = await api.get(`/blog/${slug}`)
-      
-      const mockPost = generateMockPostDetail(slug)
+
+      const mockPost = generateMockPostDetail(slug);
       if (!mockPost) {
-        setError('Blog post not found')
-        return
+        setError('Blog post not found');
+        return;
       }
-      
-      setPost(mockPost)
-      setRelatedPosts(generateRelatedPosts())
-      setViewCount(Math.floor(Math.random() * 1500) + 100) // Mock view count
+
+      setPost(mockPost);
+      setRelatedPosts(generateRelatedPosts());
+      setViewCount(Math.floor(Math.random() * 1500) + 100); // Mock view count
     } catch (err) {
-      setError('Failed to fetch blog post. Please try again later.')
-      console.error('Error fetching post:', err)
+      setError('Failed to fetch blog post. Please try again later.');
+      console.error('Error fetching post:', err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [slug])
+  }, [slug]);
 
   useEffect(() => {
-    fetchPost()
-  }, [fetchPost])
+    fetchPost();
+  }, [fetchPost]);
 
   // Reading progress tracker
   useEffect(() => {
     const updateReadingProgress = () => {
-      const article = document.querySelector('.article-content')
-      if (!article) return
+      const article = document.querySelector('.article-content');
+      if (!article) return;
 
-      const totalHeight = article.scrollHeight - window.innerHeight
-      const progress = (window.scrollY / totalHeight) * 100
-      setReadingProgress(Math.min(100, Math.max(0, progress)))
-    }
+      const totalHeight = article.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setReadingProgress(Math.min(100, Math.max(0, progress)));
+    };
 
-    window.addEventListener('scroll', updateReadingProgress)
-    return () => window.removeEventListener('scroll', updateReadingProgress)
-  }, [post])
+    window.addEventListener('scroll', updateReadingProgress);
+    return () => window.removeEventListener('scroll', updateReadingProgress);
+  }, [post]);
 
   const generateMockPostDetail = (slug) => {
     const posts = {
       'understanding-earthquake-magnitude-scales': {
         id: 1,
-        title: "Understanding Earthquake Magnitude Scales: A Deep Dive into Seismic Measurements",
+        title:
+          'Understanding Earthquake Magnitude Scales: A Deep Dive into Seismic Measurements',
         content: `# 🌍 Understanding Earthquake Magnitude Scales
 
 > "The Earth speaks in many languages, but seismologists have learned to listen through the universal language of seismic waves."
@@ -301,11 +312,18 @@ const detectEarthquake = (accelerometerData) => {
 - [USGS Earthquake Magnitude Policy](https://earthquake.usgs.gov/learn/topics/measure.php)
 - [Global Seismographic Network](https://earthquake.usgs.gov/monitoring/gsn/)
 - [International Seismological Centre](http://www.isc.ac.uk/)`,
-        author: "Dr. Elena Rodriguez",
-        date: "2024-03-15T10:30:00Z",
-        category: "Seismology",
+        author: 'Dr. Elena Rodriguez',
+        date: '2024-03-15T10:30:00Z',
+        category: 'Seismology',
         readTime: 15,
-        tags: ["magnitude", "richter-scale", "seismology", "earthquake-measurement", "geophysics", "engineering"]
+        tags: [
+          'magnitude',
+          'richter-scale',
+          'seismology',
+          'earthquake-measurement',
+          'geophysics',
+          'engineering',
+        ],
       },
       'science-behind-seismic-waves': {
         id: 2,
@@ -741,121 +759,144 @@ print("   Model: Random Forest with 100 decision trees")
 5. **🤖 AI enhances capabilities** - Machine learning improves detection speed and accuracy
 
 The science of seismic waves continues to evolve, with new technologies and methodologies constantly improving our ability to understand and respond to earthquakes.`,
-        author: "Prof. Marco Antonelli",
-        date: "2024-03-10T14:15:00Z",
-        category: "Research",
+        author: 'Prof. Marco Antonelli',
+        date: '2024-03-10T14:15:00Z',
+        category: 'Research',
         readTime: 20,
-        tags: ["seismic-waves", "p-waves", "s-waves", "earthquake-science", "geophysics", "AI", "technology"]
-      }
-    }
+        tags: [
+          'seismic-waves',
+          'p-waves',
+          's-waves',
+          'earthquake-science',
+          'geophysics',
+          'AI',
+          'technology',
+        ],
+      },
+    };
 
-    return posts[slug] || null
-  }
+    return posts[slug] || null;
+  };
 
   const generateRelatedPosts = () => {
     return [
       {
         id: 3,
-        title: "Building Earthquake-Resistant Structures: Engineering for Safety",
-        slug: "building-earthquake-resistant-structures",
-        excerpt: "Discover the advanced engineering principles and cutting-edge techniques used to construct buildings that can withstand the most powerful seismic forces.",
-        category: "Engineering",
+        title:
+          'Building Earthquake-Resistant Structures: Engineering for Safety',
+        slug: 'building-earthquake-resistant-structures',
+        excerpt:
+          'Discover the advanced engineering principles and cutting-edge techniques used to construct buildings that can withstand the most powerful seismic forces.',
+        category: 'Engineering',
         readTime: 12,
-        image: "https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Engineering"
+        image:
+          'https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Engineering',
       },
       {
         id: 4,
         title: "Italy's Seismic History: Lessons from Major Earthquakes",
-        slug: "italy-seismic-history-lessons",
-        excerpt: "A comprehensive journey through Italy's most significant earthquakes and the invaluable lessons learned from each devastating event.",
-        category: "History",
+        slug: 'italy-seismic-history-lessons',
+        excerpt:
+          "A comprehensive journey through Italy's most significant earthquakes and the invaluable lessons learned from each devastating event.",
+        category: 'History',
         readTime: 15,
-        image: "https://via.placeholder.com/300x200/f59e0b/ffffff?text=History"
+        image: 'https://via.placeholder.com/300x200/f59e0b/ffffff?text=History',
       },
       {
         id: 5,
-        title: "AI in Earthquake Detection: The Future of Seismology",
-        slug: "ai-earthquake-detection-future",
-        excerpt: "Exploring how artificial intelligence and machine learning are revolutionizing earthquake detection, prediction, and response systems.",
-        category: "Technology",
+        title: 'AI in Earthquake Detection: The Future of Seismology',
+        slug: 'ai-earthquake-detection-future',
+        excerpt:
+          'Exploring how artificial intelligence and machine learning are revolutionizing earthquake detection, prediction, and response systems.',
+        category: 'Technology',
         readTime: 10,
-        image: "https://via.placeholder.com/300x200/10b981/ffffff?text=AI+Tech"
-      }
-    ]
-  }
+        image: 'https://via.placeholder.com/300x200/10b981/ffffff?text=AI+Tech',
+      },
+    ];
+  };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString)
+    const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
-    })
-  }
+      day: 'numeric',
+    });
+  };
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
           title: post.title,
-          text: `Check out this article about ${post.category.toLowerCase()}: ${post.title}`,
+          text: `Check out this article about ${post.category.toLowerCase()}: ${
+            post.title
+          }`,
           url: window.location.href,
-        })
+        });
       } catch (err) {
-        console.log('Error sharing:', err)
+        console.log('Error sharing:', err);
       }
     } else {
       // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href)
+      navigator.clipboard.writeText(window.location.href);
       // You could show a toast notification here
-      alert('Link copied to clipboard!')
+      alert('Link copied to clipboard!');
     }
-  }
+  };
 
   const handleLike = () => {
-    setIsLiked(!isLiked)
+    setIsLiked(!isLiked);
     // TODO: Send like to backend
-  }
+  };
 
   const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked)
+    setIsBookmarked(!isBookmarked);
     // TODO: Send bookmark to backend
-  }
+  };
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-24 pb-16">
-        <MetaData title="Loading..." description="Loading blog post" />
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center h-64">
-            <div className="relative">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500"></div>
-              <div className="absolute inset-0 animate-ping rounded-full h-16 w-16 border border-purple-400 opacity-20"></div>
+      <div className='min-h-screen pt-24 pb-16'>
+        <MetaData
+          title='Loading...'
+          description='Loading blog post'
+        />
+        <div className='container mx-auto px-4'>
+          <div className='flex justify-center items-center h-64'>
+            <div className='relative'>
+              <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500'></div>
+              <div className='absolute inset-0 animate-ping rounded-full h-16 w-16 border border-purple-400 opacity-20'></div>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen pt-24 pb-16">
-        <MetaData title="Error" description="Error loading blog post" />
-        <div className="container mx-auto px-4">
-          <div className="text-center bg-red-900/20 border border-red-500/50 rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-red-400 mb-4">⚠️ Oops! Something went wrong</h2>
-            <p className="text-gray-300 mb-6">{error}</p>
-            <div className="flex justify-center space-x-4">
+      <div className='min-h-screen pt-24 pb-16'>
+        <MetaData
+          title='Error'
+          description='Error loading blog post'
+        />
+        <div className='container mx-auto px-4'>
+          <div className='text-center bg-red-900/20 border border-red-500/50 rounded-xl p-8'>
+            <h2 className='text-2xl font-bold text-red-400 mb-4'>
+              ⚠️ Oops! Something went wrong
+            </h2>
+            <p className='text-gray-300 mb-6'>{error}</p>
+            <div className='flex justify-center space-x-4'>
               <button
                 onClick={() => window.location.reload()}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200"
+                className='bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200'
               >
                 🔄 Try Again
               </button>
               <button
                 onClick={() => navigate('/blog')}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200"
+                className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200'
               >
                 📚 Back to Blog
               </button>
@@ -863,197 +904,306 @@ The science of seismic waves continues to evolve, with new technologies and meth
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (!post) {
     return (
-      <div className="min-h-screen pt-24 pb-16">
-        <MetaData title="Post Not Found" description="Blog post not found" />
-        <div className="container mx-auto px-4">
-          <div className="text-center bg-gray-900/50 border border-gray-600 rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-gray-300 mb-4">📄 Post Not Found</h2>
-            <p className="text-gray-400 mb-6">The blog post you're looking for doesn't exist or may have been moved.</p>
+      <div className='min-h-screen pt-24 pb-16'>
+        <MetaData
+          title='Post Not Found'
+          description='Blog post not found'
+        />
+        <div className='container mx-auto px-4'>
+          <div className='text-center bg-gray-900/50 border border-gray-600 rounded-xl p-8'>
+            <h2 className='text-2xl font-bold text-gray-300 mb-4'>
+              📄 Post Not Found
+            </h2>
+            <p className='text-gray-400 mb-6'>
+              The blog post you're looking for doesn't exist or may have been
+              moved.
+            </p>
             <button
               onClick={() => navigate('/blog')}
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200"
+              className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200'
             >
               🏠 Back to Blog Home
             </button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <>
-      <MetaData 
-        title={`${post.title} - TerraQuake API Blog`} 
-        description={post.content.replace(/[#*`]/g, '').substring(0, 160)} 
+      {/* SEO Stuff */}
+      <MetaData
+        title={`${post.title} | TerraQuake API Blog - Earthquake Insights`}
+        description={`${post.content
+          .replace(/[#*`]/g, '')
+          .substring(
+            0,
+            160
+          )} - Discover expert analysis, latest seismic updates, and earthquake safety tips from TerraQuake API.`}
+        ogTitle={`${post.title} | TerraQuake API Blog`}
+        ogDescription={`${post.content
+          .replace(/[#*`]/g, '')
+          .substring(
+            0,
+            160
+          )} - Stay informed with TerraQuake API’s insights into earthquake monitoring and research.`}
+        twitterTitle={`${post.title} | TerraQuake API Blog`}
+        twitterDescription={`${post.content
+          .replace(/[#*`]/g, '')
+          .substring(
+            0,
+            160
+          )} - Explore the latest in earthquake science and safety.`}
+        keywords='TerraQuake API blog, earthquake research, seismic monitoring, earthquake safety, seismology articles'
       />
-      
+      {/* SEO Stuff */}
+
       {/* Reading Progress Bar */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gray-800 z-50">
-        <div 
-          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 ease-out"
+      <div className='fixed top-0 left-0 w-full h-1 bg-gray-800 z-50'>
+        <div
+          className='h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 ease-out'
           style={{ width: `${readingProgress}%` }}
         />
       </div>
-      
-      <div className="min-h-screen pt-24 pb-16 article-content">
-        <div className="container mx-auto px-4 max-w-4xl">
+
+      <div className='min-h-screen pt-24 pb-16 article-content'>
+        <div className='container mx-auto px-4 max-w-4xl'>
           {/* Navigation */}
-          <div className="flex items-center justify-between mb-8">
-            <Link 
-              to="/blog"
-              className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-200 group"
+          <div className='flex items-center justify-between mb-8'>
+            <Link
+              to='/blog'
+              className='inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-200 group'
             >
-              <FaArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
+              <FaArrowLeft className='mr-2 group-hover:-translate-x-1 transition-transform duration-200' />
               Back to Blog
             </Link>
-            
-            <div className="flex items-center space-x-2 text-gray-500 text-sm">
-              <FaEye className="text-purple-400" />
+
+            <div className='flex items-center space-x-2 text-gray-500 text-sm'>
+              <FaEye className='text-purple-400' />
               <span>{viewCount.toLocaleString()} views</span>
             </div>
           </div>
 
           {/* Article Header */}
-          <article className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
-            <div className="p-8">
+          <article className='bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden shadow-2xl'>
+            <div className='p-8'>
               {/* Category and Actions */}
-              <div className="flex items-center justify-between mb-6">
-                <span className="inline-flex items-center text-sm font-semibold text-purple-400 bg-purple-500/10 px-4 py-2 rounded-full border border-purple-500/20">
-                  <span className="w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse"></span>
+              <div className='flex items-center justify-between mb-6'>
+                <span className='inline-flex items-center text-sm font-semibold text-purple-400 bg-purple-500/10 px-4 py-2 rounded-full border border-purple-500/20'>
+                  <span className='w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse'></span>
                   {post.category}
                 </span>
-                
-                <div className="flex items-center space-x-4">
+
+                <div className='flex items-center space-x-4'>
                   <button
                     onClick={handleLike}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                      isLiked 
-                        ? 'text-red-400 bg-red-500/10 border border-red-500/20' 
+                      isLiked
+                        ? 'text-red-400 bg-red-500/10 border border-red-500/20'
                         : 'text-gray-400 hover:text-red-400 hover:bg-red-500/5'
                     }`}
                   >
                     <FaHeart className={isLiked ? 'animate-pulse' : ''} />
-                    <span className="text-sm">{isLiked ? 'Liked' : 'Like'}</span>
+                    <span className='text-sm'>
+                      {isLiked ? 'Liked' : 'Like'}
+                    </span>
                   </button>
-                  
+
                   <button
                     onClick={handleBookmark}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                      isBookmarked 
-                        ? 'text-yellow-400 bg-yellow-500/10 border border-yellow-500/20' 
+                      isBookmarked
+                        ? 'text-yellow-400 bg-yellow-500/10 border border-yellow-500/20'
                         : 'text-gray-400 hover:text-yellow-400 hover:bg-yellow-500/5'
                     }`}
                   >
                     <FaBookmark />
-                    <span className="text-sm">{isBookmarked ? 'Saved' : 'Save'}</span>
+                    <span className='text-sm'>
+                      {isBookmarked ? 'Saved' : 'Save'}
+                    </span>
                   </button>
-                  
+
                   <button
                     onClick={handleShare}
-                    className="flex items-center space-x-2 text-gray-400 hover:text-purple-400 px-3 py-2 rounded-lg hover:bg-purple-500/5 transition-all duration-200"
+                    className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 px-3 py-2 rounded-lg hover:bg-purple-500/5 transition-all duration-200'
                   >
                     <FaShare />
-                    <span className="text-sm">Share</span>
+                    <span className='text-sm'>Share</span>
                   </button>
                 </div>
               </div>
 
               {/* Title */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight'>
                 {post.title}
               </h1>
 
               {/* Meta Information */}
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-8 pb-6 border-b border-gray-800">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-                    <FaUser className="text-white text-xs" />
+              <div className='flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-8 pb-6 border-b border-gray-800'>
+                <div className='flex items-center space-x-2'>
+                  <div className='w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center'>
+                    <FaUser className='text-white text-xs' />
                   </div>
                   <div>
-                    <span className="text-white font-medium">{post.author}</span>
-                    <div className="text-xs text-gray-500">Seismology Expert</div>
+                    <span className='text-white font-medium'>
+                      {post.author}
+                    </span>
+                    <div className='text-xs text-gray-500'>
+                      Seismology Expert
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <FaCalendarAlt className="text-purple-400" />
+                <div className='flex items-center space-x-2'>
+                  <FaCalendarAlt className='text-purple-400' />
                   <span>{formatDate(post.date)}</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <FaClock className="text-purple-400" />
+                <div className='flex items-center space-x-2'>
+                  <FaClock className='text-purple-400' />
                   <span>{post.readTime} min read</span>
                 </div>
               </div>
 
               {/* Article Content */}
-              <div className="prose prose-invert prose-purple max-w-none markdown-content">
+              <div className='prose prose-invert prose-purple max-w-none markdown-content'>
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight, rehypeRaw]}
                   components={{
                     // Custom components for better styling
-                    h1: ({children}) => <h1 className="text-4xl font-bold text-white mb-8 border-b-2 border-purple-500 pb-4">{children}</h1>,
-                    h2: ({children}) => <h2 className="text-3xl font-bold text-white mb-6 mt-12 border-b border-purple-400 pb-3">{children}</h2>,
-                    h3: ({children}) => <h3 className="text-2xl font-semibold text-white mb-4 mt-8">{children}</h3>,
-                    h4: ({children}) => <h4 className="text-xl font-semibold text-purple-300 mb-3 mt-6">{children}</h4>,
-                    p: ({children}) => <p className="text-gray-300 mb-6 leading-relaxed text-lg">{children}</p>,
-                    strong: ({children}) => <strong className="text-purple-400 font-semibold">{children}</strong>,
-                    em: ({children}) => <em className="text-purple-300 italic">{children}</em>,
-                    ul: ({children}) => <ul className="list-disc list-inside mb-6 space-y-3 text-gray-300 text-lg">{children}</ul>,
-                    ol: ({children}) => <ol className="list-decimal list-inside mb-6 space-y-3 text-gray-300 text-lg">{children}</ol>,
-                    li: ({children}) => <li className="text-gray-300">{children}</li>,
-                    blockquote: ({children}) => (
-                      <blockquote className="border-l-4 border-purple-500 pl-6 py-3 my-8 bg-gradient-to-r from-purple-900/20 to-transparent rounded-r-lg">
-                        <div className="text-purple-200 italic text-lg">{children}</div>
+                    h1: ({ children }) => (
+                      <h1 className='text-4xl font-bold text-white mb-8 border-b-2 border-purple-500 pb-4'>
+                        {children}
+                      </h1>
+                    ),
+                    h2: ({ children }) => (
+                      <h2 className='text-3xl font-bold text-white mb-6 mt-12 border-b border-purple-400 pb-3'>
+                        {children}
+                      </h2>
+                    ),
+                    h3: ({ children }) => (
+                      <h3 className='text-2xl font-semibold text-white mb-4 mt-8'>
+                        {children}
+                      </h3>
+                    ),
+                    h4: ({ children }) => (
+                      <h4 className='text-xl font-semibold text-purple-300 mb-3 mt-6'>
+                        {children}
+                      </h4>
+                    ),
+                    p: ({ children }) => (
+                      <p className='text-gray-300 mb-6 leading-relaxed text-lg'>
+                        {children}
+                      </p>
+                    ),
+                    strong: ({ children }) => (
+                      <strong className='text-purple-400 font-semibold'>
+                        {children}
+                      </strong>
+                    ),
+                    em: ({ children }) => (
+                      <em className='text-purple-300 italic'>{children}</em>
+                    ),
+                    ul: ({ children }) => (
+                      <ul className='list-disc list-inside mb-6 space-y-3 text-gray-300 text-lg'>
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className='list-decimal list-inside mb-6 space-y-3 text-gray-300 text-lg'>
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children }) => (
+                      <li className='text-gray-300'>{children}</li>
+                    ),
+                    blockquote: ({ children }) => (
+                      <blockquote className='border-l-4 border-purple-500 pl-6 py-3 my-8 bg-gradient-to-r from-purple-900/20 to-transparent rounded-r-lg'>
+                        <div className='text-purple-200 italic text-lg'>
+                          {children}
+                        </div>
                       </blockquote>
                     ),
-                    code: ({inline, className, children, ...props}) => {
-                      const match = /language-(\w+)/.exec(className || '')
+                    code: ({ inline, className, children, ...props }) => {
+                      const match = /language-(\w+)/.exec(className || '');
                       return !inline && match ? (
-                        <div className="relative my-8">
-                          <div className="absolute top-0 right-0 bg-gray-700 text-gray-300 px-3 py-1 text-sm rounded-bl-md rounded-tr-lg border-l border-b border-gray-600">
+                        <div className='relative my-8'>
+                          <div className='absolute top-0 right-0 bg-gray-700 text-gray-300 px-3 py-1 text-sm rounded-bl-md rounded-tr-lg border-l border-b border-gray-600'>
                             {match[1]}
                           </div>
-                          <pre className="bg-gray-900 border border-gray-700 rounded-lg p-6 overflow-x-auto shadow-lg">
-                            <code className={className} {...props}>
+                          <pre className='bg-gray-900 border border-gray-700 rounded-lg p-6 overflow-x-auto shadow-lg'>
+                            <code
+                              className={className}
+                              {...props}
+                            >
                               {children}
                             </code>
                           </pre>
                         </div>
                       ) : (
-                        <code className="bg-gray-800 text-purple-300 px-2 py-1 rounded text-sm font-mono" {...props}>
+                        <code
+                          className='bg-gray-800 text-purple-300 px-2 py-1 rounded text-sm font-mono'
+                          {...props}
+                        >
                           {children}
                         </code>
-                      )
+                      );
                     },
-                    table: ({children}) => (
-                      <div className="overflow-x-auto mb-8 rounded-lg border border-gray-600 shadow-lg">
-                        <table className="min-w-full">
-                          {children}
-                        </table>
+                    table: ({ children }) => (
+                      <div className='overflow-x-auto mb-8 rounded-lg border border-gray-600 shadow-lg'>
+                        <table className='min-w-full'>{children}</table>
                       </div>
                     ),
-                    thead: ({children}) => <thead className="bg-gradient-to-r from-purple-900 to-purple-800">{children}</thead>,
-                    tbody: ({children}) => <tbody className="bg-gray-900/50">{children}</tbody>,
-                    tr: ({children}) => <tr className="border-b border-gray-600 hover:bg-gray-800/30 transition-colors duration-200">{children}</tr>,
-                    th: ({children}) => <th className="px-6 py-4 text-left text-purple-200 font-semibold">{children}</th>,
-                    td: ({children}) => <td className="px-6 py-4 text-gray-300">{children}</td>,
-                    img: ({src, alt}) => (
-                      <div className="my-8">
-                        <img src={src} alt={alt} className="rounded-lg shadow-lg max-w-full h-auto mx-auto border border-gray-600" />
-                        {alt && <p className="text-center text-gray-500 text-sm mt-3 italic">{alt}</p>}
+                    thead: ({ children }) => (
+                      <thead className='bg-gradient-to-r from-purple-900 to-purple-800'>
+                        {children}
+                      </thead>
+                    ),
+                    tbody: ({ children }) => (
+                      <tbody className='bg-gray-900/50'>{children}</tbody>
+                    ),
+                    tr: ({ children }) => (
+                      <tr className='border-b border-gray-600 hover:bg-gray-800/30 transition-colors duration-200'>
+                        {children}
+                      </tr>
+                    ),
+                    th: ({ children }) => (
+                      <th className='px-6 py-4 text-left text-purple-200 font-semibold'>
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children }) => (
+                      <td className='px-6 py-4 text-gray-300'>{children}</td>
+                    ),
+                    img: ({ src, alt }) => (
+                      <div className='my-8'>
+                        <img
+                          src={src}
+                          alt={alt}
+                          className='rounded-lg shadow-lg max-w-full h-auto mx-auto border border-gray-600'
+                        />
+                        {alt && (
+                          <p className='text-center text-gray-500 text-sm mt-3 italic'>
+                            {alt}
+                          </p>
+                        )}
                       </div>
                     ),
-                    a: ({href, children}) => (
-                      <a href={href} className="text-purple-400 hover:text-purple-300 underline transition-colors duration-200 hover:bg-purple-500/10 px-1 py-0.5 rounded" target="_blank" rel="noopener noreferrer">
+                    a: ({ href, children }) => (
+                      <a
+                        href={href}
+                        className='text-purple-400 hover:text-purple-300 underline transition-colors duration-200 hover:bg-purple-500/10 px-1 py-0.5 rounded'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
                         {children}
                       </a>
-                    )
+                    ),
                   }}
                 >
                   {post.content}
@@ -1062,19 +1212,21 @@ The science of seismic waves continues to evolve, with new technologies and meth
 
               {/* Enhanced Tags Section */}
               {post.tags && (
-                <div className="mt-12 pt-8 border-t border-gray-800">
-                  <div className="flex items-center mb-6">
-                    <FaTag className="text-purple-400 mr-3 text-lg" />
-                    <h4 className="text-xl font-bold text-white">Explore Related Topics</h4>
+                <div className='mt-12 pt-8 border-t border-gray-800'>
+                  <div className='flex items-center mb-6'>
+                    <FaTag className='text-purple-400 mr-3 text-lg' />
+                    <h4 className='text-xl font-bold text-white'>
+                      Explore Related Topics
+                    </h4>
                   </div>
-                  <div className="flex flex-wrap gap-4">
+                  <div className='flex flex-wrap gap-4'>
                     {post.tags.map((tag, index) => (
-                      <button 
+                      <button
                         key={tag}
                         className={`group relative overflow-hidden text-sm px-5 py-3 rounded-full border transition-all duration-300 hover:scale-105 hover:shadow-lg ${
-                          index % 4 === 0 
-                            ? 'bg-gradient-to-r from-purple-600 to-purple-700 border-purple-500 text-white hover:from-purple-500 hover:to-purple-600' 
-                            : index % 4 === 1 
+                          index % 4 === 0
+                            ? 'bg-gradient-to-r from-purple-600 to-purple-700 border-purple-500 text-white hover:from-purple-500 hover:to-purple-600'
+                            : index % 4 === 1
                             ? 'bg-gradient-to-r from-blue-600 to-blue-700 border-blue-500 text-white hover:from-blue-500 hover:to-blue-600'
                             : index % 4 === 2
                             ? 'bg-gradient-to-r from-green-600 to-green-700 border-green-500 text-white hover:from-green-500 hover:to-green-600'
@@ -1082,19 +1234,19 @@ The science of seismic waves continues to evolve, with new technologies and meth
                         }`}
                         onClick={() => {
                           // TODO: Navigate to tag filter page
-                          console.log(`Searching for tag: ${tag}`)
+                          console.log(`Searching for tag: ${tag}`);
                         }}
                       >
-                        <span className="relative z-10 flex items-center font-medium">
-                          <span className="mr-1">#</span>
+                        <span className='relative z-10 flex items-center font-medium'>
+                          <span className='mr-1'>#</span>
                           {tag.replace('-', ' ').toUpperCase()}
                         </span>
-                        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                        <div className='absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300'></div>
                       </button>
                     ))}
                   </div>
-                  <p className="text-gray-500 text-sm mt-4 flex items-center">
-                    <span className="animate-pulse mr-2">💡</span>
+                  <p className='text-gray-500 text-sm mt-4 flex items-center'>
+                    <span className='animate-pulse mr-2'>💡</span>
                     Click on tags to discover more articles on these topics
                   </p>
                 </div>
@@ -1104,62 +1256,72 @@ The science of seismic waves continues to evolve, with new technologies and meth
 
           {/* Enhanced Related Posts */}
           {relatedPosts.length > 0 && (
-            <div className="mt-16">
-              <h3 className="text-3xl font-bold text-white mb-8 text-center">
+            <div className='mt-16'>
+              <h3 className='text-3xl font-bold text-white mb-8 text-center'>
                 🔗 Continue Your Learning Journey
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 {relatedPosts.map((relatedPost) => (
-                  <article 
+                  <article
                     key={relatedPost.id}
-                    className="group bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-2xl"
+                    className='group bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-2xl'
                   >
-                    <div className="aspect-video bg-gradient-to-br from-purple-600 to-pink-600 relative overflow-hidden">
-                      <img 
-                        src={relatedPost.image} 
+                    <div className='aspect-video bg-gradient-to-br from-purple-600 to-pink-600 relative overflow-hidden'>
+                      <img
+                        src={relatedPost.image}
                         alt={relatedPost.title}
-                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                        className='w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300'
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                      <div className="absolute bottom-4 left-4">
-                        <span className="text-xs font-semibold text-white bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                      <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent'></div>
+                      <div className='absolute bottom-4 left-4'>
+                        <span className='text-xs font-semibold text-white bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm'>
                           {relatedPost.category}
                         </span>
                       </div>
                     </div>
-                    
-                    <div className="p-6">
-                      <div className="flex items-center justify-between mb-3 text-xs text-gray-500">
-                        <span className="flex items-center">
-                          <FaClock className="mr-1" />
+
+                    <div className='p-6'>
+                      <div className='flex items-center justify-between mb-3 text-xs text-gray-500'>
+                        <span className='flex items-center'>
+                          <FaClock className='mr-1' />
                           {relatedPost.readTime} min
                         </span>
-                        <span className="flex items-center">
-                          <FaEye className="mr-1" />
+                        <span className='flex items-center'>
+                          <FaEye className='mr-1' />
                           {Math.floor(Math.random() * 500) + 50}
                         </span>
                       </div>
-                      
-                      <h4 className="text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-400 transition-colors duration-200">
-                        <Link 
-                          to={`/blog/${relatedPost.slug}`} 
-                          className="hover:underline"
+
+                      <h4 className='text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-400 transition-colors duration-200'>
+                        <Link
+                          to={`/blog/${relatedPost.slug}`}
+                          className='hover:underline'
                         >
                           {relatedPost.title}
                         </Link>
                       </h4>
-                      
-                      <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
+
+                      <p className='text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4'>
                         {relatedPost.excerpt}
                       </p>
-                      
-                      <Link 
+
+                      <Link
                         to={`/blog/${relatedPost.slug}`}
-                        className="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200 group"
+                        className='inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200 group'
                       >
                         Read Article
-                        <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <svg
+                          className='ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth={2}
+                            d='M9 5l7 7-7 7'
+                          />
                         </svg>
                       </Link>
                     </div>
@@ -1171,5 +1333,5 @@ The science of seismic waves continues to evolve, with new technologies and meth
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 import './about.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
 import {
   FaGlobeAmericas,
@@ -11,9 +11,16 @@ import {
   FaUserAstronaut,
   FaUsers,
 } from 'react-icons/fa';
+import axios from 'axios';
+import BackToTopButton from '@/components/utils/backToTopButton';
+import { motion } from 'framer-motion';
 
 export default function About() {
+  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [highlightMetrics, setHighlightMetrics] = useState([]);
+  const [loadingMetrics, setLoadingMetrics] = useState(true);
+  const [metricsError, setMetricsError] = useState(null);
 
   const cardSections = [
     {
@@ -88,73 +95,97 @@ export default function About() {
     },
   ];
 
-  const highlightMetrics = [
-    {
-      value: '180K+',
-      label: 'Events processed',
-      description: 'Real-time earthquakes normalized and accessible',
-    },
-    {
-      value: '<120ms',
-      label: 'API latency',
-      description: 'Average response across global regions',
-    },
-    {
-      value: '24/7',
-      label: 'Data monitoring',
-      description: 'Continuous ingestion from trusted observatories',
-    },
-  ];
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        setLoadingMetrics(true);
+        const res = await axios.get(`${BACKEND_URL}/v1/metrics/json`);
+        const data = res.data.data;
 
-  const timelineSteps = [
-    {
-      year: '2021',
-      title: 'Project inception',
-      description:
-        'Initial prototype launched to simplify seismic data exploration for students and researchers.',
-    },
-    {
-      year: '2022',
-      title: 'Open collaboration',
-      description:
-        'Community contributions expanded features, documentation, and automated testing pipelines.',
-    },
-    {
-      year: '2024',
-      title: 'Global adoption',
-      description:
-        'Teams across five continents integrated the API into dashboards, alerting tools, and learning apps.',
-    },
-  ];
+        setHighlightMetrics([
+          {
+            value: data.eventsProcessed?.toLocaleString() || 'N/A',
+            label: 'Events Processed',
+            description: 'Real-time earthquakes normalized and accessible',
+          },
+          {
+            value: `${data.apiLatencyAvgMs} ms`,
+            label: 'API Latency',
+            description: 'Average API response time',
+          },
+
+          {
+            value: `${Math.floor(data.uptime)} s`,
+            label: 'Uptime',
+            description: 'Time since last server restart',
+          },
+          {
+            value: '24/7',
+            label: 'Data monitoring',
+            description: 'Continuous ingestion from trusted observatories',
+          },
+        ]);
+      } catch (error) {
+        console.error('Error fetching metrics:', error);
+        setMetricsError('Unable to load metrics.');
+      } finally {
+        setLoadingMetrics(false);
+      }
+    };
+
+    fetchMetrics();
+    const interval = setInterval(fetchMetrics, 10000); // refresh ogni 10s
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='About'
-        description='About - TerraQuake API'
-        ogTitle='About - TerraQuake API'
-        twitterTitle='About - TerraQuake API'
+        title='About TerraQuake API | Real-Time Earthquake Data & Monitoring'
+        description='Learn about TerraQuake API — a powerful platform for real-time earthquake monitoring, seismic data analysis, and early warning systems. Discover our mission, vision, and use cases.'
+        ogTitle='About TerraQuake API | Real-Time Seismic Data Platform'
+        ogDescription="Discover TerraQuake API's mission and capabilities in delivering real-time earthquake data and monitoring solutions for developers, researchers, and safety organizations."
+        twitterTitle='About TerraQuake API | Earthquake Monitoring API'
+        twitterDescription='Explore TerraQuake API — your resource for real-time earthquake data, seismic analysis, and disaster prevention solutions.'
+        keywords='TerraQuake API, earthquake monitoring, seismic data, earthquake detection API, real-time earthquake data, disaster prevention, seismic analysis'
       />
       {/* SEO Stuff */}
 
-      <section className='relative z-30 w-full min-h-screen px-6 py-20 overflow-hidden'>
-        {/* Header Section */}
-        <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
-            About TerraQuake API
-            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
-          </h1>
-
-          {/* Description */}
-          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
-            A focused platform built to translate raw seismic feeds into
-            developer-friendly endpoints and actionable insights for safety,
-            research, and education.
-          </p>
+      <motion.section 
+        className="relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+         {/* Background Gradient */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
         </div>
 
-        <div className='max-w-5xl mx-auto grid gap-4 md:grid-cols-3 mb-16'>
+        {/* Content Container */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70">
+          {/* Header Section */}
+          <motion.div
+            className="mb-16 text-center lg:text-left"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h1 className="text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4">
+              About TerraQuake API.
+              <div className="h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
+            </h1>
+            <p className="text-xl text-white/70 max-w-3xl">
+             A focused platform built to translate raw seismic feeds into
+            developer-friendly endpoints and actionable insights for safety,
+            research, and education.
+            </p>
+          </motion.div>
+
+        
+          <div className='max-w-6xl mx-auto grid gap-4 md:grid-cols-4 mb-6 md:mb-16'>
           {highlightMetrics.map((metric) => (
             <div
               key={metric.label}
@@ -174,9 +205,10 @@ export default function About() {
               </div>
             </div>
           ))}
+          </div>
         </div>
 
-        <div className='max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-24'>
+        <div className='max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6 md:mb-16 p-6 md:p-0'>
           {cardSections.map((item, index) => (
             <div
               key={item.title}
@@ -211,7 +243,7 @@ export default function About() {
           ))}
         </div>
 
-        <div className='max-w-5xl mx-auto space-y-8'>
+        <div className='max-w-5xl mx-auto space-y-8 p-6 md:p-0'>
           {textSections.map((item, index) => (
             <div
               key={item.title}
@@ -236,8 +268,9 @@ export default function About() {
             </div>
           ))}
         </div>
-      </section>
+        {/* Floating Back-to-Top Button Component */}
+        <BackToTopButton />
+      </motion.section>
     </>
   );
 }
-

@@ -1,3 +1,5 @@
+import { eventsProcessed } from '../middleware/metrics.js'
+
 import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import handleHttpError from '../utils/handleHttpError.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
@@ -75,6 +77,7 @@ export const getEarthquakesByRecent = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -131,6 +134,7 @@ export const getEarthquakesByToday = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -190,6 +194,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -264,6 +269,7 @@ export const getEarthquakesByMonth = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -331,6 +337,7 @@ export const getEarthquakesByRegion = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -398,6 +405,7 @@ export const getEarthquakesByDepth = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     let { features } = data
 
     // Filtro per profondità maggiore di depthValue
@@ -468,6 +476,7 @@ export const getEarthquakesByDateRange = async (req, res) => {
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
@@ -550,6 +559,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
     url += `&minmagnitude=${magValue}`
 
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
 
     const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
@@ -603,6 +613,7 @@ export const getEarthquakesById = async (req, res) => {
 
     const url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&format=geojson`
     const data = await fetchINGV(url)
+    eventsProcessed.inc(data.features.length || 0)
     const { features } = data
 
     const filteredEvent = features.filter(
@@ -692,6 +703,7 @@ export const getEarthquakesLocation = async (req, res) => {
     }
 
     const data = await response.json()
+    eventsProcessed.inc(data.features.length || 0)
     let { features } = data
 
     // Precise local filtering using haversine
