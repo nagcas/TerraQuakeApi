@@ -242,33 +242,32 @@ export default function Contact() {
                 />
 
                 {/* Submit Button */}
-                <div className='flex justify-end'>
-                  <motion.button
-                    type='submit'
-                    className='
-                      mt-8
-                      bg-gradient-to-r from-purple-600 to-pink-500 
-                      text-white font-semibold 
-                      py-4 px-6 rounded-full
-                      hover:scale-[1.01] hover:shadow-2xl
-                      active:scale-[0.99]
-                      transform transition-all duration-300 ease-in-out
-                      flex items-center justify-center gap-2
-                      cursor-pointer
-                    '
-                    disabled={loading}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {loading ? (
-                      <>
-                        <ImSpinner9 className='animate-spin' />
-                        Processing Request...
-                      </>
-                    ) : (
-                      'Send Message'
-                    )}
-                  </motion.button>
-                </div>
+                <motion.button
+                  type='submit'
+                  className='
+                    mt-8
+                    w-full
+                    bg-gradient-to-r from-purple-600 to-pink-500 
+                  text-white font-semibold 
+                    py-4 px-6 rounded-full
+                    hover:scale-[1.01] hover:shadow-xl
+                    active:scale-[0.99]
+                    transform transition-all duration-300 ease-in-out
+                    flex items-center justify-center gap-2
+                    cursor-pointer
+                  '
+                  disabled={loading}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {loading ? (
+                    <>
+                      <ImSpinner9 className='animate-spin' />
+                      Processing Request...
+                    </>
+                  ) : (
+                    'Send Message'
+                  )}
+                </motion.button>
               </form>
             </motion.div>
 
