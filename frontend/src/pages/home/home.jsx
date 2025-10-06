@@ -6,6 +6,7 @@ import Newsletter from '@/components/newsletter/Newsletter';
 import ViewMap from '@/components/map/ViewMap';
 import { useState } from 'react';
 import Testimonials from '@/components/testimonials/Testimonials';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 
 export default function Home() {
@@ -29,6 +30,8 @@ export default function Home() {
       <ApiDocsEarthquakes setEarthquakeData={setEarthquakeData}/>
       <ViewMap earthquakeData={earthquakeData}/>
       <Newsletter />
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

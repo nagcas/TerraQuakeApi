@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useParams } from 'react-router';
 import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function resetPassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +86,12 @@ export default function resetPassword() {
       />
       {/* SEO Stuff */}
 
-      <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
+      <section className='relative z-30 min-h-screen flex items-center justify-center p-6 rounded-lg'>
+        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        <div className='absolute inset-0 z-0 pointer-events-none'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+        </div>
         <div className='rounded-lg w-full max-w-md'>
           <div className='flex flex-col justify-center items-center mb-16'>
             <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
@@ -167,6 +173,8 @@ export default function resetPassword() {
           </Link>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }
