@@ -6,6 +6,8 @@ import MetaData from "@pages/noPage/metaData";
 import { FaDiscord } from "react-icons/fa";
 import { IoIosGitPullRequest } from "react-icons/io";
 import { API_DOCS, CODE_OF_CONDUCT, DISCORD_LINK, ISSUE_TRACKER, PULL_REQUESTS } from "@/data/CONTRIBUTE";
+import HF_SVG from "@/data/HACKTOBERFEST_SVG.jsx";
+import hacktoberfest from "@images/hacktoberfest.svg"
 
 
 const ContributionCard = ({ icon, title, description, link, linkText }) => {
@@ -228,16 +230,14 @@ export default function Contribute() {
             className="flex flex-col sm:flex-row items-center justify-between gap-4 text-decoration-none"
           >
             <div className="flex items-center gap-5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 255.6 255.6"
-                className="w-18 h-18"
-                fill="currentColor"
-                role="img"
-                aria-label="Hacktoberfest Logo"
-              >
-                <path d="M139.3 255.6h55.8v-55.8h-55.8v55.8zm-22.3-22.3V17.8h-33.5v215.5h33.5zM60.8 199.8v-55.8H5v55.8h55.8zm116.3-78.1H233V66h-55.8v55.7zm-116.3 0h55.8V66H60.8v55.7zM195.1 0v55.8h55.8V0h-55.8zM5 55.8h55.8V0H5v55.8z" />
-              </svg>
+          
+              {/* <div className="text-5xl">
+                <HF_SVG className="text-4xl w-full h-full"/>
+              </div> */}
+
+              <img className="pt-3 w-48 h-25" src={hacktoberfest}/>
+
+
               <div className="text-center sm:text-left">
                 <h3 className="text-xl font-bold text-white">
                   Join us for Hacktoberfest 2025!
