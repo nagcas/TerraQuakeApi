@@ -1,18 +1,16 @@
 import { motion } from "framer-motion";
-import { useState } from "react"; 
+import { useState } from "react";
 import { FaCode, FaBug, FaBook } from "react-icons/fa";
-import BackToTopButton from "@/components/utils/backToTopButton"; 
-import MetaData from "@pages/noPage/metaData"; 
-import { FaGithub } from "react-icons/fa";
-
+import BackToTopButton from "@/components/utils/backToTopButton";
+import MetaData from "@pages/noPage/metaData";
+import { FaDiscord } from "react-icons/fa";
+import { IoIosGitPullRequest } from "react-icons/io";
 
 const PULL_REQUESTS = "https://github.com/dummy/pulls";
 const ISSUE_TRACKER = "https://github.com/dummy/issues";
 const GITHUB_REPO = "https://github.com/dummy";
 const DISCORD_LINK = "https://discord.gg/dummy";
-const CODE_OF_CONDUCT =
-  "https://github.com/dummy/blob/main/CODE_OF_CONDUCT.md";
-
+const CODE_OF_CONDUCT = "https://github.com/dummy/blob/main/CODE_OF_CONDUCT.md";
 
 const ContributionCard = ({ icon, title, description, link, linkText }) => {
   const [transformStyle, setTransformStyle] = useState(
@@ -203,9 +201,10 @@ export default function Contribute() {
               href={DISCORD_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg"
+              className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg flex justify-center items-center gap-3 bounce-on-hover"
             >
-              Join our Discord 💬
+              <FaDiscord className="text-xl" />
+              Join our Discord
             </a>
             <a
               href={CODE_OF_CONDUCT}
@@ -218,7 +217,6 @@ export default function Contribute() {
           </div>
         </motion.section>
 
-       
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -234,17 +232,16 @@ export default function Contribute() {
             className="flex flex-col sm:flex-row items-center justify-between gap-4 text-decoration-none"
           >
             <div className="flex items-center gap-5">
-             
               <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 255.6 255.6"
-      className="w-18 h-18"
-      fill="currentColor" 
-      role="img"
-      aria-label="Hacktoberfest Logo"
-    >
-      <path d="M139.3 255.6h55.8v-55.8h-55.8v55.8zm-22.3-22.3V17.8h-33.5v215.5h33.5zM60.8 199.8v-55.8H5v55.8h55.8zm116.3-78.1H233V66h-55.8v55.7zm-116.3 0h55.8V66H60.8v55.7zM195.1 0v55.8h55.8V0h-55.8zM5 55.8h55.8V0H5v55.8z" />
-    </svg>
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 255.6 255.6"
+                className="w-18 h-18"
+                fill="currentColor"
+                role="img"
+                aria-label="Hacktoberfest Logo"
+              >
+                <path d="M139.3 255.6h55.8v-55.8h-55.8v55.8zm-22.3-22.3V17.8h-33.5v215.5h33.5zM60.8 199.8v-55.8H5v55.8h55.8zm116.3-78.1H233V66h-55.8v55.7zm-116.3 0h55.8V66H60.8v55.7zM195.1 0v55.8h55.8V0h-55.8zM5 55.8h55.8V0H5v55.8z" />
+              </svg>
               <div className="text-center sm:text-left">
                 <h3 className="text-xl font-bold text-white">
                   Join us for Hacktoberfest 2025!
@@ -254,8 +251,11 @@ export default function Contribute() {
                 </p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-0 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all duration-300 transform group-hover:scale-105 flex gap-3 justify-center items-center">
-              <FaGithub/>Find an Issue &rarr;
+            <div className="mt-4 sm:mt-0 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all duration-300 transform group">
+              <div className="flex gap-2 justify-center items-center">
+                <IoIosGitPullRequest size={25} className="transition-transform duration-500 origin-top dangle-on-hover" />
+                <span>Find an Issue</span>
+              </div>
             </div>
           </a>
         </motion.div>

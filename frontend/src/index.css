@@ -78,5 +78,21 @@ body {
 
 
 .group:hover .dangle-on-hover {
-  animation: dangle-bouncy 1.2s ease-in-out;
+  animation: dangle-bouncy 1.2s ease-in-out infinite;
+}
+
+@keyframes subtle-bounce {
+  0%, 100% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+
+.bounce-on-hover:hover {
+  animation: subtle-bounce 0.6s;
 }
