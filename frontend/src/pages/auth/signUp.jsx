@@ -8,6 +8,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MetaData from '@pages/noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
+import { motion } from 'framer-motion';
+import { FaDiscord } from 'react-icons/fa6';
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -23,10 +26,14 @@ export default function SignUp() {
 
       password: yup
         .string()
-        .required('Password is required !')
-        .min(8, 'Password must be at least 8 characters !')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter !')
-        .matches(/\d/, 'Must contain a number !'),
+        .required('Password is required!')
+        .min(8, 'Password must be at least 8 characters!')
+        .matches(/[A-Z]/, 'Must contain an uppercase letter!')
+        .matches(/\d/, 'Must contain a number!')
+        .matches(
+          /[^A-Za-z0-9]/,
+          'Password must contain at least one special character!'
+        ),
 
       confirmPassword: yup
         .string()
@@ -69,7 +76,7 @@ export default function SignUp() {
           icon: 'success',
           confirmButtonText: 'Log In',
         }).then(() => {
-          navigate('/signin');
+          navigate('/signin', { replace: true });
         });
       })
       .catch((err) => {
@@ -87,146 +94,281 @@ export default function SignUp() {
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
-          navigate('/signup');
           setLoading(false);
+          navigate('/signup', { replace: true });
         });
       });
   };
 
+  const contactInfo = [
+    {
+      icon: <FaDiscord className='text-2xl' />,
+      title: 'Discord',
+      detail: 'Chat with developers and contribute to TerraQuake API together!',
+      href: 'https://discord.gg/RDBp8KJB',
+      target: '_blanck',
+    },
+  ];
+
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Sign Up'
-        description='Sign Up Page of TerraQuake'
+        title='Sign Up | TerraQuake API - Create Your Account'
+        description='Sign up for TerraQuake API to start accessing real-time earthquake monitoring, seismic data, and powerful API tools for developers and researchers.'
+        ogTitle='Sign Up | TerraQuake API'
+        ogDescription='Create your TerraQuake API account to access earthquake data, API integrations, and advanced monitoring tools.'
+        twitterTitle='Sign Up | TerraQuake API'
+        twitterDescription='Join TerraQuake API today and gain access to earthquake monitoring data, API tools, and developer resources.'
+        keywords='Sign up TerraQuake API, register earthquake API, create account earthquake monitoring, earthquake API access'
       />
-      <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
-        <div className='p-8 rounded-lg w-full max-w-md'>
-          <h2 className='text-3xl text-center text-white font-bold mb-6'>
-            Create account
-          </h2>
-          <form onSubmit={handleSubmit(handleSignUp)}>
-            <div className='mb-8'>
-              <label className='block text-white text-sm font-semibold mb-2'>
-                Name
-              </label>
-              <input
-                className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
-                name='name'
-                autoComplete='off'
-                {...register('name')}
-              />
-              <p className='text-red-600 pt-1'>{errors.name?.message}</p>
-            </div>
-            <div className='mb-6'>
-              <label className='block text-white text-sm font-semibold mb-2'>
-                Email
-              </label>
-              <input
-                className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
-                name='email'
-                autoComplete='off'
-                {...register('email')}
-              />
-              <p className='text-red-600 pt-1'>{errors.email?.message}</p>
-            </div>
-            <div className='relative mb-6'>
-              <label className='block text-white text-sm font-semibold mb-2'>
-                Password
-              </label>
-              <input
-                className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
-                name='password'
-                autoComplete='off'
-                {...register('password')}
-                type={showPassword ? 'text' : 'password'}
-              />
-              <p className='text-red-600 pt-1'>{errors.password?.message}</p>
-              <button
-                type='button'
-                onClick={togglePassword}
-                className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
-                aria-label='Toggle password view'
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
+      {/* SEO Stuff */}
 
-              <div className='relative my-6'>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Confirm Password
-                </label>
-                <input
-                  className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
-                  name='password'
-                  autoComplete='off'
-                  {...register('confirmPassword')}
-                  type={showPassword ? 'text' : 'password'}
-                />
-                <p className='text-red-600 pt-1'>
-                  {errors.confirmPassword?.message}
-                </p>
-                <button
-                  type='button'
-                  onClick={togglePassword}
-                  className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
-                  aria-label='Toggle password view'
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
-
-              <div className='relative my-6 flex items-start'>
-                <input
-                  type='checkbox'
-                  id='terms'
-                  {...register('terms', {
-                    required: 'You must accept the Terms and Conditions!',
-                  })}
-                  className='mt-1 w-5 h-5 text-purple-600 bg-gray-800 border-gray-600 rounded focus:ring-purple-500'
-                />
-                <label
-                  htmlFor='terms'
-                  className='mt-1 ml-4 text-sm text-white cursor-pointer select-none'
-                >
-                  I accept the{' '}
-                  <Link
-                    to='/terms-and-conditions'
-                    className='text-purple-400 hover:underline'
-                    aria-label='Navigate to terms and conditions page'
-                  >
-                    Terms and Conditions
-                  </Link>
-                </label>
-              </div>
-              <p className='text-red-600 pt-1'>{errors.terms?.message}</p>
-            </div>
-            <button
-              className='w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-4 rounded-2xl hover:scale-105 transform transition duration-300 cursor-pointer'
-              type='submit'
-              aria-label='Click to create a new account'
-            >
-              {loading ? (
-                <p className='text-white'>
-                  <ImSpinner9 className='text-2xl mx-auto spinner' />
-                </p>
-              ) : (
-                <span>Create your account</span>
-              )}
-            </button>
-            <div className='mt-6 flex flex-col items-center'>
-              <p className='text-gray-200 text-sm cursor-default'>
-                Already have an account?
-              </p>
-              <Link
-                to='/signin'
-                className='mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
-                aria-label='Navigate to sign in page'
-              >
-                Sign In
-              </Link>
-            </div>
-          </form>
+      <motion.section
+        className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
-      </section>
+
+        <div className='relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12'>
+          {/* Header Section */}
+          <motion.div
+            className='mb-16 text-center lg:text-left'
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h1 className='text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
+              Create account.
+              <div className='h-0.5 w-1/5 md:w-1/10 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+            </h1>
+            <p className='text-xl text-white/70 max-w-3xl lg:mx-0 mx-auto'>
+              Create your TerraQuake account to start exploring real seismic
+              events, customize your experience, and join our interactive
+              training platform.
+            </p>
+          </motion.div>
+
+          {/* Main Content: Split Layout */}
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-12'>
+            {/* Left Column: Form Section */}
+            <motion.div
+              className='lg:col-span-2 p-8 md:p-12 border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl'
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <h2 className='text-3xl font-bold text-white mb-8 border-b border-purple-500/50 pb-3'>
+                Register
+              </h2>
+
+              <form onSubmit={handleSubmit(handleSignUp)}>
+                <div className='mb-8'>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Name
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    name='name'
+                    placeholder='Your name'
+                    autoComplete='off'
+                    {...register('name')}
+                  />
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors.name?.message}
+                  </p>
+                </div>
+                <div className='mb-6'>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Email
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    name='email'
+                    placeholder='name@company.com'
+                    autoComplete='off'
+                    {...register('email')}
+                  />
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors.email?.message}
+                  </p>
+                </div>
+                <div className='relative mb-6'>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Password
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    name='password'
+                    placeholder='Your password'
+                    autoComplete='off'
+                    {...register('password')}
+                    type={showPassword ? 'text' : 'password'}
+                  />
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors.password?.message}
+                  </p>
+                  <button
+                    type='button'
+                    onClick={togglePassword}
+                    className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                    aria-label='Toggle password view'
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+
+                  <div className='relative my-6'>
+                    <label className='block text-white text-sm font-semibold mb-2'>
+                      Confirm Password
+                    </label>
+                    <input
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      name='password'
+                      placeholder='Confirm your password'
+                      autoComplete='off'
+                      {...register('confirmPassword')}
+                      type={showPassword ? 'text' : 'password'}
+                    />
+                    <p className='text-red-400 text-xs pt-1'>
+                      {errors.confirmPassword?.message}
+                    </p>
+                    <button
+                      type='button'
+                      onClick={togglePassword}
+                      className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                      aria-label='Toggle password view'
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+
+                  <div className='relative my-6 flex items-start'>
+                    <input
+                      type='checkbox'
+                      id='terms'
+                      {...register('terms', {
+                        required: 'You must accept the Terms and Conditions!',
+                      })}
+                      className='mt-1 w-5 h-5 text-purple-600 bg-gray-800 border-gray-600 rounded focus:ring-purple-500'
+                    />
+                    <label
+                      htmlFor='terms'
+                      className='mt-1 ml-4 text-sm text-white cursor-pointer select-none'
+                    >
+                      I accept the{' '}
+                      <Link
+                        to='/terms-and-conditions'
+                        className='text-purple-400 hover:underline'
+                        aria-label='Navigate to terms and conditions page'
+                      >
+                        Terms and Conditions
+                      </Link>
+                    </label>
+                  </div>
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors.terms?.message}
+                  </p>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  className='
+                    mt-8
+                    w-full
+                    bg-gradient-to-r from-purple-600 to-pink-500 
+                  text-white font-semibold 
+                    py-4 px-6 rounded-full
+                    hover:scale-[1.01] hover:shadow-xl
+                    active:scale-[0.99]
+                    transform transition-all duration-300 ease-in-out
+                    flex items-center justify-center gap-2
+                    cursor-pointer
+                  '
+                  type='submit'
+                  aria-label='Click to create a new account'
+                >
+                  {loading ? (
+                    <p className='text-white'>
+                      <ImSpinner9 className='text-2xl mx-auto spinner' />
+                    </p>
+                  ) : (
+                    <span>Create your account</span>
+                  )}
+                </button>
+                <div className='mt-6 flex flex-col items-center'>
+                  <p className='text-gray-200 text-sm cursor-default'>
+                    Already have an account?
+                  </p>
+                  <Link
+                    to='/signin'
+                    className='mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
+                    aria-label='Navigate to sign in page'
+                  >
+                    Sign In
+                  </Link>
+                </div>
+              </form>
+            </motion.div>
+
+            {/* Right Column: Other Ways to Connect */}
+            <motion.div
+              className='lg:col-span-1 p-8 md:p-12 bg-purple-600/10 border-2 border-purple-500/30 rounded-3xl shadow-inner-xl flex flex-col justify-between'
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div>
+                <h2 className='text-3xl font-bold text-purple-400 mb-6'>
+                  Other Channels
+                </h2>
+                <p className='text-white/80 mb-8'>
+                  For immediate support or specific inquiries, you might find
+                  these direct channels more suitable.
+                </p>
+
+                <div className='space-y-6'>
+                  {contactInfo.map((item, index) => (
+                    <motion.a
+                      key={index}
+                      href={item.href}
+                      target={item.target}
+                      className='flex items-start p-4 bg-gray-900/40 rounded-xl hover:bg-gray-700/50 transition duration-200 group'
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                    >
+                      <div className='text-purple-400 group-hover:text-pink-400 transition-colors mr-4 mt-1'>
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className='text-lg font-semibold text-white group-hover:underline'>
+                          {item.title}
+                        </p>
+                        <p className='text-sm text-white/60'>{item.detail}</p>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Optional: Add a subtle logo or API tagline here */}
+              <div className='mt-10 pt-6 border-t border-purple-500/50'>
+                <p className='text-sm text-white/50 italic'>
+                  Powered by TerraQuake API
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+        {/* Floating Back-to-Top Button Component */}
+        <BackToTopButton />
+      </motion.section>
     </>
   );
 }

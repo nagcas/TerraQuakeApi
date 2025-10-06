@@ -5,28 +5,27 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import EditProfile from './editProfile';
 import DeleteProfile from './deleteProfile';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
   const navigate = useNavigate();
 
-  // Stato unico per gestire la sezione attiva
   const [activeSection, setActiveSection] = useState(null);
-  // valori possibili: "edit", "delete", "password", oppure null
 
   const handleLogout = () => {
-    setUserLogin({});
-    setIsLoggedIn(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
     Swal.fire({
       title: 'Success!',
       text: 'Logged Out Successfully!',
       icon: 'success',
-      confirmButtonText: 'Okay',
+      confirmButtonText: 'Home page',
     }).then(() => {
-      navigate('/');
+      setUserLogin({});
+      setIsLoggedIn(false);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      navigate('/', { replace: true });
     });
   };
 
@@ -36,10 +35,17 @@ export default function Profile() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Profile'
-        description='Profile Page of TerraQuake'
+        title='User Profile'
+        description='View your TerraQuake API profile, including your activity, settings, and preferences.'
+        ogTitle='User Profile - TerraQuake API'
+        ogDescription='Access and manage your TerraQuake API account information and preferences.'
+        twitterTitle='User Profile - TerraQuake API'
+        twitterDescription='Manage your account and view your profile details on TerraQuake API.'
+        keywords='TerraQuake API, user profile, account settings, seismic data'
       />
+      {/* SEO Stuff */}
 
       <section className='relative z-30 w-full flex flex-col items-center justify-center text-center px-6 py-30 text-white'>
         {isLoggedIn ? (
@@ -182,6 +188,8 @@ export default function Profile() {
           </div>
         )}
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

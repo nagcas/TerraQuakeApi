@@ -1,6 +1,8 @@
-import MetaData from '@pages/noPage/metaData';
-import ApiPlayground from '@/components/apiPlayground/ApiPlayground.jsx';
 import '@/components/apiPlayground/apiPlayground.css';
+import MetaData from '@pages/noPage/metaData';
+import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
+import BackToTopButton from '@/components/utils/backToTopButton';
+import { motion } from 'framer-motion';
 
 export default function ExploreData() {
   const earthquakesEndpoints = [
@@ -356,37 +358,69 @@ It allows users to access detailed information about a single earthquake event, 
     },
   ];
 
-  return (
+   return (
     <>
+      {/* SEO Metadata */}
       <MetaData
-        title='Explore Data'
-        description='Explore Data of TerraQuake API'
+        title="Explore Data | TerraQuake API - Real-Time Earthquake Data"
+        description="Discover and explore real-time earthquake data with TerraQuake API. Access seismic activity information, historical data, and powerful analytics for research and applications."
+        ogTitle="Explore Data | TerraQuake API - Real-Time Earthquake Data"
+        ogDescription="Dive into TerraQuake API’s Explore Data section to access live and historical seismic data for earthquake monitoring, research, and safety applications."
+        twitterTitle="Explore Data | TerraQuake API"
+        twitterDescription="Access real-time and historical earthquake data through TerraQuake API’s Explore Data tools for research and monitoring."
+        keywords="TerraQuake API data, earthquake data API, seismic data explorer, earthquake monitoring, real-time seismic data"
       />
-      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
-        <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-2xl md:text-4xl text-white font-extrabold text-center my-25 tracking-tight'>
-            Explore Data for TerraQuake API
-          </h1>
 
-          {/* Descrizione visibile */}
-          <p className='text-white text-lg w-[95%] lg:w-6xl'>
-            Welcome to the <strong>TerraQuake API Playground</strong>! Here, you
-            can explore and interact with earthquake data in real time. Use the
-            playground to test API queries with different parameters such as
-            magnitude, location, or time range, view results in raw JSON format,
-            and copy ready-to-use code snippets for <code>curl</code>,
-            JavaScript (<code>fetch</code> or <code>axios</code>), and Python (
-            <code>requests</code>).
-          </p>
+      {/* Main Section */}
+      <motion.section
+        className="relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Background Gradient */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
         </div>
 
-        <div className='w-full mt-10'>
-          <ApiPlayground
-            title='Earthquakes'
-            endpoints={earthquakesEndpoints}
-          />
+        {/* Content Container */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          {/* Header Section */}
+          <motion.div
+            className="mb-16 text-center lg:text-left"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h1 className="text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4">
+              Explore Data for TerraQuake API.
+              <div className="h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
+            </h1>
+            <p className="text-xl text-white/70 max-w-3xl">
+              Welcome to the <strong>TerraQuake API Playground</strong>! Here, you
+              can explore and interact with earthquake data in real time. Use the
+              playground to test API queries with different parameters such as
+              magnitude, location, or time range, view results in raw JSON format,
+              and copy ready-to-use code snippets for <code>curl</code>,
+              JavaScript (<code>fetch</code> or <code>axios</code>), and Python (
+              <code>requests</code>).
+            </p>
+          </motion.div>
+
+          {/* Playground Section */}
+          <motion.div  
+            initial='hidden'
+            animate='visible'
+            variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+            className='w-full flex flex-col space-y-6'>
+            <ApiPlayground title="Earthquakes" endpoints={earthquakesEndpoints} />
+          </motion.div>
         </div>
-      </section>
+
+        {/* Floating Back-to-Top Button */}
+        <BackToTopButton />
+      </motion.section>
     </>
   );
 }
