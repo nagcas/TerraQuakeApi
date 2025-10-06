@@ -3,9 +3,11 @@ import { FiChevronDown} from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageTabs from './LanguageTabs';
 import ApiPlayground from './ApiPlayground';
+import { useNavigate } from 'react-router-dom';
 
 const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
   const isOpen = index === expandedIndex;
+  const navigate = useNavigate();
 
   const [showSnippets, setShowSnippets] = useState(false);
   useEffect(() => {
@@ -18,6 +20,16 @@ const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       toggleExpand(index);
+    }
+  };
+
+  const goToDocs = (exampleUrl) => {
+    try {
+      const url = new URL(exampleUrl);
+      const path = url.pathname.replace('/v1/', '').replace(/\//g, '-');
+      navigate(`/docs`);
+    } catch {
+      navigate('/404-page')
     }
   };
 
@@ -66,6 +78,14 @@ const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
               </ul>
               <ApiPlayground url={item.exampleUrl} />
               <LanguageTabs snippets={item.snippets} />
+              <div className="mt-6 text-right">
+                <button
+                  onClick={() => goToDocs(item.exampleUrl)}
+                  className="text-purple-400 hover:text-purple-300 text-sm underline transition-all cursor-pointer"
+                >
+                  View API Documentation →
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

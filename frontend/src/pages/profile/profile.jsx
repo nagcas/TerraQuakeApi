@@ -6,6 +6,14 @@ import { useNavigate } from "react-router-dom";
 import EditProfile from "./editProfile";
 import DeleteProfile from "./deleteProfile";
 import { motion } from "framer-motion";
+import React, { useContext, useState } from 'react';
+import MetaData from '../noPage/metaData';
+import { Context } from '@/components/modules/context';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import EditProfile from './editProfile';
+import DeleteProfile from './deleteProfile';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
@@ -230,6 +238,8 @@ export default function Profile() {
           </motion.div>
         )}
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }
