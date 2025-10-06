@@ -60,3 +60,38 @@ body {
 .custom-swal-popup {
   border: #8b5cf6;
 }
+
+@keyframes dangle-bouncy {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+
+.group:hover .dangle-on-hover {
+  animation: dangle-bouncy 1.2s ease-in-out infinite;
+}
+
+@keyframes subtle-bounce {
+  0%, 100% {
+    transform: translateY(-15%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.group:hover .icon-bounces {
+  animation: subtle-bounce 0.8s infinite;
+}

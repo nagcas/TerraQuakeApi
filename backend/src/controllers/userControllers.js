@@ -131,9 +131,9 @@ export const updateCurrentUserData = ({
   }
 }
 
-/**
- * Controller: Soft delete the currently authenticated user's account.
- */
+// /**
+//  * Controller: Soft delete the currently authenticated user's account.
+//  */
 export const deleteCurrentUser = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {

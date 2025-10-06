@@ -65,6 +65,8 @@ export default function SignUp() {
       email: data.email,
       password: data.password,
       role: 'user',
+      experience: data.experience,
+      student: data.student,
       terms: data.terms,
     };
     axios
@@ -144,11 +146,11 @@ export default function SignUp() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h1 className='text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
+            <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
               Create account.
-              <div className='h-0.5 w-1/5 md:w-1/10 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+              <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-white/70 max-w-3xl lg:mx-0 mx-auto'>
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
               Create your TerraQuake account to start exploring real seismic
               events, customize your experience, and join our interactive
               training platform.
@@ -246,6 +248,74 @@ export default function SignUp() {
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
+                  </div>
+
+                  <div className='relative my-6'>
+                    <label className='block text-white text-sm font-semibold mb-2'>
+                      Experience
+                    </label>
+                    <select
+                      defaultValue=''
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      name='experience'
+                    >
+                      <option
+                        value=''
+                        disabled
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        Select an option
+                      </option>
+                      <option
+                        value='Beginner'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        Beginner
+                      </option>
+                      <option
+                        value='Intermediate'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        Intermediate
+                      </option>
+                      <option
+                        value='Expert'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        Expert
+                      </option>
+                    </select>
+                  </div>
+
+                  <div className='relative my-6'>
+                    <label className='block text-white text-sm font-semibold mb-2'>
+                      Student
+                    </label>
+                    <select
+                      defaultValue=''
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      name='student'
+                    >
+                      <option
+                        value=''
+                        disabled
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        Select an option
+                      </option>
+                      <option
+                        value='Yes'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        Yes
+                      </option>
+                      <option
+                        value='No'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        No
+                      </option>
+                    </select>
                   </div>
 
                   <div className='relative my-6 flex items-start'>

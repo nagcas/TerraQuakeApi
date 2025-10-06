@@ -64,36 +64,35 @@ export default function TermsAndConditions() {
       />
       {/* SEO Stuff */}
 
-      <motion.section 
-        className="relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden"
+      <motion.section
+        className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-         {/* Background Gradient */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        {/* Background Gradient */}
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70">
+        <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70'>
           {/* Header Section */}
           <motion.div
-            className="mb-16 text-center lg:text-left"
+            className='mb-16 text-center lg:text-left'
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h1 className="text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4">
+            <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
               Terms & Conditions.
-              <div className="h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
+              <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className="text-xl text-white/70 max-w-3xl">
-             Last updated: 22-09-2025.
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
+              Last updated: 22-09-2025.
             </p>
           </motion.div>
-
 
           <section className='space-y-6'>
             <p className='text-gray-300 leading-relaxed'>

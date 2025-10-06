@@ -173,11 +173,11 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h1 className="text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4">
+            <h1 className="text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4">
               About TerraQuake API.
-              <div className="h-0.5 w-1/4 md:w-1/5 mx-auto md:mx-0 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
+              <div className="h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
             </h1>
-            <p className="text-xl text-white/70 max-w-3xl">
+             <p className='text-xl text-left text-white/70 max-w-7xl'>
              A focused platform built to translate raw seismic feeds into
             developer-friendly endpoints and actionable insights for safety,
             research, and education.
