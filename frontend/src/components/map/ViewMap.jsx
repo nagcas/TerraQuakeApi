@@ -11,9 +11,9 @@ import OSM from 'ol/source/OSM.js';
 import 'ol/ol.css';
 import { defaults as defaultInteractions } from 'ol/interaction.js';
 import Link from 'ol/interaction/Link';
-import ShowInfo from './ShowInfo';
+import ShowInfo from './showInfo';
 import { downloadMap, fetchLocation, addEarthquakeMarkers } from './mapUtil';
-import ShowProperties from './ShowProperties';
+import ShowProperties from './showProperties';
 
 const ViewMap = ({ earthquakeData }) => {
   const mapRef = useRef(null);

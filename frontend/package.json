@@ -16,6 +16,7 @@
     "axios": "1.12.1",
     "framer-motion": "12.23.22",
     "kompas": "1.0.0",
+    "ol": "10.6.1",
     "prismjs": "1.30.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",

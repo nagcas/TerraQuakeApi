@@ -413,7 +413,7 @@ It allows users to access detailed information about a single earthquake event, 
               endpoints={earthquakesEndpoints}
               setEarthquakeData={setEarthquakeData}
             />
-            {/* <ViewMap earthquakeData={earthquakeData} /> */}
+            <ViewMap earthquakeData={earthquakeData} />
           </div>
         </div>
       </motion.section>
