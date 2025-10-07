@@ -102,7 +102,7 @@ export default function Hero() {
             src={JsonApi2}
             alt="TerraQuake API Hero Image"
             style={{ transform: transformStyle }}
-            className="w-full h-auto rounded-2xl border border-gray-700 shadow-2xl transition-transform duration-300 ease-out object-contain filter brightness-110 contrast-125"
+            className="w-full p-4 h-auto rounded-2xl border border-gray-600 shadow-2xl transition-transform duration-300 ease-out object-contain filter brightness-110 contrast-160"
           />
         </motion.div>
       </section>
