@@ -14,6 +14,7 @@ import Link from 'ol/interaction/Link';
 import ShowInfo from './showInfo';
 import { downloadMap, fetchLocation, addEarthquakeMarkers } from './mapUtil';
 import ShowProperties from './showProperties';
+import Legend from './legend';
 
 const ViewMap = ({ earthquakeData }) => {
   const mapRef = useRef(null);
@@ -55,28 +56,35 @@ const ViewMap = ({ earthquakeData }) => {
   return (
     <section className='w-full text-white py-16 min-h-[70vh] flex flex-col items-center'>
       <div className='text-center mb-10'>
-        <h2 className='text-3xl md:text-5xl font-bold mb-2'>Earthquake Map</h2>
+        <h2 className='text-3xl md:text-5xl font-bold mb-2'>TerraQuake Map</h2>
         <p className='text-gray-400 max-w-2xl mx-auto text-lg'>
-          Explore real-time earthquake epicenters plotted on the map. Zoom in and pan to analyze seismic activity globally.
+          Explore real-time earthquake epicenters plotted on the map. Zoom in
+          and pan to analyze seismic global
         </p>
       </div>
 
       <div className='w-full max-w-6xl bg-white/5 border border-white/10 rounded-2xl p-4 shadow-xl'>
         <ShowInfo />
         <ShowProperties mapInstance={mapInstance.current} />
-        <div ref={mapRef} className='rounded-xl' style={{ height: '100vh', width: '100%' }} />
+        <div
+          ref={mapRef}
+          className='relative rounded-xl'
+          style={{ position: 'relative', height: '100vh', width: '100%' }}
+        >
+          <Legend />
+        </div>
 
         <div className='flex flex-row justify-between items-center mt-4'>
           <button
             onClick={() => addEarthquakeMarkers(mapInstance.current, ['clear'])}
-            className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors'
+            className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
           >
             Clear Map
           </button>
 
           <button
             onClick={() => downloadMap(mapRef, data)}
-            className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors'
+            className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
           >
             Download Map
           </button>
