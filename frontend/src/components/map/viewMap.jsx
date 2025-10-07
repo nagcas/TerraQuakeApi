@@ -64,7 +64,7 @@ const ViewMap = ({ earthquakeData }) => {
       </div>
 
       <div className='w-full max-w-6xl bg-white/5 border border-white/10 rounded-2xl p-4 shadow-xl'>
-        <ShowInfo />
+        <ShowInfo earthquakeData={earthquakeData} />
         <ShowProperties mapInstance={mapInstance.current} />
         <div
           ref={mapRef}

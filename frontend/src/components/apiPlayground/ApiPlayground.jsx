@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import { ImSpinner9 } from 'react-icons/im';
 
-
-export default function ApiPlayground({ title = "API Playground", endpoints = [] , setEarthquakeData}) {
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "";
-
+export default function ApiPlayground({
+  title = 'API Playground',
+  endpoints = [],
+  setEarthquakeData,
+}) {
+  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || '';
 
   const [activeKey, setActiveKey] = useState(endpoints[0]?.key || '');
   const active = useMemo(
@@ -74,28 +76,23 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       }
       if (!res.ok) {
         setErrorMessage(
-
           data && data.message
             ? `status: ${res.status} - message: ${data.message}`
             : `${res.status} - ${res.statusText}`
-
         );
       }
       setResponseData(data);
       setEarthquakeData(data);
     } catch (err) {
-
-      setErrorMessage("Request failed: ",err);
+      setErrorMessage('Request failed: ', err);
       setResponseData(null);
-
     } finally {
       setLoading(false);
     }
   };
 
-
-  const sampleCurl = () => `curl -s -X ${active.method || "GET"} "${buildUrl()}"`;
-
+  const sampleCurl = () =>
+    `curl -s -X ${active.method || 'GET'} "${buildUrl()}"`;
 
   const sampleFetch = () =>
     `fetch('${buildUrl()}', { method: '${
@@ -145,19 +142,16 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       await navigator.clipboard.writeText(text);
       setCopiedKey(key);
 
-      setTimeout(() => setCopiedKey(""), 1200);
+      setTimeout(() => setCopiedKey(''), 1200);
     } catch {
       // Clipboard copy failed, do nothing
     }
-
   };
 
   return (
     <section className='relative z-0 w-full min-h-screen pb-12 overflow-hidden text-white/70'>
       <div className='text-center mb-8'>
-        <h2 className='text-left text-3xl md:text-4xl font-bold'>
-          {title}
-        </h2>
+        <h2 className='text-left text-3xl md:text-4xl font-bold'>{title}</h2>
       </div>
 
       <div className='w-full flex flex-col space-y-6'>
