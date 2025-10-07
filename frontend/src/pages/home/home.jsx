@@ -1,9 +1,7 @@
 import Hero from '@components/hero/hero';
 import Info from '@components/info/info';
 import MetaData from '@pages/noPage/metaData';
-import ApiDocsEarthquakes from '@components/apiDocs/apiDocsEarthquakes';
 import Newsletter from '@/components/newsletter/Newsletter';
-import ViewMap from '@/components/map/ViewMap';
 import { useState } from 'react';
 import Testimonials from '@/components/testimonials/Testimonials';
 import BackToTopButton from '@/components/utils/backToTopButton';
