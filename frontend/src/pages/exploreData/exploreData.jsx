@@ -2,7 +2,7 @@ import '@/components/apiPlayground/apiPlayground.css';
 import ViewMap from '@/components/map/viewMap';
 import { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
-import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
+import ApiPlayground from "@/components/apiPlayground/ApiPlayground";
 import BackToTopButton from '@/components/utils/backToTopButton';
 import { motion } from 'framer-motion';
 
@@ -367,12 +367,12 @@ It allows users to access detailed information about a single earthquake event, 
       {/* SEO Metadata */}
       <MetaData
         title='Explore Data | TerraQuake API - Real-Time Earthquake Data'
-        description='Discover and explore real-time earthquake data with TerraQuake API. Access seismic activity information, historical data, and powerful analytics.'
+        description='Discover and explore real-time earthquake data with TerraQuake API.'
         ogTitle='Explore Data | TerraQuake API - Real-Time Earthquake Data'
         ogDescription='Dive into TerraQuake API’s Explore Data section to access live and historical seismic data.'
         twitterTitle='Explore Data | TerraQuake API'
         twitterDescription='Access real-time and historical earthquake data through TerraQuake API’s Explore Data tools.'
-        keywords='TerraQuake API data, earthquake data API, seismic data explorer, earthquake monitoring, real-time seismic data'
+        keywords='TerraQuake API data, earthquake data API, seismic data explorer'
       />
 
       {/* Main Section */}
@@ -382,14 +382,14 @@ It allows users to access detailed information about a single earthquake event, 
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Background Gradient */}
+        {/* Background Gradients */}
         <div className='absolute inset-0 z-0'>
           <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
           <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
         <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12'>
-          {/* Header Section */}
+          {/* Header */}
           <motion.div
             className='mb-16 text-center lg:text-left'
             initial={{ opacity: 0, y: -20 }}
@@ -398,13 +398,11 @@ It allows users to access detailed information about a single earthquake event, 
           >
             <h1 className='text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
               Explore Data for TerraQuake API
-              <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
+            <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-white/70 max-w-7xl mx-auto'>
               Welcome to the <strong>TerraQuake API Playground</strong>! Explore
-              and interact with earthquake data in real time. Test API queries
-              with different parameters such as magnitude, location, or time
-              range, view raw JSON results, and copy ready-to-use code snippets.
+              and interact with earthquake data in real time.
             </p>
           </motion.div>
 
@@ -420,7 +418,6 @@ It allows users to access detailed information about a single earthquake event, 
         </div>
       </motion.section>
 
-      {/* Floating Back-to-Top Button */}
       <BackToTopButton />
     </>
   );
