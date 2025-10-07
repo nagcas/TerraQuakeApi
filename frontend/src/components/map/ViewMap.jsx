@@ -9,13 +9,15 @@ import View from 'ol/View.js';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 import 'ol/ol.css';
+import { defaults as defaultInteractions } from 'ol/interaction.js';
+import Link from 'ol/interaction/Link';
 import ShowInfo from './ShowInfo';
 import { downloadMap, fetchLocation, addEarthquakeMarkers } from './mapUtil';
 import ShowProperties from './ShowProperties';
 
 const ViewMap = ({ earthquakeData }) => {
-  const mapRef = useRef(null); // HTML element reference
-  const mapInstance = useRef(null); // Store map instance
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
   const data = earthquakeData?.data;
 
   useEffect(() => {
@@ -29,16 +31,19 @@ const ViewMap = ({ earthquakeData }) => {
         }),
       ],
       view: new View({
-        projection: 'EPSG:3857', // Standard web map projection
+        projection: 'EPSG:3857',
         center: [0, 0],
         zoom: 2,
       }),
+      interactions: defaultInteractions({ mouseWheelZoom: false }),
     });
 
-    fetchLocation(map); // Fetch user location
+    map.addInteraction(new Link());
+    fetchLocation(map);
+
     mapInstance.current = map;
 
-    return () => map.setTarget(null); // Cleanup on unmount
+    return () => map.setTarget(null);
   }, []);
 
   useEffect(() => {
@@ -52,19 +57,14 @@ const ViewMap = ({ earthquakeData }) => {
       <div className='text-center mb-10'>
         <h2 className='text-3xl md:text-5xl font-bold mb-2'>Earthquake Map</h2>
         <p className='text-gray-400 max-w-2xl mx-auto text-lg'>
-          Explore real-time earthquake epicenters plotted on the map.
+          Explore real-time earthquake epicenters plotted on the map. Zoom in and pan to analyze seismic activity globally.
         </p>
       </div>
 
       <div className='w-full max-w-6xl bg-white/5 border border-white/10 rounded-2xl p-4 shadow-xl'>
         <ShowInfo />
         <ShowProperties mapInstance={mapInstance.current} />
-
-        <div
-          ref={mapRef}
-          className='rounded-xl'
-          style={{ height: '100vh', width: '100%' }}
-        />
+        <div ref={mapRef} className='rounded-xl' style={{ height: '100vh', width: '100%' }} />
 
         <div className='flex flex-row justify-between items-center mt-4'>
           <button
