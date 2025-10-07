@@ -42,7 +42,7 @@ export default function Hero() {
         <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
         <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
       </div>
-      <section className='relative z-30 w-full min-h-screen flex flex-col lg:flex-row justify-center items-center text-center px-6 py-20 text-white animate-fadeIn'>
+      <section className='relative z-30 w-full min-h-screen flex gap-5 flex-col lg:flex-row justify-center items-center text-center px-6 py-20 text-white animate-fadeIn'>
         {/* Page header */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -54,12 +54,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className='text-4xl md:text-6xl font-extrabold leading-tight bg-clip-text text-white/80'
+            className='text-4xl md:text-6xl font-extrabold leading-tight bg-clip-text text-white/80 lg:text-left'
           >
             Practice with Real Seismic Data
           </motion.h1>
 
-          <p className='text-lg md:text-lg text-gray-300'>
+          <p className='text-lg md:text-lg text-gray-300 lg:text-left'>
             A training and experimentation environment powered by real seismic
             events from official sources. Perfect for students, developers, and
             technicians looking to learn by working with real-world data.
@@ -70,7 +70,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className='flex flex-col md:flex-row justify-center items-center gap-6 mt-4'
+            className='flex flex-col md:flex-row justify-center items-center gap-6 mt-4 lg:justify-normal'
           >
             {!isLoggedIn && (
               <button
