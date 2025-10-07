@@ -396,13 +396,12 @@ It allows users to access detailed information about a single earthquake event, 
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h1 className='text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
+            <h1 className='text-3xl md:text-5xl text-white text-center font-extrabold tracking-tighter mb-4'>
               Explore Data for TerraQuake API
             </h1>
             <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-white/70 max-w-7xl mx-auto'>
-              Welcome to the <strong>TerraQuake API Playground</strong>! Explore
-              and interact with earthquake data in real time.
+              Explore and interact with real-time earthquake data, visualize seismic events directly on the interactive map, and download the map for your own analysis.
             </p>
           </motion.div>
 
