@@ -27,8 +27,6 @@ export default function Home() {
 
       <Hero />
       <Info />
-      <ApiDocsEarthquakes setEarthquakeData={setEarthquakeData}/>
-      <ViewMap earthquakeData={earthquakeData}/>
       <Newsletter />
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
