@@ -1,10 +1,16 @@
 import '@/components/apiPlayground/apiPlayground.css';
+import ViewMap from '@/components/map/viewMap';
+import { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
 import BackToTopButton from '@/components/utils/backToTopButton';
 import { motion } from 'framer-motion';
 
+
 export default function ExploreData() {
+
+  const [earthquakeData, setEarthquakeData] = useState(null);
+  
   const earthquakesEndpoints = [
     {
       key: 'recent',
@@ -384,6 +390,13 @@ It allows users to access detailed information about a single earthquake event, 
           <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
+        <div className='w-full mt-10'>
+          <ApiPlayground
+            title='Earthquakes'
+            endpoints={earthquakesEndpoints}
+            setEarthquakeData={setEarthquakeData}
+          />
+          <ViewMap earthquakeData={earthquakeData}/>
         {/* Content Container */}
         <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12'>
           {/* Header Section */}

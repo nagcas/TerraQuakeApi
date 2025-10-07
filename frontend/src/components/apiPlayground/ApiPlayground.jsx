@@ -1,11 +1,10 @@
 import { useMemo, useState } from 'react';
 import { ImSpinner9 } from 'react-icons/im';
 
-export default function ApiPlayground({
-  title = 'API Playground',
-  endpoints = [],
-}) {
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || '';
+
+export default function ApiPlayground({ title = "API Playground", endpoints = [] , setEarthquakeData}) {
+  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || "";
+
 
   const [activeKey, setActiveKey] = useState(endpoints[0]?.key || '');
   const active = useMemo(
@@ -75,20 +74,28 @@ export default function ApiPlayground({
       }
       if (!res.ok) {
         setErrorMessage(
-          `status: ${res.status} - message: ${data.message}` ||
-            `${res.status} - ${res.statusText}`
+
+          data && data.message
+            ? `status: ${res.status} - message: ${data.message}`
+            : `${res.status} - ${res.statusText}`
+
         );
       }
       setResponseData(data);
+      setEarthquakeData(data);
     } catch (err) {
-      setErrorMessage('Request failed');
+
+      setErrorMessage("Request failed: ",err);
+      setResponseData(null);
+
     } finally {
       setLoading(false);
     }
   };
 
-  const sampleCurl = () =>
-    `curl -s -X ${active.method || 'GET'} \"${buildUrl()}\"`;
+
+  const sampleCurl = () => `curl -s -X ${active.method || "GET"} "${buildUrl()}"`;
+
 
   const sampleFetch = () =>
     `fetch('${buildUrl()}', { method: '${
@@ -137,8 +144,12 @@ export default function ApiPlayground({
     try {
       await navigator.clipboard.writeText(text);
       setCopiedKey(key);
-      setTimeout(() => setCopiedKey(''), 1200);
-    } catch {}
+
+      setTimeout(() => setCopiedKey(""), 1200);
+    } catch {
+      // Clipboard copy failed, do nothing
+    }
+
   };
 
   return (

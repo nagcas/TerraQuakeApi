@@ -3,10 +3,14 @@ import Info from '@components/info/info';
 import MetaData from '@pages/noPage/metaData';
 import ApiDocsEarthquakes from '@components/apiDocs/apiDocsEarthquakes';
 import Newsletter from '@/components/newsletter/Newsletter';
+import ViewMap from '@/components/map/ViewMap';
+import { useState } from 'react';
 import Testimonials from '@/components/testimonials/Testimonials';
 import BackToTopButton from '@/components/utils/backToTopButton';
 
+
 export default function Home() {
+  const [earthquakeData, setEarthquakeData] = useState(null);
   return (
     <>
       {/* SEO Stuff */}
@@ -23,7 +27,8 @@ export default function Home() {
 
       <Hero />
       <Info />
-      <ApiDocsEarthquakes />
+      <ApiDocsEarthquakes setEarthquakeData={setEarthquakeData}/>
+      <ViewMap earthquakeData={earthquakeData}/>
       <Newsletter />
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
