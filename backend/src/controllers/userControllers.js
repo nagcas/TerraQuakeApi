@@ -1,4 +1,4 @@
-import { sendDeleteAccountConfirmation } from '../libs/mailerService.js'
+import { sendDeleteAccountConfirmation } from '../libs/sendDeleteAccountConfirmation.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
 
 /**
