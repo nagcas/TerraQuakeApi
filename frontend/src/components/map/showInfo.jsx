@@ -50,8 +50,12 @@ export default function ShowInfo({ earthquakeData }) {
         )}
       </div>
       <p className='py-3'>
-        {urlBackend}
-        {earthquakeData?.meta?.path || 'no path available'}
+        View path:{' '}
+        <span className='text-gray-400 font-mono'>
+          {urlBackend && earthquakeData?.meta?.path
+            ? `${urlBackend}${earthquakeData.meta.path}`
+            : 'No path available'}
+        </span>
       </p>
     </section>
   );
