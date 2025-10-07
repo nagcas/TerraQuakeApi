@@ -1,26 +1,24 @@
-import { Context } from "@/components/modules/context"
-import { useEffect, useContext, useState } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
-import Swal from "sweetalert2"
-
+import { Context } from '@/components/modules/context';
+import { useEffect, useContext, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function GithubAuth() {
-  const navigate = useNavigate()
-  const { search } = useLocation()
-  const { setUserLogin, setIsLoggedIn } = useContext(Context)
+  const navigate = useNavigate();
+  const { search } = useLocation();
+  const { setUserLogin, setIsLoggedIn } = useContext(Context);
   const [loading, setLoading] = useState(false);
 
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND
+  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
 
   useEffect(() => {
     setLoading(true);
-    const params = new URLSearchParams(search)
-    const token = params.get("token")
-    const message = params.get("message")
+    const params = new URLSearchParams(search);
+    const token = params.get('token');
+    const message = params.get('message');
 
     if (token) {
-      
-      localStorage.setItem("token", token)
+      localStorage.setItem('token', token);
 
       fetch(`${BACKEND_URL}/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -28,49 +26,57 @@ export default function GithubAuth() {
         .then((res) => res.json())
         .then((data) => {
           if (data?.user) {
-            
-            localStorage.setItem("user", JSON.stringify(data.user))
+            localStorage.setItem('user', JSON.stringify(data.user));
 
-            setUserLogin(data.user)
-            setIsLoggedIn(true)
+            setUserLogin(data.user);
+            setIsLoggedIn(true);
 
             Swal.fire({
-              title: "Success!",
-              text: message || "Login with GitHub successful!",
-              icon: "success",
-              confirmButtonText: "Profile",
+              title: 'Success!',
+              text: message || 'Login with GitHub successful!',
+              icon: 'success',
+              confirmButtonText: 'Profile',
             }).then(() => {
               setLoading(false);
-              navigate("/profile", { replace: true })
-            })
+              navigate('/profile', { replace: true });
+            });
           } else {
-            throw new Error("No user returned from backend")
+            throw new Error('Invalid user data');
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          const errorMessage =
+            err?.response?.data?.message ||
+            err?.response?.data?.error ||
+            err.message ||
+            'Login failed. Please try again.';
+
           Swal.fire({
-            title: "Error!",
-            text: "Could not fetch user data.",
-            icon: "error",
-            confirmButtonText: "Ok",
+            title: 'Error!',
+            text: errorMessage,
+            icon: 'error',
+            confirmButtonText: 'Ok',
           }).then(() => {
+            navigate('/signin');
             setLoading(false);
-            navigate("/signin", { replace: true })
-          })
-        })
+          });
+        });
     } else {
-      Swal.fire({
-        title: "Error!",
-        text: "Login with GitHub failed.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      }).then(() => {
-        setLoading(false);
-        navigate("/signin", { replace: true })
-      })
+      setLoading(false);
+      navigate('/signin');
     }
-  }, [search, navigate, BACKEND_URL, setUserLogin, setIsLoggedIn])
+  }, [search, navigate, BACKEND_URL, setUserLogin, setIsLoggedIn]);
 
-  return <p>Logging you in with GitHub...</p>
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#2d2d2d] z-50">
+        <div className="w-16 h-16 border-4 border-t-transparent border-pink-500 rounded-full animate-spin"></div>
+        <p className="mt-6 text-lg text-gray-300 font-semibold tracking-wide">
+          Logging in with GitHub...
+        </p>
+      </div>
+    );
+  }
+
+  return null; 
 }
-
