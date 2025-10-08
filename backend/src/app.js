@@ -3,6 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
+import passport from 'passport'
+import './config/passportConfig.js'
 
 import routeAuth from './routes/authRoutes.js'
 import routeUsers from './routes/usersRoutes.js'
@@ -21,6 +23,10 @@ const app = express()
 // === MIDDLEWARE ===
 app.use(helmet())
 app.use(express.json())
+
+
+// === PASSPORT SETUP ===
+app.use(passport.initialize())
 
 // === CORS ===
 // Only /v1/earthquakes is public

@@ -4,6 +4,12 @@ import { encrypt } from '../utils/handlePassword.js'
 
 const usersSchema = new Schema(
   {
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows null values, required for users without a Google login
+      trim: true
+    },
     name: {
       type: String,
       trim: true

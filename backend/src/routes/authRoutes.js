@@ -1,10 +1,13 @@
 import express from 'express'
+import passport from 'passport'
+import '../config/passportConfig.js'
 import {
   signIn,
   signUp,
   forgotPassword,
   resetPassword,
-  changePassword
+  changePassword,
+  googleAuthCallback
 } from '../controllers/authControllers.js'
 import {
   validatorSignIn,
@@ -80,5 +83,31 @@ router.post(
   validatorChangePassword,
   changePassword({ User, handleHttpError, buildResponse, matchedData })
 )
+
+// NOTE: GOOGLE AUTHENTICATION ROUTES
+
+// Step 1: Redirect user to Google for authentication
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+)
+
+// Step 2: Handle Google callback after user grants permission
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { session: false, failureRedirect: '/auth/failure' }),
+  googleAuthCallback({
+    buildResponse,
+    handleHttpError
+  })
+)
+
+// Step 3: Optional failure route
+router.get('/failure', (req, res) => {
+  res.status(401).json({
+    success: false,
+    message: 'Google authentication failed'
+  })
+})
 
 export default router
