@@ -308,25 +308,25 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
     const { user, token } = req.user
 
     // Get the frontend URL from environment variables
-    const FRONTEND_REDIRECT_URL = process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT;
+    const FRONTEND_REDIRECT_URL = process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT
 
     if (!FRONTEND_REDIRECT_URL) {
-        // Fallback or error handling if environment variable is missing
-        return res.status(500).send('Frontend redirect URL not configured.');
+      // Fallback or error handling if environment variable is missing
+      return res.status(500).send('Frontend redirect URL not configured.')
     }
 
     // 1. Construct the successful redirect URL with the JWT as a query parameter
     // The frontend must have a route/component that reads this token.
-    const successUrl = new URL(FRONTEND_REDIRECT_URL);
-    successUrl.pathname = '/login-success'; // Adjust this path to your client's success route
-    successUrl.searchParams.append('token', token);
-    successUrl.searchParams.append('user_id', user._id.toString());
-    
+    const successUrl = new URL(FRONTEND_REDIRECT_URL)
+    successUrl.pathname = '/login-success' // Adjust this path to your client's success route
+    successUrl.searchParams.append('token', token)
+    successUrl.searchParams.append('user_id', user._id.toString())
+
     // 2. Perform the redirect, handing control back to the client application
-    return res.redirect(successUrl.toString());
+    return res.redirect(successUrl.toString())
   } catch (error) {
     console.error('Error in Google callback:', error)
-    const failureUrl = process.env.FRONTEND_DEVELOPMENT || 'http://localhost:5173';
+    const failureUrl = process.env.FRONTEND_DEVELOPMENT || 'http://localhost:5173'
     res.redirect(`${failureUrl}/login-failure?error=google_auth_failed`)
   }
 }
