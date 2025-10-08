@@ -2,7 +2,7 @@ import "./apiDocs.css";
 import { useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
 
-export default function ApiDocsEarthquakes() {
+export default function ApiDocsEarthquakes({ setEarthquakeData }) {
 	const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
 
 	const [activeTab, setActiveTab] = useState("recent");
@@ -110,15 +110,17 @@ It allows users to access detailed information about a single earthquake event, 
 			const res = await fetch(`${BACKEND_URL}` + url);
 			const data = await res.json();
 			setResponseData(data);
+			setEarthquakeData(data); // Pass data to parent component
 		} catch (err) {
-			setResponseData({ error: "Request failed" });
+			setResponseData({ error: "Request failed",err });
+			setEarthquakeData(null); // Clear parent data on error
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	return (
-		<section className="w-full text-white px-6 py-10 min-h-screen">
+		<section className="w-full text-white  pb-0 py-10 min-h-screen">
 			<div className="text-center mb-12">
 				<h1 className="text-4xl md:text-6xl font-bold mb-4">TerraQuake API</h1>
 				<p className="text-gray-400 text-lg max-w-2xl mx-auto">Explore real-time seismic data powered by INGV. Use the endpoints below to query earthquake events in Italy and beyond.</p>

@@ -23,8 +23,9 @@ import { tokenSign } from '../utils/handleJwt.js'
 import { compare } from '../utils/handlePassword.js'
 import { buildResponse } from '../utils/buildResponse.js'
 import handleHttpError from '../utils/handleHttpError.js'
-import { sendEmailRegister, sendForgotPassword } from '../libs/sendEmail.js'
 import { authenticateUser } from '../middleware/authMiddleware.js'
+import { sendEmailRegister } from '../libs/sendEmailRegister.js'
+import { sendForgotPassword } from '../libs/sendForgotPassword.js'
 const router = express.Router()
 
 // NOTE: AUTH
