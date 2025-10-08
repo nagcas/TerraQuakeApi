@@ -134,7 +134,7 @@ export default function Profile() {
               {activeSection !== null && (
                 <motion.button
                   onClick={() => setActiveSection(null)}
-                  className="mt-6 w-48 sm:w-60 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300"
+                  className="mt-6 w-48 sm:w-60 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
                 >
                   Back to Profile
                 </motion.button>

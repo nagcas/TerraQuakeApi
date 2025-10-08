@@ -127,7 +127,7 @@ export default function NavbarMenu() {
         <div ref={moreRef} className="relative">
           <button
             onClick={() => setIsMoreOpen((s) => !s)}
-            className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 ${
+            className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer ${
               moreNavItems.some((item) => window.location.pathname === item.path)
                 ? 'text-purple-400 font-semibold'
                 : 'text-gray-300'
@@ -181,7 +181,7 @@ export default function NavbarMenu() {
           <div ref={profileRef} className="relative">
             <button
               onClick={() => setIsProfileOpen((s) => !s)}
-              className="flex items-center gap-2 hover:bg-gray-800/50 rounded-lg px-2 py-1 transition-colors duration-200"
+              className="flex items-center gap-2 hover:bg-gray-800/50 rounded-lg px-2 py-1 transition-colors duration-200 cursor-pointer"
               aria-label="User menu"
               aria-expanded={isProfileOpen}
             >
