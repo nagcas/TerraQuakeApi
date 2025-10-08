@@ -57,10 +57,7 @@ export default function NavbarMenu() {
   ];
 
   // All items for mobile menu (unchanged structure)
-  const listItems = [
-    ...primaryNavItems,
-    ...moreNavItems,
-  ];
+  const listItems = [...primaryNavItems, ...moreNavItems];
 
   const handleLogout = () => {
     Swal.fire({
@@ -101,7 +98,7 @@ export default function NavbarMenu() {
   return (
     <header className='fixed top-0 left-0 w-full backdrop-blur-2xl bg-black/60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50'>
       {/* Logo */}
-      <a href = "https://terraquakeapi.com/">
+      <a href='https://terraquakeapi.com/'>
         <div className='flex items-center text-2xl font-bold w-fit h-12 relative'>
           <img
             src={Sismic}
@@ -129,29 +126,31 @@ export default function NavbarMenu() {
             {item.name}
           </NavLink>
         ))}
-        
+
         {/* More Dropdown */}
         <div className='relative more-dropdown'>
           <button
             onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
             className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 ${
-              moreNavItems.some(item => window.location.pathname === item.path)
+              moreNavItems.some(
+                (item) => window.location.pathname === item.path
+              )
                 ? 'text-purple-400 font-semibold'
                 : 'text-gray-300'
             }`}
             onMouseEnter={() => setIsMoreDropdownOpen(true)}
           >
             More
-            <FaChevronDown 
+            <FaChevronDown
               className={`text-xs transition-transform duration-200 ${
                 isMoreDropdownOpen ? 'rotate-180' : 'rotate-0'
-              }`} 
+              }`}
             />
           </button>
-          
+
           {/* More Dropdown Menu */}
           {isMoreDropdownOpen && (
-            <div 
+            <div
               className='absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-xl border border-purple-500/50 rounded-2xl shadow-lg z-50 py-2'
               onMouseEnter={() => setIsMoreDropdownOpen(true)}
               onMouseLeave={() => setIsMoreDropdownOpen(false)}
@@ -180,19 +179,19 @@ export default function NavbarMenu() {
       {/* Auth Desktop */}
       <div className='lg:flex items-center ml-2 gap-3 text-[14px] lg:text-[16px] relative user-dropdown'>
         {/* Star GitHub */}
-<a
-  href="https://github.com/nagcas/TerraQuakeApi"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-gray-600/50 rounded-lg px-3 py-1.5 shadow-lg transition-all hover:scale-105 hover:border-purple-500/50 transform duration-200"
->
-  <span className="flex items-center gap-1.5 text-gray-300 font-medium text-sm">
-    <FiGithub className="text-purple-400 text-lg" /> Star
-  </span>
-  <span className="bg-purple-600 text-white font-semibold px-2 py-0.5 rounded-md shadow-md text-xs">
-    {star}
-  </span>
-</a>
+        <a
+          href='https://github.com/nagcas/TerraQuakeApi'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hidden lg:flex items-center gap-2 bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-gray-600/50 rounded-full px-3 py-1.5 shadow-lg transition-all hover:scale-105 hover:border-purple-500/50 transform duration-200'
+        >
+          <span className='flex items-center gap-1.5 text-gray-300 font-medium text-sm'>
+            <FiGithub className='text-purple-400 text-lg' /> Stars
+          </span>
+          <span className='bg-purple-600 text-white font-semibold px-2 py-0.5 rounded-md shadow-md text-xs'>
+            {star}
+          </span>
+        </a>
 
         {isLoggedIn ? (
           <>
@@ -274,14 +273,14 @@ export default function NavbarMenu() {
         ) : (
           <div className='hidden lg:flex gap-3'>
             <button
-              className='border border-gray-400 hover:border-white hover:bg-white hover:text-black transition-all duration-300 text-gray-300 font-medium py-1.5 px-4 rounded-lg cursor-pointer text-sm'
+              className='border border-gray-400 hover:border-white hover:bg-white hover:text-black transition-all duration-300 text-gray-300 font-medium py-1.5 px-4 rounded-full cursor-pointer text-sm'
               onClick={() => navigate('/signin')}
               aria-label='Navigate to sign in page'
             >
               Sign In
             </button>
             <button
-              className='bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 py-1.5 px-4 rounded-lg hover:scale-105 transform transition-all duration-300 cursor-pointer text-sm font-medium'
+              className='bg-gradient-to-r from-pink-500 to-purple-600 py-1.5 px-4 rounded-full hover:scale-105 transform transition-all duration-300 cursor-pointer text-sm font-medium'
               onClick={() => navigate('/signup')}
               aria-label='Navigate to sign up page'
             >
@@ -357,7 +356,7 @@ export default function NavbarMenu() {
         ) : (
           <div className='flex flex-col gap-3 items-center'>
             <button
-              className='border border-gray-400 hover:border-white hover:bg-white hover:text-black transition-all duration-300 text-gray-300 font-medium py-2 px-6 rounded-lg w-full max-w-[200px]'
+              className='border border-gray-400 hover:border-white hover:bg-white hover:text-black transition-all duration-300 text-gray-300 font-medium py-2 px-6 rounded-full w-full max-w-[200px]'
               onClick={() => {
                 navigate('/signin');
                 setIsOpen(false);
@@ -367,7 +366,7 @@ export default function NavbarMenu() {
               Sign In
             </button>
             <button
-              className='bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 py-2 px-6 rounded-lg transition-all duration-300 w-full max-w-[200px] font-medium'
+              className='bg-gradient-to-r from-pink-500 to-purple-600 py-2 px-6 rounded-full transition-all duration-300 w-full max-w-[200px] font-medium'
               onClick={() => {
                 navigate('/signup');
                 setIsOpen(false);
