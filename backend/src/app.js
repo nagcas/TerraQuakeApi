@@ -3,6 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
+import passport from 'passport'
+import './config/passportConfig.js'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'hpp'
@@ -32,6 +34,12 @@ const app = express()
 // 🔹 Trust proxy (Render/Heroku/NGINX)
 app.set('trust proxy', 1)
 
+
+// === PASSPORT SETUP ===
+app.use(passport.initialize())
+
+// === CORS ===
+// Only /v1/earthquakes is public
 // === SECURITY MIDDLEWARE ===
 // Helmet con Content Security Policy
 app.use(
