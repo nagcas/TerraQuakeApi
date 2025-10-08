@@ -34,6 +34,18 @@ export default function SignIn() {
   const { userLogin, setUserLogin, isLoggedIn, setIsLoggedIn } =
     useContext(Context);
 
+  const handleSocialLogin = (provider) => {
+    if (provider === 'google') {
+      // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
+      const backendBaseUrl = 'http://localhost:5001';
+
+      // This initiates the OAuth flow, leading to Google's consent screen.
+      // Your backend will handle the rest, including the final redirect back to the frontend.
+      window.location.href = `${backendBaseUrl}/auth/google`;
+    }
+    // You can add logic for 'github' here later if you implement it.
+  };
+
   const handleLoginSubmit = (data) => {
     setLoading(true);
 

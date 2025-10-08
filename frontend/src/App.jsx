@@ -24,6 +24,8 @@ import ResetPassword from '@pages/auth/resetPassword'
 import ChangePassword from './pages/auth/changePassword'
 import TermsAndConditions from './pages/termsAndConditions/termsAndConditions'
 import PrivacyPolicy from './pages/privacyPolicy/privacyPolicy'
+import HandleOAuth from '@pages/auth/handleOAuth'
+
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
@@ -62,6 +64,7 @@ function App() {
               <Route path='/forgot-password' element={<ForgotPassword />} /> 
               <Route path='/change-password' element={<ChangePassword />} /> 
               <Route path='/reset-password/:token' element={<ResetPassword />} /> 
+              <Route path='/login-success' element={<HandleOAuth />} />
               <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
               <Route path='/privacy-policy' element={<PrivacyPolicy />} />
               <Route path='*' element={<NoPage />} />
