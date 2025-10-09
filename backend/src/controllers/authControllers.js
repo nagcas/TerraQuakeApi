@@ -51,7 +51,6 @@ export const signUp = ({ User, buildResponse, handleHttpError, matchedData, send
   }
 }
 
-
 /**
  * Controller: Authenticate user (sign in).
  *
