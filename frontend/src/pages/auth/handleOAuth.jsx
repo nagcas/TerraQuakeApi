@@ -1,4 +1,3 @@
-// src/pages/auth/handleOAuth.jsx (NEW FILE)
 import { useEffect, useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/context';
@@ -12,41 +11,43 @@ export default function HandleOAuth() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Use URLSearchParams to easily parse the query string from the URL
+        // Parse query parameters from URL
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
-        const userId = params.get('user_id'); // Assuming your backend sends user_id
+        const userId = params.get('user_id'); // Backend should pass user_id
+        const name = params.get('name');      // Username from backend
+        const email = params.get('email');    // Email from backend
+        const avatar = params.get('avatar');  // Avatar URL
+        const role = params.get('role');      // User role
 
         if (token && userId) {
-            // SUCCESSFUL LOGIN
-            // 1. Store the token
+            // ✅ Save token and user data in localStorage
             localStorage.setItem('token', token);
-            
-            // 2. Fetch the full user details using the token
-            // A more robust app would fetch the full user profile here
-            // using an authenticated API call. For simplicity, we'll use a placeholder:
-            const userObject = { 
+            localStorage.setItem('user', JSON.stringify({
                 _id: userId,
-                // Add more properties if your backend provided them via query params
-            };
+                name: name || "Anonymous",
+                email: email || "",
+                avatar: avatar || "",
+                role: role || "user"
+            }));
 
-            // 3. Update context state
-            setUserLogin(userObject); 
+            // ✅ Update context state
+            setUserLogin(JSON.parse(localStorage.getItem('user')));
             setIsLoggedIn(true);
 
+            // Show success message and redirect to profile
             Swal.fire({
-                title: 'Google Login Successful!',
+                title: 'Login Successful!',
                 text: 'You have been logged in.',
                 icon: 'success',
                 confirmButtonText: 'Continue',
             }).then(() => {
-                // 4. Redirect the user to the profile/dashboard page
                 navigate('/profile', { replace: true });
             });
 
         } else if (params.get('error')) {
-            // LOGIN FAILED (if backend redirects with an error)
-            const errorMessage = params.get('error') || 'Google authentication failed.';
+            // Handle authentication error
+            const errorMessage = params.get('error') || 'Authentication failed.';
             Swal.fire({
                 title: 'Authentication Error',
                 text: errorMessage,
@@ -55,26 +56,25 @@ export default function HandleOAuth() {
             }).then(() => {
                 navigate('/signin', { replace: true });
             });
-
         } else {
-            // Unexpected redirection
+            // Unexpected redirect — go back to sign in
             navigate('/signin', { replace: true });
         }
-        
+
         setIsLoading(false);
     }, [location.search, navigate, setIsLoggedIn, setUserLogin]);
 
-    // Show a loading state while processing the redirect
+    // Loading state while processing OAuth
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <p className='text-white flex items-center gap-2'>
-                    <ImSpinner9 className='text-4xl mx-auto spinner text-purple-600' /> 
-                    <span>Authenticating with Google...</span>
+                    <ImSpinner9 className='text-4xl spinner text-purple-600' /> 
+                    <span>Authenticating...</span>
                 </p>
             </div>
         );
     }
 
-    return null; // Component renders null after processing and redirecting
+    return null; // Component does not render anything after redirect
 }

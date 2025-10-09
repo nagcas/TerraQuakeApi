@@ -53,24 +53,15 @@ export const githubAuthController = ({ handleHttpError }) => {
 
       const githubUser = userRes.data
 
-      // Fetch user's email if not included in main profile
-      if (!githubUser.email) {
-        const emailRes = await axios.get('https://api.github.com/user/emails', {
-          headers: { Authorization: `Bearer ${accessToken}` }
-        })
-        const primaryEmail = emailRes.data.find(email => email.primary && email.verified)
-        githubUser.email = primaryEmail?.email
-      }
-
       // Step 3: Find or create a user in the database based on GitHub ID
       let user = await User.findOne({ githubId: githubUser.id })
+
       if (!user) {
         user = await User.create({
           githubId: githubUser.id.toString(),
           githubUsername: githubUser.login,
           githubProfileUrl: githubUser.html_url,
           name: githubUser.name || githubUser.login,
-          email: githubUser.email,
           avatar: githubUser.avatar_url,
           role: ['user']
         })
