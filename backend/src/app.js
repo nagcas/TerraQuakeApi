@@ -25,6 +25,7 @@ import {
 } from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
 import routeMetrics from './routes/metricsRouters.js'
+import postRoutes from './routes/postRoutes.js'
 
 dotenv.config()
 
@@ -101,6 +102,7 @@ app.use('/contact', contactLimiter, routeContact)
 
 // Newsletter (pubblica)
 app.use('/newsletter', newsletterRoutes)
+app.use('/api', postRoutes)
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
