@@ -37,7 +37,8 @@ export const githubAuthController = ({ handleHttpError }) => {
         {
           client_id: GITHUB_CLIENT_ID,
           client_secret: GITHUB_CLIENT_SECRET,
-          code
+          code,
+          redirect_uri: process.env.GITHUB_CALLBACK_URL
         },
         { headers: { accept: 'application/json' } }
       )
