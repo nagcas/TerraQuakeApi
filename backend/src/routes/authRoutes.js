@@ -26,6 +26,7 @@ import handleHttpError from '../utils/handleHttpError.js'
 import { authenticateUser } from '../middleware/authMiddleware.js'
 import { sendEmailRegister } from '../libs/sendEmailRegister.js'
 import { sendForgotPassword } from '../libs/sendForgotPassword.js'
+import { sendChangePassword } from '../libs/sendChangePassword.js'
 const router = express.Router()
 
 // NOTE: AUTH
@@ -82,7 +83,7 @@ router.post(
   '/change-password',
   authenticateUser,
   validatorChangePassword,
-  changePassword({ User, handleHttpError, buildResponse, matchedData })
+  changePassword({ User, handleHttpError, buildResponse, matchedData, sendChangePassword })
 )
 
 // NOTE: GOOGLE AUTHENTICATION ROUTES

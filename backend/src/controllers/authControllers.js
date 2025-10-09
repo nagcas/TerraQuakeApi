@@ -244,7 +244,7 @@ export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
 /**
  * Controller: Change password (logged-in user).
  */
-export const changePassword = ({ User, handleHttpError, buildResponse }) => {
+export const changePassword = ({ User, handleHttpError, buildResponse, sendChangePassword }) => {
   return async (req, res) => {
     try {
       const { passwordOld, passwordNew, confirmPassword } = req.body
@@ -280,6 +280,9 @@ export const changePassword = ({ User, handleHttpError, buildResponse }) => {
 
       const userResponse = user.toObject()
       delete userResponse.password
+
+      // Send change password confirmation email
+      await sendChangePassword(user)
 
       return res
         .status(200)
