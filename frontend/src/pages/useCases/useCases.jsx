@@ -85,6 +85,8 @@ export default function UseCases() {
         'Customizable alert templates and hashtags.',
         'Real-time updates for followers and communities.',
       ],
+    },
+    {
       title: 'Scientific Research Applications',
       content:
         'This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -',
@@ -94,7 +96,6 @@ export default function UseCases() {
         'Integrate data seamlessly with analytical tools like MATLAB, Python, and R for deeper analysis.',
         'Support thesis projects, publications, and research reports on seismic activity.',
         'Assist in modeling and simulation of earthquake scenarios for research purposes.',
-
       ],
     },
   ];
@@ -110,14 +111,14 @@ export default function UseCases() {
         title="Use Cases"
         description="Use Cases for TerraQuake API"
       />
-      <section className="relative z-30 w-full min-h-screen px-6 py-20">
+      <section className="relative z-30 w-full min-h-screen px-6 py-20 bg-gradient-to-b from-[#0f172a] to-[#1e1b4b]">
         {/* Page header */}
-        <div className="flex flex-col justify-center items-center mb-16">
-          <h1 className="text-2xl md:text-4xl text-white font-extrabold text-center my-25 tracking-tight">
+        <div className="flex flex-col justify-center items-center mb-16 text-center">
+          <h1 className="text-3xl md:text-5xl bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent font-extrabold tracking-tight drop-shadow-lg">
             Use Cases for TerraQuake API
           </h1>
 
-          <p className="text-white text-lg w-[95%] lg:w-6xl">
+          <p className="text-gray-200 text-lg mt-4 w-[95%] lg:w-6xl leading-relaxed">
             Use Cases describe real-world scenarios where TerraQuake API can be
             applied. By providing fast, reliable access to seismic data, the API
             enables developers, researchers, institutions, and organizations to
@@ -131,31 +132,35 @@ export default function UseCases() {
           {useCaseDocs.map((item, index) => (
             <div
               key={item.title}
-              className="w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+              className={`w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/10 via-violet-900/10 to-purple-800/20 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-xl hover:shadow-purple-700/40 transition-all duration-500 cursor-pointer transform hover:scale-[1.02] ${
+                expandedIndex === index ? 'ring-1 ring-purple-500/40' : ''
+              }`}
               onClick={() => toggleExpand(index)}
             >
               <div className="flex justify-between items-center">
-                <h2 className="text-xl md:text-2xl font-bold text-white border-l-4 border-purple-600 pl-4">
+                <h2 className="text-xl md:text-2xl font-semibold text-white border-l-4 border-purple-500 pl-4">
                   {item.title}
                 </h2>
                 <FiChevronDown
-                  className={`text-white text-2xl transition-transform duration-300 ${
-                    expandedIndex === index ? 'rotate-180' : ''
+                  className={`text-white text-2xl transition-transform duration-500 ${
+                    expandedIndex === index ? 'rotate-180 text-purple-400' : ''
                   }`}
                 />
               </div>
 
               <div
-                className={`overflow-hidden transition-all duration-500 ${
-                  expandedIndex === index ? 'max-h-96 mt-4' : 'max-h-0'
-                }`}
+                className={`transition-all duration-700 ease-in-out ${
+                  expandedIndex === index
+                    ? 'max-h-[500px] opacity-100 mt-4 scale-100'
+                    : 'max-h-0 opacity-0 scale-95'
+                } overflow-hidden`}
               >
-                <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">
+                <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-2">
                   {item.content}
                 </p>
-                <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4">
+                <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4 space-y-1">
                   {item.points.map((point, idx) => (
-                    <li key={idx} className="mb-1">
+                    <li key={idx} className="hover:text-purple-300 transition-colors">
                       {point}
                     </li>
                   ))}
