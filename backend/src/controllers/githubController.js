@@ -46,35 +46,47 @@ export const githubAuthController = ({ handleHttpError }) => {
       // Extract the access token from GitHub's response
       const accessToken = tokenRes.data.access_token
 
-      // Step 2: Use the access token to fetch the user's GitHub profile
+      // Step 2: Get user profile
       const userRes = await axios.get('https://api.github.com/user', {
         headers: { Authorization: `Bearer ${accessToken}` }
       })
-
       const githubUser = userRes.data
 
-      // Step 3: Find or create a user in the database based on GitHub ID
-      let user = await User.findOne({ githubId: githubUser.id })
+      // Step 3: Get user emails
+      let primaryEmail = null
+      try {
+        const emailsRes = await axios.get('https://api.github.com/user/emails', {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+        const emails = emailsRes.data
+        const primary = emails.find(email => email.primary && email.verified)
+        primaryEmail = primary ? primary.email : emails[0]?.email || null
+      } catch (emailErr) {
+        console.warn('Unable to fetch emails from GitHub:', emailErr.message)
+      }
 
+      // Step 4: Find or create user
+      let user = await User.findOne({ githubId: githubUser.id })
       if (!user) {
         user = await User.create({
           githubId: githubUser.id.toString(),
           githubUsername: githubUser.login,
           githubProfileUrl: githubUser.html_url,
           name: githubUser.name || githubUser.login,
+          email: primaryEmail || null,
           avatar: githubUser.avatar_url,
           role: ['user']
         })
       }
 
-      // Step 4: Generate a signed JWT for the authenticated user
+      // Step 5: Generate a signed JWT for the authenticated user
       const token = jwt.sign(
         { _id: user._id, role: user.role || ['user'] },
         JWT_SECRET,
         { expiresIn: '7d' }
       )
 
-      // Step 5: Redirect back to the frontend with the JWT token
+      // Step 6: Redirect back to the frontend with the JWT token
       return res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}`)
     } catch (err) {
       // Log any error and send a proper response
