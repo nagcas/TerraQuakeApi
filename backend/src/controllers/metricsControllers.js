@@ -13,7 +13,7 @@ const buildResponse = (req, message, data) => ({
   }
 })
 
-// Controller that handles the /metrics endpoint
+// NOTE: Controller that handles the /metrics endpoint
 // It outputs all collected metrics in a format readable by Prometheus
 export const getMetrics = async (req, res) => {
   try {

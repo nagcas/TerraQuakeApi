@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 dotenv.config()
 
 /**
- * Controller: Register a new user.
+ * NOTE: Controller: Register a new user.
  */
 export const signUp = ({
   User,
@@ -91,7 +91,7 @@ export const signUp = ({
 }
 
 /**
- * Controller: Authenticate user (login).
+ * NOTE: Controller: Authenticate user (login).
  */
 export const signIn = ({
   User,
@@ -137,7 +137,7 @@ export const signIn = ({
 }
 
 /**
- * Controller: Forgot password (send reset link).
+ * NOTE: Controller: Forgot password (send reset link).
  */
 export const forgotPassword = ({
   User,
@@ -180,7 +180,7 @@ export const forgotPassword = ({
 }
 
 /**
- * Controller: Reset password.
+ * NOTE: Controller: Reset password.
  */
 export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
   return async (req, res) => {
@@ -242,7 +242,7 @@ export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
 }
 
 /**
- * Controller: Change password (logged-in user).
+ * NOTE: Controller: Change password (logged-in user).
  */
 export const changePassword = ({ User, handleHttpError, buildResponse, sendChangePassword }) => {
   return async (req, res) => {
@@ -306,6 +306,9 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
   }
 }
 
+/**
+ * NOTE: Controller: Google login.
+ */
 export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, res) => {
   try {
     const { user, token } = req.user

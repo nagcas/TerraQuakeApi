@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+// NOTE: Send email change password user
 export const sendChangePassword = async (user) => {
   try {
     const html = `

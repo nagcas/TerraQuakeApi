@@ -1,21 +1,27 @@
 import { check } from 'express-validator'
 import { validateResults } from '../utils/handleValidator.js'
 
+// NOTE: Validator for user sign-up
+// Ensures all required fields exist and meet validation rules
 export const validatorSignUp = [
+  // Validate 'name': required, not empty, length between 3 and 99 characters
   check('name')
     .exists()
     .notEmpty()
     .isLength({ min: 3, max: 99 })
     .withMessage('Please enter a valid username (3–99 characters).'),
 
+  // Validate 'email': required, not empty, valid email format
   check('email')
     .exists()
     .notEmpty()
     .isEmail()
     .withMessage('Please enter a valid email address.'),
 
+  // Validate 'role': required
   check('role').notEmpty(),
 
+  // Validate 'password': required, not empty, length 8–64, must contain lowercase, uppercase, number, special char
   check('password')
     .exists()
     .notEmpty()
@@ -30,6 +36,7 @@ export const validatorSignUp = [
     .matches(/[^A-Za-z0-9]/)
     .withMessage('Password must contain at least one special character.'),
 
+  // Validate 'terms': required, must be accepted
   check('terms')
     .exists()
     .withMessage('Terms field is required.')
@@ -40,16 +47,21 @@ export const validatorSignUp = [
       return true
     }),
 
+  // Final middleware: handle validation results
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for user sign-in
+// Checks required fields for login
 export const validatorSignIn = [
+  // Validate 'email': required, not empty, valid email
   check('email')
     .exists()
     .notEmpty()
     .isEmail()
     .withMessage('Please enter a valid email address.'),
 
+  // Validate 'password': required, not empty, length 8–16
   check('password')
     .exists()
     .notEmpty()
@@ -59,6 +71,8 @@ export const validatorSignIn = [
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for forgot password request
+// Requires a valid email
 export const validatorForgotPassword = [
   check('email')
     .exists()
@@ -68,6 +82,8 @@ export const validatorForgotPassword = [
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for resetting password
+// Checks both passwords and ensures they match
 export const validatorResetPassword = [
   check('password1')
     .exists()
@@ -94,6 +110,8 @@ export const validatorResetPassword = [
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for changing password
+// Requires old password and validates new password with confirmation
 export const validatorChangePassword = [
   check('passwordOld')
     .exists()
@@ -128,12 +146,13 @@ export const validatorChangePassword = [
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for getting a specific user item by ID
 export const validatorGetItem = [
   check('userId').exists().notEmpty().isMongoId(),
-
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for updating current user data
 export const validatorUpdateCurrentUserData = [
   check('name')
     .optional()
@@ -161,6 +180,7 @@ export const validatorUpdateCurrentUserData = [
   (req, res, next) => validateResults(req, res, next)
 ]
 
+// NOTE: Validator for updating a user's role by ID
 export const validatorUpdateRoleById = [
   check('role')
     .exists()

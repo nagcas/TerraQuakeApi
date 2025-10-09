@@ -2,18 +2,22 @@ import express from 'express'
 
 const router = express.Router()
 
-// NOTE: CATEGORIA -> Statistiche
+// NOTE: CATEGORY -> Statistics
 
-// NOTE: statistiche globali (totali, medie, picco)
+// NOTE: Global statistics (totals, averages, peak values)
+// GET /stats/global — retrieves aggregated seismic statistics
 router.get('/stats/global')
 
-// NOTE: statistiche sismiche per regioni
+// NOTE: Seismic statistics by region
+// GET /stats/region/:region — retrieves seismic statistics for a specific region
 router.get('/stats/region/:region')
 
-// NOTE: statistiche sismiche per anno
+// NOTE: Seismic statistics by year
+// GET /stats/yearly/:year — retrieves seismic statistics for a specific year
 router.get('/stats/yearly/:year')
 
-// NOTE: dati per creare una heatmap (coordinate + magnitudo)
+// NOTE: Data for creating a heatmap (coordinates + magnitude)
+// GET /stats/heatmap — retrieves seismic event data for visualization
 router.get('/stats/heatmap')
 
 export default router

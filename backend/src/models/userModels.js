@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
 import { encrypt } from '../utils/handlePassword.js'
 
+// NOTE: Schema user
 const usersSchema = new Schema(
   {
     googleId: {

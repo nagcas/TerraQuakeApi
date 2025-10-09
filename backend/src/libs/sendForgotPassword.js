@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+// NOTE: Send email forgot password user
 export const sendForgotPassword = async (user, token) => {
   try {
     const resetUrl =

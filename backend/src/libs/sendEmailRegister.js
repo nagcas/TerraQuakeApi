@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+// NOTE: Send email register user
 export const sendEmailRegister = async (user) => {
   try {
     const html = `
