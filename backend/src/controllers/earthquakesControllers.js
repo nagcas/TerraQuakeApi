@@ -7,7 +7,7 @@ import { processFeatures } from '../utils/processFeatures.js'
 import haversine from 'haversine-distance'
 
 /**
- * Build a standardized API response object.
+ * NOTE: Build a standardized API response object.
  *
  * @param {import('express').Request} req - Express request object.
  * @param {string} message - Response message.
@@ -30,7 +30,7 @@ const buildResponse = (req, message, data, total = null) => ({
 })
 
 /**
- * Fetch JSON data from the INGV API with error handling.
+ * NOTE: Fetch JSON data from the INGV API with error handling.
  *
  * @param {string} url - Full INGV endpoint URL.
  * @returns {Promise<any>} Parsed JSON response.
@@ -49,7 +49,7 @@ const fetchINGV = async (url) => {
 }
 
 /**
- * Get recent seismic events (from the start of the year until today).
+ * NOTE: Get recent seismic events (from the start of the year until today).
  *
  * @route GET /earthquakes/recent
  * @param {import('express').Request} req - Express request object.
@@ -108,7 +108,7 @@ export const getEarthquakesByRecent = async (req, res) => {
 }
 
 /**
- * Get today’s seismic events.
+ * NOTE: Get today’s seismic events.
  *
  * @route GET /earthquakes/today
  * @param {import('express').Request} req
@@ -164,7 +164,7 @@ export const getEarthquakesByToday = async (req, res) => {
 }
 
 /**
- * Get seismic events from the last 7 days.
+ * NOTE: Get seismic events from the last 7 days.
  *
  * @route GET /earthquakes/last-week
  * @param {import('express').Request} req
@@ -228,7 +228,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
 }
 
 /**
- * Get seismic events for a specific month.
+ * NOTE: Get seismic events for a specific month.
  *
  * @route GET /earthquakes/month
  * @query {number} year - Year in YYYY format.
@@ -300,7 +300,7 @@ export const getEarthquakesByMonth = async (req, res) => {
 }
 
 /**
- * Get seismic events by Italian region (from start of year until today).
+ * NOTE: Get seismic events by Italian region (from start of year until today).
  *
  * @route GET /earthquakes/region
  * @query {string} region - Region name.
@@ -368,7 +368,7 @@ export const getEarthquakesByRegion = async (req, res) => {
 }
 
 /**
- * Get seismic events filtered by depth (from start of year until today).
+ * NOTE: Get seismic events filtered by depth (from start of year until today).
  *
  * @route GET /earthquakes/depth
  * @query {number} depth - Minimum depth in km.
@@ -433,7 +433,7 @@ export const getEarthquakesByDepth = async (req, res) => {
 }
 
 /**
- * Get seismic events within a date range.
+ * NOTE: Get seismic events within a date range.
  *
  * @route GET /earthquakes/range
  * @query {string} startdate - Start date (YYYY-MM-DD).
@@ -510,7 +510,7 @@ export const getEarthquakesByDateRange = async (req, res) => {
 }
 
 /**
- * Get seismic events filtered by magnitude.
+ * NOTE: Get seismic events filtered by magnitude.
  *
  * @route GET /earthquakes/magnitude
  * @query {number} mag - Minimum magnitude threshold.
@@ -594,7 +594,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
 }
 
 /**
- * Get a seismic event by its eventId.
+ * NOTE: Get a seismic event by its eventId.
  *
  * @route GET /earthquakes/id
  * @query {number} eventId - Unique event ID.
@@ -650,7 +650,7 @@ export const getEarthquakesById = async (req, res) => {
 }
 
 /**
- * Get seismic events near a specific geographic location.
+ * NOTE: Get seismic events near a specific geographic location.
  *
  * @route GET /earthquakes/location
  * @query {number} latitude - Latitude in decimal degrees.

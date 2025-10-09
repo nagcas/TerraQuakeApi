@@ -187,7 +187,7 @@ export default function NavbarMenu() {
             >
               <img
                 src={
-                  userLogin?.avatarUrl ||
+                  userLogin?.avatar ||
                   'https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png'
                 }
                 alt="avatar"

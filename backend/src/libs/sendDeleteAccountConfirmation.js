@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+// NOTE: Send email delete account user
 export const sendDeleteAccountConfirmation = async (user) => {
   try {
     const html = `

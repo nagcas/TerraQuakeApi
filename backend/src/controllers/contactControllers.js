@@ -3,7 +3,7 @@ import Contact from '../models/contactModels.js'
 import handleHttpError from '../utils/handleHttpError.js'
 
 /**
- * Helper: Builds a standard API response object.
+ * NOTE: Helper: Builds a standard API response object.
  *
  * @param {object} req - Express request object.
  * @param {string} message - Response message.
@@ -24,7 +24,7 @@ const buildResponse = (req, message, data) => ({
 })
 
 /**
- * Controller: Create a new contact message.
+ * NOTE: Controller: Create a new contact message.
  *
  * - Accepts `name`, `lastname`, `email`, `subject`, and `message` from request body.
  * - Saves a new `Contact` document to the database.
@@ -49,7 +49,7 @@ export const createContact = async (req, res) => {
 }
 
 /**
- * Controller: Retrieve all contact messages.
+ * NOTE: Controller: Retrieve all contact messages.
  *
  * - Supports pagination: `page`, `limit`.
  * - Supports sorting: `sort` field and `sortDirection` (asc/desc).
@@ -115,7 +115,7 @@ export const getAllContacts = async (req, res) => {
 }
 
 /**
- * Controller: Retrieve a single contact message by ID.
+ * NOTE: Controller: Retrieve a single contact message by ID.
  *
  * - Validates that the provided ID is a valid MongoDB ObjectId.
  * - Responds with `404 Not Found` if no contact exists with the given ID.
@@ -152,7 +152,7 @@ export const getOneContact = async (req, res) => {
 }
 
 /**
- * Controller: Answer a specific contact message.
+ * NOTE: Controller: Answer a specific contact message.
  *
  * - To be implemented: should send or log a reply to a contact message.
  * - Currently returns a placeholder response.
@@ -164,7 +164,7 @@ export const answerContact = (req, res) => {
 }
 
 /**
- * Controller: Soft-delete a contact message by ID.
+ * NOTE: Controller: Soft-delete a contact message by ID.
  *
  * - To be implemented: should mark a message as deleted without removing it from the DB.
  * - Currently returns a placeholder response.

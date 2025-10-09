@@ -1,4 +1,4 @@
-/*
+/**
  * Utility to standardize API responses.
  *
  * @param {import("express").Request} req - Express request object
@@ -7,6 +7,7 @@
  * @param {number|null} [total=null] - Optional total count (defaults to data length)
  * @returns {Object} A consistent response object with metadata
  */
+
 export const buildResponse = (req, message, data, total = null, { ...rest }) => ({
   success: true,
   code: 200,
