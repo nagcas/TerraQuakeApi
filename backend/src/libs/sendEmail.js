@@ -1,4 +1,4 @@
-import { transporter } from "../config/mailerConfig.js";
+import { transporter } from '../config/mailerConfig.js'
 
 // NOTE: Function to send a registration confirmation email
 export const sendEmailRegister = async (user) => {
@@ -6,7 +6,7 @@ export const sendEmailRegister = async (user) => {
     const response = await transporter.sendMail({
       from: '"TerraQuake API" <terraquakeapi@gmail.com>', // deve corrispondere a USER_MAILER
       to: user.email,
-      subject: "🎉 Welcome to TerraQuake API!",
+      subject: '🎉 Welcome to TerraQuake API!',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; color: #333;">
           <h2 style="color: #A48DC7; text-align: center;">Registration Successful!</h2>
@@ -31,31 +31,31 @@ export const sendEmailRegister = async (user) => {
             The <span style="color: #A48DC7;">TerraQuake API</span> Team
           </p>
         </div>
-      `,
-    });
+      `
+    })
 
-    console.log("Registration email sent:", response.messageId);
-    return response;
+    console.log('Registration email sent:', response.messageId)
+    return response
   } catch (error) {
-    console.error("Error sending registration email:", error);
-    throw new Error("Failed to send registration email");
+    console.error('Error sending registration email:', error)
+    throw new Error('Failed to send registration email')
   }
-};
+}
 
 // NOTE: Function to send a forgot password email
 export const sendForgotPassword = async (user, token) => {
   try {
-    let resetUrl;
-    if (process.env.DEV_ENV === "development") {
-      resetUrl = `${process.env.FRONTEND_DEVELOPMENT}/reset-password/${token}`;
+    let resetUrl
+    if (process.env.DEV_ENV === 'development') {
+      resetUrl = `${process.env.FRONTEND_DEVELOPMENT}/reset-password/${token}`
     } else {
-      resetUrl = `${process.env.FRONTEND_PRODUCTION}/reset-password/${token}`;
+      resetUrl = `${process.env.FRONTEND_PRODUCTION}/reset-password/${token}`
     }
 
     const response = await transporter.sendMail({
       from: '"TerraQuake API" <terraquakeapi@gmail.com>', // must match USER_MAILER
       to: user.email,
-      subject: "🔑 Reset Your TerraQuake API Password",
+      subject: '🔑 Reset Your TerraQuake API Password',
       html: `<!DOCTYPE html>
         <html lang="en">
           <head>
@@ -123,13 +123,13 @@ export const sendForgotPassword = async (user, token) => {
               </tr>
             </table>
           </body>
-        </html>`,
-    });
+        </html>`
+    })
 
-    console.log("Forgot password email sent:", response.messageId);
-    return response;
+    console.log('Forgot password email sent:', response.messageId)
+    return response
   } catch (error) {
-    console.error("Error sending forgot password email:", error);
-    throw new Error("Failed to send forgot password email");
+    console.error('Error sending forgot password email:', error)
+    throw new Error('Failed to send forgot password email')
   }
-};
+}
