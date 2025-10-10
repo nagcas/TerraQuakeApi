@@ -15,6 +15,13 @@ export default function PrivacyPolicy() {
         twitterDescription='Understand TerraQuake API’s approach to privacy and data protection in our Privacy Policy.'
         keywords='TerraQuake API, privacy policy, data protection, GDPR, seismic data privacy'
       />
+      <section className="relative z-30 w-full min-h-screen px-6 py-16 flex justify-center bg-gradient-to-br from-gray-950 via-indigo-950 to-purple-900">
+        <div className="max-w-5xl w-full bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl rounded-2xl p-10 space-y-10 transition-all hover:shadow-purple-900/40">
+
+          {/* Titolo */}
+          <div className="text-center space-y-3">
+            <h1 className="text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-purple-400 to-indigo-400 font-extrabold text-center my-10 tracking-tight drop-shadow-lg">
+              Privacy Policy
       {/* SEO Stuff */}
 
       <motion.section
@@ -55,6 +62,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 1. Data We Collect
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               1. Data We Collect
@@ -70,6 +80,9 @@ export default function PrivacyPolicy() {
             </ul>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 2. How We Use Your Data
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               2. How We Use Your Data
@@ -82,6 +95,9 @@ export default function PrivacyPolicy() {
             </ul>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 3. Legal Basis (GDPR)
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               3. Legal Basis (GDPR)
@@ -92,6 +108,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 4. Sharing Your Data
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               4. Sharing Your Data
@@ -103,6 +122,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 5. User Rights (GDPR & CCPA)
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               5. User Rights (GDPR & CCPA)
@@ -114,6 +136,9 @@ export default function PrivacyPolicy() {
               <li>Opt-out of sale of personal information (CCPA only).</li>
               <li>Object or restrict processing where applicable.</li>
             </ul>
+            <p className="text-gray-300 leading-relaxed">
+              To exercise these rights, contact us at{" "}
+              <span className="text-pink-400 font-semibold hover:underline decoration-pink-500/50">
             <p className='text-gray-300 leading-relaxed'>
               To exercise these rights, contact us at{' '}
               <span className='text-pink-400 font-semibold'>
@@ -123,6 +148,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 6. Data Retention
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               6. Data Retention
@@ -133,6 +161,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 7. Cookies & Tracking
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               7. Cookies & Tracking
@@ -144,6 +175,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 8. International Transfers
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               8. International Transfers
@@ -155,6 +189,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 9. Security
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               9. Security
@@ -165,6 +202,9 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 10. Changes to this Policy
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               10. Changes to this Policy
@@ -175,6 +215,13 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
+          <section className="space-y-6 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-purple-500 rounded-full"></span> 11. Contact Information
+            </h2>
+            <p className="text-gray-300 leading-relaxed">
+              Questions or requests regarding privacy? Contact us at{" "}
+              <span className="text-pink-400 font-semibold hover:underline decoration-pink-500/50">
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
               11. Contact Information
