@@ -7,11 +7,18 @@ import {
   createContact
 } from '../controllers/contactControllers.js'
 import { validatorAnswer, validatorContact } from '../validators/contactValidators.js'
+import { sendEmailConfirmContact } from '../libs/sendEmailConfirmContact.js'
 
 const router = express.Router()
 
 // NOTE: Defining a [POST] route to send a new message
-router.post('/create-contact', validatorContact, createContact)
+router.post(
+  '/create-contact',
+  validatorContact,
+  createContact({
+    sendEmailConfirmContact
+  })
+)
 
 // NOTE: Defining a [GET] route to display all received messages
 router.get('/get-all-contacts', getAllContacts)

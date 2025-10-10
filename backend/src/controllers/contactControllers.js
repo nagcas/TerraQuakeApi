@@ -31,20 +31,29 @@ const buildResponse = (req, message, data) => ({
  * - Responds with `200 OK` and the created contact object on success.
  * - Returns a structured error response if validation or DB error occurs.
  */
-export const createContact = async (req, res) => {
-  try {
-    const { name, lastname, email, subject, message } = req.body
-    const contact = new Contact({ name, lastname, email, subject, message })
-    const newContact = await contact.save()
-    res.json({
-      ...buildResponse(req, 'Message sent successfully', newContact)
-    })
-  } catch (error) {
-    console.error('Error in the contact controller:', error.message)
-    handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+export const createContact = ({
+  sendEmailConfirmContact
+}) => {
+  return async (req, res) => {
+    try {
+      const { name, lastname, email, subject, message } = req.body
+      const contact = new Contact({ name, lastname, email, subject, message })
+
+      const newContact = await contact.save()
+
+      // Send registration confirmation email
+      await sendEmailConfirmContact(contact)
+
+      res.json({
+        ...buildResponse(req, 'Message sent successfully', newContact)
+      })
+    } catch (error) {
+      console.error('Error in the contact controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
