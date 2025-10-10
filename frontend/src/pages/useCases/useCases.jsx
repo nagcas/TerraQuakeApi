@@ -100,9 +100,24 @@ export default function UseCases() {
     },
   ];
 
+  // State: single-expanded index or "allExpanded" toggle
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [allExpanded, setAllExpanded] = useState(false);
+
   const toggleExpand = (index) => {
+    // clicking an item cancels "expand all" and toggles the item
+    setAllExpanded(false);
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  const expandAll = () => {
+    setAllExpanded(true);
+    setExpandedIndex(null);
+  };
+
+  const collapseAll = () => {
+    setAllExpanded(false);
+    setExpandedIndex(null);
   };
 
   return (
@@ -113,7 +128,7 @@ export default function UseCases() {
       />
       <section className="relative z-30 w-full min-h-screen px-6 py-20 bg-gradient-to-b from-[#0f172a] to-[#1e1b4b]">
         {/* Page header */}
-        <div className="flex flex-col justify-center items-center mb-16 text-center">
+        <div className="flex flex-col justify-center items-center mb-8 text-center">
           <h1 className="text-3xl md:text-5xl bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent font-extrabold tracking-tight drop-shadow-lg">
             Use Cases for TerraQuake API
           </h1>
@@ -127,47 +142,82 @@ export default function UseCases() {
           </p>
         </div>
 
-        {/* Accordion section */}
-        <div className="w-full mt-10 flex flex-col items-center">
-          {useCaseDocs.map((item, index) => (
-            <div
-              key={item.title}
-              className={`w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/10 via-violet-900/10 to-purple-800/20 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-xl hover:shadow-purple-700/40 transition-all duration-500 cursor-pointer transform hover:scale-[1.02] ${
-                expandedIndex === index ? 'ring-1 ring-purple-500/40' : ''
-              }`}
-              onClick={() => toggleExpand(index)}
-            >
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl md:text-2xl font-semibold text-white border-l-4 border-purple-500 pl-4">
-                  {item.title}
-                </h2>
-                <FiChevronDown
-                  className={`text-white text-2xl transition-transform duration-500 ${
-                    expandedIndex === index ? 'rotate-180 text-purple-400' : ''
-                  }`}
-                />
-              </div>
+        {/* Controls */}
+        <div className="w-[95%] lg:w-6xl mb-6 flex justify-end gap-3">
+          <button
+            onClick={expandAll}
+            className="text-sm px-3 py-1 rounded-md bg-white/6 border border-white/10 text-white hover:bg-white/10 transition"
+            aria-label="Expand all use cases"
+          >
+            Expand All
+          </button>
+          <button
+            onClick={collapseAll}
+            className="text-sm px-3 py-1 rounded-md bg-white/6 border border-white/10 text-white hover:bg-white/10 transition"
+            aria-label="Collapse all use cases"
+          >
+            Collapse All
+          </button>
+        </div>
 
-              <div
-                className={`transition-all duration-700 ease-in-out ${
-                  expandedIndex === index
-                    ? 'max-h-[500px] opacity-100 mt-4 scale-100'
-                    : 'max-h-0 opacity-0 scale-95'
-                } overflow-hidden`}
+        {/* Accordion section */}
+        <div className="w-full mt-2 flex flex-col items-center">
+          {useCaseDocs.map((item, index) => {
+            const isExpanded = allExpanded || expandedIndex === index;
+            const buttonId = `usecase-btn-${index}`;
+            const panelId = `usecase-panel-${index}`;
+
+            return (
+              <article
+                key={`${item.title}-${index}`}
+                className={`w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/10 via-violet-900/10 to-purple-800/20 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-xl hover:shadow-purple-700/40 transition-all duration-500 transform hover:scale-[1.02] ${
+                  isExpanded ? 'ring-1 ring-purple-500/40' : ''
+                }`}
               >
-                <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-2">
-                  {item.content}
-                </p>
-                <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4 space-y-1">
-                  {item.points.map((point, idx) => (
-                    <li key={idx} className="hover:text-purple-300 transition-colors">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+                <header>
+                  <button
+                    id={buttonId}
+                    aria-controls={panelId}
+                    aria-expanded={isExpanded}
+                    onClick={() => toggleExpand(index)}
+                    className="w-full flex justify-between items-center text-left"
+                  >
+                    <h2 className="text-xl md:text-2xl font-semibold text-white border-l-4 border-purple-500 pl-4">
+                      {item.title}
+                    </h2>
+                    <FiChevronDown
+                      className={`text-white text-2xl transition-transform duration-500 ${
+                        isExpanded ? 'rotate-180 text-purple-400' : ''
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </header>
+
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  className={`transition-all duration-700 ease-in-out overflow-hidden ${
+                    isExpanded
+                      ? 'max-h-[500px] opacity-100 mt-4 scale-100'
+                      : 'max-h-0 opacity-0 scale-95'
+                  }`}
+                >
+                  <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-2">
+                    {item.content}
+                  </p>
+                  <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4 space-y-1">
+                    {item.points.map((point, idx) => (
+                      <li key={idx} className="hover:text-purple-300 transition-colors">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </>
