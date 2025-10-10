@@ -12,6 +12,8 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import axios from 'axios';
+import BackToTopButton from '@/components/utils/backToTopButton';
+import { motion } from 'framer-motion';
 
 export default function About() {
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
@@ -107,10 +109,11 @@ export default function About() {
             description: 'Real-time earthquakes normalized and accessible',
           },
           {
-            value: `${(data.apiLatencyAvg || 0).toFixed(3)} s`,
+            value: `${data.apiLatencyAvgMs} ms`,
             label: 'API Latency',
-            description: 'Average response time across global regions',
+            description: 'Average API response time',
           },
+
           {
             value: `${Math.floor(data.uptime)} s`,
             label: 'Uptime',
@@ -139,52 +142,72 @@ export default function About() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='About'
-        description='About - TerraQuake API'
-        ogTitle='About - TerraQuake API'
-        twitterTitle='About - TerraQuake API'
+        title='About TerraQuake API | Real-Time Earthquake Data & Monitoring'
+        description='Learn about TerraQuake API — a powerful platform for real-time earthquake monitoring, seismic data analysis, and early warning systems. Discover our mission, vision, and use cases.'
+        ogTitle='About TerraQuake API | Real-Time Seismic Data Platform'
+        ogDescription="Discover TerraQuake API's mission and capabilities in delivering real-time earthquake data and monitoring solutions for developers, researchers, and safety organizations."
+        twitterTitle='About TerraQuake API | Earthquake Monitoring API'
+        twitterDescription='Explore TerraQuake API — your resource for real-time earthquake data, seismic analysis, and disaster prevention solutions.'
+        keywords='TerraQuake API, earthquake monitoring, seismic data, earthquake detection API, real-time earthquake data, disaster prevention, seismic analysis'
       />
       {/* SEO Stuff */}
 
-      <section className='relative z-30 w-full min-h-screen px-6 py-20 overflow-hidden'>
-        {/* Header Section */}
-        <div className='flex flex-col justify-center items-center mb-16'>
-          <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
-            About TerraQuake API
-            <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
-          </h1>
-
-          {/* Description */}
-          <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
-            A focused platform built to translate raw seismic feeds into
-            developer-friendly endpoints and actionable insights for safety,
-            research, and education.
-          </p>
+      <motion.section
+        className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Background Gradient */}
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
-        <div className='max-w-6xl mx-auto grid gap-4 md:grid-cols-4 mb-16'>
-          {highlightMetrics.map((metric) => (
-            <div
-              key={metric.label}
-              className='group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]'
-            >
-              <div className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent' />
-              <div className='relative'>
-                <span className='text-2xl md:text-3xl font-semibold text-white tracking-tight'>
-                  {metric.value}
-                </span>
-                <p className='mt-1 text-sm uppercase tracking-[0.2em] text-purple-200/70'>
-                  {metric.label}
-                </p>
-                <p className='mt-3 text-sm text-gray-300 leading-relaxed'>
-                  {metric.description}
-                </p>
+        {/* Content Container */}
+        <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70'>
+          {/* Header Section */}
+          <motion.div
+            className='mb-16 text-center lg:text-left'
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
+              About TerraQuake API.
+              <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+            </h1>
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
+              A focused platform built to translate raw seismic feeds into
+              developer-friendly endpoints and actionable insights for safety,
+              research, and education.
+            </p>
+          </motion.div>
+
+          <div className='max-w-6xl mx-auto grid gap-4 md:grid-cols-4 mb-6 md:mb-16'>
+            {highlightMetrics.map((metric) => (
+              <div
+                key={metric.label}
+                className='group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]'
+              >
+                <div className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent' />
+                <div className='relative'>
+                  <span className='text-2xl md:text-3xl font-semibold text-white tracking-tight'>
+                    {metric.value}
+                  </span>
+                  <p className='mt-1 text-sm uppercase tracking-[0.2em] text-purple-200/70'>
+                    {metric.label}
+                  </p>
+                  <p className='mt-3 text-sm text-gray-300 leading-relaxed'>
+                    {metric.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className='max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-24'>
+        <div className='max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6 md:mb-16 p-6 md:p-0'>
           {cardSections.map((item, index) => (
             <div
               key={item.title}
@@ -219,7 +242,7 @@ export default function About() {
           ))}
         </div>
 
-        <div className='max-w-5xl mx-auto space-y-8'>
+        <div className='max-w-5xl mx-auto space-y-8 p-6 md:p-0'>
           {textSections.map((item, index) => (
             <div
               key={item.title}
@@ -244,7 +267,9 @@ export default function About() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

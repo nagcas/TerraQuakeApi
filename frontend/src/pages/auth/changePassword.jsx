@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function ChangePassword() {
   const { isLoggedIn } = useContext(Context);
@@ -108,11 +109,24 @@ export default function ChangePassword() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Change Password'
-        description='Change password - TerraQuake API'
+        title='Change Password | TerraQuake API - Secure Account Management'
+        description='Change your TerraQuake API account password securely. Protect your account and manage your access to real-time earthquake data.'
+        ogTitle='Change Password | TerraQuake API'
+        ogDescription='Securely change your TerraQuake API account password to protect access to your earthquake data and API keys.'
+        twitterTitle='Change Password | TerraQuake API'
+        twitterDescription='Manage your TerraQuake API account securely by updating your password. Keep your earthquake monitoring data safe.'
+        keywords='change password TerraQuake API, account security, update password, earthquake data API security'
       />
-      <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
+      {/* SEO Stuff */}
+
+      <section className='relative z-30 min-h-screen flex items-center justify-center p-6 rounded-lg'>
+        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        <div className='absolute inset-0 z-0 pointer-events-none'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+        </div>
         {isLoggedIn ? (
           <div className='rounded-lg w-full max-w-md'>
             <div className='flex flex-col justify-center items-center mb-16'>
@@ -247,6 +261,8 @@ export default function ChangePassword() {
           </div>
         )}
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

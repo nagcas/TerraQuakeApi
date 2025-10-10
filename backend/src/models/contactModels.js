@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import mongooseDelete from 'mongoose-delete'
 
-// Schema contact
+// NOTE: Schema contact
 const contactsSchema = new Schema(
   {
     name: {

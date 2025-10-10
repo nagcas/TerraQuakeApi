@@ -5,181 +5,213 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import EditProfile from './editProfile';
 import DeleteProfile from './deleteProfile';
+import { motion } from 'framer-motion';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
   const navigate = useNavigate();
-
   const [activeSection, setActiveSection] = useState(null);
 
   const handleLogout = () => {
+    setUserLogin({});
+    setIsLoggedIn(false);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+
     Swal.fire({
-      title: 'Success!',
-      text: 'Logged Out Successfully!',
+      title: 'Logged Out!',
+      text: 'You have successfully logged out of TerraQuake.',
       icon: 'success',
-      confirmButtonText: 'Home page',
+      confirmButtonColor: '#9333ea',
     }).then(() => {
-      setUserLogin({});
-      setIsLoggedIn(false);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
       navigate('/', { replace: true });
     });
   };
 
   const handleGenerateToken = () => {
-    alert('Generate token');
+    Swal.fire({
+      title: 'Coming Soon!',
+      text: 'API Token generation feature will be available soon.',
+      icon: 'info',
+      confirmButtonColor: '#ec4899',
+    });
   };
 
   return (
     <>
+      {/* SEO Meta Data */}
       <MetaData
-        title='Profile'
-        description='Profile Page of TerraQuake'
+        title="User Profile"
+        description="View your TerraQuake API profile, including your activity, settings, and preferences."
+        ogTitle="User Profile - TerraQuake API"
+        ogDescription="Access and manage your TerraQuake API account information and preferences."
+        twitterTitle="User Profile - TerraQuake API"
+        twitterDescription="Manage your account and view your profile details on TerraQuake API."
+        keywords="TerraQuake API, user profile, account settings, seismic data"
       />
 
-      <section className='relative z-30 w-full flex flex-col items-center justify-center text-center px-6 py-30 text-white'>
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-8 py-20 text-white overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-72 sm:w-80 h-72 sm:h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
+          <div className="absolute bottom-10 right-10 w-80 sm:w-96 h-80 sm:h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        </div>
+
         {isLoggedIn ? (
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl'>
-            {/* Left Column: Avatar + Info */}
-            <div className='bg-black/30 backdrop-blur-xl shadow-2xl rounded-2xl p-10 flex flex-col items-center border border-purple-500/50'>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl relative z-10 mt-6"
+          >
+            {/* Left Column */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center transition duration-300"
+            >
               <img
                 src={
-                  userLogin.avatarUrl ||
+                  userLogin?.avatar ||
                   'https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png'
                 }
-                alt='avatar'
-                className='w-32 h-32 rounded-full mx-auto border-4 border-pink-500 shadow-lg'
+                alt="avatar"
+                className="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-pink-500 shadow-[0_0_25px_rgba(236,72,153,0.6)] object-cover"
               />
 
-              <h1 className='text-3xl font-extrabold mt-6'>
-                Hello, {userLogin.name || 'Anonymus'}
+              <h1 className="text-2xl sm:text-3xl font-extrabold mt-5 tracking-tight">
+                Hello,{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+                  {userLogin.name || 'Anonymous'}
+                </span>
               </h1>
-              <p className='text-pink-300 text-sm mt-2'>
-                TerraQuake <span className='uppercase'>{userLogin.role}</span>
+
+              <p className="text-gray-300 text-xs sm:text-sm mt-2 uppercase tracking-widest">
+                {userLogin.role || 'User'} • TerraQuake
               </p>
 
               <button
                 onClick={handleLogout}
-                className='mt-6 w-auto py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
-                aria-label='Log out of your account'
+                className="mt-6 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
               >
                 Logout
               </button>
-            </div>
+            </motion.div>
 
             {/* Right Column */}
-            <div className='flex flex-col justify-center items-center p-6 bg-black/20 backdrop-blur-lg rounded-2xl shadow-lg'>
-              <h1 className='text-4xl font-extrabold mb-4'>Profile</h1>
-              <p className='text-slate-300 max-w-md text-center'>
-                Welcome to your TerraQuake profile!
+            <div className="flex flex-col justify-center items-center bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-sm rounded-2xl shadow-lg border border-purple-500/20 p-6 sm:p-8">
+              <h1 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                Profile Dashboard
+              </h1>
+              <p className="text-gray-400 mt-2 max-w-md text-center text-sm sm:text-base">
+                Manage your TerraQuake account, update details, or generate API tokens.
               </p>
 
               {activeSection === null && (
-                <>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6 flex flex-col gap-3 sm:gap-4"
+                >
                   <button
                     onClick={() => setActiveSection('edit')}
-                    className='mt-6 w-60 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
-                    aria-label='Edit profile'
+                    className="w-48 sm:w-60 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base"
                   >
-                    Edit profile
+                    Edit Profile
                   </button>
 
                   <button
                     onClick={() => setActiveSection('delete')}
-                    className='mt-6 w-60 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
-                    aria-label='Delete your profile'
+                    className="w-48 sm:w-60 border border-purple-400 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-500 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base"
                   >
-                    Delete profile
+                    Delete Profile
                   </button>
-                </>
+                </motion.div>
               )}
 
               {activeSection !== null && (
-                <button
+                <motion.button
                   onClick={() => setActiveSection(null)}
-                  className='mt-6 w-60 py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
-                  aria-label='Return to profile page'
+                  className="mt-6 w-48 sm:w-60 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
                 >
-                  Back to profile
-                </button>
+                  Back to Profile
+                </motion.button>
               )}
             </div>
 
-            {/* Right Bottom Area */}
+            {/* Bottom Section */}
             {activeSection === 'edit' ? (
               <EditProfile setEditProfile={() => setActiveSection(null)} />
             ) : activeSection === 'delete' ? (
               <DeleteProfile />
             ) : (
-              <>
-                {/* Info profile user */}
-                <div className='text-left py-4'>
-                  <p className='text-xl py-2'>
-                    Name:{' '}
-                    <span className='font-semibold'>{userLogin.name}</span>
-                  </p>
-                  <p className='text-xl py-2'>
-                    Email:{' '}
-                    <span className='font-semibold'>{userLogin.email}</span>
-                  </p>
-                  <p className='text-xl py-2'>
-                    Role:{' '}
-                    <span className='font-semibold'>{userLogin.role}</span>
-                  </p>
-                  <p className='text-xl py-2'>
-                    Experience:{' '}
-                    <span className='font-semibold'>
-                      {userLogin.experience}
-                    </span>
-                  </p>
-                  <p className='text-xl py-2'>
-                    Student:{' '}
-                    <span className='font-semibold'>{userLogin.student}</span>
-                  </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="col-span-1 lg:col-span-2 bg-black/30 backdrop-blur-xl border border-pink-500/10 rounded-2xl shadow-lg p-6 sm:p-8 mt-6"
+              >
+                <h2 className="text-xl sm:text-2xl font-semibold text-pink-400 mb-4">
+                  Account Details
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base">
+                  <p><span className="font-bold text-white">Name:</span> {userLogin.name}</p>
+                  <p><span className="font-bold text-white">Email:</span> {userLogin.email}</p>
+                  <p><span className="font-bold text-white">Role:</span> {userLogin.role}</p>
+                  <p><span className="font-bold text-white">Experience:</span> {userLogin.experience || 'N/A'}</p>
+                  <p><span className="font-bold text-white">Student:</span> {userLogin.student || 'No'}</p>
                 </div>
 
-                {/* Generate a token for accessing the TerraQuake API */}
-                <div className='text-center py-4 flex flex-col items-center'>
-                  <h2 className='text-xl'>Generate Token for accessing API</h2>
+                <div className="text-center mt-10">
+                  <h2 className="text-lg sm:text-xl font-semibold text-purple-400">
+                    Generate API Token
+                  </h2>
                   <button
                     onClick={handleGenerateToken}
-                    className='mt-6 w-auto py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
-                    aria-label='Generate token api'
+                    className="mt-4 py-2 sm:py-3 px-8 sm:px-10 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
                   >
-                    Generate token
+                    Generate Token
                   </button>
                 </div>
-              </>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         ) : (
-          <div className='flex flex-col items-center gap-4'>
-            <p className='text-2xl text-center text-gray-300 max-w-lg'>
-              To access your profile page, you need to be registered. If you
-              already have an account, please sign in. Otherwise, create a new
-              account to get started.
+          // Not Logged In
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-lg z-10"
+          >
+            <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">
+              Access Denied
+            </h1>
+            <p className="text-gray-300 mb-8 text-sm sm:text-base">
+              Please sign in or create an account to view your profile.
             </p>
-            <div className='flex gap-4 mt-4'>
+            <div className="flex justify-center gap-4 flex-wrap">
               <button
                 onClick={() => navigate('/signin')}
-                className='py-3 px-8 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
-                aria-label='Navigate to sign in page'
+                className="py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full font-bold text-white shadow-lg hover:scale-105 transition-transform text-sm sm:text-base"
               >
                 Sign In
               </button>
               <button
                 onClick={() => navigate('/signup')}
-                className='py-3 px-8 rounded-full bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
-                aria-label='Navigate to sign up page'
+                className="py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-600 to-purple-700 rounded-full font-bold text-white shadow-lg hover:scale-105 transition-transform text-sm sm:text-base"
               >
                 Sign Up
               </button>
             </div>
-          </div>
+          </motion.div>
         )}
       </section>
+
+      {/* Floating Button */}
+      <BackToTopButton />
     </>
   );
 }

@@ -1,8 +1,8 @@
-import { sendDeleteAccountConfirmation } from '../libs/mailerService.js'
+import { sendDeleteAccountConfirmation } from '../libs/sendDeleteAccountConfirmation.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
 
 /**
- * Controller: List all users (Admin only).
+ * NOTE: Controller: List all users (Admin only).
  */
 export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
@@ -28,7 +28,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
 }
 
 /**
- * Controller: Update a user's role by ID (Admin only).
+ * NOTE: Controller: Update a user's role by ID (Admin only).
  */
 export const updateRoleById = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
@@ -58,7 +58,7 @@ export const updateRoleById = ({ User, buildResponse, handleHttpError }) => {
 }
 
 /**
- * Controller: Get current authenticated user's data.
+* NOTE: Controller: Get current authenticated user's data.
  */
 export const getCurrentUserData = ({
   User,
@@ -86,7 +86,7 @@ export const getCurrentUserData = ({
 }
 
 /**
- * Controller: Update current authenticated user's data.
+* NOTE: Controller: Update current authenticated user's data.
  */
 export const updateCurrentUserData = ({
   User,
@@ -132,7 +132,7 @@ export const updateCurrentUserData = ({
 }
 
 /**
- * Controller: Soft delete the currently authenticated user's account.
+* NOTE: Controller: Soft delete the currently authenticated user's account.
  */
 export const deleteCurrentUser = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {

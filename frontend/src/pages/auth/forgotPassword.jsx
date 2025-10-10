@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MetaData from '@pages/noPage/metaData';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function forgotPassword() {
   const [loading, setLoading] = useState(false);
@@ -73,11 +74,24 @@ export default function forgotPassword() {
 
   return (
     <>
+      {/* SEO Stuff */}
       <MetaData
-        title='Forgot Password'
-        description='Forgot Password Page of TerraQuake'
+        title='Forgot Password | TerraQuake API - Account Recovery'
+        description='Reset your TerraQuake API account password securely. Recover access to your earthquake monitoring data with our easy password recovery process.'
+        ogTitle='Forgot Password | TerraQuake API'
+        ogDescription='Securely reset your TerraQuake API password to regain access to your earthquake monitoring tools and data.'
+        twitterTitle='Forgot Password | TerraQuake API'
+        twitterDescription='Recover your TerraQuake API account by securely resetting your password. Keep your earthquake data access safe.'
+        keywords='forgot password TerraQuake API, password recovery, account reset, earthquake data API'
       />
-      <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
+      {/* SEO Stuff */}
+
+      <section className='relative z-30 min-h-screen flex items-center justify-center p-6 rounded-lg'>
+        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        <div className='absolute inset-0 z-0 pointer-events-none'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+        </div>
         <div className='rounded-lg w-full max-w-md'>
           <div className='flex flex-col justify-center items-center mb-16'>
             <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
@@ -136,6 +150,8 @@ export default function forgotPassword() {
           </Link>
         </div>
       </section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

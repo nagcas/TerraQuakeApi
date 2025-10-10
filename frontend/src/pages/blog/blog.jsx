@@ -1,3 +1,4 @@
+import './blog.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
@@ -8,7 +9,8 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from 'react-icons/fa';
-import './blog.css';
+import { motion } from 'framer-motion';
+import BackToTopButton from '@/components/utils/backToTopButton';
 
 // Mock data generation functions
 const generateMockPosts = (page, limit) => {
@@ -227,38 +229,56 @@ export default function Blog() {
     <>
       {/* SEO Stuff */}
       <MetaData
-        title='Blog - TerraQuake API'
-        description='Stay updated with the latest insights on earthquake science, seismology research, and seismic safety from the TerraQuake API blog.'
-        ogTitle='Blog - TerraQuake API'
-        twitterTitle='Blog - TerraQuake API'
+        title='Blog | TerraQuake API - Earthquake News, Insights & Research'
+        description='Explore the TerraQuake API Blog for expert insights on earthquake science, seismic monitoring, safety tips, and the latest in seismology research.'
+        ogTitle='Blog | TerraQuake API - Earthquake News, Insights & Research'
+        ogDescription='Stay informed with TerraQuake API’s blog. Discover earthquake science, seismology updates, safety tips, and cutting-edge research for developers and researchers.'
+        twitterTitle='Blog | TerraQuake API'
+        twitterDescription='Read the TerraQuake API blog for news, research insights, and seismic safety tips. Stay updated on earthquake monitoring and technology.'
+        keywords='TerraQuake API blog, earthquake science, seismology research, earthquake monitoring, seismic safety, disaster prevention blog'
       />
       {/* SEO Stuff */}
 
-      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
-        <div className='container mx-auto px-4 max-w-7xl'>
-          {/* Header Section */}
-          <div className='flex flex-col justify-center items-center mb-16'>
-            <h1 className='text-3xl md:text-5xl text-white/80 font-extrabold text-center tracking-tight mb-4 animate-fade-in mt-12'>
-              Seismic Insights Blog
-              <div className='h-1 w-2/4 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 mx-auto my-2 rounded-full' />
-            </h1>
+      <motion.section
+        className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        <div className='absolute inset-0 z-0'>
+          <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
+          <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
+        </div>
 
-            {/* Description */}
-            <p className='mt-16 text-white text-center text-lg w-[95%] lg:w-6xl'>
+        {/* Content Container */}
+        <div className='relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-white/70'>
+          {/* Header Section */}
+          <motion.div
+            className='mb-16 text-center lg:text-left'
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
+              Seismic Insights Blog.
+              <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+            </h1>
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
               Explore the latest research, insights, and developments in
-              earthquake science and seismology
+              earthquake science and seismology.
             </p>
             <div className='mt-4 text-sm text-gray-500'>
               {totalPosts} articles • Page {currentPage} of {totalPages}
             </div>
-          </div>
+          </motion.div>
 
           {/* Blog Posts Grid */}
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
             {posts.map((post) => (
               <article
                 key={post.id}
-                className='bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 group'
+                className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 group'
               >
                 {/* Post Header */}
                 <div className='p-6'>
@@ -303,7 +323,7 @@ export default function Blog() {
                 <div className='px-6 pb-6'>
                   <Link
                     to={`/blog/${post.slug}`}
-                    className='inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
+                    className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
                   >
                     Read More
                     <svg
@@ -334,10 +354,10 @@ export default function Blog() {
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                    className={`relative z-30 flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                       currentPage === 1
-                        ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
-                        : 'bg-gray-800 text-white hover:bg-purple-600 hover:scale-105'
+                        ? 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 cursor-not-allowed'
+                        : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:scale-105 cursor-pointer'
                     }`}
                   >
                     <FaChevronLeft className='w-4 h-4' />
@@ -345,15 +365,15 @@ export default function Blog() {
                   </button>
 
                   {/* Page Numbers */}
-                  <div className='flex items-center space-x-1'>
+                  <div className='relative z-30 flex items-center space-x-1'>
                     {generatePageNumbers().map((pageNum) => (
                       <button
                         key={pageNum}
                         onClick={() => handlePageChange(pageNum)}
                         className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-all duration-200 ${
                           currentPage === pageNum
-                            ? 'bg-purple-600 text-white font-bold scale-110'
-                            : 'bg-gray-800 text-gray-400 hover:bg-purple-600 hover:text-white hover:scale-105'
+                            ? 'bg-purple-600 text-white/70 scale-110'
+                            : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:text-white hover:scale-105 cursor-pointer'
                         }`}
                       >
                         {pageNum}
@@ -365,10 +385,10 @@ export default function Blog() {
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                    className={`relative z-30 flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                       currentPage === totalPages
-                        ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
-                        : 'bg-gray-800 text-white hover:bg-purple-600 hover:scale-105'
+                        ? 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 cursor-not-allowed'
+                        : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:scale-105 cursor-pointer'
                     }`}
                   >
                     <span className='hidden sm:inline'>Next</span>
@@ -386,7 +406,9 @@ export default function Blog() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
+      {/* Floating Back-to-Top Button Component */}
+      <BackToTopButton />
     </>
   );
 }

@@ -3,6 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
+import passport from 'passport'
+import './config/passportConfig.js'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'hpp'
@@ -23,6 +25,7 @@ import {
 } from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
 import routeMetrics from './routes/metricsRouters.js'
+import postRoutes from './routes/postRoutes.js'
 
 dotenv.config()
 
@@ -32,6 +35,11 @@ const app = express()
 // 🔹 Trust proxy (Render/Heroku/NGINX)
 app.set('trust proxy', 1)
 
+// === PASSPORT SETUP ===
+app.use(passport.initialize())
+
+// === CORS ===
+// Only /v1/earthquakes is public
 // === SECURITY MIDDLEWARE ===
 // Helmet con Content Security Policy
 app.use(
@@ -62,9 +70,6 @@ app.use(mongoSanitize())
 app.use(xss())
 app.use(hpp())
 
-// === METRICS MIDDLEWARE ===
-app.use(metricsMiddleware)
-
 // Body parser
 app.use(express.json({ limit: '10kb' })) // evita payload enormi
 app.use(express.urlencoded({ extended: true }))
@@ -78,6 +83,9 @@ const corsOptions = {
   credentials: true
 }
 app.use(cors(corsOptions))
+
+// === METRICS MIDDLEWARE ===
+app.use(metricsMiddleware)
 
 // === ROUTES ===
 // Solo /v1/earthquakes è pubblico
@@ -93,10 +101,11 @@ app.use('/contact', contactLimiter, routeContact)
 
 // Newsletter (pubblica)
 app.use('/newsletter', newsletterRoutes)
+app.use('/posts', postRoutes)
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
-  console.error('🔥 Error:', err.message)
+  console.error('Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
     message: devEnv === 'development'
@@ -107,6 +116,7 @@ app.use((err, req, res, next) => {
 
 // ===== START SERVER =====
 const port = process.env.PORT || 5000
+const urlBackend = process.env.BACKEND_URL || 'http://localhost:5001'
 
 const startServer = async () => {
   try {
@@ -115,8 +125,8 @@ const startServer = async () => {
 
     app.listen(port, () => {
       console.log(`Server running in ${devEnv} environment`)
-      console.log(`Started at: http://localhost:${port}`)
-      console.log(`Test endpoint: http://localhost:${port}/v1/test`)
+      console.log(`Started at: ${urlBackend}`)
+      console.log(`Test endpoint: ${urlBackend}/v1/test`)
 
       const endPoints = expressListEndpoints(app)
       console.log('List of available endpoints:')

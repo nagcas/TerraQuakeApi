@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 dotenv.config()
 
 /**
- * Controller: Register a new user.
+ * NOTE: Controller: Register a new user.
  */
 export const signUp = ({
   User,
@@ -91,7 +91,7 @@ export const signUp = ({
 }
 
 /**
- * Controller: Authenticate user (login).
+ * NOTE: Controller: Authenticate user (login).
  */
 export const signIn = ({
   User,
@@ -137,7 +137,7 @@ export const signIn = ({
 }
 
 /**
- * Controller: Forgot password (send reset link).
+ * NOTE: Controller: Forgot password (send reset link).
  */
 export const forgotPassword = ({
   User,
@@ -180,7 +180,7 @@ export const forgotPassword = ({
 }
 
 /**
- * Controller: Reset password.
+ * NOTE: Controller: Reset password.
  */
 export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
   return async (req, res) => {
@@ -242,9 +242,9 @@ export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
 }
 
 /**
- * Controller: Change password (logged-in user).
+ * NOTE: Controller: Change password (logged-in user).
  */
-export const changePassword = ({ User, handleHttpError, buildResponse }) => {
+export const changePassword = ({ User, handleHttpError, buildResponse, sendChangePassword }) => {
   return async (req, res) => {
     try {
       const { passwordOld, passwordNew, confirmPassword } = req.body
@@ -281,6 +281,9 @@ export const changePassword = ({ User, handleHttpError, buildResponse }) => {
       const userResponse = user.toObject()
       delete userResponse.password
 
+      // Send change password confirmation email
+      await sendChangePassword(user)
+
       return res
         .status(200)
         .json(
@@ -300,5 +303,36 @@ export const changePassword = ({ User, handleHttpError, buildResponse }) => {
         500
       )
     }
+  }
+}
+
+/**
+ * NOTE: Controller: Google login.
+ */
+export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, res) => {
+  try {
+    const { user, token } = req.user
+
+    // Get the frontend URL from environment variables
+    const FRONTEND_REDIRECT_URL = process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT
+
+    if (!FRONTEND_REDIRECT_URL) {
+      // Fallback or error handling if environment variable is missing
+      return res.status(500).send('Frontend redirect URL not configured.')
+    }
+
+    // 1. Construct the successful redirect URL with the JWT as a query parameter
+    // The frontend must have a route/component that reads this token.
+    const successUrl = new URL(FRONTEND_REDIRECT_URL)
+    successUrl.pathname = '/login-success' // Adjust this path to your client's success route
+    successUrl.searchParams.append('token', token)
+    successUrl.searchParams.append('user_id', user._id.toString())
+
+    // 2. Perform the redirect, handing control back to the client application
+    return res.redirect(successUrl.toString())
+  } catch (error) {
+    console.error('Error in Google callback:', error)
+    const failureUrl = process.env.FRONTEND_DEVELOPMENT || 'http://localhost:5173'
+    res.redirect(`${failureUrl}/login-failure?error=google_auth_failed`)
   }
 }
