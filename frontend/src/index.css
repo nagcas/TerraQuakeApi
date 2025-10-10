@@ -1,6 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;1,500;1,700&display=swap');
 @import "tailwindcss";
 
+:root {
+  --color-primary: #6b21a8;
+  --color-primary-hover: #8b5cf6;
+  --color-secondary: #0f0c29;
+  --color-border: #8b5cf6;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e0e0e0;
+  --color-bg-body: #0f0c29;
+  --color-bg-light: #1a1733;
+  --scrollbar-width: 12px;
+  --radius-md: 6px;
+}
+
+/* These font classes do not need changes */
 .poppins-bold {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
@@ -20,118 +34,101 @@
 }
 
 
+/* ================================================================ */
+/* 👇 2. REFACTOR EXISTING STYLES TO USE THE VARIABLES 👇 */
+/* ================================================================ */
 
-/* Tutta la scrollbar */
+/* Tutta la scrollbar (for Webkit browsers like Chrome, Safari) */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: var(--scrollbar-width);
 }
 
 /* Sfondo della scrollbar */
 ::-webkit-scrollbar-track {
-  background: #0f0c29;
+  background: var(--color-secondary);
+  /* CHANGED */
 }
 
 /* Thumb (parte mobile) */
 ::-webkit-scrollbar-thumb {
-  background-color: #6b21a8;
-  border-radius: 6px;
+  background-color: var(--color-primary);
+  /* CHANGED */
+  border-radius: var(--radius-md);
+  /* CHANGED */
   border: 3px solid transparent;
   background-clip: content-box;
 }
 
 /* Al passaggio del mouse */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #8b5cf6;
+  background-color: var(--color-primary-hover);
+  /* CHANGED */
 }
 
 /* Per Firefox */
 html {
-  scrollbar-color: #6b21a8 #0f0c29; /* thumb / track */
+  scrollbar-color: var(--color-primary) var(--color-secondary);
+  /* CHANGED: thumb / track */
   scrollbar-width: thin;
 }
-
 
 body {
   height: 100vh;
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-style: normal;
-  background: linear-gradient(135deg, #1a1333 0%, #2d186d 50%, #6b21a8 100%);
-  min-height: 100vh;
-  transition: background 0.5s;
-  animation: fadeInBody 1.2s ease;
-}
-
-@keyframes fadeInBody {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  background: linear-gradient(90deg, #8b5cf6, #6b21a8, #2d186d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  letter-spacing: 1px;
-  margin-bottom: 0.5em;
-}
-
-a {
-  color: #8b5cf6;
-  text-decoration: none;
-  transition: color 0.2s, text-shadow 0.2s;
-}
-a:hover, a:focus {
-  color: #fff;
-  text-shadow: 0 0 8px #8b5cf6, 0 0 2px #fff;
-}
-
-button, .btn {
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(90deg, #6b21a8 0%, #8b5cf6 100%);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6em 1.4em;
-  font-weight: 600;
-  box-shadow: 0 2px 12px rgba(107,33,168,0.12);
-  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
-  cursor: pointer;
-}
-button:hover, .btn:hover, button:focus, .btn:focus {
-  background: linear-gradient(90deg, #8b5cf6 0%, #6b21a8 100%);
-  box-shadow: 0 4px 24px #8b5cf699, 0 0 8px #fff2;
-  transform: translateY(-2px) scale(1.04);
-}
-
-.glow {
-  box-shadow: 0 0 16px 4px #8b5cf6cc, 0 0 4px 1px #fff2;
-  animation: glowPulse 2s infinite alternate;
-}
-@keyframes glowPulse {
-  from { box-shadow: 0 0 8px 2px #8b5cf6cc, 0 0 2px 1px #fff2; }
-  to { box-shadow: 0 0 24px 8px #8b5cf6cc, 0 0 8px 2px #fff2; }
-}
-
-.fade-in {
-  animation: fadeIn 1s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.slide-up {
-  animation: slideUp 0.8s cubic-bezier(.4,2,.3,1);
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  /* ADDED these lines to apply the global theme */
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
 }
 
 .custom-swal-popup {
-  border: #8b5cf6;
+  border-color: var(--color-border);
+  /* CHANGED */
+  /* Note: 'border' needs a style and width, e.g., 'border: 1px solid var(--color-border)'. 
+     I've used 'border-color' to be safe. */
+}
+
+
+/* These animation classes do not need changes */
+@keyframes dangle-bouncy {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(15deg);
+  }
+
+  50% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.group:hover .dangle-on-hover {
+  animation: dangle-bouncy 1.2s ease-in-out infinite;
+}
+
+@keyframes subtle-bounce {
+
+  0%,
+  100% {
+    transform: translateY(-15%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.group:hover .icon-bounces {
+  animation: subtle-bounce 0.8s infinite;
 }
