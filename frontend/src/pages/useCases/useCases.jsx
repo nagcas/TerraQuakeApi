@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
 import { motion } from 'framer-motion';
+import { FiChevronDown } from 'react-icons/fi';
 import { useCaseDocs } from '@/data/USE_CASE_DOCS';
 import AccordionItem from '@/utils/useCases/AccordionItem';
 import BackToTopButton from '@/components/utils/backToTopButton';
@@ -105,8 +106,9 @@ export default function UseCases() {
 
   // State: single-expanded index or "allExpanded" toggle
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [allExpanded, setAllExpanded] = useState(false);
+
   const toggleExpand = (index) => {
-    // clicking an item cancels "expand all" and toggles the item
     setAllExpanded(false);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
@@ -133,6 +135,7 @@ export default function UseCases() {
         twitterDescription='Explore real-world applications of TerraQuake API for earthquake monitoring, seismic data, early warning systems, and disaster prevention.'
         keywords='TerraQuake API, use cases, earthquake monitoring API, seismic data, early warning systems, disaster prevention'
       />
+
       <section className="relative z-30 w-full min-h-screen px-6 py-20 bg-gradient-to-b from-[#0f172a] to-[#1e1b4b]">
         {/* Page header */}
         <div className="flex flex-col justify-center items-center mb-8 text-center">
@@ -201,28 +204,34 @@ export default function UseCases() {
                   </button>
                 </header>
 
-              <div
-                className={`transition-all duration-700 ease-in-out ${
-                  expandedIndex === index
-                    ? 'max-h-[500px] opacity-100 mt-4 scale-100'
-                    : 'max-h-0 opacity-0 scale-95'
-                } overflow-hidden`}
-              >
-                <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-2">
-                  {item.content}
-                </p>
-                <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4 space-y-1">
-                  {item.points.map((point, idx) => (
-                    <li key={idx} className="hover:text-purple-300 transition-colors">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+                <div
+                  id={panelId}
+                  className={`transition-all duration-700 ease-in-out ${
+                    isExpanded
+                      ? 'max-h-[500px] opacity-100 mt-4 scale-100'
+                      : 'max-h-0 opacity-0 scale-95'
+                  } overflow-hidden`}
+                >
+                  <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-2">
+                    {item.content}
+                  </p>
+                  <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4 space-y-1">
+                    {item.points.map((point, idx) => (
+                      <li
+                        key={idx}
+                        className="hover:text-purple-300 transition-colors"
+                      >
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
         </div>
-      </motion.section>
+      </section>
+
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
