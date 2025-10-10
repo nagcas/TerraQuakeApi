@@ -1,10 +1,10 @@
-import { transporter } from '../config/mailerConfig.js'
+import { client } from '../config/mailgunConfig.js'
 
 // NOTE: Function to send a registration confirmation email
 export const sendEmailRegister = async (user) => {
   try {
-    const response = await transporter.sendMail({
-      from: '"TerraQuake API" <terraquakeapi@gmail.com>', // deve corrispondere a USER_MAILER
+    const response = await client.messages.create(process.env.MAILGUN_DOMAIN, {
+      from: `"TerraQuake API" <postmaster@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🎉 Welcome to TerraQuake API!',
       html: `
@@ -52,8 +52,8 @@ export const sendForgotPassword = async (user, token) => {
       resetUrl = `${process.env.FRONTEND_PRODUCTION}/reset-password/${token}`
     }
 
-    const response = await transporter.sendMail({
-      from: '"TerraQuake API" <terraquakeapi@gmail.com>', // must match USER_MAILER
+    const response = await client.messages.create(process.env.MAILGUN_DOMAIN, {
+      from: `"TerraQuake API" <postmaster@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🔑 Reset Your TerraQuake API Password',
       html: `<!DOCTYPE html>
