@@ -258,4 +258,233 @@ print(f"Found {response.json()['total']} deep-focus earthquakes for the project.
       Bash: `curl "${API_BASE}/v1/earthquakes/depth?depth=300"`
     }
   },
+  {
+    title: 'Tutorial: Displaying Earthquake Data on a Map',
+    content: 'Learn how to fetch earthquake data from the TerraQuake API and visualize it on an interactive map using OpenLayers. This tutorial covers data fetching, map initialization, and adding styled markers based on magnitude.',
+    points: [
+      'Fetch GeoJSON earthquake data from TerraQuake API endpoints.',
+      'Initialize an interactive map using the OpenLayers JavaScript library.',
+      'Convert geographical coordinates to map projection for accurate display.',
+      'Add custom-styled markers to the map, with size and color indicating magnitude.',
+      'Dynamically adjust the map view to encompass all displayed earthquake events.',
+    ],
+    exampleUrl: `${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=10`,
+    snippets: {
+      JavaScript: `// 1. Fetch Earthquake Data (e.g., near Tokyo)
+const API_BASE = 'https://api.terraquakeapi.com';
+async function getEarthquakesNearLocation(latitude, longitude, radius, limit = 10) {
+  const url = \`\${API_BASE}/v1/earthquakes/location?latitude=\${latitude}&longitude=\${longitude}&radius=\${radius}&limit=\${limit}\`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.success ? data.data : [];
+}
+
+// 2. Initialize OpenLayers Map (assuming a div with id="map-container")
+import 'ol/ol.css';
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import TileLayer from 'ol/layer/Tile.js';
+import OSM from 'ol/source/OSM.js';
+function initializeOpenLayersMap(targetElementId) {
+  const map = new Map({
+    target: targetElementId,
+    layers: [new TileLayer({ source: new OSM() })],
+    view: new View({ center: [0, 0], zoom: 2, projection: 'EPSG:3857' }),
+  });
+  return map;
+}
+
+// 3. Add Earthquake Markers
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import { fromLonLat } from 'ol/proj';
+import { Fill, Style, Stroke, Circle as CircleStyle } from 'ol/style';
+function addEarthquakeMarkersToMap(map, earthquakeFeatures) {
+  map.getLayers().forEach(layer => { if (layer.get('name') === 'earthquake_markers') map.removeLayer(layer); });
+  const vectorSource = new VectorSource({
+    features: earthquakeFeatures.map(feature => {
+      const magnitude = feature.properties?.mag || 0;
+      const earthquakeFeature = new Feature({
+        geometry: new Point(fromLonLat([feature.geometry.coordinates[0], feature.geometry.coordinates[1]])),
+        properties: feature.properties,
+      });
+      let color = '#34d399'; let radius = 5;
+      if (magnitude >= 6.0) { color = '#991b1b'; radius = 12; } else if (magnitude >= 5.0) { color = '#ef4444'; radius = 10; }
+      else if (magnitude >= 4.0) { color = '#f59e0b'; radius = 8; } else if (magnitude >= 2.0) { color = '#fbbf24'; radius = 6; }
+      earthquakeFeature.setStyle(new Style({ image: new CircleStyle({ radius, fill: new Fill({ color }), stroke: new Stroke({ color: 'white', width: 1 }) }) }));
+      return earthquakeFeature;
+    }),
+  });
+  const vectorLayer = new VectorLayer({ source: vectorSource, name: 'earthquake_markers' });
+  map.addLayer(vectorLayer);
+  if (vectorSource.getFeatures().length > 0) { map.getView().fit(vectorSource.getExtent(), { padding: [50, 50, 50, 50], duration: 1000 }); }
+}
+
+// Example:
+// getEarthquakesNearLocation(35.6762, 139.6503, 500).then(earthquakes => {
+//   if (earthquakes.length > 0) {
+//     const myMap = initializeOpenLayersMap('map-container');
+//     addEarthquakeMarkersToMap(myMap, earthquakes);
+//   }
+// });`,
+      Python: `import requests
+from pprint import pprint
+
+API_BASE = 'https://api.terraquakeapi.com'
+
+def get_earthquakes_for_map(latitude, longitude, radius, limit=10):
+    url = f"{API_BASE}/v1/earthquakes/location"
+    params = {"latitude": latitude, "longitude": longitude, "radius": radius, "limit": limit}
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    data = response.json()
+    return data['data'] if data['success'] else []
+
+# In a real application, you would use a Python mapping library (e.g., Folium, Plotly)
+# to visualize this data. Here, we just print the relevant parts.
+# Example: Get earthquakes near Tokyo for mapping
+# earthquakes_data = get_earthquakes_for_map(35.6762, 139.6503, 500)
+# for quake in earthquakes_data:
+#     coords = quake['geometry']['coordinates']
+#     props = quake['properties']
+#     print(f"Magnitude: {props['mag']}, Place: {props['place']}, Lat: {coords[1]}, Lon: {coords[0]}")
+`,
+      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=10" | jq '.data[] | {mag: .properties.mag, place: .properties.place, coordinates: .geometry.coordinates}'`
+    }
+  },
+  {
+    title: 'Tutorial: Filtering and Searching Earthquakes',
+    content: 'The TerraQuake API provides extensive filtering capabilities to retrieve specific earthquake data based on various criteria like time, location, magnitude, depth, and event ID.',
+    points: [
+      'Filter earthquakes by specific date ranges, months, or recent activity.',
+      'Search for events within a geographical radius or a predefined Italian region.',
+      'Isolate earthquakes based on their magnitude or depth characteristics.',
+      'Retrieve detailed information for a single earthquake using its unique event ID.',
+      'Utilize common pagination parameters (`page`, `limit`) for efficient data retrieval.',
+    ],
+    exampleUrl: `${API_BASE}/v1/earthquakes/magnitude?mag=5.0&limit=10`,
+    snippets: {
+      JavaScript: `const API_BASE = 'https://api.terraquakeapi.com';
+
+// Example 1: Get earthquakes with magnitude >= 5.0
+async function filterByMagnitude(minMag) {
+  const response = await fetch(\`\${API_BASE}/v1/earthquakes/magnitude?mag=\${minMag}&limit=5\`);
+  const data = await response.json();
+  console.log(\`Magnitude >= \${minMag}:\`, data.data);
+}
+
+// Example 2: Get earthquakes in a specific Italian region
+async function filterByRegion(regionName) {
+  const response = await fetch(\`\${API_BASE}/v1/earthquakes/region?region=\${regionName}&limit=5\`);
+  const data = await response.json();
+  console.log(\`Earthquakes in \${regionName}:\`, data.data);
+}
+
+// Example 3: Get earthquakes by date range
+async function filterByDateRange(startDate, endDate) {
+  const response = await fetch(\`\${API_BASE}/v1/earthquakes/range-time?startdate=\${startDate}&enddate=\${endDate}&limit=5\`);
+  const data = await response.json();
+  console.log(\`Earthquakes from \${startDate} to \${endDate}:\`, data.data);
+}
+
+// filterByMagnitude(5.0);
+// filterByRegion('Sicilia');
+// filterByDateRange('2025-09-01', '2025-09-07');`,
+      Python: `import requests
+
+API_BASE = 'https://api.terraquakeapi.com'
+
+# Example 1: Get earthquakes by depth
+def filter_by_depth(max_depth):
+    url = f"{API_BASE}/v1/earthquakes/depth"
+    params = {"depth": max_depth, "limit": 5}
+    response = requests.get(url, params=params)
+    print(f"Earthquakes <= {max_depth}km deep:", response.json()['data'])
+
+# Example 2: Get a specific earthquake by Event ID
+def get_by_event_id(event_id):
+    url = f"{API_BASE}/v1/earthquakes/eventId"
+    params = {"eventId": event_id}
+    response = requests.get(url, params=params)
+    print(f"Details for Event ID {event_id}:", response.json()['data'])
+
+# filter_by_depth(10)
+# get_by_event_id(44278572)`,
+      Bash: `# Example 1: Get today's earthquakes
+curl "${API_BASE}/v1/earthquakes/today?limit=5"
+
+# Example 2: Get earthquakes with magnitude >= 6.0
+curl "${API_BASE}/v1/earthquakes/magnitude?mag=6.0&limit=5"
+
+# Example 3: Get earthquakes near specific coordinates (Los Angeles)
+curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=100&limit=5"`
+    }
+  },
+  {
+    title: 'Tutorial: Using the API with Python, JS, or cURL',
+    content: 'This tutorial demonstrates how to interact with the TerraQuake API using common tools and programming languages: cURL for command-line, JavaScript (Fetch API/Axios) for web/Node.js, and Python (requests library).',
+    points: [
+      'Execute quick API requests directly from the command line using cURL.',
+      'Integrate API calls into web applications or Node.js services with JavaScript Fetch API or Axios.',
+      'Develop robust data fetching scripts and applications using Python with the requests library.',
+      'Understand how to handle API responses and potential errors in each environment.',
+      'Apply common parameters like `limit` and `page` for efficient data retrieval across languages.',
+    ],
+    exampleUrl: `${API_BASE}/v1/earthquakes/recent?limit=5`,
+    snippets: {
+      JavaScript: `const API_BASE = 'https://api.terraquakeapi.com';
+
+// Using Fetch API (Browser/Node.js)
+async function fetchRecentQuakes() {
+  try {
+    const response = await fetch(\`\${API_BASE}/v1/earthquakes/recent?limit=5\`);
+    const data = await response.json();
+    if (data.success) {
+      console.log('JS Fetch (Recent):', data.data.map(q => q.properties.place));
+    }
+  } catch (error) { console.error('Fetch Error:', error); }
+}
+
+// Using Axios (Node.js/Browser - requires 'npm install axios')
+// import axios from 'axios'; // or const axios = require('axios');
+async function axiosQuakesByMonth(year, month) {
+  try {
+    const response = await axios.get(\`\${API_BASE}/v1/earthquakes/month\`, {
+      params: { year, month, limit: 5 }
+    });
+    if (response.data.success) {
+      console.log(\`JS Axios (\${month}/\${year}):\`, response.data.data.map(q => q.properties.place));
+    }
+  } catch (error) { console.error('Axios Error:', error.response ? error.response.data : error.message); }
+}
+
+// fetchRecentQuakes();
+// axiosQuakesByMonth(2025, 9);`,
+      Python: `import requests
+
+API_BASE = 'https://api.terraquakeapi.com'
+
+# Using Python Requests Library
+def get_last_week_quakes():
+    url = f"{API_BASE}/v1/earthquakes/last-week"
+    params = {"limit": 5}
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        data = response.json()
+        if data['success']:
+            print('Python (Last Week):', [q['properties']['place'] for q in data['data']])
+    except requests.exceptions.RequestException as e:
+        print(f"Python Request Error: {e}")
+
+# get_last_week_quakes()`,
+      Bash: `# cURL Example 1: Get today's earthquakes
+curl "${API_BASE}/v1/earthquakes/today?limit=5" | jq '.data[] | .properties.place'
+
+# cURL Example 2: Get earthquake by Event ID
+curl "${API_BASE}/v1/earthquakes/eventId?eventId=44278572" | jq '.data[] | .properties.place'`
+    }
+  }
 ];
