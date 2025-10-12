@@ -332,7 +332,7 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
     const successUrl = new URL(FRONTEND_REDIRECT_URL)
 
     // The frontend route that will handle the OAuth data
-    successUrl.pathname = '/handle-oauth'
+    successUrl.pathname = '/login-success'
 
     // Append all necessary query parameters
     successUrl.searchParams.append('token', token)
