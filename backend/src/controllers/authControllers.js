@@ -307,32 +307,47 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
 }
 
 /**
- * NOTE: Controller: Google login.
+ * NOTE: Controller: Google OAuth Callback
+ * ---------------------------------
+ * This controller is triggered after Google authentication succeeds.
+ * It receives `req.user` populated by Passport with the authenticated user
+ * and a signed JWT token. Then, it redirects the user to the frontend app
+ * with the token and user data as query parameters.
  */
+
 export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, res) => {
   try {
     const { user, token } = req.user
 
-    // Get the frontend URL from environment variables
-    const FRONTEND_REDIRECT_URL = process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT
+    // 🔹 Get the frontend URL from environment variables
+    const FRONTEND_REDIRECT_URL =
+      process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT
 
     if (!FRONTEND_REDIRECT_URL) {
-      // Fallback or error handling if environment variable is missing
+      // If the environment variable is missing, respond with an error
       return res.status(500).send('Frontend redirect URL not configured.')
     }
 
-    // 1. Construct the successful redirect URL with the JWT as a query parameter
-    // The frontend must have a route/component that reads this token.
+    // Construct the frontend redirect URL
     const successUrl = new URL(FRONTEND_REDIRECT_URL)
-    successUrl.pathname = '/login-success' // Adjust this path to your client's success route
+
+    // The frontend route that will handle the OAuth data
+    successUrl.pathname = '/handle-oauth'
+
+    // Append all necessary query parameters
     successUrl.searchParams.append('token', token)
     successUrl.searchParams.append('user_id', user._id.toString())
+    successUrl.searchParams.append('name', user.name || '')
+    successUrl.searchParams.append('email', user.email || '')
+    successUrl.searchParams.append('avatar', user.avatar || '')
+    successUrl.searchParams.append('role', user.role || 'user')
 
-    // 2. Perform the redirect, handing control back to the client application
+    // 🔹 Redirect the user to the frontend with all data attached
     return res.redirect(successUrl.toString())
   } catch (error) {
+    // 🔹 Handle unexpected errors gracefully
     console.error('Error in Google callback:', error)
     const failureUrl = process.env.FRONTEND_DEVELOPMENT || 'http://localhost:5173'
-    res.redirect(`${failureUrl}/login-failure?error=google_auth_failed`)
+    res.redirect(`${failureUrl}/signin?error=google_auth_failed`)
   }
 }
