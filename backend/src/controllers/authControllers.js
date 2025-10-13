@@ -31,7 +31,7 @@ export const signUp = ({
           existingUser.password = data.password // hashed in pre-save hook
           existingUser.role = data.role || 'user'
           existingUser.experience = data.experience || ''
-          existingUser.student = data.student || false
+          existingUser.student = data.student || 'No'
           existingUser.terms = data.terms || false
 
           const restoredUser = await existingUser.save()
@@ -106,7 +106,7 @@ export const signIn = ({
       req.body = matchedData(req)
 
       const user = await User.findOne({ email: req.body.email })
-        .select('password name email role')
+        .select('password name email role experience student')
         .lean()
 
       if (!user) {

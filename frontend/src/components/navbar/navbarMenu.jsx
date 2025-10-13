@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/context';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import AvatarUser from '../utils/avatarUser';
 
 export default function NavbarMenu() {
   const navigate = useNavigate();
@@ -185,14 +186,7 @@ export default function NavbarMenu() {
               aria-label="User menu"
               aria-expanded={isProfileOpen}
             >
-              <img
-                src={
-                  userLogin?.avatar ||
-                  'https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png'
-                }
-                alt="avatar"
-                className="w-7 h-7 rounded-full cursor-pointer border border-purple-500/30"
-              />
+              <AvatarUser use='navbar' />
               <span className="text-white/80 font-medium text-sm">
                 {userLogin?.name ? userLogin.name.split(' ')[0].trim() : 'User'}
               </span>

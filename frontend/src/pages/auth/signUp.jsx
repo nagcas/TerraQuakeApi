@@ -39,6 +39,10 @@ export default function SignUp() {
         .string()
         .required('Please confirm your password!')
         .oneOf([yup.ref('password')], 'Passwords must match!'),
+      
+      experience: yup.string().required('Experience is required!'),
+      
+      student: yup.string().required('Please select if you are a student!'),
 
       terms: yup
         .bool()
@@ -69,6 +73,7 @@ export default function SignUp() {
       student: data.student,
       terms: data.terms,
     };
+
     axios
       .post('auth/signup', formData)
       .then((res) => {
@@ -256,8 +261,9 @@ export default function SignUp() {
                     </label>
                     <select
                       defaultValue=''
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      name='experience'
+                      className="w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50"
+                      {...register('experience')}
+                      
                     >
                       <option
                         value=''
@@ -293,8 +299,8 @@ export default function SignUp() {
                     </label>
                     <select
                       defaultValue=''
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      name='student'
+                      className='w-full px-5 py-3 border-2 rounded-xl  bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      {...register('student')}
                     >
                       <option
                         value=''

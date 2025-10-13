@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       setUserLogin(JSON.parse(storedUser))
       setIsLoggedIn(true)
     }
-  }, [])
+  }, [setUserLogin])
 
   return (
     <Context.Provider

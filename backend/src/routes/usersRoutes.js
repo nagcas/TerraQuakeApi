@@ -35,7 +35,7 @@ router.get('/me', getCurrentUserData({ User, buildResponse, handleHttpError }))
 
 // NOTE: Update current logged-in user's data
 // PUT /me/update — updates personal data for the logged-in user
-router.put('/me/update', validatorUpdateCurrentUserData, updateCurrentUserData({ User, buildResponse, handleHttpError, matchedData }))
+router.patch('/me/update', validatorUpdateCurrentUserData, updateCurrentUserData({ User, buildResponse, handleHttpError, matchedData }))
 
 // NOTE: Update user preferences (e.g., notifications, geographic area)
 // DELETE /preferences/:id — removes specified user preferences

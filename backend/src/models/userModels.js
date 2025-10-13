@@ -34,11 +34,13 @@ const usersSchema = new Schema(
     },
     experience: {
       type: String,
+      default: '',
       trim: true
     },
     student: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: 'No',
+      trim: true
     },
     terms: {
       type: Boolean,

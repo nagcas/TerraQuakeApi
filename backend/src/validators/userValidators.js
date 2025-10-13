@@ -21,6 +21,20 @@ export const validatorSignUp = [
   // Validate 'role': required
   check('role').notEmpty(),
 
+  // Validate 'experience': optional string, must be one of allowed values
+  check('experience')
+    .optional()
+    .isString()
+    .isIn(['Beginner', 'Intermediate', 'Expert'])
+    .withMessage('Experience must be Beginner, Intermediate or Expert.'),
+
+  // Validate 'student': optional string, must be yes/no
+  check('student')
+    .optional()
+    .isString()
+    .isIn(['Yes', 'No'])
+    .withMessage('Student field must be Yes or No.'),
+
   // Validate 'password': required, not empty, length 8–64, must contain lowercase, uppercase, number, special char
   check('password')
     .exists()
@@ -176,6 +190,20 @@ export const validatorUpdateCurrentUserData = [
     .withMessage('Password must contain at least one number.')
     .matches(/[^A-Za-z0-9]/)
     .withMessage('Password must contain at least one special character.'),
+
+  // Validate 'experience': optional string, must be one of allowed values
+  check('experience')
+    .optional()
+    .isString()
+    .isIn(['Beginner', 'Intermediate', 'Expert'])
+    .withMessage('Experience must be Beginner, Intermediate or Expert.'),
+
+  // Validate 'student': optional string, must be yes/no
+  check('student')
+    .optional()
+    .isString()
+    .isIn(['Yes', 'No'])
+    .withMessage('Student field must be Yes or No.'),
 
   (req, res, next) => validateResults(req, res, next)
 ]
