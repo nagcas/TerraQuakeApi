@@ -1,0 +1,222 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Paths filter
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+
+  frontend:
+    name: Frontend • build & test
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Setup Node with lockfile-aware caching
+      - name: Use Node.js (pnpm cache)
+        if: hashFiles('frontend/pnpm-lock.yaml') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: 'frontend/pnpm-lock.yaml'
+
+      - name: Use Node.js (yarn cache)
+        if: hashFiles('frontend/yarn.lock') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: 'frontend/yarn.lock'
+
+      - name: Use Node.js (npm cache)
+        if: hashFiles('frontend/package-lock.json') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Use Node.js (default)
+        if: |
+          hashFiles('frontend/pnpm-lock.yaml') == '' &&
+          hashFiles('frontend/yarn.lock') == '' &&
+          hashFiles('frontend/package-lock.json') == ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            corepack enable
+            pnpm i --frozen-lockfile
+          elif [ -f yarn.lock ]; then
+            yarn install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm i
+          fi
+
+      - name: Lint
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm run lint --if-present
+          elif [ -f yarn.lock ]; then
+            yarn lint || true
+          else
+            npm run lint --if-present
+          fi
+
+      - name: Build
+        env:
+          # Provide a sane default so Vite builds even if env is referenced
+          VITE_URL_BACKEND: ${{ secrets.VITE_URL_BACKEND || 'http://localhost:3000' }}
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm run build
+          elif [ -f yarn.lock ]; then
+            yarn build
+          else
+            npm run build --if-present
+          fi
+
+      - name: Test
+        env:
+          NODE_ENV: test
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm run test --if-present
+          elif [ -f yarn.lock ]; then
+            yarn test || true
+          else
+            npm test --if-present
+          fi
+
+  backend:
+    name: Backend • build & test
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Setup Node with lockfile-aware caching
+      - name: Use Node.js (pnpm cache)
+        if: hashFiles('backend/pnpm-lock.yaml') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: 'backend/pnpm-lock.yaml'
+
+      - name: Use Node.js (yarn cache)
+        if: hashFiles('backend/yarn.lock') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: 'backend/yarn.lock'
+
+      - name: Use Node.js (npm cache)
+        if: hashFiles('backend/package-lock.json') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Use Node.js (default)
+        if: |
+          hashFiles('backend/pnpm-lock.yaml') == '' &&
+          hashFiles('backend/yarn.lock') == '' &&
+          hashFiles('backend/package-lock.json') == ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            corepack enable
+            pnpm i --frozen-lockfile
+          elif [ -f yarn.lock ]; then
+            yarn install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm i
+          fi
+
+      - name: Lint
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm run lint --if-present
+          elif [ -f yarn.lock ]; then
+            yarn lint || true
+          else
+            npm run lint --if-present
+          fi
+
+      - name: Build
+        env:
+          NODE_ENV: production
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm run build --if-present
+          elif [ -f yarn.lock ]; then
+            yarn build || true
+          else
+            npm run build --if-present
+          fi
