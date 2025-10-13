@@ -7,9 +7,10 @@ import EditProfile from './editProfile';
 import DeleteProfile from './deleteProfile';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/backToTopButton';
+import AvatarUser from '@/components/utils/avatarUser';
 
 export default function Profile() {
-  const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
+  const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =
     useContext(Context);
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(null);
@@ -72,24 +73,17 @@ export default function Profile() {
               whileHover={{ scale: 1.02 }}
               className="bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center transition duration-300"
             >
-              <img
-                src={
-                  userLogin?.avatar ||
-                  'https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png'
-                }
-                alt="avatar"
-                className="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-pink-500 shadow-[0_0_25px_rgba(236,72,153,0.6)] object-cover"
-              />
+              <AvatarUser />
 
               <h1 className="text-2xl sm:text-3xl font-extrabold mt-5 tracking-tight">
                 Hello,{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                  {userLogin.name || 'Anonymous'}
+                  {userLogin?.name || 'Anonymous'}
                 </span>
               </h1>
 
               <p className="text-gray-300 text-xs sm:text-sm mt-2 uppercase tracking-widest">
-                {userLogin.role || 'User'} • TerraQuake
+                {userLogin?.role || 'User'} • TerraQuake
               </p>
 
               <button
@@ -157,11 +151,11 @@ export default function Profile() {
                   Account Details
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base">
-                  <p><span className="font-bold text-white">Name:</span> {userLogin.name}</p>
-                  <p><span className="font-bold text-white">Email:</span> {userLogin.email}</p>
-                  <p><span className="font-bold text-white">Role:</span> {userLogin.role}</p>
-                  <p><span className="font-bold text-white">Experience:</span> {userLogin.experience || 'N/A'}</p>
-                  <p><span className="font-bold text-white">Student:</span> {userLogin.student || 'No'}</p>
+                  <p><span className="font-bold text-white">Name:</span> {userLogin?.name}</p>
+                  <p><span className="font-bold text-white">Email:</span> {userLogin?.email}</p>
+                  <p><span className="font-bold text-white">Role:</span> {userLogin?.role}</p>
+                  <p><span className="font-bold text-white">Experience:</span> {userLogin?.experience || 'N/A'}</p>
+                  <p><span className="font-bold text-white">Student:</span> {userLogin?.student || 'No'}</p>
                 </div>
 
                 <div className="text-center mt-10">
