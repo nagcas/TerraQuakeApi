@@ -64,8 +64,8 @@ export default function EditProfile({ setEditProfile }) {
           Authorization: `Bearer ${token}`, // send token in header
         },
       });
-    
-      const updatedUser = res.data.user;
+
+      const updatedUser = res.data.data;
 
       // Update Context and localStorage
       setUserLogin(updatedUser);
