@@ -9,7 +9,7 @@ export default function Info() {
       content:
         'Access comprehensive information about seismic events, including magnitude, depth, coordinates, time, and location.',
       button: 'View Docs',
-      link: '/docs/event-details',
+      link: '/docs/#event-details',
     },
     {
       title: 'Advanced Filtering',
@@ -17,7 +17,7 @@ export default function Info() {
       content:
         'Query earthquakes by time range, location, magnitude interval, and distance radius to get exactly the data you need.',
       button: 'Learn More',
-      link: '/docs/advanced-filtering',
+      link: '/docs/#filtering',
     },
     {
       title: 'Statistical Insights',
@@ -25,7 +25,7 @@ export default function Info() {
       content:
         'Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.',
       button: 'See Stats Guide',
-      link: '/docs/statistics',
+      link: '/docs/#statistic',
     },
     {
       title: 'Easy Integration',
@@ -33,7 +33,7 @@ export default function Info() {
       content:
         'Seamlessly integrate earthquake data into dashboards, monitoring tools, GIS platforms, mobile apps, or educational projects.',
       button: 'Integration Guide',
-      link: '/docs/integration',
+      link: '/docs/#integration',
     },
   ];
 
