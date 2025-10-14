@@ -5,6 +5,7 @@ import Newsletter from '@/components/newsletter/Newsletter';
 import { useState } from 'react';
 import Testimonials from '@/components/testimonials/Testimonials';
 import BackToTopButton from '@/components/utils/backToTopButton';
+import GetStarted from '@/components/started/getStarted';
 
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
 
       <Hero />
       <Info />
+      <GetStarted />
       <Newsletter />
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
