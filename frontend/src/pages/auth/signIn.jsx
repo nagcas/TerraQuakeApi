@@ -33,7 +33,8 @@ export default function SignIn() {
 
   // ✅ Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
-    const backendBaseUrl = import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
+    const backendBaseUrl =
+      import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
     if (provider === 'google') {
       window.location.href = `${backendBaseUrl}/auth/google`;
     } else if (provider === 'github') {
@@ -50,9 +51,9 @@ export default function SignIn() {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      setUserLogin(res.data.user);
+      setUserLogin(res.data.data);
       setIsLoggedIn(true);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
+      localStorage.setItem('user', JSON.stringify(res.data.data));
       localStorage.setItem('token', res.data.token);
 
       Swal.fire({
