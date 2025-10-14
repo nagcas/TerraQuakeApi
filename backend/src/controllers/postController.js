@@ -1,9 +1,4 @@
-// Import Mongoose model for blog posts
-import Post from '../models/postModel.js'
-// Custom error handling utility
-import handleHttpError from '../utils/handleHttpError.js'
-// Extracts only validated data from the request
-import { matchedData } from 'express-validator'
+import mongoose from 'mongoose'
 
 /**
  * NOTE: Converts a given string into a URL-friendly slug.
@@ -23,7 +18,7 @@ function slugify (text) {
  * NOTE: Ensures that a generated slug is unique by appending an incremental counter
  * if another post with the same slug already exists.
  */
-async function getUniqueSlug (baseSlug) {
+async function getUniqueSlug (baseSlug, Post) {
   let slug = baseSlug
   let count = 1
   while (await Post.findOne({ slug })) {
@@ -37,7 +32,7 @@ async function getUniqueSlug (baseSlug) {
  * NOTE: Controller to create a new post.
  * Automatically generates a unique slug and saves the post in the database.
  */
-export const createPost = () => {
+export const createPost = ({ Post, buildResponse, handleHttpError, matchedData }) => {
   return async (req, res) => {
     try {
       // Extract only validated data from request
@@ -45,7 +40,7 @@ export const createPost = () => {
 
       // Generate slug (use title if slug is not provided)
       let slug = data.slug ? slugify(data.slug) : slugify(data.title)
-      slug = await getUniqueSlug(slug)
+      slug = await getUniqueSlug(slug, Post)
 
       // Create and save new post
       const post = await Post.create({
@@ -59,9 +54,14 @@ export const createPost = () => {
       })
 
       // Respond with created post
-      return res.status(201).json(post)
-    } catch (err) {
-      handleHttpError(res, err.message || 'Error creating post', 500)
+      res.json(
+        buildResponse(req, 'Post created successfully', post, null, {})
+      )
+    } catch (error) {
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }
@@ -70,7 +70,7 @@ export const createPost = () => {
  * NOTE: Controller to update an existing post.
  * If the slug is modified, ensures that the new slug remains unique.
  */
-export const updatePost = () => {
+export const updatePost = ({ Post, buildResponse, handleHttpError, matchedData }) => {
   return async (req, res) => {
     try {
       const postId = req.params.id
@@ -97,15 +97,22 @@ export const updatePost = () => {
       updateFields.updatedAt = new Date()
 
       // Perform update in the database
-      const updated = await Post.findByIdAndUpdate(postId, updateFields, { new: true })
+      const updated = await Post.findByIdAndUpdate(postId, updateFields, {
+        new: true
+      })
       if (!updated) {
         return handleHttpError(res, 'Post not found', 404)
       }
 
       // Respond with updated post
-      return res.status(200).json(updated)
-    } catch (err) {
-      handleHttpError(res, err.message || 'Error updating post', 500)
+      res.json(
+        buildResponse(req, 'Post updated successfully', updated, null, {})
+      )
+    } catch (error) {
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }
@@ -114,7 +121,7 @@ export const updatePost = () => {
  * NOTE: Controller to delete a post by its ID.
  * Validates the format of the provided ID before deletion.
  */
-export const deletePost = () => {
+export const deletePost = ({ Post, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const postId = req.params.id
@@ -124,20 +131,109 @@ export const deletePost = () => {
         return handleHttpError(res, 'Invalid post ID format', 400)
       }
 
-      // Delete post by ID
-      const deleted = await Post.findByIdAndDelete(postId)
+      // Soft delete using mongoose-delete
+      const deleted = await Post.delete({ _id: postId }) // plugin handles deletedAt & overrideMethods
+
       if (!deleted) {
         return handleHttpError(res, 'Post not found', 404)
       }
 
       // Respond with success message
-      return res.status(200).json({
-        success: true,
-        message: 'Post deleted successfully',
-        postId
-      })
-    } catch (err) {
-      handleHttpError(res, err.message || 'Error deleting post', 500)
+      res.json(
+        buildResponse(req, 'Post deleted successfully', postId, null, {})
+      )
+    } catch (error) {
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
+
+/**
+ * NOTE: Controller to retrieve all posts.
+ * Fetches and returns a list of all available posts from the database.
+ * Supports optional query filters, pagination, and sorting.
+ */
+export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const { title, category, tags } = req.query
+      const page = parseInt(req.query.page) || 1
+      const limit = parseInt(req.query.limit) || 10
+      const sort = req.query.sort || 'createdAt'
+      const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1
+      const skip = (page - 1) * limit
+
+      // Build filters only if provided
+      const filter = {}
+      if (title) filter.title = { $regex: title, $options: 'i' }
+      if (category) filter.category = { $regex: category, $options: 'i' }
+      if (tags) filter.tags = { $regex: tags, $options: 'i' }
+
+      // Count total documents
+      const totalPosts = await Post.countDocuments(filter)
+
+      // Fetch filtered or all posts
+      const posts = await Post.findWithDeleted(filter)
+        .sort({ [sort]: sortDirection })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+
+      const totalPages = Math.ceil(totalPosts / limit)
+      const hasMore = page < totalPages
+
+      // Respond with paginated posts
+      res.json(
+        buildResponse(req, 'Posts retrieved successfully', {
+          posts,
+          pagination: {
+            page,
+            totalPages,
+            limit,
+            hasMore,
+            totalResults: totalPosts
+          }
+        })
+      )
+    } catch (error) {
+      console.error('Error in listAllPosts:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
+
+/**
+ * NOTE: Controller to retrieve a single post by its ID.
+ * Fetches and returns the post that matches the provided ID.
+ */
+export const listOnePost = ({ Post, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const postId = req.params.id
+
+      if (!mongoose.Types.ObjectId.isValid(postId)) {
+        return handleHttpError(res, `Invalid post ID: ${postId}`, 400)
+      }
+
+      const post = await Post.findById(postId)
+
+      if (!post) {
+        return handleHttpError(res, `No post found with ID: ${postId}`, 404)
+      }
+      res.json(
+        buildResponse(req, 'Get one post', post, null, {})
+      )
+    } catch (error) {
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }
