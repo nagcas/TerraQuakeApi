@@ -1,27 +1,4 @@
 import mongoose from 'mongoose'
-import Contact from '../models/contactModels.js'
-import handleHttpError from '../utils/handleHttpError.js'
-
-/**
- * NOTE: Helper: Builds a standard API response object.
- *
- * @param {object} req - Express request object.
- * @param {string} message - Response message.
- * @param {object} data - Data payload for the response.
- * @returns {object} Structured JSON response with meta info.
- */
-const buildResponse = (req, message, data) => ({
-  success: true,
-  code: 200,
-  status: 'OK',
-  message,
-  data,
-  meta: {
-    method: req.method.toUpperCase(),
-    path: req.originalUrl,
-    timestamp: new Date().toISOString()
-  }
-})
 
 /**
  * NOTE: Controller: Create a new contact message.
@@ -31,9 +8,7 @@ const buildResponse = (req, message, data) => ({
  * - Responds with `200 OK` and the created contact object on success.
  * - Returns a structured error response if validation or DB error occurs.
  */
-export const createContact = ({
-  sendEmailConfirmContact
-}) => {
+export const createContact = ({ Contact, sendEmailConfirmContact, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const { name, lastname, email, subject, message } = req.body
@@ -44,9 +19,9 @@ export const createContact = ({
       // Send registration confirmation email
       await sendEmailConfirmContact(contact)
 
-      res.json({
-        ...buildResponse(req, 'Message sent successfully', newContact)
-      })
+      res.json(
+        buildResponse(req, 'Message sent successfully', newContact, null, {})
+      )
     } catch (error) {
       console.error('Error in the contact controller:', error.message)
       handleHttpError(
@@ -66,60 +41,60 @@ export const createContact = ({
  * - Returns total count, total pages, and pagination metadata.
  * - Responds with `200 OK` and an array of contacts on success.
  */
-export const getAllContacts = async (req, res) => {
-  try {
-    const { name, lastname, email } = req.body
-    const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 10
-    const sort = req.query.sort || 'createdAt'
-    const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1
-    const skip = (page - 1) * limit
+export const listAllContacts = ({ Contact, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const { name, lastname, email } = req.body
+      const page = parseInt(req.query.page) || 1
+      const limit = parseInt(req.query.limit) || 10
+      const sort = req.query.sort || 'createdAt'
+      const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1
+      const skip = (page - 1) * limit
 
-    // Case-insensitive filters
-    const filter = {}
-    if (email) {
-      filter.email = { $regex: email, $options: 'i' }
-    }
-    if (name) {
-      filter.name = { $regex: name, $options: 'i' }
-    }
-    if (lastname) {
-      filter.lastname = { $regex: lastname, $options: 'i' }
-    }
-
-    // Count total documents
-    const totalContacts = await Contact.countDocuments(filter)
-
-    // Get filtered + paginated contacts
-    const contacts = await Contact.findWithDeleted(filter)
-      .sort({ [sort]: sortDirection })
-      .skip(skip)
-      .limit(limit)
-      .lean()
-
-    const totalPages = Math.ceil(totalContacts / limit)
-    const hasMore = page < totalPages
-
-    res.json({
-      ...buildResponse(
-        req,
-        'Contacts retrieved successfully',
-        contacts
-      ),
-      pagination: {
-        page,
-        totalPages,
-        limit,
-        hasMore,
-        totalResults: totalContacts
+      // Case-insensitive filters
+      const filter = {}
+      if (email) {
+        filter.email = { $regex: email, $options: 'i' }
       }
-    })
-  } catch (error) {
-    console.error('Error in the contact controller:', error.message)
-    handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+      if (name) {
+        filter.name = { $regex: name, $options: 'i' }
+      }
+      if (lastname) {
+        filter.lastname = { $regex: lastname, $options: 'i' }
+      }
+
+      // Count total documents
+      const totalContacts = await Contact.countDocuments(filter)
+
+      // Get filtered + paginated contacts
+      const contacts = await Contact.findWithDeleted(filter)
+        .sort({ [sort]: sortDirection })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+
+      const totalPages = Math.ceil(totalContacts / limit)
+      const hasMore = page < totalPages
+
+      res.json(
+        buildResponse(req, 'Contacts retrieved successfully', {
+          contacts,
+          pagination: {
+            page,
+            totalPages,
+            limit,
+            hasMore,
+            totalResults: totalContacts
+          }
+        })
+      )
+    } catch (error) {
+      console.error('Error in the contact controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
@@ -130,33 +105,37 @@ export const getAllContacts = async (req, res) => {
  * - Responds with `404 Not Found` if no contact exists with the given ID.
  * - Returns `200 OK` and the contact document on success.
  */
-export const getOneContact = async (req, res) => {
-  try {
-    const { contactId } = req.params
+export const listOneContact = ({ Contact, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const contactId = req.params.id
 
-    if (!mongoose.Types.ObjectId.isValid(contactId)) {
-      return handleHttpError(res, `Invalid contact ID: ${contactId}`, 400)
-    }
+      if (!mongoose.Types.ObjectId.isValid(contactId)) {
+        return handleHttpError(res, `Invalid contact ID: ${contactId}`, 400)
+      }
 
-    const contact = await Contact.findById(contactId)
+      const contact = await Contact.findById(contactId)
 
-    if (!contact) {
-      return handleHttpError(res, `No contact found with ID: ${contactId}`, 404)
-    }
+      if (!contact) {
+        return handleHttpError(res, `No contact found with ID: ${contactId}`, 404)
+      }
 
-    res.json({
-      ...buildResponse(
-        req,
-        'Contact retrieved successfully',
-        contact
+      res.json(
+        buildResponse(
+          req,
+          'Contact retrieved successfully',
+          contact,
+          null,
+          {}
+        )
       )
-    })
-  } catch (error) {
-    console.error('Error in the contact controller:', error.message)
-    handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+    } catch (error) {
+      console.error('Error in the contact controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
@@ -166,10 +145,47 @@ export const getOneContact = async (req, res) => {
  * - To be implemented: should send or log a reply to a contact message.
  * - Currently returns a placeholder response.
  */
-export const answerContact = (req, res) => {
-  res.json({
-    message: 'answer contact'
-  })
+export const answerContact = ({ Contact, sendEmailConfirmAnswer, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const contactId = req.params.id
+      const { answer } = req.body
+
+      // Validate MongoDB ObjectId format
+      if (!contactId || !contactId.match(/^[a-fA-F0-9]{24}$/)) {
+        return handleHttpError(res, 'Invalid post ID format', 400)
+      }
+
+      const updatedContact = await Contact.findByIdAndUpdate(
+        contactId,
+        {
+          answer,
+          answered: true
+        },
+        {
+          new: true
+        }
+      )
+
+      if (!updatedContact) {
+        return handleHttpError(res, 'Contact message not found', 404)
+      }
+
+      // Send registration confirmation email
+      await sendEmailConfirmAnswer(updatedContact)
+
+      // Respond with success message and updated contact
+      res.json(
+        buildResponse(req, 'Contact answered successfully', updatedContact, null, {})
+      )
+    } catch (error) {
+      console.error('Error in the contact controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
 }
 
 /**
@@ -178,8 +194,33 @@ export const answerContact = (req, res) => {
  * - To be implemented: should mark a message as deleted without removing it from the DB.
  * - Currently returns a placeholder response.
  */
-export const deleteContact = (req, res) => {
-  res.json({
-    message: 'delete contact'
-  })
+export const deleteContact = ({ Contact, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const contactId = req.params.id
+
+      // Validate MongoDB ObjectId format
+      if (!contactId || !contactId.match(/^[a-fA-F0-9]{24}$/)) {
+        return handleHttpError(res, 'Invalid post ID format', 400)
+      }
+
+      // Soft delete using mongoose-delete
+      const deleted = await Contact.delete({ _id: contactId }) // plugin handles deletedAt & overrideMethods
+
+      if (!deleted) {
+        return handleHttpError(res, 'Post not found', 404)
+      }
+
+      // Respond with success message
+      res.json(
+        buildResponse(req, 'Contact deleted successfully', contactId, null, {})
+      )
+    } catch (error) {
+      console.error('Error in the contact controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
 }
