@@ -4,11 +4,6 @@ import {
   FaXTwitter,
   FaDiscord,
   FaYoutube,
-  FaInstagram,
-  FaFacebook,
-  FaReddit,
-  FaMedium,
-  FaTelegram,
 } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
@@ -57,32 +52,7 @@ export default function Footer() {
       title: 'YouTube',
       url: 'https://www.youtube.com/@TerraQuakeAPI',
       icon: <FaYoutube className='text-2xl' />,
-    },
-    {
-      title: 'Instagram',
-      url: 'https://www.instagram.com/',
-      icon: <FaInstagram className='text-2xl' />,
-    },
-    {
-      title: 'Facebook',
-      url: 'https://www.facebook.com/',
-      icon: <FaFacebook className='text-2xl' />,
-    },
-    {
-      title: 'Reddit',
-      url: 'https://www.reddit.com/',
-      icon: <FaReddit className='text-2xl' />,
-    },
-    {
-      title: 'Medium',
-      url: 'https://medium.com/',
-      icon: <FaMedium className='text-2xl' />,
-    },
-    {
-      title: 'Telegram',
-      url: 'https://t.me/',
-      icon: <FaTelegram className='text-2xl' />,
-    },
+    }
   ];
 
   return (
@@ -166,7 +136,7 @@ export default function Footer() {
           <h3 className='text-white font-semibold mb-6 text-lg after:content-[""] after:block after:max-w-1/3 after:h-[2px] after:bg-violet-500 after:mt-2 after:mx-auto'>
             Community & Socials
           </h3>
-          <div className='flex flex-wrap justify-center md:justify-start gap-4'>
+          <div className='flex flex-wrap justify-center gap-4'>
             {socials.map((item) => (
               <motion.a
                 key={item.title}
