@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import MongooseDelete from 'mongoose-delete'
 
 // NOTE: Schema post
 const postSchema = new mongoose.Schema({
@@ -36,8 +37,12 @@ const postSchema = new mongoose.Schema({
     }
   ]
 }, {
-  timestamps: true // adds createdAt and updatedAt
+  timestamps: true, // adds createdAt and updatedAt
+  versionKey: false,
+  collection: 'posts'
 })
+
+postSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
 
 const Post = mongoose.model('Post', postSchema)
 export default Post
