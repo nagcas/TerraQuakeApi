@@ -21,6 +21,10 @@ const NewsletterSchema = new mongoose.Schema({
     type: Date,
     default: null
   }
+}, {
+  timestamps: true, // adds createdAt and updatedAt
+  versionKey: false,
+  collection: 'newsletters'
 })
 
 export default mongoose.model('Newsletter', NewsletterSchema)
