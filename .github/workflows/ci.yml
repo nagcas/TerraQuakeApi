@@ -120,7 +120,7 @@ jobs:
       - name: Build
         env:
           # Provide a sane default so Vite builds even if env is referenced
-          VITE_URL_BACKEND: ${{ secrets.VITE_URL_BACKEND || 'http://localhost:3000' }}
+          VITE_URL_BACKEND: ${secrets.VITE_URL_BACKEND || 'http://localhost:5001'}
         run: |
           if [ -f pnpm-lock.yaml ]; then
             pnpm run build
