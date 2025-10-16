@@ -61,7 +61,11 @@ const ApiPlayground = ({ url }) => {
               <FiX size={16} />
             </button>
             
-            {response && <CodeSnippet code={response} language="json" />}
+            {response && (
+              <div className="relative mt-3 max-h-[400px] overflow-auto rounded-lg bg-black/40 border border-white/10">
+                <CodeSnippet code={response} language="json" />
+              </div>
+            )}
             
             {error && (
               <div className="mt-4 flex items-center gap-2 text-sm text-red-400 p-3 rounded-lg bg-red-500/10">
