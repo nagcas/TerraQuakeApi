@@ -106,8 +106,8 @@ jobs:
           fi
 
       - name: Lint
-          continue-on-error: true
-          run: |
+        continue-on-error: true
+        run: |
             echo "Running ESLint / Standard (non-blocking mode)..."
             if [ -f pnpm-lock.yaml ]; then
               pnpm run lint --if-present || true
@@ -202,7 +202,7 @@ jobs:
           fi
 
       - name: Lint fix
-          run: |
+        run: |
             if [ -f pnpm-lock.yaml ]; then
               pnpm run lint --if-present || true
             elif [ -f yarn.lock ]; then
