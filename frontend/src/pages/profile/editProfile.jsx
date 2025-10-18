@@ -137,7 +137,12 @@ export default function EditProfile({ setEditProfile }) {
               <h1 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
                 Edit your Profile
               </h1>
-              <div className='h-1 w-32 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 rounded-full' />
+              <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+              <p className='text-xl text-left text-white/70 max-w-7xl'>
+                In the Edit Profile section, you can update your personal
+                information such as your name, email, experience, and whether
+                you’re a student.
+              </p>
             </motion.div>
 
             {/* Form container */}
