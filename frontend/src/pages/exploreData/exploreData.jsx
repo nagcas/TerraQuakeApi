@@ -397,13 +397,17 @@ It allows users to access detailed information about a single earthquake event, 
               Explore Data for TerraQuake API
             </h1>
             <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
-            <p className='text-xl text-white/70 max-w-7xl mx-auto'>
-              Explore and interact with real-time earthquake data, visualize seismic events directly on the interactive map, and download the map for your own analysis.
+            <p className='text-xl text-left text-white/70 max-w-7xl mx-auto'>
+              Explore and interact with real-time earthquake data. Visualize seismic events directly on the interactive map, and download the map for your own analysis.
+
+              By clicking on “Switch to Tabular View”, you can access the tabulated section of recent seismic events, where each record includes the event date and time (UTC), magnitude, depth (km), latitude, longitude, and location.
+
+              You can also search events by location, sort the table by date, and export the data in CSV format for further analysis or research. Stay informed and monitor global seismic activity with ease.
             </p>
             <div className="mt-6">
               <Link
                 to="/explore-data/table"
-                className="inline-block bg-purple-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+                className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
               >
                 Switch to Tabular View
               </Link>
