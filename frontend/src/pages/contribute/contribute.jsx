@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { FaCode, FaBug, FaBook } from 'react-icons/fa';
+import { FaCode, FaBug, FaBook, FaDiscord } from 'react-icons/fa';
+import { IoIosGitPullRequest } from 'react-icons/io';
 import BackToTopButton from '@/components/utils/backToTopButton';
 import MetaData from '@pages/noPage/metaData';
-import { FaDiscord } from 'react-icons/fa';
-import { IoIosGitPullRequest } from 'react-icons/io';
 import {
   API_DOCS,
   CODE_OF_CONDUCT,
@@ -111,14 +110,14 @@ export default function Contribute() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Background Gradient/Mesh (for a classy, dark theme) */}
+        {/* Background */}
         <div className='absolute inset-0 z-0'>
           <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
           <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
         </div>
 
         <div className='relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12'>
-          {/* Header Section */}
+          {/* Header */}
           <motion.div
             className='mb-16 text-center lg:text-left'
             initial={{ opacity: 0, y: -20 }}
@@ -136,7 +135,7 @@ export default function Contribute() {
             </p>
           </motion.div>
 
-          {/* Main Content: Split Layout */}
+          {/* Cards */}
           <div className='grid grid-cols-1 lg:grid-cols-1 gap-12'>
             <motion.div
               variants={containerVariants}
@@ -168,6 +167,7 @@ export default function Contribute() {
               />
             </motion.div>
 
+            {/* Community Section */}
             <motion.section
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -203,26 +203,27 @@ export default function Contribute() {
               </div>
             </motion.section>
 
+            {/* Hacktoberfest Section */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
               viewport={{ once: true, amount: 0.8 }}
               transition={{ type: 'spring', stiffness: 120, damping: 15 }}
-              className='mt-16 max-w-3xl mx-auto p-6 bg-gradient-to-r from-slate-900 to-slate-800/70 backdrop-blur-sm border border-white/10 rounded-2xl shadow-lg cursor-pointer'
+              className='mt-16 max-w-3xl mx-auto p-6 bg-gradient-to-r from-slate-900 to-slate-800/70 backdrop-blur-sm border border-white/10 rounded-2xl shadow-lg'
             >
-              <a
-                href='https://hacktoberfest.com/'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='flex flex-col sm:flex-row items-center justify-between gap-4 text-decoration-none'
-              >
-                <div className='flex items-center gap-5'>
+              <div className='flex flex-col sm:flex-row items-center justify-between gap-4'>
+                <a
+                  href='https://hacktoberfest.com/'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex items-center gap-5'
+                >
                   <img
                     className='pt-3 w-48 h-25'
                     src={hacktoberfest}
+                    alt='Hacktoberfest logo'
                   />
-
                   <div className='text-center sm:text-left'>
                     <h3 className='text-xl font-bold text-white'>
                       Join us for Hacktoberfest 2025!
@@ -232,9 +233,12 @@ export default function Contribute() {
                       swag.
                     </p>
                   </div>
-                </div>
+                </a>
+
                 <a
                   href={ISSUE_TRACKER}
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className='mt-4 sm:mt-0 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all duration-300 transform group'
                 >
                   <div className='flex gap-2 justify-center items-center'>
@@ -245,7 +249,7 @@ export default function Contribute() {
                     <span>Find an Issue</span>
                   </div>
                 </a>
-              </a>
+              </div>
             </motion.div>
           </div>
         </div>
