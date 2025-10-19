@@ -47,7 +47,7 @@ export default function ApiPlayground({ url }) {
         <button
           onClick={fetchData}
           disabled={isLoading}
-          className='flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed'
+          className='flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
         >
           {isLoading ? (
             <motion.div
@@ -74,7 +74,7 @@ export default function ApiPlayground({ url }) {
             <button
               onClick={handleClearResponse}
               aria-label='Close response'
-              className='absolute top-3 right-3 z-20 p-1.5 rounded-full bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white transition-colors'
+              className='absolute top-3 right-8 z-20 p-1.5 rounded-full bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white transition-colors cursor-pointer'
             >
               <FiX size={16} />
             </button>
@@ -93,8 +93,8 @@ export default function ApiPlayground({ url }) {
                 role='alert'
                 className='mt-4 flex items-center gap-2 text-sm text-red-400 p-3 rounded-lg bg-red-500/10'
               >
-                <FiAlertTriangle />
-                <span>Error: {error}</span>
+                <span className='mt-2'><FiAlertTriangle /></span>
+                <span className='mt-2'>Error: {error}</span>
               </div>
             )}
           </motion.div>
