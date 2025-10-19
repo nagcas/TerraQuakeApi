@@ -33,6 +33,7 @@ import Contribute from "@pages/contribute/contribute";
 import GithubAuth from "@pages/auth/githubAuth";
 import HandleOAuth from "@pages/auth/handleOAuth";
 import NoPage from "@pages/noPage/noPage";
+import TableView from "@pages/TableView";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/explore-data' element={<ExploreData />} />
+              <Route path='/explore-data/table' element={<TableView />} />
               <Route path='/api-access' element={<ApiAccess />} />
               <Route path='/docs' element={<Docs />} />
               <Route path='/use-cases' element={<UseCases />} />
@@ -87,4 +89,3 @@ function App() {
 }
 
 export default App;
-
