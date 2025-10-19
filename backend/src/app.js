@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors' // This was already here
+import cors from 'cors'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
@@ -32,34 +32,40 @@ dotenv.config()
 const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
-// Trust proxy
+// === TRUST PROXY ===
 app.set('trust proxy', 1)
 
-// PASSPORT SETUP
+// === PASSPORT ===
 app.use(passport.initialize())
 
-// SECURITY MIDDLEWARE
-app.use(helmet({ contentSecurityPolicy: false })) // Simplified for development
+// === SECURITY MIDDLEWARE ===
+app.use(helmet({ contentSecurityPolicy: false }))
 app.use(mongoSanitize())
 app.use(xss())
 app.use(hpp())
 
-// Body parser
+// === BODY PARSER ===
 app.use(express.json({ limit: '10kb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// === CORS ===
-// 1. ADD THIS LINE to allow requests from your frontend
-app.use(cors())
+// === GLOBAL CORS ===
+const corsOptions = {
+  origin: [
+    process.env.FRONTEND_PRODUCTION, // es: https://terraquakeapi.com
+    process.env.FRONTEND_DEVELOPMENT // es: http://localhost:5173
+  ],
+  credentials: true
+}
+app.use(cors(corsOptions))
 
-// METRICS MIDDLEWARE
+// === METRICS MIDDLEWARE ===
 app.use(metricsMiddleware)
 
 // === ROUTES ===
-// 2. REMOVED the specific cors() call from this line
+// Public route for earthquake data
 app.use('/v1/earthquakes', apiLimiter, routeEarthquakes)
 
-// Protected/authenticated routes
+// Protected routes
 app.use('/v1/test', apiLimiter, routeGetStart)
 app.use('/v1', routeMetrics)
 app.use('/auth', authLimiter, routeAuth)
@@ -67,22 +73,21 @@ app.use('/auth/github', authLimiter, routeGitHub)
 app.use('/users', authLimiter, authenticateUser, routeUsers)
 app.use('/contact', contactLimiter, routeContact)
 
-// Newsletter (public)
+// Public routes
 app.use('/newsletter', newsletterRoutes)
 app.use('/posts', postRoutes)
 
-// ERROR HANDLER
+// === ERROR HANDLER ===
 app.use((err, req, res, next) => {
   console.error('Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
-    message: devEnv === 'development'
-      ? err.message
-      : 'Internal Server Error'
+    message:
+      devEnv === 'development' ? err.message : 'Internal Server Error'
   })
 })
 
-// START SERVER
+// === START SERVER ===
 const port = process.env.PORT || 5000
 const urlBackend = process.env.BACKEND_URL || 'http://localhost:5001'
 
@@ -97,7 +102,7 @@ const startServer = async () => {
       console.log(`Test endpoint: ${urlBackend}/v1/test`)
 
       const endPoints = expressListEndpoints(app)
-      console.log('List of available endpoints:')
+      console.log('Available endpoints:')
       console.table(endPoints)
     })
   } catch (error) {
