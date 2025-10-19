@@ -12,7 +12,7 @@ const LanguageTabs = ({ snippets }) => {
           <button
             key={lang}
             onClick={() => setActiveLang(lang)}
-            className="relative px-4 py-2 text-sm font-medium text-gray-300 transition hover:text-white"
+            className="relative px-4 py-2 text-sm font-medium text-gray-300 transition hover:text-white cursor-pointer"
           >
             {activeLang === lang && (
               <motion.div

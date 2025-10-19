@@ -21,7 +21,7 @@ const CodeSnippet = ({ code, language }) => {
         onClick={handleCopy}
         aria-label="Copy code snippet"
        
-        className="absolute top-3 right-14 z-10 flex items-center gap-2 rounded-md px-2 py-1 text-xs bg-white/5 text-gray-300 backdrop-blur-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10"
+        className="absolute top-3 right-14 z-10 flex items-center gap-2 rounded-md px-2 py-1 text-xs bg-white/5 text-gray-300 backdrop-blur-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10 cursor-pointer"
       >
         <FiCopy size={14} />
         {copied ? 'Copied!' : 'Copy'}

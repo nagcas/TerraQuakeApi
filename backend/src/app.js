@@ -18,21 +18,16 @@ import routeGitHub from './routes/githubAuthRoutes.js'
 import newsletterRoutes from './routes/newsletterRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
-import {
-  apiLimiter,
-  authLimiter,
-  contactLimiter
-} from './middleware/rateLimiter.js'
+import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
 import routeMetrics from './routes/metricsRouters.js'
 import postRoutes from './routes/postRoutes.js'
 
 dotenv.config()
-
 const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
-// === TRUST PROXY ===
+// 🔹 Trust proxy
 app.set('trust proxy', 1)
 
 // === PASSPORT ===
@@ -48,22 +43,22 @@ app.use(hpp())
 app.use(express.json({ limit: '10kb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// === GLOBAL CORS ===
-const corsOptions = {
-  origin: [
-    process.env.FRONTEND_PRODUCTION, // es: https://terraquakeapi.com
-    process.env.FRONTEND_DEVELOPMENT // es: http://localhost:5173
-  ],
-  credentials: true
-}
-app.use(cors(corsOptions))
-
 // === METRICS MIDDLEWARE ===
 app.use(metricsMiddleware)
 
+// === GLOBAL CORS per endpoint protetti ===
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_PRODUCTION,
+    process.env.FRONTEND_DEVELOPMENT
+  ],
+  credentials: true
+}))
+
 // === ROUTES ===
-// Public route for earthquake data
-app.use('/v1/earthquakes', apiLimiter, routeEarthquakes)
+
+// Public route: earthquakes data, accessible from any origin
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
 
 // Protected routes
 app.use('/v1/test', apiLimiter, routeGetStart)
@@ -82,8 +77,7 @@ app.use((err, req, res, next) => {
   console.error('Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
-    message:
-      devEnv === 'development' ? err.message : 'Internal Server Error'
+    message: devEnv === 'development' ? err.message : 'Internal Server Error'
   })
 })
 
@@ -95,15 +89,11 @@ const startServer = async () => {
   try {
     console.clear()
     await dbConnect()
-
     app.listen(port, () => {
       console.log(`Server running in ${devEnv} environment`)
       console.log(`Started at: ${urlBackend}`)
       console.log(`Test endpoint: ${urlBackend}/v1/test`)
-
-      const endPoints = expressListEndpoints(app)
-      console.log('Available endpoints:')
-      console.table(endPoints)
+      console.table(expressListEndpoints(app))
     })
   } catch (error) {
     console.error('Server startup error:', error.message)
