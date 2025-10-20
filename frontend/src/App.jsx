@@ -2,10 +2,10 @@ import './App.css';
 import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import NavbarMenu from '@components/navbar/navbarMenu';
-import Footer from '@components/footer/footer';
-import ScrollToTop from '@components/modules/scrollToTop';
-import { AuthProvider } from '@components/modules/authProvider';
+import NavbarMenu from '@components/navbar/NavbarMenu';
+import Footer from '@components/footer/Footer';
+import ScrollToTop from '@components/modules/ScrollToTop';
+import { AuthProvider } from '@components/modules/AuthProvider';
 
 // Pages
 import Home from '@pages/home/Home';
