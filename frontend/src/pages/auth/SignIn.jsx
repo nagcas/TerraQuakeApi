@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa';
 import { ImSpinner9 } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
-import { Context } from '@components/modules/context';
+import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
