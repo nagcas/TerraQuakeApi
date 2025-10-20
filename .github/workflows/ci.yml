@@ -30,8 +30,8 @@ jobs:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
-      frontend: ${{ steps.filter.outputs.frontend }}
-      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${steps.filter.outputs.frontend}
+      backend: ${steps.filter.outputs.backend}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
