@@ -28,12 +28,13 @@ import ResetPassword from "@pages/auth/resetPassword";
 import ChangePassword from "@pages/auth/changePassword";
 import TermsAndConditions from "@pages/termsAndConditions/termsAndConditions";
 import PrivacyPolicy from "@pages/privacyPolicy/privacyPolicy";
-import Faq from "@components/faq/faq";
+
 import Contribute from "@pages/contribute/contribute";
 import GithubAuth from "@pages/auth/githubAuth";
 import HandleOAuth from "@pages/auth/handleOAuth";
 import NoPage from "@pages/noPage/noPage";
 import TableView from "@pages/tableView/tableView";
+import Faq from './components/faq/faq';
 
 export default function App() {
   return (
