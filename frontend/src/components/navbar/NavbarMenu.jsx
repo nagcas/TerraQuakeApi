@@ -3,7 +3,7 @@ import Sismic from '@images/tracciato.png';
 import { FaChevronDown, FaBars, FaTimes } from 'react-icons/fa';
 import { FiGithub } from 'react-icons/fi';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Context } from '@components/modules/context';
+import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import AvatarUser from '../utils/AvatarUser';
