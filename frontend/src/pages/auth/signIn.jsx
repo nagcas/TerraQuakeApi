@@ -131,7 +131,7 @@ export default function SignIn() {
               Sign In.
               <div className='h-0.5 w-1/3 md:w-1/10 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
               Access your TerraQuake account to explore real seismic data,
               manage your preferences, and engage with our training environment.
             </p>

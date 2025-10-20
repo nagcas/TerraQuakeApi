@@ -10,7 +10,7 @@ import { Overlay } from 'ol';
  * component to show properties of earthquake on marker hover or click
  * @param {Object} mapInstance - instance of the map
  */
-const ShowProperties = ({ mapInstance }) => {
+export default function ShowProperties({ mapInstance }) {
   useEffect(() => {
     if (!mapInstance) return;
 
@@ -101,5 +101,3 @@ const ShowProperties = ({ mapInstance }) => {
 
   return null;
 };
-
-export default ShowProperties;

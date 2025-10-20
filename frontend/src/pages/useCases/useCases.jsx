@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
 import { motion } from 'framer-motion';
 import { useCaseDocs } from '@/data/USE_CASE_DOCS';
-import AccordionItem from '@/utils/useCases/AccordionItem';
+import AccordionItem from '@/utils/useCases/accordionItem';
 import BackToTopButton from '@/components/utils/backToTopButton';
 
 export default function UseCases() {
@@ -51,7 +51,7 @@ export default function UseCases() {
               Use Cases for TerraQuake API.
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
               Use Cases describe real-world scenarios where TerraQuake API can
               be applied. By providing fast, reliable access to seismic data,
               the API enables developers, researchers, institutions, and

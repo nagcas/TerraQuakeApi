@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CodeSnippet from '@/utils/useCases/CodeSnippet';
+import CodeSnippet from '@/utils/useCases/codeSnippet';
 
-const LanguageTabs = ({ snippets }) => {
+export default function LanguageTabs({ snippets }) {
   const [activeLang, setActiveLang] = useState(Object.keys(snippets)[0]);
 
   return (
@@ -41,5 +41,3 @@ const LanguageTabs = ({ snippets }) => {
     </div>
   );
 };
-
-export default LanguageTabs;

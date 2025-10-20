@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FiChevronDown} from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import LanguageTabs from './LanguageTabs';
-import ApiPlayground from './ApiPlayground';
+import LanguageTabs from './languageTabs';
+import ApiPlayground from './apiPlayground';
 import { useNavigate } from 'react-router-dom';
 
-const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
+export default function AccordionItem({ item, index, expandedIndex, toggleExpand }) {
   const isOpen = index === expandedIndex;
   const navigate = useNavigate();
 
@@ -93,5 +93,3 @@ const AccordionItem = ({ item, index, expandedIndex, toggleExpand }) => {
     </motion.article>
   );
 };
-
-export default AccordionItem;

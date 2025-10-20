@@ -177,7 +177,7 @@ export default function About() {
               About TerraQuake API.
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
               A focused platform built to translate raw seismic feeds into
               developer-friendly endpoints and actionable insights for safety,
               research, and education.

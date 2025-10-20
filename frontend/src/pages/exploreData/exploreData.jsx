@@ -3,7 +3,7 @@ import ViewMap from '@/components/map/viewMap';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MetaData from '@pages/noPage/metaData';
-import ApiPlayground from "@/components/apiPlayground/ApiPlayground";
+import ApiPlayground from "@/components/apiPlayground/apiPlayground";
 import BackToTopButton from '@/components/utils/backToTopButton';
 import { motion } from 'framer-motion';
 
@@ -397,7 +397,7 @@ It allows users to access detailed information about a single earthquake event, 
               Explore Data for TerraQuake API
             </h1>
             <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
-            <p className='text-xl text-left text-white/70 max-w-7xl mx-auto'>
+            <p className='text-xl text-center md:text-left text-white/70 max-w-7xl mx-auto'>
               Explore and interact with real-time earthquake data. Visualize seismic events directly on the interactive map, and download the map for your own analysis.
 
               By clicking on “Switch to Tabular View”, you can access the tabulated section of recent seismic events, where each record includes the event date and time (UTC), magnitude, depth (km), latitude, longitude, and location.

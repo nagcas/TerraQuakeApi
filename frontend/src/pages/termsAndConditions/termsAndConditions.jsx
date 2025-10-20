@@ -43,7 +43,7 @@ export default function TermsAndConditions() {
               Terms & Conditions.
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-md text-center md:text-left text-white/70 max-w-7xl'>
               Last updated: 22-09-2025.
             </p>
           </motion.div>

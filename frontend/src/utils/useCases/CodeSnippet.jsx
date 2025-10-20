@@ -1,8 +1,7 @@
 import React, { useState} from 'react';
 import { FiCopy } from 'react-icons/fi';
 
-
-const CodeSnippet = ({ code, language }) => {
+export default function CodeSnippet({ code, language }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -32,5 +31,3 @@ const CodeSnippet = ({ code, language }) => {
     </div>
   );
 };
-
-export default CodeSnippet;

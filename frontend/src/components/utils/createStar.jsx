@@ -1,5 +1,5 @@
 // Funzione per creare animazione di stelle
-const createStar = () => {
+export default function CreateStar() {
   const star = document.createElement('div')
   star.className = 'star'
   star.style.left = `${Math.random() * 100}vw`
@@ -12,5 +12,3 @@ const createStar = () => {
     star.remove()
   }, 1000)
 }
-
-export default createStar
