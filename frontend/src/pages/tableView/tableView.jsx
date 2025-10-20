@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import BackToTopButton from '@/components/utils/backToTopButton';
-import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/BackToTopButton';
+import MetaData from '../noPage/MetaData';
 import Swal from 'sweetalert2';
 import { ImSpinner9 } from 'react-icons/im';
 

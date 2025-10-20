@@ -1,4 +1,4 @@
-import { Context } from '@/components/modules/context';
+import { Context } from '@/components/modules/Context';
 import { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';

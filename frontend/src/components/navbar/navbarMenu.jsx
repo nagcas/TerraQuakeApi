@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/context';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import AvatarUser from '../utils/avatarUser';
+import AvatarUser from '../utils/AvatarUser';
 
 export default function NavbarMenu() {
   const navigate = useNavigate();

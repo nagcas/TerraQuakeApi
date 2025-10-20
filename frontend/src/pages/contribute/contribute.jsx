@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaCode, FaBug, FaBook, FaDiscord } from 'react-icons/fa';
 import { IoIosGitPullRequest } from 'react-icons/io';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '@pages/noPage/metaData';
 import {
   API_DOCS,
@@ -9,9 +9,9 @@ import {
   DISCORD_LINK,
   ISSUE_TRACKER,
   PULL_REQUESTS,
-} from '@/data/CONTRIBUTE';
+} from '@/data/Contribute';
 import hacktoberfest from '@images/hacktoberfest.svg';
-import { ContributionCard } from './contributeCard';
+import { ContributionCard } from './ContributeCard';
 
 export default function Contribute() {
   const containerVariants = {

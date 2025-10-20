@@ -1,10 +1,10 @@
 import '@/components/apiPlayground/apiPlayground.css';
-import ViewMap from '@/components/map/viewMap';
+import ViewMap from '@/components/map/ViewMap';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MetaData from '@pages/noPage/metaData';
 import ApiPlayground from "@/components/apiPlayground/apiPlayground";
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 
 export default function ExploreData() {

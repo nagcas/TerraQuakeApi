@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
 import { motion } from 'framer-motion';
-import { useCaseDocs } from '@/data/USE_CASE_DOCS';
+import { useCaseDocs } from '@/data/UseCaseDocs';
 import AccordionItem from '@/utils/useCases/accordionItem';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 
 export default function UseCases() {
   const [expandedIndex, setExpandedIndex] = useState(0);

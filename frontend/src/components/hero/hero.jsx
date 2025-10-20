@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import JsonApi2 from '@images/json-api-2.png';
 import { useContext, useState } from 'react';
-import { Context } from '../modules/context';
+import { Context } from '../modules/Context';
 import { motion } from 'framer-motion';
 
 export default function Hero() {

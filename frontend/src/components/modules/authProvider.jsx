@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Context } from './context';
+import { Context } from './Context';
 
 export const AuthProvider = ({ children }) => {
   const [userLogin, setUserLogin] = useState(null);

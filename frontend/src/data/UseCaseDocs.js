@@ -1,4 +1,4 @@
-import { API_BASE } from '@/data/BASE_API';
+import { API_BASE } from '@/data/BaseApi';
 export const useCaseDocs = [
   {
     title: 'Introduction',

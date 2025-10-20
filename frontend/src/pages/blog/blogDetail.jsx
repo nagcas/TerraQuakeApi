@@ -15,7 +15,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 
 export default function BlogDetail() {
   const { slug } = useParams();

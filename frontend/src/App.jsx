@@ -33,7 +33,7 @@ import GithubAuth from "@pages/auth/githubAuth";
 import HandleOAuth from "@pages/auth/handleOAuth";
 import NoPage from "@pages/noPage/noPage";
 import TableView from "@pages/tableView/tableView";
-import Faq from './components/faq/faq';
+import Faq from './components/faq/Faq';
 
 export default function App() {
   return (

@@ -1,7 +1,7 @@
-import { Context } from '@/components/modules/context';
+import { Context } from '@/components/modules/Context';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MetaData from '../noPage/metaData';
+import MetaData from '../noPage/MetaData';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';

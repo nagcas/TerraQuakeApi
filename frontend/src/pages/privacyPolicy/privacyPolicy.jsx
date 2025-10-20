@@ -1,5 +1,5 @@
-import BackToTopButton from '@/components/utils/backToTopButton';
-import MetaData from '../noPage/metaData';
+import BackToTopButton from '@/components/utils/BackToTopButton';
+import MetaData from '../noPage/MetaData';
 import { motion } from 'framer-motion';
 
 export default function PrivacyPolicy() {

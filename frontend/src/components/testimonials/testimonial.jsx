@@ -1,4 +1,4 @@
-import { TimelineContent } from "@/components/testimonials/timeline-animation";
+import { TimelineContent } from "@/components/testimonials/TimelineAnimation";
 import { useRef } from "react";
 
 export default function ClientFeedback() {

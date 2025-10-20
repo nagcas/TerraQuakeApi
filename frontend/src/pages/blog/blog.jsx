@@ -10,7 +10,7 @@ import {
   FaChevronRight,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 
 // Mock data generation functions
 const generateMockPosts = (page, limit) => {

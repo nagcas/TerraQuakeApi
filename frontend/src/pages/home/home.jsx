@@ -4,8 +4,8 @@ import MetaData from '@pages/noPage/metaData';
 import Newsletter from '@/components/newsletter/newsletter';
 import { useState } from 'react';
 import Testimonials from '@/components/testimonials/testimonials';
-import BackToTopButton from '@/components/utils/backToTopButton';
-import GetStarted from '@/components/started/getStarted';
+import BackToTopButton from '@/components/utils/BackToTopButton';
+import GetStarted from '@/components/started/GetStarted';
 
 
 export default function Home() {

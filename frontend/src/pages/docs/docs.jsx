@@ -1,11 +1,11 @@
 // Docs.jsx
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import MetaData from '../noPage/metaData';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import MetaData from '../noPage/MetaData';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { CopyButton } from './copyButton';
+import { CopyButton } from './CopyButton';
 
 export default function Docs() {
   const contentRef = useRef(null);

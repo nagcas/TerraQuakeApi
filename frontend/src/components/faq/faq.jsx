@@ -1,7 +1,7 @@
-import MetaData from '@/pages/noPage/metaData';
-import BackToTopButton from '../utils/backToTopButton';
+import MetaData from '@/pages/noPage/MetaData';
+import BackToTopButton from '../utils/BackToTopButton';
 import { motion } from 'framer-motion';
-import FaqItem from './faqItem';
+import FaqItem from './FaqItem';
 
 export default function Faq() {
   const faqData = [

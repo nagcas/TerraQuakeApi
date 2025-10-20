@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { Context } from "@/components/modules/context";
-import MetaData from "../noPage/metaData";
+import { Context } from "@/components/modules/Context";
+import MetaData from "../noPage/MetaData";
 
 export default function DeleteProfile() {
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;

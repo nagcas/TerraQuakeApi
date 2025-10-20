@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useParams } from 'react-router';
-import MetaData from '../noPage/metaData';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import MetaData from '../noPage/MetaData';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 
 export default function ResetPassword() {

@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from '@config/axios.js';
 import MetaData from '@pages/noPage/metaData';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import { FaDiscord } from 'react-icons/fa6';
 

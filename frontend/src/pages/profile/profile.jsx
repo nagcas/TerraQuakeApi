@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import MetaData from '../noPage/metaData';
-import { Context } from '@/components/modules/context';
+import MetaData from '../noPage/MetaData';
+import { Context } from '@/components/modules/Context';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import EditProfile from './editProfile';
-import DeleteProfile from './deleteProfile';
+import EditProfile from './EditProfile';
+import DeleteProfile from './DeleteProfile';
 import { motion } from 'framer-motion';
-import BackToTopButton from '@/components/utils/backToTopButton';
-import AvatarUser from '@/components/utils/avatarUser';
+import BackToTopButton from '@/components/utils/BackToTopButton';
+import AvatarUser from '@/components/utils/AvatarUser';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =

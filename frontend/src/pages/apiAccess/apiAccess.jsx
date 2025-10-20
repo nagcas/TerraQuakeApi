@@ -1,4 +1,4 @@
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '@pages/noPage/metaData';
 import { motion } from 'framer-motion';
 

@@ -1,14 +1,14 @@
-import { Context } from '@/components/modules/context';
+import { Context } from '@/components/modules/Context';
 import React, { useContext, useState, useEffect } from 'react';
 import axios from '@config/axios.js';
-import MetaData from '../noPage/metaData';
+import MetaData from '../noPage/MetaData';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 
 export default function ChangePassword() {

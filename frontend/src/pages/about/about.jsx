@@ -12,7 +12,7 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import axios from 'axios';
-import BackToTopButton from '@/components/utils/backToTopButton';
+import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 
 export default function About() {

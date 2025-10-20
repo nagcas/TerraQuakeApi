@@ -1,6 +1,6 @@
 import Avatar from '@/assets/images/avatar_default.png';
 import { useContext } from 'react';
-import { Context } from '../modules/context';
+import { Context } from '../modules/Context';
 
 export default function AvatarUser({ use }) {
   const { userLogin } = useContext(Context);

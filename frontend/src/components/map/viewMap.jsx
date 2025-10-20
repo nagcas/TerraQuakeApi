@@ -11,10 +11,10 @@ import OSM from 'ol/source/OSM.js';
 import 'ol/ol.css';
 import { defaults as defaultInteractions } from 'ol/interaction.js';
 import Link from 'ol/interaction/Link';
-import ShowInfo from './showInfo';
-import { downloadMap, fetchLocation, addEarthquakeMarkers } from './mapUtil';
-import ShowProperties from './showProperties';
-import Legend from './legend';
+import ShowInfo from './ShowInfo';
+import { downloadMap, fetchLocation, addEarthquakeMarkers } from './MapUtil';
+import ShowProperties from './ShowProperties';
+import Legend from './Legend';
 
 export default function ViewMap({ earthquakeData }) {
   const [currentEarthquakeData, setCurrentEarthquakeData] =
