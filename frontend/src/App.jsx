@@ -2,7 +2,7 @@ import './App.css';
 import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import NavbarMenu from '@components/navbar/NavbarMenu';
+import NavbarMenu from './components/navbar/NavbarMenu';
 import Footer from '@components/footer/Footer';
 import ScrollToTop from '@components/modules/ScrollToTop';
 import { AuthProvider } from '@components/modules/AuthProvider';
