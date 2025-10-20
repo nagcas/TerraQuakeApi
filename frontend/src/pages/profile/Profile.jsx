@@ -219,7 +219,6 @@ export default function Profile() {
           </motion.div>
         )}
       </section>
-
       {/* Floating Button */}
       <BackToTopButton />
     </>

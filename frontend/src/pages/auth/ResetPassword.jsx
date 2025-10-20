@@ -199,7 +199,6 @@ export default function ResetPassword() {
           </motion.div>
         </div>
       </motion.section>
-
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>

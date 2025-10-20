@@ -291,7 +291,6 @@ export default function ChangePassword() {
           </div>
         )}
       </motion.section>
-
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
