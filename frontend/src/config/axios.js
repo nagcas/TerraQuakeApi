@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_URL_BACKEND;
 
 const api = axios.create({
-	baseURL: BASE_URL,
-	withCredentials: true
+  baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 // Alter defaults after instance has been created

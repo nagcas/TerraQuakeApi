@@ -1,5 +1,5 @@
 import BackToTopButton from '@/components/utils/BackToTopButton';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import { motion } from 'framer-motion';
 
 export default function ApiAccess() {

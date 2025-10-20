@@ -12,7 +12,7 @@ import 'ol/ol.css';
 import { defaults as defaultInteractions } from 'ol/interaction.js';
 import Link from 'ol/interaction/Link';
 import ShowInfo from './ShowInfo';
-import { downloadMap, fetchLocation, addEarthquakeMarkers } from './MapUtil';
+import { downloadMap, fetchLocation, addEarthquakeMarkers } from './MapUtil.js';
 import ShowProperties from './ShowProperties';
 import Legend from './Legend';
 
@@ -102,4 +102,4 @@ export default function ViewMap({ earthquakeData }) {
       </div>
     </section>
   );
-};
+}

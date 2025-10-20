@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import axios from '@config/axios.js';
+import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { ImSpinner9 } from 'react-icons/im';
 import { useNavigate, Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 
@@ -87,7 +87,7 @@ export default function forgotPassword() {
       />
       {/* SEO Stuff */}
 
-      <motion.section  
+      <motion.section
         className='relative z-0 w-full min-h-screen pt-24 pb-12 overflow-hidden'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -112,17 +112,17 @@ export default function forgotPassword() {
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-               Enter your email and we’ll send you a password reset link if it matches an existing account.
+              Enter your email and we’ll send you a password reset link if it
+              matches an existing account.
             </p>
           </motion.div>
 
           <motion.div
-              className='lg:col-span-2 p-8 md:p-12 border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl'
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              
+            className='lg:col-span-2 p-8 md:p-12 border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl'
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
             <form onSubmit={handleSubmit(handleForgotPassword)}>
               <div className='mb-8'>
                 <label className='block text-white text-sm font-semibold mb-2'>
@@ -138,7 +138,7 @@ export default function forgotPassword() {
                 <p className='text-red-400 pt-1'>{errors.email?.message}</p>
               </div>
               <button
-                 className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
+                className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                 type='submit'
                 aria-label='Recover your account password'
               >
@@ -160,8 +160,6 @@ export default function forgotPassword() {
               <div className='flex-grow border-t border-gray-500'></div>
             </div>
 
-            
-
             <Link
               to='/signin'
               className='block text-center mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
@@ -169,11 +167,8 @@ export default function forgotPassword() {
             >
               Back to Sign In
             </Link>
-            </motion.div>
-
-          
+          </motion.div>
         </div>
-  
       </motion.section>
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />

@@ -1,9 +1,9 @@
-import '@/components/apiPlayground/apiPlayground.css';
+import '@/components/apiPlayground/ApiPlayground.css';
 import ViewMap from '@/components/map/ViewMap';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import MetaData from '@pages/noPage/metaData';
-import ApiPlayground from "@/components/apiPlayground/apiPlayground";
+import MetaData from '@pages/noPage/MetaData';
+import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 
@@ -398,15 +398,19 @@ It allows users to access detailed information about a single earthquake event, 
             </h1>
             <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl mx-auto'>
-              Explore and interact with real-time earthquake data. Visualize seismic events directly on the interactive map, and download the map for your own analysis.
-
-              By clicking on “Switch to Tabular View”, you can access the tabulated section of recent seismic events, where each record includes the event date and time (UTC), magnitude, depth (km), latitude, longitude, and location.
-
-              You can also search events by location, sort the table by date, and export the data in CSV format for further analysis or research. Stay informed and monitor global seismic activity with ease.
+              Explore and interact with real-time earthquake data. Visualize
+              seismic events directly on the interactive map, and download the
+              map for your own analysis. By clicking on “Switch to Tabular
+              View”, you can access the tabulated section of recent seismic
+              events, where each record includes the event date and time (UTC),
+              magnitude, depth (km), latitude, longitude, and location. You can
+              also search events by location, sort the table by date, and export
+              the data in CSV format for further analysis or research. Stay
+              informed and monitor global seismic activity with ease.
             </p>
-            <div className="mt-6">
+            <div className='mt-6'>
               <Link
-                to="/explore-data/table"
+                to='/explore-data/table'
                 className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
               >
                 Switch to Tabular View

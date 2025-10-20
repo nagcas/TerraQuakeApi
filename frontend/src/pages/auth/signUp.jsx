@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ImSpinner9 } from 'react-icons/im';
-import axios from '@config/axios.js';
+import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import { FaDiscord } from 'react-icons/fa6';
@@ -39,9 +39,9 @@ export default function SignUp() {
         .string()
         .required('Please confirm your password!')
         .oneOf([yup.ref('password')], 'Passwords must match!'),
-      
+
       experience: yup.string().required('Experience is required!'),
-      
+
       student: yup.string().required('Please select if you are a student!'),
 
       terms: yup
@@ -261,9 +261,8 @@ export default function SignUp() {
                     </label>
                     <select
                       defaultValue=''
-                      className="w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50"
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
                       {...register('experience')}
-                      
                     >
                       <option
                         value=''

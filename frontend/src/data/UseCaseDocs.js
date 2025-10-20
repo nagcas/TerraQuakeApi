@@ -2,7 +2,8 @@ import { API_BASE } from '@/data/BaseApi';
 export const useCaseDocs = [
   {
     title: 'Introduction',
-    content: 'This section describes the real-world applications of TerraQuake API. A great starting point is fetching all seismic activity for the current year.',
+    content:
+      'This section describes the real-world applications of TerraQuake API. A great starting point is fetching all seismic activity for the current year.',
     points: [
       'Open to developers, researchers, and organizations.',
       'Enables building applications for earthquake early warning systems.',
@@ -28,12 +29,13 @@ response = requests.get(f"${API_BASE}/v1/earthquakes/recent", params={'limit': 1
 if response.status_code == 200 and response.json()['success']:
     for event in response.json()['data']:
         print(f"{event['properties']['mag']} - {event['properties']['place']}")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/recent?limit=10"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/recent?limit=10"`,
+    },
   },
   {
     title: 'Scientific Research Applications',
-    content: 'Leverage the API to query a historical archive within a specific date range, perfect for gathering datasets for seismological research.',
+    content:
+      'Leverage the API to query a historical archive within a specific date range, perfect for gathering datasets for seismological research.',
     points: [
       'Monitor seismic patterns and trends for academic and applied research.',
       'Conduct studies on earthquake probability, frequency, and impact modeling.',
@@ -63,12 +65,13 @@ params = {
 response = requests.get(f"${API_BASE}/v1/earthquakes/range-time", params=params)
 data = response.json()
 print(f"Found {data['total']} quakes for the research period.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/range-time?startdate=2025-09-01&enddate=2025-09-15"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/range-time?startdate=2025-09-01&enddate=2025-09-15"`,
+    },
   },
   {
     title: 'Civil Protection Applications',
-    content: 'Isolate high-impact events by filtering for a minimum magnitude. This helps authorities prioritize the most critical seismic activity for public safety.',
+    content:
+      'Isolate high-impact events by filtering for a minimum magnitude. This helps authorities prioritize the most critical seismic activity for public safety.',
     points: [
       'Receive real-time earthquake alerts to initiate rapid emergency response.',
       'Integrate live seismic data into dashboards for operators to monitor events.',
@@ -94,12 +97,13 @@ response = requests.get(f"${API_BASE}/v1/earthquakes/magnitude", params={'mag': 
 significant_quakes = response.json()['data']
 if significant_quakes:
     print(f"Alert! {len(significant_quakes)} significant events detected.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/magnitude?mag=5.5&limit=10"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/magnitude?mag=5.5&limit=10"`,
+    },
   },
   {
     title: 'Government & Policy Making',
-    content: 'Gather seismic data for a specific administrative region to inform zoning and building codes. The API supports queries for all Italian regions.',
+    content:
+      'Gather seismic data for a specific administrative region to inform zoning and building codes. The API supports queries for all Italian regions.',
     points: [
       'Develop public dashboards for earthquake activity and alerts.',
       'Enable national disaster management agencies to make data-driven decisions.',
@@ -120,12 +124,13 @@ params = {'region': 'Sicilia', 'limit': 50}
 response = requests.get(f"${API_BASE}/v1/earthquakes/region", params=params)
 data = response.json()
 print(f"Analysis for {data['data'][0]['properties']['place']}: {data['total']} seismic events found.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/region?region=Sicilia"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/region?region=Sicilia"`,
+    },
   },
   {
     title: 'Educational Platforms',
-    content: 'Build engaging learning tools by querying for events near major landmarks or cities, making seismic data relatable for students.',
+    content:
+      'Build engaging learning tools by querying for events near major landmarks or cities, making seismic data relatable for students.',
     points: [
       'Create simulations that demonstrate seismic waves and fault lines.',
       'Enable students to track live earthquake activity globally.',
@@ -145,12 +150,13 @@ fetch('${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&r
 params = {'latitude': 35.6762, 'longitude': 139.6503, 'radius': 500}
 response = requests.get(f"${API_BASE}/v1/earthquakes/location", params=params)
 print(f"Project Data: Found {response.json()['total']} quakes near Tokyo.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500"`,
+    },
   },
   {
     title: 'Smart Cities & Infrastructure Monitoring',
-    content: 'Integrate with IoT and smart city applications by finding significant quakes near a specific urban center to trigger automated safety responses.',
+    content:
+      'Integrate with IoT and smart city applications by finding significant quakes near a specific urban center to trigger automated safety responses.',
     points: [
       'Enable smart building systems to react automatically to seismic activity.',
       'Provide city planners with long-term seismic trend insights.',
@@ -176,12 +182,13 @@ params = {'latitude': 34.0522, 'longitude': -118.2437, 'radius': 250}
 response = requests.get(f"${API_BASE}/v1/earthquakes/location", params=params)
 if response.json()['data']:
     print(f"Significant quake near LA detected. Sending IoT alert...")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=250"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=250"`,
+    },
   },
   {
     title: 'Insurance & Risk Management',
-    content: 'Firms can benefit from historical data for planning. Querying events by month in a high-risk region helps in building risk assessment models.',
+    content:
+      'Firms can benefit from historical data for planning. Querying events by month in a high-risk region helps in building risk assessment models.',
     points: [
       'Assess risk exposure for properties and infrastructure in earthquake-prone areas.',
       'Enable dynamic adjustment of insurance policies based on seismic activity.',
@@ -201,12 +208,13 @@ fetch('${API_BASE}/v1/earthquakes/month?year=2025&month=9&limit=1000')
 params = {'year': 2025, 'month': 9, 'limit': 1000}
 response = requests.get(f"${API_BASE}/v1/earthquakes/month", params=params)
 print(f"Risk Report: {response.json()['total']} events in Sept 2025.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/month?year=2025&month=9"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/month?year=2025&month=9"`,
+    },
   },
   {
     title: 'Smart Cities & Structural Monitoring',
-    content: 'Frequently poll the API for the very latest daily events, a method ideal for integration with IoT sensors like Arduino or Raspberry Pi for live dashboards.',
+    content:
+      'Frequently poll the API for the very latest daily events, a method ideal for integration with IoT sensors like Arduino or Raspberry Pi for live dashboards.',
     points: [
       'Integrate with IoT sensors (e.g., Arduino, Raspberry Pi) to stream data.',
       'Monitor the stability and integrity of buildings, bridges, and infrastructure.',
@@ -230,18 +238,19 @@ while True:
     latest_event = response.json()['data'][0]['properties']['place']
     print(f"Live Dashboard Update: {latest_event}")
     time.sleep(60)`,
-      Bash: `watch -n 60 'curl -s "${API_BASE}/v1/earthquakes/today?limit=1" | jq .data[0].properties.place'`
-    }
+      Bash: `watch -n 60 'curl -s "${API_BASE}/v1/earthquakes/today?limit=1" | jq .data[0].properties.place'`,
+    },
   },
   {
-    title: "Education & Learning",
-    content: "Gather data for comparative analysis by filtering on physical properties. This example isolates deep-focus earthquakes for an earth science class project.",
+    title: 'Education & Learning',
+    content:
+      'Gather data for comparative analysis by filtering on physical properties. This example isolates deep-focus earthquakes for an earth science class project.',
     points: [
-      "Conduct classroom experiments using real earthquake data.",
-      "Integrate into geography or earth science lessons.",
-      "Use open-source tools powered by TerraQuakeAPI to explore seismology.",
-      "Visualize seismic events over time and space.",
-      "Enable project-based learning with real-world data insights.",
+      'Conduct classroom experiments using real earthquake data.',
+      'Integrate into geography or earth science lessons.',
+      'Use open-source tools powered by TerraQuakeAPI to explore seismology.',
+      'Visualize seismic events over time and space.',
+      'Enable project-based learning with real-world data insights.',
     ],
     exampleUrl: `${API_BASE}/v1/earthquakes/depth?depth=300`,
     snippets: {
@@ -255,12 +264,13 @@ fetch('${API_BASE}/v1/earthquakes/depth?depth=300')
 params = {'depth': 300, 'limit': 50}
 response = requests.get(f"${API_BASE}/v1/earthquakes/depth", params=params)
 print(f"Found {response.json()['total']} deep-focus earthquakes for the project.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/depth?depth=300"`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/depth?depth=300"`,
+    },
   },
   {
     title: 'Tutorial: Displaying Earthquake Data on a Map',
-    content: 'Learn how to fetch earthquake data from the TerraQuake API and visualize it on an interactive map using OpenLayers. This tutorial covers data fetching, map initialization, and adding styled markers based on magnitude.',
+    content:
+      'Learn how to fetch earthquake data from the TerraQuake API and visualize it on an interactive map using OpenLayers. This tutorial covers data fetching, map initialization, and adding styled markers based on magnitude.',
     points: [
       'Fetch GeoJSON earthquake data from TerraQuake API endpoints.',
       'Initialize an interactive map using the OpenLayers JavaScript library.',
@@ -351,12 +361,13 @@ def get_earthquakes_for_map(latitude, longitude, radius, limit=10):
 #     props = quake['properties']
 #     print(f"Magnitude: {props['mag']}, Place: {props['place']}, Lat: {coords[1]}, Lon: {coords[0]}")
 `,
-      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=10" | jq '.data[] | {mag: .properties.mag, place: .properties.place, coordinates: .geometry.coordinates}'`
-    }
+      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=10" | jq '.data[] | {mag: .properties.mag, place: .properties.place, coordinates: .geometry.coordinates}'`,
+    },
   },
   {
     title: 'Tutorial: Filtering and Searching Earthquakes',
-    content: 'The TerraQuake API provides extensive filtering capabilities to retrieve specific earthquake data based on various criteria like time, location, magnitude, depth, and event ID.',
+    content:
+      'The TerraQuake API provides extensive filtering capabilities to retrieve specific earthquake data based on various criteria like time, location, magnitude, depth, and event ID.',
     points: [
       'Filter earthquakes by specific date ranges, months, or recent activity.',
       'Search for events within a geographical radius or a predefined Italian region.',
@@ -419,12 +430,13 @@ curl "${API_BASE}/v1/earthquakes/today?limit=5"
 curl "${API_BASE}/v1/earthquakes/magnitude?mag=6.0&limit=5"
 
 # Example 3: Get earthquakes near specific coordinates (Los Angeles)
-curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=100&limit=5"`
-    }
+curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=100&limit=5"`,
+    },
   },
   {
     title: 'Tutorial: Using the API with Python, JS, or cURL',
-    content: 'This tutorial demonstrates how to interact with the TerraQuake API using common tools and programming languages: cURL for command-line, JavaScript (Fetch API/Axios) for web/Node.js, and Python (requests library).',
+    content:
+      'This tutorial demonstrates how to interact with the TerraQuake API using common tools and programming languages: cURL for command-line, JavaScript (Fetch API/Axios) for web/Node.js, and Python (requests library).',
     points: [
       'Execute quick API requests directly from the command line using cURL.',
       'Integrate API calls into web applications or Node.js services with JavaScript Fetch API or Axios.',
@@ -484,7 +496,7 @@ def get_last_week_quakes():
 curl "${API_BASE}/v1/earthquakes/today?limit=5" | jq '.data[] | .properties.place'
 
 # cURL Example 2: Get earthquake by Event ID
-curl "${API_BASE}/v1/earthquakes/eventId?eventId=44278572" | jq '.data[] | .properties.place'`
-    }
-  }
+curl "${API_BASE}/v1/earthquakes/eventId?eventId=44278572" | jq '.data[] | .properties.place'`,
+    },
+  },
 ];

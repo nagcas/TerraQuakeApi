@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function GetStarted() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function GetStarted() {
 
           <div className='text-center mt-12'>
             <button
-              onClick={() => navigate("/api-access")}
+              onClick={() => navigate('/api-access')}
               className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-4 px-8 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer shadow-lg text-lg'
             >
               Start Your Journey

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FiPlay, FiLoader, FiAlertTriangle, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import CodeSnippet from '@/utils/useCases/codeSnippet';
+import CodeSnippet from '@/utils/useCases/CodeSnippet';
 
 export default function ApiPlayground({ url }) {
   const [response, setResponse] = useState(null);
@@ -93,7 +93,9 @@ export default function ApiPlayground({ url }) {
                 role='alert'
                 className='mt-4 flex items-center gap-2 text-sm text-red-400 p-3 rounded-lg bg-red-500/10'
               >
-                <span className='mt-2'><FiAlertTriangle /></span>
+                <span className='mt-2'>
+                  <FiAlertTriangle />
+                </span>
                 <span className='mt-2'>Error: {error}</span>
               </div>
             )}

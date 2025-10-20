@@ -88,4 +88,4 @@ export default function Faq() {
       <BackToTopButton />
     </>
   );
-};
+}

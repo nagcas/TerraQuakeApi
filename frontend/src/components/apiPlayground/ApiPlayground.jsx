@@ -6,7 +6,8 @@ export default function ApiPlayground({
   endpoints = [],
   setEarthquakeData,
 }) {
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
+  const BACKEND_URL =
+    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
 
   const [activeKey, setActiveKey] = useState(endpoints[0]?.key || '');
   const active = useMemo(

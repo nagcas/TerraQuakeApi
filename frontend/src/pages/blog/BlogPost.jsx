@@ -1,7 +1,8 @@
+import './Blog.css';
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 // import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import {
   FaCalendarAlt,
   FaUser,
@@ -17,7 +18,6 @@ import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
-import './blog.css';
 import 'prismjs/themes/prism-tomorrow.css';
 
 export default function BlogPost() {

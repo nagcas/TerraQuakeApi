@@ -1,8 +1,8 @@
-import './blog.css';
+import './Blog.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import {
   FaCalendarAlt,
   FaUser,

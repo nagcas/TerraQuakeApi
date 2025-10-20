@@ -1,6 +1,6 @@
-import './about.css';
+import './About.css';
 import { useEffect, useState } from 'react';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import {
   FaGlobeAmericas,
   FaLightbulb,

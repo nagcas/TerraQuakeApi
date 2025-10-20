@@ -16,7 +16,7 @@ import kompas from 'kompas';
 import compassIcon from '@/assets/svgs/compass.svg';
 import { Stroke } from 'ol/style';
 import CircleStyle from 'ol/style/Circle';
-import html2canvas from "html2canvas";
+import html2canvas from 'html2canvas';
 
 /**
  * Download the current map view as a PNG image including the legend,
@@ -32,23 +32,23 @@ export const downloadMap = async (mapRef, data) => {
   const now = new Date();
   const timestamp = now
     .toISOString()
-    .replace("T", "_")
-    .replace(/:/g, "-")
-    .split(".")[0];
+    .replace('T', '_')
+    .replace(/:/g, '-')
+    .split('.')[0];
 
   // Get all canvas elements from the map (each OpenLayers layer is a separate canvas)
-  const canvases = mapRef.current.querySelectorAll("canvas");
+  const canvases = mapRef.current.querySelectorAll('canvas');
   if (!canvases.length) return;
 
   // Create a new canvas to merge all layers into a single image
-  const exportCanvas = document.createElement("canvas");
+  const exportCanvas = document.createElement('canvas');
   const width = canvases[0].width;
   const height = canvases[0].height;
   exportCanvas.width = width;
   exportCanvas.height = height;
 
   // Get the 2D drawing context
-  const context = exportCanvas.getContext("2d", { willReadFrequently: true });
+  const context = exportCanvas.getContext('2d', { willReadFrequently: true });
 
   // Step 1 — Draw all map layers onto the export canvas
   canvases.forEach((canvas) => {
@@ -58,22 +58,24 @@ export const downloadMap = async (mapRef, data) => {
   });
 
   // Step 2 — Draw the legend onto the export canvas (if present)
-  const legendElement = document.querySelector(".legend");
+  const legendElement = document.querySelector('.legend');
   if (legendElement) {
     // Use html2canvas to convert the legend HTML to a canvas
-    const legendCanvas = await html2canvas(legendElement, { backgroundColor: null });
+    const legendCanvas = await html2canvas(legendElement, {
+      backgroundColor: null,
+    });
     const legendX = width - legendCanvas.width - 20; // horizontal position
     const legendY = height - legendCanvas.height - 20; // vertical position
     context.drawImage(legendCanvas, legendX, legendY); // draw the legend on the map
   }
 
   // Step 3 — Optionally add title and timestamp on the image
-  context.font = "bold 24px Arial";
-  context.fillStyle = "black";
-  context.strokeStyle = "black";
+  context.font = 'bold 24px Arial';
+  context.fillStyle = 'black';
+  context.strokeStyle = 'black';
   context.lineWidth = 1;
 
-  const title = "TerraQuake API";
+  const title = 'TerraQuake API';
   const dateStr = now.toLocaleString();
 
   // Draw the title
@@ -81,16 +83,16 @@ export const downloadMap = async (mapRef, data) => {
   context.fillText(title, 20, 40);
 
   // Draw the download timestamp
-  context.font = "16px Arial";
+  context.font = '16px Arial';
   context.strokeText(dateStr, 20, 65);
   context.fillText(dateStr, 20, 65);
 
   // Step 4 — Convert the combined canvas to a PNG image
-  const image = exportCanvas.toDataURL("image/png");
+  const image = exportCanvas.toDataURL('image/png');
 
   // Download the image with a timestamped filename
   const mapFileName = `map_view_${timestamp}.png`;
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = image;
   link.download = mapFileName;
   document.body.appendChild(link);
@@ -99,8 +101,10 @@ export const downloadMap = async (mapRef, data) => {
 
   // Step 5 — Download earthquake data as JSON if provided
   if (data && data.length > 0) {
-    const jsonBlob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const jsonLink = document.createElement("a");
+    const jsonBlob = new Blob([JSON.stringify(data, null, 2)], {
+      type: 'application/json',
+    });
+    const jsonLink = document.createElement('a');
     jsonLink.href = URL.createObjectURL(jsonBlob);
     jsonLink.download = `earthquake_data_${timestamp}.json`;
     document.body.appendChild(jsonLink);

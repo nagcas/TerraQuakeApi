@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function FaqItem({ question, answer }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,4 +32,4 @@ export default function FaqItem({ question, answer }) {
       )}
     </div>
   );
-};
+}

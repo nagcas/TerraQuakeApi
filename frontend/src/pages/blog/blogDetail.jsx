@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate, NavLink } from 'react-router-dom';
 // import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import {
   FaCalendarAlt,
   FaUser,
@@ -517,7 +517,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
         <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />
         <div className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000' />
       </div>
-      
+
       <div className='min-h-screen pt-24 pb-16'>
         <div className='container mx-auto px-4 max-w-4xl'>
           {/* Back to Blog Button */}

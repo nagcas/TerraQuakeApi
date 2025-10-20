@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 export function ContributionCard({ icon, title, description, link, linkText }) {
@@ -67,4 +67,4 @@ export function ContributionCard({ icon, title, description, link, linkText }) {
       </motion.div>
     </motion.div>
   );
-};
+}

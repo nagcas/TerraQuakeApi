@@ -100,4 +100,4 @@ export default function ShowProperties({ mapInstance }) {
   }, [mapInstance]);
 
   return null;
-};
+}

@@ -1,12 +1,11 @@
-import Hero from '@components/hero/hero';
-import Info from '@components/info/info';
-import MetaData from '@pages/noPage/metaData';
-import Newsletter from '@/components/newsletter/newsletter';
+import Hero from '@components/hero/Hero';
+import Info from '@components/info/Info';
+import MetaData from '@pages/noPage/MetaData';
+import Newsletter from '@/components/newsletter/Newsletter';
 import { useState } from 'react';
-import Testimonials from '@/components/testimonials/testimonials';
+import Testimonials from '@/components/testimonials/Testimonials';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import GetStarted from '@/components/started/GetStarted';
-
 
 export default function Home() {
   const [earthquakeData, setEarthquakeData] = useState(null);

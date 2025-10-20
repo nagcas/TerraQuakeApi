@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function CopyButton({ text }) {
   const [copied, setCopied] = useState(false);

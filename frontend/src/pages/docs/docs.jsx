@@ -115,7 +115,7 @@ export default function Docs() {
               parameters, examples, and best practices.
             </p>
           </motion.div>
-          
+
           <div className='flex items-start justify-between mb-8'>
             {/* mobile menu toggle */}
             <div className='md:hidden'>

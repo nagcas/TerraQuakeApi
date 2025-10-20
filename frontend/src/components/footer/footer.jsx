@@ -52,7 +52,7 @@ export default function Footer() {
       title: 'YouTube',
       url: 'https://www.youtube.com/@TerraQuakeAPI',
       icon: <FaYoutube className='text-2xl' />,
-    }
+    },
   ];
 
   return (

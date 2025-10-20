@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { FaCode, FaBug, FaBook, FaDiscord } from 'react-icons/fa';
 import { IoIosGitPullRequest } from 'react-icons/io';
 import BackToTopButton from '@/components/utils/BackToTopButton';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import {
   API_DOCS,
   CODE_OF_CONDUCT,

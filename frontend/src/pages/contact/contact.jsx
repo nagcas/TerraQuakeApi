@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import { ImSpinner9 } from 'react-icons/im';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
-import axios from '@config/axios.js';
+import axios from '@config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 // Import new icons for the 'Connect' section

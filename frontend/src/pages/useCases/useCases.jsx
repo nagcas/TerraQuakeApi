@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import { motion } from 'framer-motion';
 import { useCaseDocs } from '@/data/UseCaseDocs';
-import AccordionItem from '@/utils/useCases/accordionItem';
+import AccordionItem from '@/utils/useCases/AccordionItem';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 
 export default function UseCases() {

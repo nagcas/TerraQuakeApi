@@ -1,4 +1,4 @@
-import MetaData from '@pages/noPage/metaData';
+import MetaData from '@pages/noPage/MetaData';
 import { TbError404 } from 'react-icons/tb';
 import { NavLink } from 'react-router-dom';
 
