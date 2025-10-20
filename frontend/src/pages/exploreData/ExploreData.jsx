@@ -428,7 +428,7 @@ It allows users to access detailed information about a single earthquake event, 
           </div>
         </div>
       </motion.section>
-
+      {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
   );
