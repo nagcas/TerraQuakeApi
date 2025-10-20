@@ -1,7 +1,7 @@
-import { TimelineContent } from "@/components/ui/timeline-animation";
+import { TimelineContent } from "@/components/testimonials/timeline-animation";
 import { useRef } from "react";
 
-function ClientFeedback() {
+export default function ClientFeedback() {
     const testimonialRef = useRef(null);
   
     const revealVariants = {
@@ -201,5 +201,3 @@ function ClientFeedback() {
     </main>
   );
 }
-
-export default ClientFeedback;

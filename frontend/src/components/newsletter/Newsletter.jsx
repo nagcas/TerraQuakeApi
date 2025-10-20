@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Newsletter = () => {
+export default function Newsletter() {
   const URL = import.meta.env.VITE_URL_BACKEND;
 
   const [email, setEmail] = useState("");
@@ -281,5 +281,3 @@ const Newsletter = () => {
     </div>
   );
 };
-
-export default Newsletter;

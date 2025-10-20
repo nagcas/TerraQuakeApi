@@ -168,7 +168,7 @@ export default function Contact() {
               Let's Connect.
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
               At TerraQuake API, we’re committed to making seismic data
               accessible and insightful. Whether you’re a researcher, developer,
               or enthusiast, your ideas and feedback help us improve the

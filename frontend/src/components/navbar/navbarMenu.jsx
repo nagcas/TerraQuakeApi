@@ -32,7 +32,7 @@ export default function NavbarMenu() {
     { name: 'API Access', path: '/api-access' },
     { name: 'Docs', path: '/docs' },
     { name: 'Blog', path: '/blog' },
-    { name: 'FAQ', path: '/faq' },
+    { name: 'Faq', path: '/faq' },
     { name: 'Contact', path: '/contact' },
   ];
 

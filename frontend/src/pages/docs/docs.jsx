@@ -5,29 +5,7 @@ import BackToTopButton from '@/components/utils/backToTopButton';
 import { motion } from 'framer-motion';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
-function CopyButton({ text }) {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
-  return (
-    <button
-      onClick={handleCopy}
-      className='ml-2 text-xs px-2 py-1 rounded bg-white/6 hover:bg-white/10 transition text-white/80'
-      aria-label='Copy code'
-      type='button'
-    >
-      {copied ? 'Copied' : 'Copy'}
-    </button>
-  );
-}
+import { CopyButton } from './copyButton';
 
 export default function Docs() {
   const contentRef = useRef(null);
@@ -132,11 +110,12 @@ export default function Docs() {
               TerraQuake API Documentation.
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left text-white/70 max-w-7xl'>
+            <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
               Programmatic access to global seismic event data — endpoints,
               parameters, examples, and best practices.
             </p>
           </motion.div>
+          
           <div className='flex items-start justify-between mb-8'>
             {/* mobile menu toggle */}
             <div className='md:hidden'>

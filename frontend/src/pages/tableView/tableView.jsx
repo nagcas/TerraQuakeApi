@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/backToTopButton';
-import MetaData from './noPage/metaData';
+import MetaData from '../noPage/metaData';
 import Swal from 'sweetalert2';
 import { ImSpinner9 } from 'react-icons/im';
 

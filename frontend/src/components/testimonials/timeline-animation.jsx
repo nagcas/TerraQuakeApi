@@ -1,20 +1,19 @@
-import { motion, useInView } from "framer-motion"
-import React from "react"
+import { motion, useInView } from 'framer-motion';
+import React from 'react';
 
-
-export const TimelineContent = ({
+export function TimelineContent({
   children,
   animationNum,
   timelineRef,
   className,
   as,
   customVariants,
-  once=false,
+  once = false,
   ...props
-}) => {
+}) {
   const defaultSequenceVariants = {
     visible: (i) => ({
-      filter: "blur(0px)",
+      filter: 'blur(0px)',
       y: 0,
       opacity: 1,
       transition: {
@@ -23,25 +22,25 @@ export const TimelineContent = ({
       },
     }),
     hidden: {
-      filter: "blur(20px)",
+      filter: 'blur(20px)',
       y: 0,
       opacity: 0,
     },
-  }
+  };
 
   // Use custom variants if provided, otherwise use default
-  const sequenceVariants = customVariants || defaultSequenceVariants
+  const sequenceVariants = customVariants || defaultSequenceVariants;
 
   const isInView = useInView(timelineRef, {
-    once
-  })
+    once,
+  });
 
-  const MotionComponent = motion[as || "div"]
+  const MotionComponent = motion[as || 'div'];
 
   return (
     <MotionComponent
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      initial='hidden'
+      animate={isInView ? 'visible' : 'hidden'}
       custom={animationNum}
       variants={sequenceVariants}
       className={className}
@@ -49,5 +48,5 @@ export const TimelineContent = ({
     >
       {children}
     </MotionComponent>
-  )
+  );
 }

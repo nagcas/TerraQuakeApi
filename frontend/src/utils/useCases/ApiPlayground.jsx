@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FiPlay, FiLoader, FiAlertTriangle, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import CodeSnippet from '@/utils/useCases/CodeSnippet';
+import CodeSnippet from '@/utils/useCases/codeSnippet';
 
 export default function ApiPlayground({ url }) {
   const [response, setResponse] = useState(null);

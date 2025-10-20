@@ -16,7 +16,7 @@ import { downloadMap, fetchLocation, addEarthquakeMarkers } from './mapUtil';
 import ShowProperties from './showProperties';
 import Legend from './legend';
 
-const ViewMap = ({ earthquakeData }) => {
+export default function ViewMap({ earthquakeData }) {
   const [currentEarthquakeData, setCurrentEarthquakeData] =
     useState(earthquakeData);
 
@@ -103,5 +103,3 @@ const ViewMap = ({ earthquakeData }) => {
     </section>
   );
 };
-
-export default ViewMap;

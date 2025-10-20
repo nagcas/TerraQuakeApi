@@ -1,10 +1,6 @@
-import React from 'react'
-import ClientFeedback from '../ui/testimonial'
+import React from 'react';
+import ClientFeedback from './testimonial';
 
-const Testimonials = () => {
-  return (
-        <ClientFeedback/>
-  )
+export default function Testimonials() {
+  return <ClientFeedback />;
 }
-
-export default Testimonials

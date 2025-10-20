@@ -43,7 +43,7 @@ export default function ApiAccess() {
               API Access for TerraQuake API.
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
-            <p className='text-xl text-left mx-auto text-white/70 max-w-7xl'>
+            <p className='text-xl text-center md:text-left mx-auto text-white/70 max-w-7xl'>
               Use Cases describe real-world scenarios where TerraQuake API can
               be applied. By providing fast, reliable access to seismic data,
               the API enables developers, researchers, institutions, and
