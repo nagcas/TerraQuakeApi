@@ -28,7 +28,6 @@ import ResetPassword from "@pages/auth/resetPassword";
 import ChangePassword from "@pages/auth/changePassword";
 import TermsAndConditions from "@pages/termsAndConditions/termsAndConditions";
 import PrivacyPolicy from "@pages/privacyPolicy/privacyPolicy";
-
 import Contribute from "@pages/contribute/contribute";
 import GithubAuth from "@pages/auth/githubAuth";
 import HandleOAuth from "@pages/auth/handleOAuth";
