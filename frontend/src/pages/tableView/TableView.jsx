@@ -171,7 +171,7 @@ export default function TableView() {
           <div className='mb-8'>
             <Link
               to='/explore-data'
-              className='text-purple-400 hover:underline'
+              className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
             >
               ← Back to Map View
             </Link>

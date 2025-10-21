@@ -27,6 +27,7 @@ export default function Home() {
       <Info />
       <GetStarted />
       <Newsletter />
+
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>

@@ -408,10 +408,10 @@ It allows users to access detailed information about a single earthquake event, 
               the data in CSV format for further analysis or research. Stay
               informed and monitor global seismic activity with ease.
             </p>
-            <div className='mt-6'>
+            <div className='mt-16'>
               <Link
                 to='/explore-data/table'
-                className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+                className='py-4 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
               >
                 Switch to Tabular View
               </Link>
