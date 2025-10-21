@@ -50,16 +50,16 @@ export const sendConfirmationEmail = async (email, unsubscribeLink) => {
     `
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: email,
       subject: '🌍 Welcome to TerraQuake API Newsletter!',
       html
     })
 
-    console.log('✅ Confirmation email sent:', result)
+    console.log('Confirmation email sent:', result)
     return result
   } catch (error) {
-    console.error('❌ Error sending confirmation email:', error)
+    console.error('Error sending confirmation email:', error)
     throw error
   }
 }
@@ -100,17 +100,58 @@ export const sendBulkNewsletter = async (
       `
 
       await client.messages.create(process.env.MAILGUN_DOMAIN, {
-        from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+        from: `TerraQuake API <support${process.env.MAILGUN_DOMAIN}>`,
         to: subscriber.email,
         subject,
         html
       })
     }
 
-    console.log('✅ Bulk newsletter sent successfully')
+    console.log('Bulk newsletter sent successfully')
     return true
   } catch (error) {
-    console.error('❌ Error sending bulk newsletter:', error)
+    console.error('Error sending bulk newsletter:', error)
     return false
+  }
+}
+
+// NOTE: Send unsubscribe confirmation email after newsletter cancellation
+export const sendUnsubscribeEmail = async (email) => {
+  try {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; color: #333;">
+        <h2 style="color: #A48DC7; text-align: center;">You’ve unsubscribed from TerraQuake API Newsletter</h2>
+
+        <p>Hi there 👋,</p>
+
+        <p>This is to confirm that your email <strong>${email}</strong> has been successfully unsubscribed from the <strong>TerraQuake API</strong> newsletter.</p>
+
+        <p>You will no longer receive updates, news, or notifications about new API features and seismic data.</p>
+
+        <hr style="margin: 32px 0; border: none; border-top: 1px solid #ddd;" />
+
+        <p style="font-size: 0.9em; color: #666;">
+          <strong>TerraQuake API</strong> is open-source software, released under the GNU Affero General Public License v3 or later.  
+          You are free to use, modify, and share it — always with credit to the community.
+        </p>
+
+        <p style="font-weight: bold; font-size: 1.1em; color: #333; text-align: center;">
+          The <span style="color: #A48DC7;">TerraQuake API</span> Team
+        </p>
+      </div>
+    `
+
+    const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
+      to: email,
+      subject: '✅ You’ve unsubscribed from TerraQuake API Newsletter',
+      html
+    })
+
+    console.log('Unsubscribe confirmation email sent:', result)
+    return result
+  } catch (error) {
+    console.error('Error sending unsubscribe email:', error)
+    throw error
   }
 }
