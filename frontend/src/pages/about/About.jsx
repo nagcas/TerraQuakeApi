@@ -14,14 +14,11 @@ import {
 import axios from 'axios';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
+import Metrics from '@/components/metrics/Metrics';
 
 export default function About() {
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [highlightMetrics, setHighlightMetrics] = useState([]);
-  const [loadingMetrics, setLoadingMetrics] = useState(true);
-  const [metricsError, setMetricsError] = useState(null);
-
+ 
   const cardSections = [
     {
       title: 'Project Introduction',
@@ -95,49 +92,6 @@ export default function About() {
     },
   ];
 
-  useEffect(() => {
-    const fetchMetrics = async () => {
-      try {
-        setLoadingMetrics(true);
-        const res = await axios.get(`${BACKEND_URL}/v1/metrics/json`);
-        const data = res.data.data;
-
-        setHighlightMetrics([
-          {
-            value: data.eventsProcessed?.toLocaleString() || 'N/A',
-            label: 'Events Processed',
-            description: 'Real-time earthquakes normalized and accessible',
-          },
-          {
-            value: `${data.apiLatencyAvgMs} ms`,
-            label: 'API Latency',
-            description: 'Average API response time',
-          },
-
-          {
-            value: `${Math.floor(data.uptime)} s`,
-            label: 'Uptime',
-            description: 'Time since last server restart',
-          },
-          {
-            value: '24/7',
-            label: 'Data monitoring',
-            description: 'Continuous ingestion from trusted observatories',
-          },
-        ]);
-      } catch (error) {
-        console.error('Error fetching metrics:', error);
-        setMetricsError('Unable to load metrics.');
-      } finally {
-        setLoadingMetrics(false);
-      }
-    };
-
-    fetchMetrics();
-    const interval = setInterval(fetchMetrics, 10000); // refresh ogni 10s
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <>
       {/* SEO Stuff */}
@@ -184,27 +138,7 @@ export default function About() {
             </p>
           </motion.div>
 
-          <div className='max-w-6xl mx-auto grid gap-4 md:grid-cols-4 mb-6 md:mb-16'>
-            {highlightMetrics.map((metric) => (
-              <div
-                key={metric.label}
-                className='group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]'
-              >
-                <div className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent' />
-                <div className='relative'>
-                  <span className='text-2xl md:text-3xl font-semibold text-white tracking-tight'>
-                    {metric.value}
-                  </span>
-                  <p className='mt-1 text-sm uppercase tracking-[0.2em] text-purple-200/70'>
-                    {metric.label}
-                  </p>
-                  <p className='mt-3 text-sm text-gray-300 leading-relaxed'>
-                    {metric.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Metrics />
         </div>
 
         <div className='max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6 md:mb-16 p-6 md:p-0'>

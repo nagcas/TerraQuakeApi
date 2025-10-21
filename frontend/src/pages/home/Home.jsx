@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Testimonials from '@/components/testimonials/Testimonials';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import GetStarted from '@/components/started/GetStarted';
+import Metrics from '@/components/metrics/Metrics';
 
 export default function Home() {
   const [earthquakeData, setEarthquakeData] = useState(null);
@@ -25,6 +26,7 @@ export default function Home() {
 
       <Hero />
       <Info />
+      <Metrics />
       <GetStarted />
       <Newsletter />
 
