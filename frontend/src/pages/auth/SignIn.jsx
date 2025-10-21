@@ -11,7 +11,7 @@ import axios from '@config/Axios.js';
 import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
-import { FaDiscord } from 'react-icons/fa6';
+import Channels from '@/components/channels/Channels';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -83,16 +83,6 @@ export default function SignIn() {
   };
 
   const togglePassword = () => setShowPassword((prev) => !prev);
-
-  const contactInfo = [
-    {
-      icon: <FaDiscord className='text-2xl' />,
-      title: 'Discord',
-      detail: 'Chat with developers and contribute to TerraQuake API together!',
-      href: 'https://discord.gg/RDBp8KJB',
-      target: '_blank',
-    },
-  ];
 
   return (
     <>
@@ -251,53 +241,8 @@ export default function SignIn() {
               </form>
             </motion.div>
 
-            {/* Right: Discord */}
-            <motion.div
-              className='lg:col-span-1 p-8 md:p-12 bg-purple-600/10 border-2 border-purple-500/30 rounded-3xl shadow-inner-xl flex flex-col justify-between'
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <div>
-                <h2 className='text-3xl font-bold text-purple-400 mb-6'>
-                  Other Channels
-                </h2>
-                <p className='text-white/80 mb-8'>
-                  For immediate support or specific inquiries, you might find
-                  these direct channels more suitable.
-                </p>
-
-                <div className='space-y-6'>
-                  {contactInfo.map((item, index) => (
-                    <motion.a
-                      key={index}
-                      href={item.href}
-                      target={item.target}
-                      className='flex items-start p-4 bg-gray-900/40 rounded-xl hover:bg-gray-700/50 transition duration-200 group'
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                    >
-                      <div className='text-purple-400 group-hover:text-pink-400 transition-colors mr-4 mt-1'>
-                        {item.icon}
-                      </div>
-                      <div>
-                        <p className='text-lg font-semibold text-white group-hover:underline'>
-                          {item.title}
-                        </p>
-                        <p className='text-sm text-white/60'>{item.detail}</p>
-                      </div>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-
-              <div className='mt-10 pt-6 border-t border-purple-500/50'>
-                <p className='text-sm text-white/50 italic'>
-                  Powered by TerraQuake API
-                </p>
-              </div>
-            </motion.div>
+            {/* Right: Other channels */}
+            <Channels />
           </div>
         </div>
       </motion.section>
