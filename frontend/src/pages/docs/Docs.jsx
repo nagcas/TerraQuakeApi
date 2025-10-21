@@ -1,4 +1,3 @@
-// Docs.jsx
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MetaData from '../noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
@@ -26,7 +25,6 @@ export default function Docs() {
       { id: 'code-examples', label: 'Code Examples' },
       { id: 'data-fields', label: 'Data Field Reference' },
       { id: 'support', label: 'Support & Feedback' },
-      { id: 'faq', label: 'FAQ' },
     ],
     []
   );
@@ -55,10 +53,17 @@ export default function Docs() {
   const scrollToId = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const offset = 100; // compensate header
+
+    
+    const offset = window.innerWidth < 768 ? 650 : 100;
+
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
+
+    
     setSidebarOpen(false);
+    setTimeout(() => {
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 300);
   };
 
   // Code snippets centralized for reuse and copy buttons
@@ -155,15 +160,14 @@ export default function Docs() {
                     </li>
                   ))}
                 </ul>
-              </nav>
-
-              {/* Quick links (small footer in sidebar) */}
-              <div className='mt-4 text-xs text-white/60'>
-                <div>
-                  API Version: <strong>1.0</strong>
+                {/* Quick links (small footer in sidebar) */}
+                <div className='mt-4 text-xs text-white/60'>
+                  <div>
+                    API Version: <strong>1.0</strong>
+                  </div>
+                  <div className='mt-2'>Last updated: October 2025</div>
                 </div>
-                <div className='mt-2'>Last updated: October 2025</div>
-              </div>
+              </nav>
             </aside>
 
             {/* Content */}
@@ -805,26 +809,6 @@ export default function Docs() {
                 <p className='mt-2 text-sm text-white/60'>
                   Last updated: October 2025 · API v1.0
                 </p>
-              </section>
-
-              {/* FAQ */}
-              <section
-                id='faq'
-                className='scroll-mt-28 py-6'
-              >
-                <h2 className='text-2xl font-bold text-white'>FAQ</h2>
-                <div className='mt-3 text-white/80'>
-                  <p>
-                    <strong>Q: Do I need an API key?</strong>
-                    <br />
-                    A: No for basic usage; some future endpoints may require it.
-                  </p>
-                  <p className='mt-3'>
-                    <strong>Q: How often is data updated?</strong>
-                    <br />
-                    A: Near real-time; within a few minutes of detection.
-                  </p>
-                </div>
               </section>
             </main>
           </div>
