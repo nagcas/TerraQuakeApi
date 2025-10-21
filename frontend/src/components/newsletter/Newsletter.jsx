@@ -26,7 +26,9 @@ export default function Newsletter() {
       setIsSuccess(false);
     } finally {
       setIsLoading(false);
-    }
+      if (window.clearMessageTimeout) clearTimeout(window.clearMessageTimeout);
+        window.clearMessageTimeout = setTimeout(() => setMessage(''), 3000);
+      }
   };
 
   return (
@@ -194,7 +196,7 @@ export default function Newsletter() {
           )}
 
           <p className='mt-8 text-sm text-purple-300/80 text-center md:text-left leading-relaxed'>
-            🔒 We respect your privacy. No spam, just value. Unsubscribe at any
+            We respect your privacy. No spam, just value. Unsubscribe at any
             time with one click.
           </p>
         </div>

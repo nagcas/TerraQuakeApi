@@ -34,6 +34,7 @@ import HandleOAuth from '@pages/auth/HandleOAuth';
 import NoPage from '@pages/noPage/NoPage';
 import TableView from '@pages/tableView/TableView';
 import Faq from './components/faq/Faq';
+import Unsubscribe from './components/newsletter/Unsubscribe';
 
 export default function App() {
   return (
@@ -148,6 +149,10 @@ export default function App() {
               <Route
                 path='/contribute'
                 element={<Contribute />}
+              />
+              <Route
+                path='/newsletter/unsubscribe'
+                element={<Unsubscribe />}
               />
               <Route
                 path='*'
