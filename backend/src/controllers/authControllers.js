@@ -317,9 +317,13 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
 
 export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, res) => {
   try {
-    const { user, token } = req.user
+    const { user, token } = req.user || {}
 
-    // 🔹 Get the frontend URL from environment variables
+    if (!user || !token) {
+      return res.status(400).send('Invalid authentication data from Google.')
+    }
+
+    // Get the frontend URL from environment variables
     const FRONTEND_REDIRECT_URL =
       process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT
 
@@ -336,16 +340,18 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
 
     // Append all necessary query parameters
     successUrl.searchParams.append('token', token)
-    successUrl.searchParams.append('user_id', user._id.toString())
+    successUrl.searchParams.append('user_id', user._id.toString() || '')
     successUrl.searchParams.append('name', user.name || '')
     successUrl.searchParams.append('email', user.email || '')
     successUrl.searchParams.append('avatar', user.avatar || '')
     successUrl.searchParams.append('role', user.role || 'user')
+    successUrl.searchParams.append('experience', user.experience || '')
+    successUrl.searchParams.append('student', user.student || 'No')
 
-    // 🔹 Redirect the user to the frontend with all data attached
+    // Redirect the user to the frontend with all data attached
     return res.redirect(successUrl.toString())
   } catch (error) {
-    // 🔹 Handle unexpected errors gracefully
+    // Handle unexpected errors gracefully
     console.error('Error in Google callback:', error)
     const failureUrl = process.env.FRONTEND_DEVELOPMENT || 'http://localhost:5173'
     res.redirect(`${failureUrl}/signin?error=google_auth_failed`)

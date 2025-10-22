@@ -19,25 +19,29 @@ export default function HandleOAuth() {
     const email = params.get('email');
     const avatar = params.get('avatar');
     const role = params.get('role');
+    const experience = params.get('experience');
+    const student = params.get('student');
 
     if (token && userId) {
-      // ✅ Save token and user data in localStorage
+      // Save token and user data in localStorage
       const userData = {
         _id: userId,
         name: name || 'Anonymous',
         email: email || '',
         avatar: avatar || '',
         role: role || 'user',
+        experience: experience || '',
+        student: student || 'No',
       };
 
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
 
-      // ✅ Update context state
+      // Update context state
       setUserLogin(userData);
       setIsLoggedIn(true);
 
-      // ✅ Redirect after success
+      // Redirect after success
       Swal.fire({
         title: 'Login Successful!',
         text: 'You have been logged in.',

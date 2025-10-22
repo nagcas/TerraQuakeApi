@@ -27,6 +27,7 @@ passport.use(
             email: profile.emails?.[0]?.value || '',
             avatar: profile.photos?.[0]?.value || '',
             experience: '',
+            student: 'No',
             terms: true,
             role: ['user']
           })
