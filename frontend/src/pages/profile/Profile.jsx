@@ -8,6 +8,7 @@ import DeleteProfile from './DeleteProfile';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import AvatarUser from '@/components/utils/AvatarUser';
+import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =
@@ -190,33 +191,7 @@ export default function Profile() {
           </motion.div>
         ) : (
           // Not Logged In
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className='text-center max-w-lg z-10'
-          >
-            <h1 className='text-3xl sm:text-4xl font-extrabold mb-4 bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent'>
-              Access Denied
-            </h1>
-            <p className='text-gray-300 mb-8 text-sm sm:text-base'>
-              Please sign in or create an account to view your profile.
-            </p>
-            <div className='flex justify-center gap-4 flex-wrap'>
-              <button
-                onClick={() => navigate('/signin')}
-                className='py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full font-bold text-white shadow-lg hover:scale-105 transition-transform text-sm sm:text-base'
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => navigate('/signup')}
-                className='py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-600 to-purple-700 rounded-full font-bold text-white shadow-lg hover:scale-105 transition-transform text-sm sm:text-base'
-              >
-                Sign Up
-              </button>
-            </div>
-          </motion.div>
+          <AccessRestricted />
         )}
       </section>
       {/* Floating Button */}
