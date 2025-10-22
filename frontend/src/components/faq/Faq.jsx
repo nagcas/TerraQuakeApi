@@ -2,31 +2,9 @@ import MetaData from '@/pages/noPage/MetaData';
 import BackToTopButton from '../utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import FaqItem from './FaqItem';
+import faqData from '../../data/FaqData.json';
 
 export default function Faq() {
-  const faqData = [
-    {
-      question: 'What is TerraQuake API?',
-      answer:
-        'TerraQuake API is a comprehensive seismic data service that provides real-time and historical earthquake information. It offers developers and researchers easy access to global earthquake data through RESTful API endpoints.',
-    },
-    {
-      question: 'What kind of data does it provide?',
-      answer:
-        'The API provides detailed earthquake data including magnitude, location (latitude/longitude), depth, time of occurrence, and region information. It also offers additional metadata like tsunami warnings and seismic station data.',
-    },
-    {
-      question: 'Is the API free to use?',
-      answer:
-        'Yes, TerraQuake API offers a free tier with basic access to earthquake data. Premium features may require a subscription, but core functionality remains free for developers and researchers.',
-    },
-    {
-      question: 'How can I contribute to the project?',
-      answer:
-        'You can contribute to TerraQuake API by submitting bug reports, suggesting new features, or contributing code on our GitHub repository. We welcome community involvement to improve and expand the service.',
-    },
-  ];
-
   return (
     <>
       {/* SEO Stuff */}
