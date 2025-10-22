@@ -27,7 +27,7 @@ export default function FaqItem({ question, answer }) {
       </button>
       {isOpen && (
         <div className='px-4 pb-5'>
-          <p className='text-gray-300'>{answer}</p>
+          <p className='text-base text-purple-300 md:text-xl leading-relaxed'>{answer}</p>
         </div>
       )}
     </div>
