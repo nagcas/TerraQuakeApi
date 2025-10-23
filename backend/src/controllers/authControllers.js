@@ -32,6 +32,11 @@ export const signUp = ({
           existingUser.role = data.role || 'user'
           existingUser.experience = data.experience || ''
           existingUser.student = data.student || 'No'
+          existingUser.bio = data.bio || ''
+          existingUser.location = data.location || ''
+          existingUser.website = data.website || ''
+          existingUser.portfolio = data.portfolio || ''
+          existingUser.github = data.github || ''
           existingUser.terms = data.terms || false
 
           const restoredUser = await existingUser.save()
@@ -106,7 +111,7 @@ export const signIn = ({
       req.body = matchedData(req)
 
       const user = await User.findOne({ email: req.body.email })
-        .select('password name email role experience student')
+        .select('password name email role experience student bio location website portfolio github')
         .lean()
 
       if (!user) {
@@ -347,6 +352,11 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
     successUrl.searchParams.append('role', user.role || 'user')
     successUrl.searchParams.append('experience', user.experience || '')
     successUrl.searchParams.append('student', user.student || 'No')
+    successUrl.searchParams.append('bio', user.bio || '')
+    successUrl.searchParams.append('location', user.location || '')
+    successUrl.searchParams.append('website', user.website || '')
+    successUrl.searchParams.append('portfolio', user.portfolio || '')
+    successUrl.searchParams.append('github', user.github || '')
 
     // Redirect the user to the frontend with all data attached
     return res.redirect(successUrl.toString())

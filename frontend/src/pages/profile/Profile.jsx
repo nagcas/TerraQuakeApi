@@ -173,6 +173,28 @@ export default function Profile() {
                     <span className='font-bold text-white'>Student:</span>{' '}
                     {userLogin?.student || 'No'}
                   </p>
+                   <p>
+                    <span className='font-bold text-white'>Location:</span>{' '}
+                    {userLogin?.location || ''}
+                  </p>
+                   <p>
+                    <span className='font-bold text-white'>Website:</span>{' '}
+                    {userLogin?.website || ''}
+                  </p>
+                   <p>
+                    <span className='font-bold text-white'>Portfolio:</span>{' '}
+                    {userLogin?.portfolio || ''}
+                  </p>
+                   <p>
+                    <span className='font-bold text-white'>GitHub:</span>{' '}
+                    {userLogin?.github || ''}
+                  </p>
+                </div>
+                <div className='mt-6'>
+                  <p>
+                    <span className='font-bold text-white'>Bio:</span>{' '}
+                    {userLogin?.bio || ''}
+                  </p>
                 </div>
 
                 <div className='text-center mt-10'>

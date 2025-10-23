@@ -8,7 +8,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       if (!req.user || !req.user.role?.includes('admin')) {
-        return handleHttpError(res, 'Unauthorized', 400)
+        return handleHttpError(res, 'Unauthorized', 401)
       }
 
       const limit = getPositiveInt(req.query, 'limit', { max: 100, def: 50 })
@@ -34,7 +34,7 @@ export const updateRoleById = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       if (!req.user || !req.user.role?.includes('admin')) {
-        return handleHttpError(res, 'Unauthorized', 400)
+        return handleHttpError(res, 'Unauthorized', 401)
       }
 
       const { id } = req.params
@@ -68,7 +68,7 @@ export const getCurrentUserData = ({
   return async (req, res) => {
     try {
       if (!req.user || !req.user.role?.length) {
-        return handleHttpError(res, 'Unauthorized', 400)
+        return handleHttpError(res, 'Unauthorized', 401)
       }
 
       const user = await User.findById(req.user._id).lean()
@@ -97,7 +97,7 @@ export const updateCurrentUserData = ({
   return async (req, res) => {
     try {
       if (!req.user || !req.user.role?.length) {
-        return handleHttpError(res, 'Unauthorized', 400)
+        return handleHttpError(res, 'Unauthorized', 401)
       }
 
       const updates = matchedData(req)
@@ -138,7 +138,7 @@ export const deleteCurrentUser = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       if (!req.user || !req.user.role?.length) {
-        return handleHttpError(res, 'Unauthorized', 400)
+        return handleHttpError(res, 'Unauthorized', 401)
       }
 
       // Find user first to use its data for email

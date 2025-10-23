@@ -52,6 +52,25 @@ const usersSchema = new Schema(
     },
     githubProfileUrl: {
       type: String
+    },
+    bio: {
+      type: String
+    },
+    location: {
+      type: String,
+      trim: true
+    },
+    website: {
+      type: String,
+      trim: true
+    },
+    portfolio: {
+      type: String,
+      trim: true
+    },
+    github: {
+      type: String,
+      trim: true
     }
   },
   {

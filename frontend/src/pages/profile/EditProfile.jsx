@@ -42,10 +42,15 @@ export default function EditProfile({ setEditProfile }) {
   useEffect(() => {
     if (userLogin) {
       reset({
-        name: userLogin.name || '',
-        email: userLogin.email || '',
-        experience: userLogin.experience || '',
-        student: userLogin.student || 'No',
+        name: userLogin?.name || '',
+        email: userLogin?.email || '',
+        experience: userLogin?.experience || '',
+        student: userLogin?.student || 'No',
+        bio: userLogin?.bio || '',
+        location: userLogin?.location || '',
+        website: userLogin?.website || '',
+        portfolio: userLogin?.portfolio || '',
+        github: userLogin?.github || '',
       });
     }
   }, [userLogin, reset]);
@@ -260,6 +265,72 @@ export default function EditProfile({ setEditProfile }) {
                   <p className='text-red-400 text-xs pt-1'>
                     {errors.student?.message}
                   </p>
+                </div>
+
+                {/* Location field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update Location
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='Location'
+                    autoComplete='off'
+                    {...register('location')}
+                  />
+                </div>
+
+                {/* Website field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update Website url
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='Website'
+                    autoComplete='off'
+                    {...register('website')}
+                  />
+                </div>
+
+                {/* Portfolio field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update Portfolio url
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='portfolio'
+                    autoComplete='off'
+                    {...register('portfolio')}
+                  />
+                </div>
+
+                {/* GitHub field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update GitHub url
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='github'
+                    autoComplete='off'
+                    {...register('github')}
+                  />
+                </div>
+
+                {/* Bio field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update Bio
+                  </label>
+                  <textarea
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='Bio'
+                    autoComplete='off'
+                    rows={4} // puoi cambiare il numero di righe visibili
+                    {...register('bio')}
+                  />
                 </div>
 
                 {/* Submit button */}

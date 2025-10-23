@@ -205,6 +205,38 @@ export const validatorUpdateCurrentUserData = [
     .isIn(['Yes', 'No'])
     .withMessage('Student field must be Yes or No.'),
 
+  // Validate 'bio': optional string
+  check('bio')
+    .optional({ checkFalsy: true })
+    .isString()
+    .isLength({ max: 500 })
+    .withMessage('Bio must be up to 500 characters.'),
+
+  // Validate 'location': optional string
+  check('location')
+    .optional({ checkFalsy: true })
+    .isString()
+    .isLength({ max: 100 })
+    .withMessage('Location must be up to 100 characters.'),
+
+  // Validate 'website': optional string
+  check('website')
+    .optional({ checkFalsy: true })
+    .isURL()
+    .withMessage('Website must be a valid URL.'),
+
+  // Validate 'portfolio': optional string
+  check('portfolio')
+    .optional({ checkFalsy: true })
+    .isURL()
+    .withMessage('Portfolio must be a valid URL.'),
+
+  // Validate 'github': optional string
+  check('github')
+    .optional({ checkFalsy: true })
+    .isURL()
+    .withMessage('GitHub must be a valid URL.'),
+
   (req, res, next) => validateResults(req, res, next)
 ]
 
