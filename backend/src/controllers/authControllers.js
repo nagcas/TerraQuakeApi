@@ -312,6 +312,45 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
 }
 
 /**
+ * NOTE: Controller: Logout user
+ * ---------------------------------
+ * Invalidates the user's current JWT token by adding it to the blacklist.
+ * This provides session expiration and prevents token reuse after logout.
+ */
+export const logout = ({ buildResponse, handleHttpError, invalidateToken }) => {
+  return async (req, res) => {
+    try {
+      // Get token from Authorization header or from req object (set by middleware)
+      const token = req.token || req.get('Authorization')?.split(' ')[1]
+
+      if (!token) {
+        return handleHttpError(res, 'No token provided', 400)
+      }
+
+      // Invalidate the token (add to blacklist)
+      const success = await invalidateToken(token)
+
+      if (!success) {
+        return handleHttpError(res, 'Failed to logout. Invalid token.', 400)
+      }
+
+      return res.status(200).json(
+        buildResponse(
+          req,
+          'Logout successful. Your session has been terminated.',
+          null,
+          null,
+          {}
+        )
+      )
+    } catch (error) {
+      console.error('Logout error:', error)
+      return handleHttpError(res, 'Error during logout', 500)
+    }
+  }
+}
+
+/**
  * NOTE: Controller: Google OAuth Callback
  * ---------------------------------
  * This controller is triggered after Google authentication succeeds.
