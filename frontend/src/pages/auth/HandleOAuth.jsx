@@ -21,6 +21,11 @@ export default function HandleOAuth() {
     const role = params.get('role');
     const experience = params.get('experience');
     const student = params.get('student');
+    const bio = params.get('bio');
+    const location = params.get('location');
+    const website = params.get('website');
+    const portfolio = params.get('portfolio');
+    const github = params.get('github');
 
     if (token && userId) {
       // Save token and user data in localStorage
@@ -32,6 +37,11 @@ export default function HandleOAuth() {
         role: role || 'user',
         experience: experience || '',
         student: student || 'No',
+        bio: bio || '',
+        location: location || '',
+        website: website || '',
+        portfolio: portfolio || '',
+        github: github || '',
       };
 
       localStorage.setItem('token', token);
