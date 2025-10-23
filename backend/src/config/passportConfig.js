@@ -28,6 +28,11 @@ passport.use(
             avatar: profile.photos?.[0]?.value || '',
             experience: '',
             student: 'No',
+            location: '',
+            website: '',
+            portfolio: '',
+            github: '',
+            bio: '',
             terms: true,
             role: ['user']
           })
