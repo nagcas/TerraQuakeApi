@@ -22,7 +22,7 @@ export default function HandleOAuth() {
     const experience = params.get('experience');
     const student = params.get('student');
     const bio = params.get('bio');
-    const location = params.get('location');
+    const userLocation = params.get('location');
     const website = params.get('website');
     const portfolio = params.get('portfolio');
     const github = params.get('github');
@@ -38,7 +38,7 @@ export default function HandleOAuth() {
         experience: experience || '',
         student: student || 'No',
         bio: bio || '',
-        location: location || '',
+        location: userLocation || '',
         website: website || '',
         portfolio: portfolio || '',
         github: github || '',
