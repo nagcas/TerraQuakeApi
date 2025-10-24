@@ -1,4 +1,7 @@
 import express from 'express'
+import { getAllStations } from '../controllers/seimiscStationsControllers.js'
+import { buildResponse } from '../utils/buildResponse.js'
+import handleHttpError from '../utils/handleHttpError.js'
 
 const router = express.Router()
 
@@ -6,7 +9,7 @@ const router = express.Router()
 
 // NOTE: List and details of active seismic stations
 // GET / — retrieves a list of seismic stations and their details
-router.get('/')
+router.get('/', getAllStations({ buildResponse, handleHttpError }))
 
 // NOTE: Returns a single seismic station by code
 // GET /:code — retrieves details of a specific seismic station identified by its code
