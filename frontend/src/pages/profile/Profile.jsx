@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import AvatarUser from '@/components/utils/AvatarUser';
 import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
+import Logout from '../auth/Logout';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =
@@ -87,12 +88,8 @@ export default function Profile() {
                 {userLogin?.role || 'User'} • TerraQuake
               </p>
 
-              <button
-                onClick={handleLogout}
-                className='mt-6 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer'
-              >
-                Logout
-              </button>
+              {/* Button Logout */}
+              <Logout />
             </motion.div>
 
             {/* Right Column */}
