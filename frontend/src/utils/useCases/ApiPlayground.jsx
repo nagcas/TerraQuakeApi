@@ -40,7 +40,7 @@ export default function ApiPlayground({ url }) {
 
   return (
     <div className='mt-6 p-4 rounded-xl border border-dashed border-white/20 bg-black/20'>
-      <div className='flex items-center justify-between'>
+      <div className='flex flex-col md:flex-row gap-6 items-center justify-between'>
         <p className='text-sm font-semibold text-purple-300'>
           Live API Playground
         </p>
