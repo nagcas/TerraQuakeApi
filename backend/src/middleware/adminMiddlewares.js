@@ -34,7 +34,7 @@ export const adminMiddleware = async (req, res, next) => {
     // CRITICAL: Fetch user from DB to verify current role and account status
     // This prevents using old tokens if admin privileges were revoked
     const user = await User.findById(decoded._id).select('-password')
-    
+
     if (!user) {
       return handleHttpError(res, 'User account not found or has been deleted.', 404)
     }

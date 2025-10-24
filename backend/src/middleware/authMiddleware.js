@@ -4,7 +4,7 @@ import User from '../models/userModels.js'
 
 /**
  * Regular authentication middleware
- * 
+ *
  * Validates JWT token for any authenticated user (not just admin)
  * Use this for routes that require authentication but not admin privileges
  */
@@ -24,7 +24,7 @@ export const authMiddleware = async (req, res, next) => {
 
     // Fetch user from DB to verify account exists and is active
     const user = await User.findById(decoded._id).select('-password')
-    
+
     if (!user) {
       return handleHttpError(res, 'User account not found or has been deleted.', 404)
     }
@@ -58,13 +58,13 @@ export const authenticateUser = authMiddleware
 
 /**
  * Admin authentication middleware (legacy - use adminMiddleware from adminMiddlewares.js)
- * 
+ *
  * @deprecated Use adminMiddleware from adminMiddlewares.js instead
  */
 export const validateAdminToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1]
-    
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -73,14 +73,14 @@ export const validateAdminToken = async (req, res, next) => {
     }
 
     const decoded = await verifyToken(token)
-    
+
     if (!decoded) {
       return res.status(401).json({
         success: false,
         message: 'Invalid, expired, or revoked token.'
       })
     }
-    
+
     // Check if user is admin
     if (!decoded.role || !decoded.role.includes('admin')) {
       return res.status(403).json({

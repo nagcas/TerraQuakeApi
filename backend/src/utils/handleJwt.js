@@ -17,7 +17,7 @@ const tokenBlacklist = new Set()
  */
 export const tokenSign = async (user) => {
   const tokenId = `${user._id}_${Date.now()}_${Math.random().toString(36).substring(7)}`
-  
+
   const sign = jwt.sign(
     {
       _id: user._id,
@@ -44,12 +44,12 @@ export const tokenSign = async (user) => {
 export const verifyToken = async (tokenJwt) => {
   try {
     const decoded = jwt.verify(tokenJwt, JWT_SECRET)
-    
+
     // Check if token is blacklisted (logged out)
     if (tokenBlacklist.has(decoded.jti)) {
       return null
     }
-    
+
     return decoded
   } catch (error) {
     return null
@@ -65,7 +65,7 @@ export const invalidateToken = async (tokenJwt) => {
     const decoded = jwt.decode(tokenJwt)
     if (decoded && decoded.jti) {
       tokenBlacklist.add(decoded.jti)
-      
+
       // Clean up expired tokens from blacklist after token expiry
       // Calculate time until token expires
       const expiryTime = (decoded.exp - Math.floor(Date.now() / 1000)) * 1000
@@ -74,7 +74,7 @@ export const invalidateToken = async (tokenJwt) => {
           tokenBlacklist.delete(decoded.jti)
         }, expiryTime)
       }
-      
+
       return true
     }
     return false
