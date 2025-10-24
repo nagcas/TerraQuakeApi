@@ -1,25 +1,117 @@
 import { verifyToken } from '../utils/handleJwt.js'
 import handleHttpError from '../utils/handleHttpError.js'
+import User from '../models/userModels.js'
 
 /**
-* NOTE: Middleware to authenticate a user based on a JWT.
-* It checks for an "Authorization" header, verifies the token,
-* and if valid, attaches the decoded user payload to the request object.
-* If the token is invalid or missing, it sends a 400 Bad Request response.
-*/
-export const authenticateUser = async (req, res, next) => {
-  const token = req.get('Authorization')?.split(' ')[1]
+ * Regular authentication middleware
+ * 
+ * Validates JWT token for any authenticated user (not just admin)
+ * Use this for routes that require authentication but not admin privileges
+ */
+export const authMiddleware = async (req, res, next) => {
+  try {
+    const token = req.get('Authorization')?.split(' ')[1]
 
-  if (!token) {
-    return handleHttpError(res, 'Authorization token missing', 401)
+    if (!token) {
+      return handleHttpError(res, 'Authorization token missing', 401)
+    }
+
+    // Verify JWT token (includes blacklist check and expiration validation)
+    const decoded = await verifyToken(token)
+    if (!decoded) {
+      return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
+    }
+
+    // Fetch user from DB to verify account exists and is active
+    const user = await User.findById(decoded._id).select('-password')
+    
+    if (!user) {
+      return handleHttpError(res, 'User account not found or has been deleted.', 404)
+    }
+
+    // Attach user object and token to request
+    req.user = user
+    req.token = token
+    req.tokenDecoded = decoded
+
+    next()
+  } catch (error) {
+    console.error('Authentication error:', error)
+
+    if (error.name === 'JsonWebTokenError') {
+      return handleHttpError(res, 'Malformed or invalid token', 401)
+    }
+
+    if (error.name === 'TokenExpiredError') {
+      return handleHttpError(res, 'Token has expired. Please log in again.', 401)
+    }
+
+    handleHttpError(res, 'Internal server error during authentication', 500)
   }
+}
 
-  const decoded = await verifyToken(token)
+/**
+ * Alias for authMiddleware (for backward compatibility)
+ * Use this name if you prefer the old naming convention
+ */
+export const authenticateUser = authMiddleware
 
-  if (!decoded) {
-    return handleHttpError(res, 'Invalid or expired JWT token', 401)
+/**
+ * Admin authentication middleware (legacy - use adminMiddleware from adminMiddlewares.js)
+ * 
+ * @deprecated Use adminMiddleware from adminMiddlewares.js instead
+ */
+export const validateAdminToken = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1]
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'Access denied. No token provided.'
+      })
+    }
+
+    const decoded = await verifyToken(token)
+    
+    if (!decoded) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid, expired, or revoked token.'
+      })
+    }
+    
+    // Check if user is admin
+    if (!decoded.role || !decoded.role.includes('admin')) {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Admin privileges required.'
+      })
+    }
+
+    // Verify user still exists and has admin role
+    const user = await User.findById(decoded._id).select('-password')
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.'
+      })
+    }
+
+    if (!user.role || !user.role.includes('admin')) {
+      return res.status(403).json({
+        success: false,
+        message: 'Admin privileges have been revoked.'
+      })
+    }
+
+    req.user = user
+    req.token = token
+    next()
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid or expired token.'
+    })
   }
-
-  req.user = decoded
-  next()
 }

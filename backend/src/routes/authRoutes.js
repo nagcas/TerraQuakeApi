@@ -7,7 +7,8 @@ import {
   forgotPassword,
   resetPassword,
   changePassword,
-  googleAuthCallback
+  googleAuthCallback,
+  logout
 } from '../controllers/authControllers.js'
 import {
   validatorSignIn,
@@ -19,11 +20,11 @@ import {
 
 import User from '../models/userModels.js'
 import { matchedData } from 'express-validator'
-import { tokenSign } from '../utils/handleJwt.js'
+import { tokenSign, invalidateToken } from '../utils/handleJwt.js'
 import { compare } from '../utils/handlePassword.js'
 import { buildResponse } from '../utils/buildResponse.js'
 import handleHttpError from '../utils/handleHttpError.js'
-import { authenticateUser } from '../middleware/authMiddleware.js'
+import { authenticateUser, authMiddleware } from '../middleware/authMiddleware.js'
 import { sendEmailRegister } from '../libs/sendEmailRegister.js'
 import { sendForgotPassword } from '../libs/sendForgotPassword.js'
 import { sendChangePassword } from '../libs/sendChangePassword.js'
@@ -84,6 +85,14 @@ router.post(
   authenticateUser,
   validatorChangePassword,
   changePassword({ User, handleHttpError, buildResponse, matchedData, sendChangePassword })
+)
+
+// NOTE: logout user
+// SECURED: Requires authentication - invalidates current session token
+router.post(
+  '/logout',
+  authMiddleware,
+  logout({ buildResponse, handleHttpError, invalidateToken })
 )
 
 // NOTE: GOOGLE AUTHENTICATION ROUTES

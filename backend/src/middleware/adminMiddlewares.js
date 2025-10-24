@@ -5,8 +5,11 @@ import User from '../models/userModels.js'
 /**
  * Admin authentication middleware
  *
- * Checks for JWT token, verifies it,
- * ensures the user exists in the DB, and checks the admin role.
+ * Enhanced security implementation:
+ * - Validates JWT token on every request
+ * - Checks token expiration and blacklist status
+ * - Verifies user exists and still has admin role in database
+ * - Protects against token replay and session hijacking
  */
 export const adminMiddleware = async (req, res, next) => {
   try {
@@ -14,35 +17,48 @@ export const adminMiddleware = async (req, res, next) => {
     const token = req.get('Authorization')?.split(' ')[1]
 
     if (!token) {
-      return handleHttpError(res, 'Authorization token missing', 401)
+      return handleHttpError(res, 'Authorization token missing. Admin access denied.', 401)
     }
 
-    // Verify JWT token
+    // Verify JWT token (includes blacklist check and expiration validation)
     const decoded = await verifyToken(token)
     if (!decoded) {
-      return handleHttpError(res, 'Invalid or expired token', 401)
+      return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
     }
 
     // Check if the decoded token contains the admin role
     if (!decoded.role || !decoded.role.includes('admin')) {
-      return handleHttpError(res, 'Unauthorized access', 401)
+      return handleHttpError(res, 'Access denied. Admin privileges required.', 403)
     }
 
-    // Optionally fetch user from DB
+    // CRITICAL: Fetch user from DB to verify current role and account status
+    // This prevents using old tokens if admin privileges were revoked
     const user = await User.findById(decoded._id).select('-password')
+    
     if (!user) {
-      return handleHttpError(res, 'User not found', 404)
+      return handleHttpError(res, 'User account not found or has been deleted.', 404)
     }
 
-    // Attach user to request object
+    // Verify user still has admin role in the database
+    if (!user.role || !user.role.includes('admin')) {
+      return handleHttpError(res, 'Admin privileges have been revoked. Access denied.', 403)
+    }
+
+    // Attach full user object and token to request for further use
     req.user = user
+    req.token = token
+    req.tokenDecoded = decoded
 
     next()
   } catch (error) {
     console.error('Admin authentication error:', error)
 
     if (error.name === 'JsonWebTokenError') {
-      return handleHttpError(res, 'Invalid token', 401)
+      return handleHttpError(res, 'Malformed or invalid token', 401)
+    }
+
+    if (error.name === 'TokenExpiredError') {
+      return handleHttpError(res, 'Token has expired. Please log in again.', 401)
     }
 
     handleHttpError(res, 'Internal server error during authentication', 500)
