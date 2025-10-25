@@ -19,22 +19,34 @@ export default function GithubAuth() {
     const token = params.get('token');
     const message = params.get('message');
 
-    // If token is missing, show error and redirect to signin
+    // Handle cases where token is missing
     if (!token) {
       setLoading(false);
-      Swal.fire({
-        title: 'Error!',
-        text: 'No token received. Please try signing in again.',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      }).then(() => navigate('/signin'));
+
+      if (message) {
+        // Backend returned an error message
+        Swal.fire({
+          title: 'Error!',
+          text: message,
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        }).then(() => navigate('/signin'));
+      } else {
+        // Token is missing without a backend message
+        Swal.fire({
+          title: 'Error!',
+          text: 'No token received. Please try signing in again.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        }).then(() => navigate('/signin'));
+      }
       return;
     }
 
     // Save JWT token in localStorage
     localStorage.setItem('token', token);
 
-    // Fetch user data from backend using axios
+    // Fetch user data from backend using the token
     axios
       .get(`${import.meta.env.VITE_URL_BACKEND}/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -42,7 +54,7 @@ export default function GithubAuth() {
       .then(response => {
         const data = response.data;
         if (data?.data) {
-          // Save user data in localStorage and update context
+          // Save user info in localStorage and update context
           localStorage.setItem('user', JSON.stringify(data.data));
           setUserLogin(data.data);
           setIsLoggedIn(true);
@@ -69,7 +81,7 @@ export default function GithubAuth() {
       .finally(() => setLoading(false));
   }, [search, navigate, setIsLoggedIn, setUserLogin]);
 
-  // Loading screen while fetching token and user data
+  // Show loading screen while fetching token and user data
   if (loading) {
     return (
       <motion.section
@@ -96,3 +108,4 @@ export default function GithubAuth() {
 
   return null;
 }
+
