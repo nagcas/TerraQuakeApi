@@ -75,6 +75,15 @@ export const githubAuthController = ({ handleHttpError }) => {
           name: githubUser.name || githubUser.login,
           email: primaryEmail || null,
           avatar: githubUser.avatar_url,
+          experience: '',
+          student: 'No',
+          location: '',
+          website: '',
+          portfolio: '',
+          github: '',
+          linkedin: '',
+          bio: '',
+          terms: true,
           role: ['user']
         })
       }
