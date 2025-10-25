@@ -15,12 +15,43 @@ export default function GithubAuth() {
     const params = new URLSearchParams(search);
     const token = params.get('token');
     const message = params.get('message');
+    const userId = params.get('user_id');
+    const name = params.get('name');
+    const email = params.get('email');
+    const avatar = params.get('avatar');
+    const role = params.get('role');
+    const experience = params.get('experience');
+    const student = params.get('student');
+    const bio = params.get('bio');
+    const userLocation = params.get('location');
+    const website = params.get('website');
+    const portfolio = params.get('portfolio');
+    const github = params.get('github');
+    const linkedin = params.get('linkedin');
 
-    if (token) {
-      // Salva il token in localStorage
+    if (token && userId) {
+      // Save token and user data in localStorage
+      const userData = {
+        _id: userId,
+        name: name || 'Anonymous',
+        email: email || '',
+        avatar: avatar || '',
+        role: role || 'user',
+        experience: experience || '',
+        student: student || 'No',
+        bio: bio || '',
+        location: userLocation || '',
+        website: website || '',
+        portfolio: portfolio || '',
+        github: github || '',
+        linkedin: linkedin || '',
+      };
+      
       localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(userData));
 
-      // Imposta utente come loggato
+      // Update context state
+      setUserLogin(userData);
       setIsLoggedIn(true);
 
       Swal.fire({
