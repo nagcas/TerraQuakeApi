@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import MetaData from '../noPage/MetaData';
 import { Context } from '@/components/modules/Context';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import EditProfile from './EditProfile';
 import DeleteProfile from './DeleteProfile';
@@ -10,37 +9,15 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import AvatarUser from '@/components/utils/AvatarUser';
 import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
 import Logout from '../auth/Logout';
+import DetailProfile from './DetailProfile';
+import GenerateTokenAPI from './GenerateTokenAPI';
+import FunctionsProfile from './FunctionsProfile';
 
 export default function Profile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =
     useContext(Context);
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(null);
-
-  const handleLogout = () => {
-    setUserLogin({});
-    setIsLoggedIn(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-
-    Swal.fire({
-      title: 'Logged Out!',
-      text: 'You have successfully logged out of TerraQuake.',
-      icon: 'success',
-      confirmButtonColor: '#9333ea',
-    }).then(() => {
-      navigate('/', { replace: true });
-    });
-  };
-
-  const handleGenerateToken = () => {
-    Swal.fire({
-      title: 'Coming Soon!',
-      text: 'API Token generation feature will be available soon.',
-      icon: 'info',
-      confirmButtonColor: '#ec4899',
-    });
-  };
 
   return (
     <>
@@ -102,27 +79,8 @@ export default function Profile() {
                 tokens.
               </p>
 
-              {activeSection === null && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className='mt-6 flex flex-col gap-3 sm:gap-4'
-                >
-                  <button
-                    onClick={() => setActiveSection('edit')}
-                    className='w-48 sm:w-60 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
-                  >
-                    Edit Profile
-                  </button>
-
-                  <button
-                    onClick={() => setActiveSection('delete')}
-                    className='w-48 sm:w-60 border border-purple-400 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-500 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
-                  >
-                    Delete Profile
-                  </button>
-                </motion.div>
-              )}
+              {/* Functions profile users */}
+              {activeSection === null && <FunctionsProfile setActiveSection={setActiveSection} />}
 
               {activeSection !== null && (
                 <motion.button
@@ -146,65 +104,11 @@ export default function Profile() {
                 transition={{ delay: 0.2 }}
                 className='col-span-1 lg:col-span-2 bg-black/30 backdrop-blur-xl border border-pink-500/10 rounded-2xl shadow-lg p-6 sm:p-8 mt-6'
               >
-                <h2 className='text-xl sm:text-2xl font-semibold text-pink-400 mb-4'>
-                  Account Details
-                </h2>
-                <div className='grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base'>
-                  <p>
-                    <span className='font-bold text-white'>Name:</span>{' '}
-                    {userLogin?.name}
-                  </p>
-                  <p>
-                    <span className='font-bold text-white'>Email:</span>{' '}
-                    {userLogin?.email}
-                  </p>
-                  <p>
-                    <span className='font-bold text-white'>Role:</span>{' '}
-                    {userLogin?.role}
-                  </p>
-                  <p>
-                    <span className='font-bold text-white'>Experience:</span>{' '}
-                    {userLogin?.experience || 'N/A'}
-                  </p>
-                  <p>
-                    <span className='font-bold text-white'>Student:</span>{' '}
-                    {userLogin?.student || 'No'}
-                  </p>
-                   <p>
-                    <span className='font-bold text-white'>Location:</span>{' '}
-                    {userLogin?.location || ''}
-                  </p>
-                   <p>
-                    <span className='font-bold text-white'>Website:</span>{' '}
-                    {userLogin?.website || ''}
-                  </p>
-                   <p>
-                    <span className='font-bold text-white'>Portfolio:</span>{' '}
-                    {userLogin?.portfolio || ''}
-                  </p>
-                   <p>
-                    <span className='font-bold text-white'>GitHub:</span>{' '}
-                    {userLogin?.github || ''}
-                  </p>
-                </div>
-                <div className='mt-6'>
-                  <p>
-                    <span className='font-bold text-white'>Bio:</span>{' '}
-                    {userLogin?.bio || ''}
-                  </p>
-                </div>
+                {/* Detail Profile */}
+                <DetailProfile />
 
-                <div className='text-center mt-10'>
-                  <h2 className='text-lg sm:text-xl font-semibold text-purple-400'>
-                    Generate API Token
-                  </h2>
-                  <button
-                    onClick={handleGenerateToken}
-                    className='mt-4 py-2 sm:py-3 px-8 sm:px-10 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer'
-                  >
-                    Generate Token
-                  </button>
-                </div>
+                {/* Generate Token API */}
+                <GenerateTokenAPI />
               </motion.div>
             )}
           </motion.div>
