@@ -60,7 +60,7 @@ export default function GithubAuth() {
         console.error('Axios fetch user error:', err);
         Swal.fire({
           title: 'Error!',
-          text: 'Failed to fetch user data',
+          text: message || 'Failed to fetch user data',
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => navigate('/signin'));

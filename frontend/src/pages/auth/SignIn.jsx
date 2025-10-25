@@ -32,31 +32,15 @@ export default function SignIn() {
   } = useForm({ resolver: yupResolver(loginSchema) });
 
   // Social login (Google & GitHub unified)
-  const handleSocialLogin = async (provider) => {
+  const handleSocialLogin = (provider) => {
     const backendBaseUrl =
       import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
 
-    try {
-      if (provider === 'google') {
-        window.location.href = `${backendBaseUrl}/auth/google`;
-      } else if (provider === 'github') {
-        // Check if GitHub login will fail due to existing email
-        const res = await axios.get(`${backendBaseUrl}/auth/github/check`);
-        if (res.data?.redirectUrl) {
-          window.location.href = res.data.redirectUrl;
-        }
-      }
-    } catch (err) {
-      const errorMessage =
-        err?.response?.data?.message ||
-        'GitHub login failed or account already exists.';
-
-      Swal.fire({
-        title: 'Error!',
-        text: errorMessage,
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      });
+    if (provider === 'google') {
+      window.location.href = `${backendBaseUrl}/auth/google`;
+    } else if (provider === 'github') {
+      // GitHub OAuth
+      window.location.href = `${backendBaseUrl}/auth/github`;
     }
   };
 

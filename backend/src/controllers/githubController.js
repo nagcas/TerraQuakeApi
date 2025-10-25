@@ -11,20 +11,17 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 // Define frontend URL based on environment (development or production)
-const FRONTEND_URL = process.env.DEV_ENV === 'production'
-  ? process.env.FRONTEND_PRODUCTION
-  : process.env.FRONTEND_DEVELOPMENT
+const FRONTEND_URL =
+  process.env.DEV_ENV === 'production'
+    ? process.env.FRONTEND_PRODUCTION
+    : process.env.FRONTEND_DEVELOPMENT
 
 // Destructure required environment variables
-const {
-  GITHUB_CLIENT_SECRET,
-  GITHUB_CLIENT_ID,
-  JWT_SECRET
-} = process.env
+const { GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID, JWT_SECRET } = process.env
 
 // NOTE: GitHub OAuth controller
 // Handles authentication using GitHub's OAuth 2.0 flow
-export const githubAuthController = ({ handleHttpError }) => {
+export const githubAuthController = ({ buildResponse, handleHttpError }) => {
   return async (req, res) => {
     const code = req.query.code
     if (!code) return handleHttpError(res, 'Code is required', 400)
@@ -53,26 +50,28 @@ export const githubAuthController = ({ handleHttpError }) => {
       // Step 3: Get verified primary email
       let primaryEmail = null
       try {
-        const emailsRes = await axios.get('https://api.github.com/user/emails', {
-          headers: { Authorization: `Bearer ${accessToken}` }
-        })
+        const emailsRes = await axios.get(
+          'https://api.github.com/user/emails',
+          {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          }
+        )
         const emails = emailsRes.data
-        const primary = emails.find(email => email.primary && email.verified)
+        const primary = emails.find((email) => email.primary && email.verified)
         primaryEmail = primary ? primary.email : emails[0]?.email || null
       } catch (emailErr) {
         console.warn('Unable to fetch emails from GitHub:', emailErr.message)
       }
 
-      // ✅ Step 4: Check if the email already exists
+      // Step 4: Check if the email already exists
       if (primaryEmail) {
         const existingUser = await User.findOne({ email: primaryEmail })
 
         if (existingUser && !existingUser.githubId) {
           // Return JSON error handled by frontend Swal
-          return res.status(400).json({
-            success: false,
-            message: 'An account with this email already exists. Please log in using your original provider (Google or email/password).'
-          })
+          return res.redirect(
+            `${FRONTEND_URL}/auth/error?message=An account with this email already exists. Please log in using your original provider (Google or email/password).`
+          )
         }
       }
 
