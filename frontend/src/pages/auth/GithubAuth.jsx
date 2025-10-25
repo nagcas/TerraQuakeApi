@@ -3,6 +3,7 @@ import { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 export default function GithubAuth() {
   const navigate = useNavigate();
@@ -32,18 +33,17 @@ export default function GithubAuth() {
     // Save JWT token in localStorage
     localStorage.setItem('token', token);
 
-    // Fetch user data from backend using the token
-    fetch(`${import.meta.env.VITE_URL_BACKEND}/users/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data?.user) {
+    // Fetch user data from backend using axios
+    axios
+      .get(`${import.meta.env.VITE_URL_BACKEND}/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => {
+        const data = response.data;
+        if (data?.data) {
           // Save user data in localStorage and update context
-          localStorage.setItem('user', JSON.stringify(data.user));
-          setUserLogin(data.user);
+          localStorage.setItem('user', JSON.stringify(data.data));
+          setUserLogin(data.data);
           setIsLoggedIn(true);
 
           Swal.fire({
@@ -57,7 +57,7 @@ export default function GithubAuth() {
         }
       })
       .catch(err => {
-        console.error('Fetch user error:', err);
+        console.error('Axios fetch user error:', err);
         Swal.fire({
           title: 'Error!',
           text: 'Failed to fetch user data',
