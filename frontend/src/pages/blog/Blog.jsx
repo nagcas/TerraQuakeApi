@@ -11,6 +11,7 @@ import {
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
+import Spinner from '@/components/spinner/Spinner';
 
 // Mock data generation functions
 const generateMockPosts = (page, limit) => {
@@ -188,17 +189,7 @@ export default function Blog() {
 
   if (loading) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
-        <MetaData
-          title='Blog - Loading'
-          description='Loading blog posts'
-        />
-        <div className='container mx-auto px-4'>
-          <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500'></div>
-          </div>
-        </div>
-      </div>
+      <Spinner />
     );
   }
 

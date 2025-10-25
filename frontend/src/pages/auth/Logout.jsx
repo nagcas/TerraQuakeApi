@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
 import Swal from 'sweetalert2';
 import { Context } from '@components/modules/Context';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function Logout() {
   const backendBaseUrl =
@@ -71,7 +72,7 @@ export default function Logout() {
       className='mt-6 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer disabled:opacity-60'
     >
       {loading ? (
-        <ImSpinner9 className='text-2xl mx-auto animate-spin text-white' />
+        <Spinner />
       ) : (
         <span className='text-white'>Logout</span>
       )}

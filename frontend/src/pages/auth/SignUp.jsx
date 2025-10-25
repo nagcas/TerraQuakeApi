@@ -11,6 +11,7 @@ import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Channels from '@/components/channels/Channels';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -360,7 +361,7 @@ export default function SignUp() {
                 >
                   {loading ? (
                     <p className='text-white'>
-                      <ImSpinner9 className='text-2xl mx-auto spinner' />
+                      <Spinner />
                     </p>
                   ) : (
                     <span>Create your account</span>

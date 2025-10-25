@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@/components/modules/Context';
 import MetaData from '../noPage/MetaData';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function DeleteProfile() {
   const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
@@ -101,7 +102,7 @@ export default function DeleteProfile() {
               className='mt-6 w-auto py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer disabled:opacity-50'
               aria-label='Delete your account'
             >
-              {loading ? 'Deleting...' : 'Delete account'}
+              {loading ? <Spinner /> : 'Delete account'}
             </button>
           </div>
         ) : (

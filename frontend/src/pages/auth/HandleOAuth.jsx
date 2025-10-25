@@ -4,6 +4,7 @@ import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
 import { ImSpinner9 } from 'react-icons/im';
 import { motion } from 'framer-motion';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function HandleOAuth() {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ export default function HandleOAuth() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <ImSpinner9 className='text-5xl animate-spin text-purple-500' />
+          <Spinner />
           <motion.span
             className='text-lg font-medium tracking-wide text-gray-300'
             initial={{ opacity: 0 }}
