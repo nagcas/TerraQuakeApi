@@ -131,6 +131,10 @@ export default function App() {
                 element={<GithubAuth />}
               />
               <Route
+                path='/auth/error'
+                element={<GithubAuth />}
+              />
+              <Route
                 path='/login-success'
                 element={<HandleOAuth />}
               />
