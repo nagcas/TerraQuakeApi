@@ -70,7 +70,7 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
         if (existingUser && !existingUser.githubId) {
           // Return JSON error handled by frontend Swal
           return res.redirect(
-            `${FRONTEND_URL}/auth/error?message=An account with this email already exists. Please log in using your original provider (Google or email/password).`
+            `${FRONTEND_URL}/auth/callback?message=An account with this email already exists. Please log in using your original provider (Google or email/password).`
           )
         }
       }
@@ -110,7 +110,7 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
     } catch (err) {
       console.error('GitHub auth error:', err.message)
       return res.redirect(
-        `${FRONTEND_URL}/auth/error?message=GitHub authentication failed. Please try again.`
+        `${FRONTEND_URL}/auth/callback?message=GitHub authentication failed. Please try again.`
       )
     }
   }
