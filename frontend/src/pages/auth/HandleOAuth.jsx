@@ -13,6 +13,7 @@ export default function HandleOAuth() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+    const message = params.get('message');
     const token = params.get('token');
     const userId = params.get('user_id');
     const name = params.get('name');
