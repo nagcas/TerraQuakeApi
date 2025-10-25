@@ -56,7 +56,7 @@ export default function HandleOAuth() {
       // Redirect after success
       Swal.fire({
         title: 'Login Successful!',
-        text: 'You have been logged in.',
+        text: message || 'Login with Google successful!',
         icon: 'success',
         confirmButtonText: 'Profile',
       }).then(() => {
