@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function GithubAuth() {
   const navigate = useNavigate();
@@ -79,6 +80,7 @@ export default function GithubAuth() {
                    bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#2d2d2d] z-50"
       >
         <div className="absolute inset-0 z-0">
+          <Spinner />
           <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full
                           mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full

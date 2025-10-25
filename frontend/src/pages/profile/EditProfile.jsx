@@ -7,8 +7,8 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ImSpinner9 } from 'react-icons/im';
 import Swal from 'sweetalert2';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function EditProfile({ setEditProfile }) {
   // Get user context and login state
@@ -355,7 +355,7 @@ export default function EditProfile({ setEditProfile }) {
                   className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
                 >
                   {loading ? (
-                    <ImSpinner9 className='text-2xl mx-auto animate-spin' />
+                    <Spinner />
                   ) : (
                     'Save Changes'
                   )}

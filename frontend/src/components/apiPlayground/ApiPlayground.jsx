@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ImSpinner9 } from 'react-icons/im';
+import Spinner from '../spinner/Spinner';
 
 export default function ApiPlayground({
   title = 'API Playground',
@@ -229,9 +229,9 @@ export default function ApiPlayground({
           </div>
 
           {loading && (
-            <p className='text-yellow-400 mb-4 flex items-center gap-2'>
-              <ImSpinner9 className='spinner' /> Loading...
-            </p>
+            <div className='my-6'>
+              <Spinner />
+            </div>
           )}
 
           {errorMessage && (

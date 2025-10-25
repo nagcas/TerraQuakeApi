@@ -10,8 +10,10 @@ import { useParams } from 'react-router';
 import MetaData from '../noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function ResetPassword() {
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
 
@@ -44,6 +46,8 @@ export default function ResetPassword() {
   let navigate = useNavigate();
 
   const handleForgotPassword = (data) => {
+    setLoading(true);
+
     const formData = {
       password1: data.password,
       password2: data.confirmPassword,
@@ -60,6 +64,7 @@ export default function ResetPassword() {
           allowEscapeKey: false,
           confirmButtonText: 'Ok',
         }).then(() => {
+          setLoading(false);
           navigate('/signin');
         });
       })
@@ -70,7 +75,7 @@ export default function ResetPassword() {
           icon: 'error',
           confirmButtonText: 'Ok',
         });
-      });
+      })
   };
 
   return (
@@ -178,6 +183,13 @@ export default function ResetPassword() {
                 aria-label='Reset your account password'
               >
                 Reset
+                {loading ? (
+                                    <p className='text-white'>
+                                      <Spinner />
+                                    </p>
+                                  ) : (
+                                    <span>Reset</span>
+                                  )}
               </button>
             </form>
             {/* Divider */}

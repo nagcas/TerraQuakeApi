@@ -16,6 +16,7 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
 import BackToTopButton from '@/components/utils/BackToTopButton';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -419,17 +420,7 @@ The study of seismic waves continues to evolve with new technologies, providing 
 
   if (loading) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
-        <MetaData
-          title='Loading...'
-          description='Loading blog post'
-        />
-        <div className='container mx-auto px-4'>
-          <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500'></div>
-          </div>
-        </div>
-      </div>
+      <Spinner />
     );
   }
 

@@ -14,7 +14,7 @@ export function CopyButton({ text }) {
   return (
     <button
       onClick={handleCopy}
-      className='ml-2 text-xs px-2 py-1 rounded bg-white/6 hover:bg-white/10 transition text-white/80'
+      className='ml-2 text-xs px-2 py-1 rounded bg-white/6 hover:bg-white/10 transition text-white/80 cursor-pointer'
       aria-label='Copy code'
       type='button'
     >

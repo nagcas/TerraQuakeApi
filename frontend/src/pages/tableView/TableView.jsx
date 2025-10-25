@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
 import Swal from 'sweetalert2';
-import { ImSpinner9 } from 'react-icons/im';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function TableView() {
   const BACKEND_URL =
@@ -201,8 +201,7 @@ export default function TableView() {
 
           {loading && (
             <p className='flex justify-center mt-16 text-center text-2xl'>
-              <ImSpinner9 className='mr-2 animate-spin text-indigo-600' />
-              Loading data...
+              <Spinner />
             </p>
           )}
           {error && <p className='text-red-500'>{error}</p>}

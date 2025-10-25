@@ -1,5 +1,5 @@
 import './About.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MetaData from '@pages/noPage/MetaData';
 import {
   FaGlobeAmericas,
@@ -11,7 +11,6 @@ import {
   FaUserAstronaut,
   FaUsers,
 } from 'react-icons/fa';
-import axios from 'axios';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Metrics from '@/components/metrics/Metrics';

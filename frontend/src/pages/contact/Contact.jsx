@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import MetaData from '@pages/noPage/MetaData';
-import { ImSpinner9 } from 'react-icons/im';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -10,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Channels from '@/components/channels/Channels';
+import Spinner from '@/components/spinner/Spinner';
 
 const contactSchema = yup.object({
   name: yup.string().required('Name is required!'),
@@ -250,8 +250,7 @@ export default function Contact() {
                 >
                   {loading ? (
                     <>
-                      <ImSpinner9 className='animate-spin' />
-                      Processing Request...
+                      <Spinner />
                     </>
                   ) : (
                     'Send Message'

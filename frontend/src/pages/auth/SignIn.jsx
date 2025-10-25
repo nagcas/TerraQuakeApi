@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa';
-import { ImSpinner9 } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
@@ -12,6 +11,7 @@ import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Channels from '@/components/channels/Channels';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -194,7 +194,7 @@ export default function SignIn() {
                   type='submit'
                 >
                   {loading ? (
-                    <ImSpinner9 className='text-2xl mx-auto spinner' />
+                    <Spinner />
                   ) : (
                     <span>Login</span>
                   )}
