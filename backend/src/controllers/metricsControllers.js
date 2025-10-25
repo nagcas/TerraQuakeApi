@@ -43,7 +43,7 @@ export const getMetricsJSON = async (req, res) => {
       memoryUsage: process.memoryUsage().rss
     }
 
-    console.log(metrics)
+    // console.log(metrics)
 
     res.status(200).json({
       ...buildResponse(
