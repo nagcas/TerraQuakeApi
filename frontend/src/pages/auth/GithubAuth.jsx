@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 export default function GithubAuth() {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const { setIsLoggedIn } = useContext(Context);
+  const { setIsLoggedIn, setUserLogin } = useContext(Context);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
