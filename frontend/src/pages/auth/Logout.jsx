@@ -12,11 +12,11 @@ export default function Logout() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setUserLogin, setIsLoggedIn } = useContext(Context);
-
+  const token = localStorage.getItem('token');
+  
   const handleLogoutSubmit = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
 
       if (!token) {
         throw new Error('No token found. Please log in again.');
