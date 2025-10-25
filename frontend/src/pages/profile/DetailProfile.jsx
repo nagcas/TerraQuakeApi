@@ -11,45 +11,66 @@ export default function DetailProfile() {
         Account Details
       </h2>
       <div className='grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base'>
-        <p>
-          <span className='font-bold text-white'>Name:</span> {userLogin?.name}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Name:</span> 
+          <span>{userLogin?.name}</span>
         </p>
-        <p>
-          <span className='font-bold text-white'>Email:</span>{' '}
-          {userLogin?.email}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Email:</span>
+          <span>{userLogin?.email}</span>
         </p>
-        <p>
-          <span className='font-bold text-white'>Role:</span> {userLogin?.role}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Role:</span> 
+          <span>{userLogin?.role}</span>
         </p>
-        <p>
-          <span className='font-bold text-white'>Experience:</span>{' '}
-          {userLogin?.experience || 'N/A'}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Experience:</span>
+          <span>{userLogin?.experience || 'N/A'}</span>
         </p>
-        <p>
-          <span className='font-bold text-white'>Student:</span>{' '}
-          {userLogin?.student || 'No'}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Student:</span>
+          <span>{userLogin?.student || 'No'}</span>
         </p>
-        <p>
-          <span className='font-bold text-white'>Location:</span>{' '}
-          {userLogin?.location || ''}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Location (optional):</span>
+          <span>{userLogin?.location || ''}</span>
         </p>
-        <p>
-          <span className='font-bold text-white'>Website:</span>{' '}
-          {userLogin?.website || ''}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Website (optional):</span>
+          <a 
+            href={userLogin?.website || ''}
+            target='_blank'
+            className='hover:text-pink-400'
+          >
+            {userLogin?.website || ''}
+          </a>
+          
         </p>
-        <p>
-          <span className='font-bold text-white'>Portfolio:</span>{' '}
-          {userLogin?.portfolio || ''}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Portfolio (optional):</span>
+          <a 
+            href={userLogin?.portfolio || ''} 
+            target='_blank'
+            className='hover:text-pink-400'
+          >
+            {userLogin?.portfolio || ''}
+          </a>
         </p>
-        <p>
-          <span className='font-bold text-white'>GitHub:</span>{' '}
-          {userLogin?.github || ''}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>GitHub (optional):</span>
+          <a 
+            href={userLogin?.github || ''} 
+            target='_blank'
+            className='hover:text-pink-400'
+          >
+            {userLogin?.github || ''}
+          </a>
         </p>
       </div>
       <div className='mt-6'>
-        <p>
-          <span className='font-bold text-white'>Bio:</span>{' '}
-          {userLogin?.bio || ''}
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>Bio (optional):</span>
+          <span>{userLogin?.bio || ''}</span>
         </p>
       </div>
     </>
