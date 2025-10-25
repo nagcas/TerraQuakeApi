@@ -66,6 +66,16 @@ export default function DetailProfile() {
             {userLogin?.github || ''}
           </a>
         </p>
+        <p className='flex flex-col'>
+          <span className='font-bold text-purple-400'>LinkedIn (optional):</span>
+          <a 
+            href={userLogin?.linkedin || ''} 
+            target='_blank'
+            className='hover:text-pink-400'
+          >
+            {userLogin?.linkedin || ''}
+          </a>
+        </p>
       </div>
       <div className='mt-6'>
         <p className='flex flex-col'>

@@ -51,6 +51,7 @@ export default function EditProfile({ setEditProfile }) {
         website: userLogin?.website || '',
         portfolio: userLogin?.portfolio || '',
         github: userLogin?.github || '',
+        linkedin: userLogin?.linkedin || '',
       });
     }
   }, [userLogin, reset]);
@@ -270,7 +271,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* Location field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Location
+                    Update Location (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -283,7 +284,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* Website field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Website url
+                    Update Website url (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -296,7 +297,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* Portfolio field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Portfolio url
+                    Update Portfolio url (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -309,7 +310,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* GitHub field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update GitHub url
+                    Update GitHub url (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -319,10 +320,23 @@ export default function EditProfile({ setEditProfile }) {
                   />
                 </div>
 
+                {/* Linkedin field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update LinkedIn url (optional)
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='linkedin'
+                    autoComplete='off'
+                    {...register('linkedin')}
+                  />
+                </div>
+
                 {/* Bio field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Bio
+                    Update Bio (optional)
                   </label>
                   <textarea
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'

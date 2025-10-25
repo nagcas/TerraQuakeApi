@@ -26,6 +26,7 @@ export default function HandleOAuth() {
     const website = params.get('website');
     const portfolio = params.get('portfolio');
     const github = params.get('github');
+    const linkedin = params.get('linkedin');
 
     if (token && userId) {
       // Save token and user data in localStorage
@@ -42,6 +43,7 @@ export default function HandleOAuth() {
         website: website || '',
         portfolio: portfolio || '',
         github: github || '',
+        linkedin: linkedin || '',
       };
 
       localStorage.setItem('token', token);

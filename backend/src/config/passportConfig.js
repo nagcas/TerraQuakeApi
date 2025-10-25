@@ -32,6 +32,7 @@ passport.use(
             website: '',
             portfolio: '',
             github: '',
+            linkedin: '',
             bio: '',
             terms: true,
             role: ['user']

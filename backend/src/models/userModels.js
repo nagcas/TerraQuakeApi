@@ -71,6 +71,10 @@ const usersSchema = new Schema(
     github: {
       type: String,
       trim: true
+    },
+    linkedin: {
+      type: String,
+      trim: true
     }
   },
   {
