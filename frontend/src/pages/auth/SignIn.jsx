@@ -19,7 +19,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const { setUserLogin, setIsLoggedIn } = useContext(Context);
 
-  // ✅ Validation schema
+  // Validation schema
   const loginSchema = yup.object({
     email: yup.string().email('Invalid email!').required('Email is required!'),
     password: yup.string().required('Password is required!'),
@@ -31,18 +31,36 @@ export default function SignIn() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
 
-  // ✅ Social login (Google & GitHub unified)
-  const handleSocialLogin = (provider) => {
+  // Social login (Google & GitHub unified)
+  const handleSocialLogin = async (provider) => {
     const backendBaseUrl =
       import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
-    if (provider === 'google') {
-      window.location.href = `${backendBaseUrl}/auth/google`;
-    } else if (provider === 'github') {
-      window.location.href = `${backendBaseUrl}/auth/github`;
+
+    try {
+      if (provider === 'google') {
+        window.location.href = `${backendBaseUrl}/auth/google`;
+      } else if (provider === 'github') {
+        // Check if GitHub login will fail due to existing email
+        const res = await axios.get(`${backendBaseUrl}/auth/github/check`);
+        if (res.data?.redirectUrl) {
+          window.location.href = res.data.redirectUrl;
+        }
+      }
+    } catch (err) {
+      const errorMessage =
+        err?.response?.data?.message ||
+        'GitHub login failed or account already exists.';
+
+      Swal.fire({
+        title: 'Error!',
+        text: errorMessage,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
     }
   };
 
-  // ✅ Traditional login
+  // Traditional login
   const handleLoginSubmit = async (data) => {
     try {
       setLoading(true);
