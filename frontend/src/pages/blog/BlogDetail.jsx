@@ -62,6 +62,7 @@ export default function BlogDetail() {
     const shareData = {
       title: post.title,
       text: `${cleanText}...`,
+      author: post.author.name,
       url: window.location.href,
     };
 
