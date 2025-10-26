@@ -42,6 +42,11 @@ export const validatorCreatePost = [
     .optional()
     .isArray(),
 
+  // Validate 'readTime'
+  check('readTime')
+    .optional()
+    .isString(),
+
   // Final middleware: handle validation results
   (req, res, next) => validateResults(req, res, next)
 ]

@@ -1,10 +1,10 @@
 import React from 'react';
 import { ImSpinner9 } from 'react-icons/im';
 
-export default function Spinner() {
+export default function Spinner({ size = '2xl' }) {
   return (
     <>
-      <ImSpinner9 className='text-2xl mx-auto spinner' />
+      <ImSpinner9 className={`text-${size} mx-auto spinner`} />
     </>
   );
 }
