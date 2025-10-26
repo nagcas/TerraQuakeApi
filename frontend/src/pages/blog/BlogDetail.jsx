@@ -84,8 +84,18 @@ export default function BlogDetail() {
     }
   };
 
+  // Loading (show spinner first)
   if (loading) {
-    return <Spinner />;
+    return (
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <MetaData
+          title='Blog - Loading'
+          description='Loading blog posts'
+        />
+        <Spinner size='5xl' />
+        <p className='text-gray-400 text-sm mt-4'>Loading post...</p>
+      </section>
+    );
   }
 
   {

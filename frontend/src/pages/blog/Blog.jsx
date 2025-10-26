@@ -89,6 +89,20 @@ export default function Blog() {
     return pages;
   };
 
+  // Loading (show spinner first)
+  if (loading) {
+    return (
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <MetaData
+          title='Blog - Loading'
+          description='Loading blog posts'
+        />
+        <Spinner size='5xl' />
+        <p className='text-gray-400 text-sm mt-4'>Loading blog posts...</p>
+      </section>
+    );
+  }
+
   {
     /* Error */
   }
@@ -114,10 +128,8 @@ export default function Blog() {
     );
   }
 
-  {
-    /* No posts */
-  }
-  if (totalPosts === 0) {
+  // No posts available
+  if (!loading && totalPosts === 0) {
     return (
       <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
         <MetaData
@@ -130,7 +142,6 @@ export default function Blog() {
         <p className='text-gray-300 mb-4'>
           We are working on adding new articles. Please check back soon!
         </p>
-
         <NavLink
           to='/'
           className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
@@ -191,87 +202,82 @@ export default function Blog() {
           </motion.div>
 
           {/* Blog Posts Grid */}
-          {loading ? (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-              <Spinner size='5xl' />
-            </div>
-          ) : (
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
-              {posts.map((post) => (
-                <article
-                  key={post._id}
-                  className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 group'
-                >
-                  {/* Post Header */}
-                  <div className='p-6'>
-                    <div className='flex justify-center gap-1 mb-3'>
-                      {post.categories.map((item, index) => (
-                        <span
-                          key={index}
-                          className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
 
-                    <h2 className='text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors duration-200 line-clamp-2'>
-                      <Link
-                        to={`/blog/${post.slug}`}
-                        className='hover:underline'
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
+            {posts.map((post) => (
+              <article
+                key={post._id}
+                className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 group'
+              >
+                {/* Post Header */}
+                <div className='p-6'>
+                  <div className='flex justify-center gap-1 mb-3'>
+                    {post.categories.map((item, index) => (
+                      <span
+                        key={index}
+                        className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'
                       >
-                        {post.title}
-                      </Link>
-                    </h2>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
 
-                    <p className='text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3'>
-                      {post.excerpt}
-                    </p>
+                  <h2 className='text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors duration-200 line-clamp-2'>
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      className='hover:underline'
+                    >
+                      {post.title}
+                    </Link>
+                  </h2>
 
-                    {/* Post Meta */}
-                    <div className='flex items-center justify-between text-xs text-gray-500 border-t border-gray-800 pt-4'>
-                      <div className='flex items-center space-x-4'>
-                        <div className='flex items-center space-x-1'>
-                          <FaUser className='text-purple-400' />
-                          <span>{post.author?.name}</span>
-                        </div>
-                        <div className='flex items-center space-x-1'>
-                          <FaCalendarAlt className='text-purple-400' />
-                          <span>{formatDate(post.createdAt)}</span>
-                        </div>
+                  <p className='text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3'>
+                    {post.excerpt}
+                  </p>
+
+                  {/* Post Meta */}
+                  <div className='flex items-center justify-between text-xs text-gray-500 border-t border-gray-800 pt-4'>
+                    <div className='flex items-center space-x-4'>
+                      <div className='flex items-center space-x-1'>
+                        <FaUser className='text-purple-400' />
+                        <span>{post.author?.name}</span>
+                      </div>
+                      <div className='flex items-center space-x-1'>
+                        <FaCalendarAlt className='text-purple-400' />
+                        <span>{formatDate(post.createdAt)}</span>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* Read More Link */}
-                  <div className='flex justify-between items-center px-6 pb-6'>
-                    <Link
-                      to={`/blog/${post.slug}`}
-                      className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
+                {/* Read More Link */}
+                <div className='flex justify-between items-center px-6 pb-6'>
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
+                  >
+                    Read More
+                    <svg
+                      className='ml-2 w-4 h-4'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
                     >
-                      Read More
-                      <svg
-                        className='ml-2 w-4 h-4'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M9 5l7 7-7 7'
-                        />
-                      </svg>
-                    </Link>
-                    <span className='text-xs text-gray-500 ml-2'>
-                      {post.readTime} min read
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M9 5l7 7-7 7'
+                      />
+                    </svg>
+                  </Link>
+                  <span className='text-xs text-gray-500 ml-2'>
+                    {post.readTime} min read
+                  </span>
+                </div>
+              </article>
+            ))}
+          </div>
 
           {/* Pagination */}
           {totalPages > 1 && (
