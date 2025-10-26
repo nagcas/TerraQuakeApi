@@ -79,7 +79,7 @@ export default function ApiPlayground({ url }) {
             </button>
 
             {response && (
-              <div className='relative mt-3 max-h-[400px] overflow-auto rounded-lg bg-black/40 border border-white/10'>
+              <div className='relative mt-3 max-h-[400px] overflow-auto rounded-lg bg-black/20 border border-white/10'>
                 <CodeSnippet
                   code={response}
                   language='json'

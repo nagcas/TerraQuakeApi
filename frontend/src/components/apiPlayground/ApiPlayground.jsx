@@ -241,7 +241,7 @@ export default function ApiPlayground({
           )}
 
           {responseData && (
-            <div className='bg-black/40 rounded-lg p-4 text-sm text-yellow-400 max-h-[400px] overflow-auto'>
+            <div className='bg-black/40 rounded-lg p-4 text-sm text-gray-300 max-h-[400px] overflow-auto'>
               <pre className='text-left font-mono break-words'>
                 {JSON.stringify(responseData, null, 2)}
               </pre>
@@ -319,7 +319,7 @@ export default function ApiPlayground({
                 </button>
               </div>
 
-              <pre className='text-left font-mono text-green-400 text-sm overflow-auto break-words p-3 bg-black/60 rounded-lg'>
+              <pre className='text-left font-mono text-white/90 text-sm overflow-auto break-words p-3 bg-[#0c0c12] rounded-lg'>
                 {currentSnippet()}
               </pre>
             </div>
