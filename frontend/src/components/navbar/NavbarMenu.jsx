@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import Sismic from '@images/tracciato.png';
 import { FaChevronDown, FaBars, FaTimes } from 'react-icons/fa';
 import { FiGithub } from 'react-icons/fi';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
 import axios from 'axios';
 import AvatarUser from '../utils/AvatarUser';
@@ -15,10 +15,10 @@ export default function NavbarMenu() {
 
   const [stars, setStars] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  const moreRef = useRef(null);
+  const resourcesRef = useRef(null);
   const profileRef = useRef(null);
   const mobileRef = useRef(null);
 
@@ -26,15 +26,15 @@ export default function NavbarMenu() {
     { name: 'Home', path: '/' },
     { name: 'Explore Data', path: '/explore-data' },
     { name: 'Use Cases', path: '/use-cases' },
+    { name: 'Blog', path: '/blog' },
     { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
   ];
 
-  const moreNavItems = [
+  const resourcesNavItems = [
     { name: 'API Access', path: '/api-access' },
     { name: 'Docs', path: '/docs' },
-    { name: 'Blog', path: '/blog' },
     { name: 'Faq', path: '/faq' },
-    { name: 'Contact', path: '/contact' },
   ];
 
   const profileItems = [
@@ -63,8 +63,8 @@ export default function NavbarMenu() {
 
   useEffect(() => {
     function onDocClick(e) {
-      if (moreRef.current && !moreRef.current.contains(e.target))
-        setIsMoreOpen(false);
+      if (resourcesRef.current && !resourcesRef.current.contains(e.target))
+        setIsResourcesOpen(false);
       if (profileRef.current && !profileRef.current.contains(e.target))
         setIsProfileOpen(false);
       if (mobileRef.current && !mobileRef.current.contains(e.target))
@@ -77,8 +77,8 @@ export default function NavbarMenu() {
   return (
     <header className='fixed top-0 left-0 w-full backdrop-blur-2xl bg-black/60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50'>
       {/* Logo */}
-      <a
-        href='https://terraquakeapi.com/'
+      <Link
+        to='/'
         aria-label='TerraQuake home'
       >
         <div className='flex items-center text-2xl font-bold w-fit h-12 relative'>
@@ -89,10 +89,10 @@ export default function NavbarMenu() {
           />
           <span className='text-white z-20'>TerraQuake</span>
         </div>
-      </a>
+      </Link>
 
       {/* Desktop Menu */}
-      <nav className='hidden lg:flex justify-center gap-6 text-[14px] xl:text-[16px] relative'>
+      <nav className='hidden lg:flex justify-center gap-6 text-[12px] xl:text-[14px] relative'>
         {primaryNavItems.map((item) => (
           <NavLink
             key={item.name}
@@ -105,7 +105,7 @@ export default function NavbarMenu() {
               }`
             }
             onClick={() => {
-              setIsMoreOpen(false);
+              setIsResourcesOpen(false);
               setIsProfileOpen(false);
             }}
           >
@@ -113,40 +113,40 @@ export default function NavbarMenu() {
           </NavLink>
         ))}
 
-        {/* More dropdown */}
+        {/* Resources dropdown */}
         <div
-          ref={moreRef}
+          ref={resourcesRef}
           className='relative'
         >
           <button
-            onClick={() => setIsMoreOpen((s) => !s)}
+            onClick={() => setIsResourcesOpen((s) => !s)}
             className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer ${
-              moreNavItems.some(
+              resourcesNavItems.some(
                 (item) => window.location.pathname === item.path
               )
                 ? 'text-purple-400 font-semibold'
                 : 'text-gray-300'
             }`}
-            aria-expanded={isMoreOpen}
+            aria-expanded={isResourcesOpen}
           >
-            More{' '}
+            Resources{' '}
             <FaChevronDown
               className={`text-xs transition-transform ${
-                isMoreOpen ? 'rotate-180' : 'rotate-0'
+                isResourcesOpen ? 'rotate-180' : 'rotate-0'
               }`}
             />
           </button>
 
-          {isMoreOpen && (
+          {isResourcesOpen && (
             <div
               className='absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-xl border border-purple-500/50 rounded-2xl shadow-lg z-50 py-2 animate-fade-in'
               onClick={(e) => e.stopPropagation()}
             >
-              {moreNavItems.map((item) => (
+              {resourcesNavItems.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.path}
-                  onClick={() => setIsMoreOpen(false)}
+                  onClick={() => setIsResourcesOpen(false)}
                   className={({ isActive }) =>
                     `block px-4 py-2 text-sm hover:text-purple-400 hover:bg-purple-500/10 transition-colors duration-200 ${
                       isActive
@@ -272,7 +272,7 @@ export default function NavbarMenu() {
         }`}
       >
         <div className='flex flex-col items-center gap-4 text-xl mb-4 px-6'>
-          {[...primaryNavItems, ...moreNavItems].map((item) => (
+          {[...primaryNavItems, ...resourcesNavItems].map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
@@ -291,12 +291,7 @@ export default function NavbarMenu() {
         </div>
 
         <div className='px-6'>
-          {isLoggedIn ? (
-            <>
-              <hr className='border-t border-purple-200 my-2' />
-              <Logout />
-            </>
-          ) : (
+          {!isLoggedIn && (
             <div className='flex flex-col gap-3 items-center'>
               <button
                 className='border border-gray-400 text-gray-300 font-medium py-2 px-6 rounded-full w-full max-w-[260px]'
