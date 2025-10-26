@@ -55,8 +55,11 @@ export const createPost = ({
         author: data.author,
         categories: data.categories,
         content: data.content,
-        tags: data.tags || []
+        tags: data.tags || [],
+        readTime: data.readTime
       })
+
+      console.log(post)
 
       // Respond with created post
       res.json(buildResponse(req, 'Post created successfully', post, null, {}))
@@ -165,9 +168,9 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
     try {
       const { title, category, tags } = req.query
       const page = parseInt(req.query.page) || 1
-      const limit = parseInt(req.query.limit) || 10
+      const limit = parseInt(req.query.limit) || 9
       const sort = req.query.sort || 'createdAt'
-      const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1
+      const sortDirection = req.query.sortDirection === 'asc' ? 1 : -1
       const skip = (page - 1) * limit
 
       // Build filters only if provided
@@ -180,7 +183,8 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       const totalPosts = await Post.countDocuments(filter)
 
       // Fetch filtered or all posts
-      const posts = await Post.findWithDeleted(filter)
+      const posts = await Post.find(filter)
+        .populate('author', 'name')
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
