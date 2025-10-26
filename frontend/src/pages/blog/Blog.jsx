@@ -1,6 +1,6 @@
 import './Blog.css';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import MetaData from '@pages/noPage/MetaData';
 import {
@@ -30,7 +30,7 @@ export default function Blog() {
 
   const listAllPosts = async () => {
     setLoading(true);
-     setError(null);
+    setError(null);
     try {
       const response = await axios.get(
         `${backendBaseUrl}/posts/list-all-posts`,
@@ -65,14 +65,14 @@ export default function Blog() {
     });
   };
 
-  // Gestisci cambio pagina
+  // Manage page changes
   const handlePageChange = (pageNum) => {
     if (pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
       setCurrentPage(pageNum);
     }
   };
 
-  // Genera i numeri di pagina visibili
+  // Generate visible page numbers
   const generatePageNumbers = () => {
     const maxVisible = 5;
     let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
@@ -89,18 +89,21 @@ export default function Blog() {
     return pages;
   };
 
-if (error) {
-  return (
-     <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
-      <MetaData
-        title='Blog - Error'
-        description='Error loading blog posts'
-      />
+  {
+    /* Error */
+  }
+  if (error) {
+    return (
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <MetaData
+          title='Blog - Error'
+          description='Error loading blog posts'
+        />
         <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
           Oops! Something went wrong.
         </h1>
         <p className='text-gray-300 mb-4'>{error}</p>
-        
+
         <button
           onClick={() => listAllPosts()}
           className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
@@ -108,9 +111,36 @@ if (error) {
           Retry
         </button>
       </section>
-  );
-}
+    );
+  }
 
+  {
+    /* No posts */
+  }
+  if (totalPosts === 0) {
+    return (
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <MetaData
+          title='Blog - No posts available'
+          description='Currently there are no posts available in the blog'
+        />
+        <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
+          No posts yet.
+        </h1>
+        <p className='text-gray-300 mb-4'>
+          We are working on adding new articles. Please check back soon!
+        </p>
+
+        <NavLink
+          to='/'
+          className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+          aria-label='Navigate to home page'
+        >
+          Back To Home
+        </NavLink>
+      </section>
+    );
+  }
 
   return (
     <>
