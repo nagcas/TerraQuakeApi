@@ -204,13 +204,15 @@ export default function Blog() {
                 >
                   {/* Post Header */}
                   <div className='p-6'>
-                    <div className='flex items-center justify-between mb-3'>
-                      <span className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'>
-                        {post.categories}
-                      </span>
-                      <span className='text-xs text-gray-500'>
-                        {post.readTime} min read
-                      </span>
+                    <div className='flex justify-center gap-1 mb-3'>
+                      {post.categories.map((item, index) => (
+                        <span
+                          key={index}
+                          className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'
+                        >
+                          {item}
+                        </span>
+                      ))}
                     </div>
 
                     <h2 className='text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors duration-200 line-clamp-2'>
@@ -242,7 +244,7 @@ export default function Blog() {
                   </div>
 
                   {/* Read More Link */}
-                  <div className='px-6 pb-6'>
+                  <div className='flex justify-between items-center px-6 pb-6'>
                     <Link
                       to={`/blog/${post.slug}`}
                       className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
@@ -262,6 +264,9 @@ export default function Blog() {
                         />
                       </svg>
                     </Link>
+                    <span className='text-xs text-gray-500 ml-2'>
+                      {post.readTime} min read
+                    </span>
                   </div>
                 </article>
               ))}
