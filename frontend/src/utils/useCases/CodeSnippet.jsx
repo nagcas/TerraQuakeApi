@@ -24,7 +24,7 @@ export default function CodeSnippet({ code, language }) {
         <FiCopy size={14} />
         {copied ? 'Copied!' : 'Copy'}
       </button>
-      <pre className='p-4 rounded-xl border border-white/10 bg-[#0c0c12] text-sm text-white/90 shadow-lg w-full overflow-x-auto'>
+      <pre className='p-4 rounded-xl border border-white/10 bg-black/20 text-sm text-white/90 shadow-lg w-full overflow-x-auto'>
         <code
           className={`language-${language} whitespace-pre-wrap break-words`}
         >
