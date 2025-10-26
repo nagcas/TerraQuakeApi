@@ -1,33 +1,33 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import Sismic from '@images/tracciato.png';
-import { FaChevronDown, FaBars, FaTimes } from 'react-icons/fa';
-import { FiGithub } from 'react-icons/fi';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Context } from '@components/modules/Context';
-import Swal from 'sweetalert2';
-import axios from 'axios';
-import AvatarUser from '../utils/AvatarUser';
+import React, { useState, useContext, useEffect, useRef } from 'react'
+import Sismic from '@images/tracciato.png'
+import { FaChevronDown, FaBars, FaTimes } from 'react-icons/fa'
+import { FiGithub } from 'react-icons/fi'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Context } from '@components/modules/Context'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import AvatarUser from '../utils/AvatarUser'
 
 export default function NavbarMenu() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
-    useContext(Context);
+    useContext(Context)
 
-  const [stars, setStars] = useState(0);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [stars, setStars] = useState(0)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isMoreOpen, setIsMoreOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
 
-  const moreRef = useRef(null);
-  const profileRef = useRef(null);
-  const mobileRef = useRef(null);
+  const moreRef = useRef(null)
+  const profileRef = useRef(null)
+  const mobileRef = useRef(null)
 
   const primaryNavItems = [
     { name: 'Home', path: '/' },
     { name: 'Explore Data', path: '/explore-data' },
     { name: 'Use Cases', path: '/use-cases' },
     { name: 'About', path: '/about' },
-  ];
+  ]
 
   const moreNavItems = [
     { name: 'API Access', path: '/api-access' },
@@ -35,7 +35,7 @@ export default function NavbarMenu() {
     { name: 'Blog', path: '/blog' },
     { name: 'Faq', path: '/faq' },
     { name: 'Contact', path: '/contact' },
-  ];
+  ]
 
   const profileItems = [
     { name: 'Profile', path: '/profile' },
@@ -43,7 +43,16 @@ export default function NavbarMenu() {
     { name: 'Messages', path: '/contact' },
     { name: 'Documentation', path: '/docs' },
     { name: 'Information', path: '/info' },
-  ];
+  ]
+
+  // Add admin dashboard link for admin users
+  const getProfileItems = () => {
+    const items = [...profileItems]
+    if (userLogin?.role && userLogin.role.includes('admin')) {
+      items.unshift({ name: 'Admin Dashboard', path: '/admin' })
+    }
+    return items
+  }
 
   const handleLogout = () => {
     Swal.fire({
@@ -52,53 +61,50 @@ export default function NavbarMenu() {
       icon: 'success',
       confirmButtonText: 'Home page',
     }).then(() => {
-      setIsMobileOpen(false);
-      setIsMoreOpen(false);
-      setIsProfileOpen(false);
-      setUserLogin({});
-      setIsLoggedIn(false);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      navigate('/', { replace: true });
-    });
-  };
+      setIsMobileOpen(false)
+      setIsMoreOpen(false)
+      setIsProfileOpen(false)
+      setUserLogin({})
+      setIsLoggedIn(false)
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+      navigate('/', { replace: true })
+    })
+  }
 
   useEffect(() => {
-    const urlGitHub = 'https://api.github.com/repos/nagcas/TerraQuakeApi';
-    let mounted = true;
+    const urlGitHub = 'https://api.github.com/repos/nagcas/TerraQuakeApi'
+    let mounted = true
     axios
       .get(urlGitHub)
       .then(({ data }) => {
-        if (mounted) setStars(data?.stargazers_count ?? 0);
+        if (mounted) setStars(data?.stargazers_count ?? 0)
       })
       .catch((err) => {
-        console.error('GitHub stars fetch error', err?.message ?? err);
-      });
+        console.error('GitHub stars fetch error', err?.message ?? err)
+      })
     return () => {
-      mounted = false;
-    };
-  }, []);
+      mounted = false
+    }
+  }, [])
 
   useEffect(() => {
     function onDocClick(e) {
       if (moreRef.current && !moreRef.current.contains(e.target))
-        setIsMoreOpen(false);
+        setIsMoreOpen(false)
       if (profileRef.current && !profileRef.current.contains(e.target))
-        setIsProfileOpen(false);
+        setIsProfileOpen(false)
       if (mobileRef.current && !mobileRef.current.contains(e.target))
-        setIsMobileOpen(false);
+        setIsMobileOpen(false)
     }
-    document.addEventListener('mousedown', onDocClick);
-    return () => document.removeEventListener('mousedown', onDocClick);
-  }, []);
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [])
 
   return (
     <header className='fixed top-0 left-0 w-full backdrop-blur-2xl bg-black/60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50'>
       {/* Logo */}
-      <a
-        href='https://terraquakeapi.com/'
-        aria-label='TerraQuake home'
-      >
+      <a href='https://terraquakeapi.com/' aria-label='TerraQuake home'>
         <div className='flex items-center text-2xl font-bold w-fit h-12 relative'>
           <img
             src={Sismic}
@@ -123,8 +129,8 @@ export default function NavbarMenu() {
               }`
             }
             onClick={() => {
-              setIsMoreOpen(false);
-              setIsProfileOpen(false);
+              setIsMoreOpen(false)
+              setIsProfileOpen(false)
             }}
           >
             {item.name}
@@ -132,10 +138,7 @@ export default function NavbarMenu() {
         ))}
 
         {/* More dropdown */}
-        <div
-          ref={moreRef}
-          className='relative'
-        >
+        <div ref={moreRef} className='relative'>
           <button
             onClick={() => setIsMoreOpen((s) => !s)}
             className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer ${
@@ -198,10 +201,7 @@ export default function NavbarMenu() {
         </a>
 
         {isLoggedIn ? (
-          <div
-            ref={profileRef}
-            className='relative'
-          >
+          <div ref={profileRef} className='relative'>
             <button
               onClick={() => setIsProfileOpen((s) => !s)}
               className='flex items-center gap-2 hover:bg-gray-800/50 rounded-lg px-2 py-1 transition-colors duration-200 cursor-pointer'
@@ -224,7 +224,7 @@ export default function NavbarMenu() {
                 className='absolute top-full right-0 mt-2 w-52 bg-black/95 backdrop-blur-xl border border-purple-500/50 rounded-2xl shadow-lg z-50 py-2 animate-fade-in'
                 onClick={(e) => e.stopPropagation()}
               >
-                {profileItems.map((item) => (
+                {getProfileItems().map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.path}
@@ -234,17 +234,24 @@ export default function NavbarMenu() {
                         isActive
                           ? 'text-purple-400 font-semibold bg-purple-500/20'
                           : 'text-gray-300'
+                      } ${
+                        item.name === 'Admin Dashboard'
+                          ? 'border-l-2 border-purple-500 bg-purple-500/5'
+                          : ''
                       }`
                     }
                   >
+                    {item.name === 'Admin Dashboard' && (
+                      <span className='text-purple-400 mr-2'>👑</span>
+                    )}
                     {item.name}
                   </NavLink>
                 ))}
                 <hr className='border-t border-purple-500/40 my-2' />
                 <button
                   onClick={() => {
-                    setIsProfileOpen(false);
-                    handleLogout();
+                    setIsProfileOpen(false)
+                    handleLogout()
                   }}
                   className='block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-purple-400 hover:bg-purple-500/10 transition-colors duration-200'
                 >
@@ -317,11 +324,27 @@ export default function NavbarMenu() {
         <div className='px-6'>
           {isLoggedIn ? (
             <>
+              {/* Admin Dashboard link for mobile */}
+              {userLogin?.role && userLogin.role.includes('admin') && (
+                <NavLink
+                  to='/admin'
+                  onClick={() => setIsMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `block w-full text-center py-3 rounded-full mb-2 ${
+                      isActive
+                        ? 'text-purple-400 font-semibold bg-purple-500/20'
+                        : 'text-gray-300 hover:text-purple-400 hover:bg-purple-500/10'
+                    }`
+                  }
+                >
+                  👑 Admin Dashboard
+                </NavLink>
+              )}
               <hr className='border-t border-purple-200 my-2' />
               <button
                 onClick={() => {
-                  handleLogout();
-                  setIsMobileOpen(false);
+                  handleLogout()
+                  setIsMobileOpen(false)
                 }}
                 className='w-full text-center py-3 rounded-full'
               >
@@ -333,8 +356,8 @@ export default function NavbarMenu() {
               <button
                 className='border border-gray-400 text-gray-300 font-medium py-2 px-6 rounded-full w-full max-w-[260px]'
                 onClick={() => {
-                  navigate('/signin');
-                  setIsMobileOpen(false);
+                  navigate('/signin')
+                  setIsMobileOpen(false)
                 }}
               >
                 Sign In
@@ -342,8 +365,8 @@ export default function NavbarMenu() {
               <button
                 className='bg-gradient-to-r from-pink-500 to-purple-600 py-2 px-6 rounded-full w-full max-w-[260px]'
                 onClick={() => {
-                  navigate('/signup');
-                  setIsMobileOpen(false);
+                  navigate('/signup')
+                  setIsMobileOpen(false)
                 }}
               >
                 Sign Up
@@ -353,5 +376,5 @@ export default function NavbarMenu() {
         </div>
       </div>
     </header>
-  );
+  )
 }

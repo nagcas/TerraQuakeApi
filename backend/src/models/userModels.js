@@ -9,74 +9,75 @@ const usersSchema = new Schema(
       type: String,
       unique: true,
       sparse: true, // Allows null values, required for users without a Google login
-      trim: true
+      trim: true,
     },
     name: {
       type: String,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
       unique: true,
-      trim: true
+      trim: true,
     },
     password: {
       type: String,
-      select: false
+      select: false,
     },
     avatar: {
       type: String,
-      trim: true
+      trim: true,
     },
     role: {
       type: ['user', 'admin', 'contributor'],
-      default: 'user'
+      default: 'user',
     },
     experience: {
       type: String,
       default: '',
-      trim: true
+      trim: true,
     },
     student: {
       type: String,
       default: 'No',
-      trim: true
+      trim: true,
     },
     terms: {
       type: Boolean,
-      default: false
+      default: false,
     },
     githubId: {
       type: String,
-      unique: true
+      unique: true,
+      sparse: true,
     },
     githubProfileUrl: {
-      type: String
+      type: String,
     },
     bio: {
-      type: String
+      type: String,
     },
     location: {
       type: String,
-      trim: true
+      trim: true,
     },
     website: {
       type: String,
-      trim: true
+      trim: true,
     },
     portfolio: {
       type: String,
-      trim: true
+      trim: true,
     },
     github: {
       type: String,
-      trim: true
-    }
+      trim: true,
+    },
   },
   {
     timestamps: true,
     versionKey: false,
-    collection: 'users'
+    collection: 'users',
   }
 )
 

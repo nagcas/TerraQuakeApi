@@ -1,75 +1,84 @@
-import { useContext, useState } from 'react';
-import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa';
-import { ImSpinner9 } from 'react-icons/im';
-import { Link, useNavigate } from 'react-router-dom';
-import { Context } from '@components/modules/Context';
-import Swal from 'sweetalert2';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import axios from '@config/Axios.js';
-import MetaData from '@pages/noPage/MetaData';
-import BackToTopButton from '@/components/utils/BackToTopButton';
-import { motion } from 'framer-motion';
-import Channels from '@/components/channels/Channels';
+import { useContext, useState } from 'react'
+import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa'
+import { ImSpinner9 } from 'react-icons/im'
+import { Link, useNavigate } from 'react-router-dom'
+import { Context } from '@components/modules/Context'
+import Swal from 'sweetalert2'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import axios from '@config/Axios.js'
+import MetaData from '@pages/noPage/MetaData'
+import BackToTopButton from '@/components/utils/BackToTopButton'
+import { motion } from 'framer-motion'
+import Channels from '@/components/channels/Channels'
 
 export default function SignIn() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const { setUserLogin, setIsLoggedIn } = useContext(Context);
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const { setUserLogin, setIsLoggedIn } = useContext(Context)
 
   // ✅ Validation schema
   const loginSchema = yup.object({
     email: yup.string().email('Invalid email!').required('Email is required!'),
     password: yup.string().required('Password is required!'),
-  });
+  })
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(loginSchema) });
+  } = useForm({ resolver: yupResolver(loginSchema) })
 
   // ✅ Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
     const backendBaseUrl =
-      import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
+      import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001'
     if (provider === 'google') {
-      window.location.href = `${backendBaseUrl}/auth/google`;
+      window.location.href = `${backendBaseUrl}/auth/google`
     } else if (provider === 'github') {
-      window.location.href = `${backendBaseUrl}/auth/github`;
+      window.location.href = `${backendBaseUrl}/auth/github`
     }
-  };
+  }
 
   // ✅ Traditional login
   const handleLoginSubmit = async (data) => {
     try {
-      setLoading(true);
+      setLoading(true)
 
       const res = await axios.post('/auth/signin', data, {
         headers: { 'Content-Type': 'application/json' },
-      });
+      })
 
-      setUserLogin(res.data.data);
-      setIsLoggedIn(true);
-      localStorage.setItem('user', JSON.stringify(res.data.data));
-      localStorage.setItem('token', res.data.token);
+      setUserLogin(res.data.data)
+      setIsLoggedIn(true)
+      localStorage.setItem('user', JSON.stringify(res.data.data))
+      localStorage.setItem('token', res.data.token)
+
+      // Check if user is admin and redirect accordingly
+      const userRole = res.data.data.role
+      const isAdmin = userRole && userRole.includes('admin')
 
       Swal.fire({
         title: 'Success!',
         text: res.data.message,
         icon: 'success',
-        confirmButtonText: 'Profile',
+        confirmButtonText: isAdmin ? 'Admin Dashboard' : 'Profile',
       }).then(() => {
-        setLoading(false);
-        navigate('/profile', { replace: true });
-      });
+        setLoading(false)
+        // Redirect admins to admin dashboard, others to profile
+        if (isAdmin) {
+          navigate('/admin', { replace: true })
+        } else {
+          navigate('/profile', { replace: true })
+        }
+      })
     } catch (err) {
       const errorMessage =
         err?.response?.data?.message ||
         err?.response?.data?.error ||
-        'Login failed. Please try again.';
+        'Login failed. Please try again.'
 
       Swal.fire({
         title: 'Error!',
@@ -77,12 +86,12 @@ export default function SignIn() {
         icon: 'error',
         confirmButtonText: 'Ok',
       }).then(() => {
-        setLoading(false);
-      });
+        setLoading(false)
+      })
     }
-  };
+  }
 
-  const togglePassword = () => setShowPassword((prev) => !prev);
+  const togglePassword = () => setShowPassword((prev) => !prev)
 
   return (
     <>
@@ -249,5 +258,5 @@ export default function SignIn() {
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
-  );
+  )
 }
