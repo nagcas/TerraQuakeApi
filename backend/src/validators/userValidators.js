@@ -241,6 +241,12 @@ export const validatorUpdateCurrentUserData = [
     .isURL()
     .withMessage('GitHub must be a valid URL.'),
 
+  // Validate 'linkedin': optional string
+  check('linkedin')
+    .optional({ checkFalsy: true })
+    .isURL()
+    .withMessage('Linkedin must be a valid URL.'),
+
   (req, res, next) => validateResults(req, res, next),
 ]
 

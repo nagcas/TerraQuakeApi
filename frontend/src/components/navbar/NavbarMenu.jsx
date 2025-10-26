@@ -4,9 +4,9 @@ import { FaChevronDown, FaBars, FaTimes } from 'react-icons/fa'
 import { FiGithub } from 'react-icons/fi'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Context } from '@components/modules/Context'
-import Swal from 'sweetalert2'
 import axios from 'axios'
 import AvatarUser from '../utils/AvatarUser'
+import Logout from '@/pages/auth/Logout'
 
 export default function NavbarMenu() {
   const navigate = useNavigate()
@@ -52,24 +52,6 @@ export default function NavbarMenu() {
       items.unshift({ name: 'Admin Dashboard', path: '/admin' })
     }
     return items
-  }
-
-  const handleLogout = () => {
-    Swal.fire({
-      title: 'Success!',
-      text: 'Logged Out Successfully!',
-      icon: 'success',
-      confirmButtonText: 'Home page',
-    }).then(() => {
-      setIsMobileOpen(false)
-      setIsMoreOpen(false)
-      setIsProfileOpen(false)
-      setUserLogin({})
-      setIsLoggedIn(false)
-      localStorage.removeItem('user')
-      localStorage.removeItem('token')
-      navigate('/', { replace: true })
-    })
   }
 
   useEffect(() => {
@@ -248,15 +230,9 @@ export default function NavbarMenu() {
                   </NavLink>
                 ))}
                 <hr className='border-t border-purple-500/40 my-2' />
-                <button
-                  onClick={() => {
-                    setIsProfileOpen(false)
-                    handleLogout()
-                  }}
-                  className='block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-purple-400 hover:bg-purple-500/10 transition-colors duration-200'
-                >
-                  Log Out
-                </button>
+                <div className='flex justify-center mb-2'>
+                  <Logout />
+                </div>
               </div>
             )}
           </div>
@@ -341,15 +317,7 @@ export default function NavbarMenu() {
                 </NavLink>
               )}
               <hr className='border-t border-purple-200 my-2' />
-              <button
-                onClick={() => {
-                  handleLogout()
-                  setIsMobileOpen(false)
-                }}
-                className='w-full text-center py-3 rounded-full'
-              >
-                Log Out
-              </button>
+              <Logout />
             </>
           ) : (
             <div className='flex flex-col gap-3 items-center'>

@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa'
-import { ImSpinner9 } from 'react-icons/im'
 import { Link, useNavigate } from 'react-router-dom'
 import { Context } from '@components/modules/Context'
 import Swal from 'sweetalert2'
@@ -12,6 +11,7 @@ import MetaData from '@pages/noPage/MetaData'
 import BackToTopButton from '@/components/utils/BackToTopButton'
 import { motion } from 'framer-motion'
 import Channels from '@/components/channels/Channels'
+import Spinner from '@/components/spinner/Spinner'
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false)
   const { setUserLogin, setIsLoggedIn } = useContext(Context)
 
-  // ✅ Validation schema
+  // Validation schema
   const loginSchema = yup.object({
     email: yup.string().email('Invalid email!').required('Email is required!'),
     password: yup.string().required('Password is required!'),
@@ -31,18 +31,20 @@ export default function SignIn() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) })
 
-  // ✅ Social login (Google & GitHub unified)
+  // Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
     const backendBaseUrl =
       import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001'
+
     if (provider === 'google') {
       window.location.href = `${backendBaseUrl}/auth/google`
     } else if (provider === 'github') {
+      // GitHub OAuth
       window.location.href = `${backendBaseUrl}/auth/github`
     }
   }
 
-  // ✅ Traditional login
+  // Traditional login
   const handleLoginSubmit = async (data) => {
     try {
       setLoading(true)
@@ -56,23 +58,14 @@ export default function SignIn() {
       localStorage.setItem('user', JSON.stringify(res.data.data))
       localStorage.setItem('token', res.data.token)
 
-      // Check if user is admin and redirect accordingly
-      const userRole = res.data.data.role
-      const isAdmin = userRole && userRole.includes('admin')
-
       Swal.fire({
         title: 'Success!',
         text: res.data.message,
         icon: 'success',
-        confirmButtonText: isAdmin ? 'Admin Dashboard' : 'Profile',
+        confirmButtonText: 'Profile',
       }).then(() => {
         setLoading(false)
-        // Redirect admins to admin dashboard, others to profile
-        if (isAdmin) {
-          navigate('/admin', { replace: true })
-        } else {
-          navigate('/profile', { replace: true })
-        }
+        navigate('/profile', { replace: true })
       })
     } catch (err) {
       const errorMessage =
@@ -200,11 +193,7 @@ export default function SignIn() {
                   className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                   type='submit'
                 >
-                  {loading ? (
-                    <ImSpinner9 className='text-2xl mx-auto spinner' />
-                  ) : (
-                    <span>Login</span>
-                  )}
+                  {loading ? <Spinner /> : <span>Login</span>}
                 </button>
 
                 {/* Divider */}

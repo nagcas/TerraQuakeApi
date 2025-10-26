@@ -48,6 +48,7 @@ const usersSchema = new Schema(
     },
     githubId: {
       type: String,
+      default: '',
       unique: true,
       sparse: true,
     },
@@ -56,21 +57,31 @@ const usersSchema = new Schema(
     },
     bio: {
       type: String,
+      default: '',
     },
     location: {
       type: String,
+      default: '',
       trim: true,
     },
     website: {
       type: String,
+      default: '',
       trim: true,
     },
     portfolio: {
       type: String,
+      default: '',
       trim: true,
     },
     github: {
       type: String,
+      default: '',
+      trim: true,
+    },
+    linkedin: {
+      type: String,
+      default: '',
       trim: true,
     },
   },
