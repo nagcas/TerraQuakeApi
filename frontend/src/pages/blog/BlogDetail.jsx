@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, NavLink } from 'react-router-dom';
 import MetaData from '@pages/noPage/MetaData';
 import {
@@ -16,14 +16,17 @@ import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
+import axios from 'axios';
 
 export default function BlogDetail() {
+  const backendBaseUrl =
+    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const { slug } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [relatedPosts, setRelatedPosts] = useState([]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -34,50 +37,78 @@ export default function BlogDetail() {
     });
   };
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${backendBaseUrl}/posts/list-postSlug/${slug}`
+        );
+        setPost(response.data.data);
+        setRelatedPosts(response.data.data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load the blog post. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [slug]);
+
   const handleShare = async () => {
+    const cleanText = post.content.replace(/<[^>]*>/g, '');
+    const shareData = {
+      title: post.title,
+      text: `${cleanText}...`,
+      url: window.location.href,
+    };
+
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: post.title,
-          text: post.title,
-          url: window.location.href,
-        });
+        await navigator.share(shareData);
+        console.log('Post shared successfully!');
       } catch (err) {
-        console.log('Error sharing:', err);
+        console.error('Error sharing:', err);
       }
     } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+      // Fallback: copia URL e titolo nel clipboard
+      const fallbackText = `${post.title}\n${cleanText}\n${window.location.href}`;
+      try {
+        await navigator.clipboard.writeText(fallbackText);
+      } catch (err) {
+        console.error('Failed to copy to clipboard:', err);
+      }
     }
   };
 
   if (loading) {
-    return (
-      <Spinner />
-    );
+    return <Spinner />;
   }
 
+  {
+    /* Error */
+  }
   if (error) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
         <MetaData
-          title='Error'
-          description='Error loading blog post'
+          title='Blog - Error'
+          description='Error loading blog posts'
         />
-        <div className='container mx-auto px-4'>
-          <div className='text-center'>
-            <h2 className='text-2xl font-bold text-red-500 mb-4'>Error</h2>
-            <p className='text-gray-300 mb-4'>{error}</p>
-            <button
-              onClick={() => navigate('/blog')}
-              className='bg-purple-600 hover:bg-purple-700 text-white/70 font-bold py-2 px-4 rounded transition-colors duration-200 cursor-pointer'
-            >
-              Back to Blog
-            </button>
-          </div>
-        </div>
-      </div>
+        <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
+          Oops! Something went wrong.
+        </h1>
+        <p className='text-gray-300 mb-4'>{error}</p>
+
+        <button
+          onClick={() => navigate('/blog')}
+          className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+        >
+          Back to Blog
+        </button>
+      </section>
     );
   }
 
@@ -158,17 +189,26 @@ export default function BlogDetail() {
           <article className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 overflow-hidden'>
             <div className='p-8'>
               {/* Category and Share */}
-              <div className='flex items-center justify-between mb-6'>
-                <span className='text-sm font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'>
-                  {post.category}
-                </span>
-                <button
-                  onClick={handleShare}
-                  className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors duration-200'
-                >
-                  <FaShare className='w-4 h-4' />
-                  <span className='text-sm cursor-pointer'>Share</span>
-                </button>
+              <div className='grid grid-cols-2 mb-6'>
+                <div className='flex justify-start gap-2'>
+                  {post.categories.map((item, index) => (
+                    <span
+                      key={index}
+                      className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <div className='z-50 flex justify-end'>
+                  <button
+                    onClick={handleShare}
+                    className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors duration-200 cursor-pointer'
+                  >
+                    <FaShare className='w-4 h-4' />
+                    <span className='text-sm cursor-pointer'>Share</span>
+                  </button>
+                </div>
               </div>
 
               {/* Title */}
@@ -180,11 +220,11 @@ export default function BlogDetail() {
               <div className='flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-8 pb-6 border-b border-gray-800'>
                 <div className='flex items-center space-x-2'>
                   <FaUser className='text-purple-400' />
-                  <span>{post.author}</span>
+                  <span>{post.author?.name}</span>
                 </div>
                 <div className='flex items-center space-x-2'>
                   <FaCalendarAlt className='text-purple-400' />
-                  <span>{formatDate(post.date)}</span>
+                  <span>{formatDate(post.createdAt)}</span>
                 </div>
                 <div className='flex items-center space-x-2'>
                   <FaClock className='text-purple-400' />

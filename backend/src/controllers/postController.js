@@ -243,3 +243,31 @@ export const listOnePost = ({ Post, buildResponse, handleHttpError }) => {
     }
   }
 }
+
+/**
+ * NOTE: Controller to retrieve a single post by slug.
+ * Fetches and returns the post that matches the provided slug.
+ */
+export const listOnePostSlug = ({ Post, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const postSlug = req.params.slug
+
+      // Cerca il post per slug
+      const post = await Post.findOne({ slug: postSlug })
+        .populate('author', 'name')
+        .lean()
+
+      if (!post) {
+        return handleHttpError(res, `No post found with slug: ${postSlug}`, 404)
+      }
+
+      res.json(buildResponse(req, 'Get one post', post, null, {}))
+    } catch (error) {
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}

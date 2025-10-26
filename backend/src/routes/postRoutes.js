@@ -1,5 +1,5 @@
 import express from 'express'
-import { createPost, updatePost, deletePost, listAllPosts, listOnePost } from '../controllers/postController.js'
+import { createPost, updatePost, deletePost, listAllPosts, listOnePost, listOnePostSlug } from '../controllers/postController.js'
 import { validatorCreatePost, validatorUpdatePost } from '../validators/postValidators.js'
 import Post from '../models/postModel.js'
 import { matchedData } from 'express-validator'
@@ -28,7 +28,11 @@ router.get('/list-all-posts', listAllPosts({ Post, buildResponse, handleHttpErro
 
 // NOTE: Route: Get a post by ID
 // Defining a route to display a single post with a specific id
-router.get('/list-one-post/:id', listOnePost({ Post, buildResponse, handleHttpError }))
+router.get('/list-postId/:id', adminMiddleware, listOnePost({ Post, buildResponse, handleHttpError }))
+
+// NOTE: Route: Get a post by slug
+// Defining a route to display a single post with a specific slug
+router.get('/list-postSlug/:slug', listOnePostSlug({ Post, buildResponse, handleHttpError }))
 
 // Export the post router to be used in the main app
 export default router
