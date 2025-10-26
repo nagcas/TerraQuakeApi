@@ -190,7 +190,7 @@ export default function BlogDetail() {
             <div className='p-8'>
               {/* Category and Share */}
               <div className='grid grid-cols-2 mb-6'>
-                <div className='flex justify-start gap-2'>
+                <div className='flex flex-col md:flex-row justify-start gap-2'>
                   {post.categories.map((item, index) => (
                     <span
                       key={index}
@@ -212,7 +212,7 @@ export default function BlogDetail() {
               </div>
 
               {/* Title */}
-              <h1 className='text-3xl md:text-4xl font-bold text-white mb-6 leading-tight'>
+              <h1 className='text-3xl md:text-4xl text-center md:text-left font-bold text-white mb-6 leading-tight'>
                 {post.title}
               </h1>
 
