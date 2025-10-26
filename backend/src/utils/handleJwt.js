@@ -63,6 +63,7 @@ export const verifyToken = async (tokenJwt) => {
 export const invalidateToken = async (tokenJwt) => {
   try {
     const decoded = jwt.decode(tokenJwt)
+
     if (decoded && decoded.jti) {
       tokenBlacklist.add(decoded.jti)
 

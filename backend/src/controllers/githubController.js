@@ -99,8 +99,18 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
       }
 
       // Step 6: Generate JWT
+      const tokenId = `${user._id}_${Date.now()}_${Math.random().toString(36).substring(7)}`
+
       const token = jwt.sign(
-        { _id: user._id, role: user.role || ['user'] },
+        {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          role: user.role || ['user'],
+          jti: tokenId,
+          iat: Math.floor(Date.now() / 1000)
+        },
         JWT_SECRET,
         { expiresIn: '7d' }
       )
