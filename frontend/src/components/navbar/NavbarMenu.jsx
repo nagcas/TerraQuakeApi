@@ -44,6 +44,11 @@ export default function NavbarMenu() {
     { name: 'Information', path: '/info' },
   ];
 
+  // Automatically close the profile menu when the login status changes
+  useEffect(() => {
+    setIsProfileOpen(false);
+  }, [isLoggedIn]);
+
   useEffect(() => {
     function onDocClick(e) {
       if (resourcesRef.current && !resourcesRef.current.contains(e.target))
