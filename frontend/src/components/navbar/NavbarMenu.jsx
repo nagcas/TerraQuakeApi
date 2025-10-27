@@ -182,7 +182,7 @@ export default function NavbarMenu() {
                   // If the item is Admin Dashboard but the user is NOT admin, we don't show it
                   if (
                     item.name === 'Admin Dashboard' &&
-                    userLogin.role !== 'admin'
+                    userLogin.role.toString() !== 'admin'
                   ) {
                     return null;
                   }
@@ -209,8 +209,8 @@ export default function NavbarMenu() {
                       }
                     >
                       {item.name === 'Admin Dashboard' ? (
-                        <span className='text-purple-400 mr-2'>
-                          👑 {item.name}
+                        <span className='text-purple-400 mr-2 font-semibold'>
+                          {item.name}
                         </span>
                       ) : (
                         item.name
