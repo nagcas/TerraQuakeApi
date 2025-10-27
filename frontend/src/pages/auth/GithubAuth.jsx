@@ -2,7 +2,6 @@ import { Context } from '@/components/modules/Context';
 import { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { motion } from 'framer-motion';
 import axios from '@config/Axios.js';
 import Spinner from '@/components/spinner/Spinner';
 
@@ -84,14 +83,8 @@ export default function GithubAuth() {
   // Show loading screen while fetching token and user data
   if (loading) {
     return (
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="fixed inset-0 flex flex-col items-center justify-center
-                   bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#2d2d2d] z-50"
-      >
-        <div className="absolute inset-0 z-0">
+      <section>
+        <div className="w-full h-min-screen absolute inset-0 z-0">
           <Spinner />
           <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full
                           mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
@@ -102,7 +95,7 @@ export default function GithubAuth() {
         <p className="mt-6 text-lg text-gray-300 font-semibold tracking-wide">
           Logging in with GitHub...
         </p>
-      </motion.section>
+      </section>
     );
   }
 
