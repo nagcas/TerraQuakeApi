@@ -9,7 +9,7 @@ export default function HandleOAuth() {
   const navigate = useNavigate();
   const location = useLocation();
   const { setUserLogin, setIsLoggedIn } = useContext(Context);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -79,34 +79,34 @@ export default function HandleOAuth() {
       navigate('/signin', { replace: true });
     }
 
-    setIsLoading(false);
+    setLoading(false);
   }, [location.search, navigate, setIsLoggedIn, setUserLogin]);
 
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className='min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white'>
-        <motion.div
-          className='flex flex-col items-center gap-4'
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className='fixed inset-0 flex flex-col items-center justify-center
+                        bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#2d2d2d] z-50'
+      >
+        <div className='absolute inset-0 z-0'>
           <Spinner />
-          <motion.span
-            className='text-lg font-medium tracking-wide text-gray-300'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 1.2,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-          >
-            Authenticating your account...
-          </motion.span>
-        </motion.div>
-      </div>
+          <div
+            className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full
+                               mix-blend-multiply filter blur-3xl opacity-30 animate-blob'
+          />
+          <div
+            className='absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full
+                               mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000'
+          />
+        </div>
+        <div className='w-16 h-16 border-4 border-t-transparent border-pink-500 rounded-full animate-spin'></div>
+        <p className='mt-6 text-lg text-gray-300 font-semibold tracking-wide'>
+          Logging in with Google...
+        </p>
+      </motion.section>
     );
   }
 
