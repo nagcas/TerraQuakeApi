@@ -29,7 +29,8 @@ const usersSchema = new Schema(
       trim: true
     },
     role: {
-      type: ['user', 'admin', 'contributor'],
+      type: String,
+      enum: ['user', 'admin', 'contributor'],
       default: 'user'
     },
     experience: {

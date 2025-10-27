@@ -39,7 +39,7 @@ export default function HandleOAuth() {
         name: name || 'Anonymous',
         email: email || '',
         avatar: avatar || '',
-        role: role || 'user',
+        role: role || ['user'],
         experience: experience || '',
         student: student || 'No',
         bio: bio || '',
