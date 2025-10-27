@@ -50,7 +50,7 @@ export default function GithubAuth() {
       .get(`/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then(response => {
+      .then((response) => {
         const data = response.data;
         if (data?.data) {
           // Save user info in localStorage and update context
@@ -68,7 +68,7 @@ export default function GithubAuth() {
           throw new Error('User data missing');
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Axios fetch user error:', err);
         Swal.fire({
           title: 'Error!',
@@ -83,22 +83,20 @@ export default function GithubAuth() {
   // Show loading screen while fetching token and user data
   if (loading) {
     return (
-      <section>
-        <div className="w-full h-min-screen absolute inset-0 z-0">
-          <Spinner />
-          <div className="absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full
-                          mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500 rounded-full
-                          mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
-        </div>
-        <div className="w-16 h-16 border-4 border-t-transparent border-pink-500 rounded-full animate-spin"></div>
-        <p className="mt-6 text-lg text-gray-300 font-semibold tracking-wide">
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <Spinner />
+        <p className='mt-6 mx-auto md:text-xl text-gray-300'>
           Logging in with GitHub...
         </p>
       </section>
     );
   }
 
-  return null;
+  return (
+    <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
+      <h1 className='text-2xl md:text-4xl mx-auto font-extrabold leading-tight mt-[50px] select-none'>
+        Login with GitHub successful!
+      </h1>
+    </section>
+  );
 }
-
