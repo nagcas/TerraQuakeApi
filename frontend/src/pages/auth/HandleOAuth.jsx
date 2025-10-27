@@ -17,6 +17,7 @@ export default function HandleOAuth() {
     const message = params.get('message');
     const token = params.get('token');
     const userId = params.get('user_id');
+    const googleId = params.get('googleId');
     const name = params.get('name');
     const email = params.get('email');
     const avatar = params.get('avatar');
