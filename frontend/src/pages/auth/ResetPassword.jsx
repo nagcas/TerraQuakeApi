@@ -65,7 +65,7 @@ export default function ResetPassword() {
           confirmButtonText: 'Ok',
         }).then(() => {
           setLoading(false);
-          navigate('/signin');
+          navigate('/signin', { replace: true });
         });
       })
       .catch((err) => {

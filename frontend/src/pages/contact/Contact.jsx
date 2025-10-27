@@ -83,7 +83,7 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      const res = await axios.post('/contact/create-contact', data);
+      const res = await axios.post(`/contact/create-contact`, data);
 
       Swal.fire({
         title: 'Success!',

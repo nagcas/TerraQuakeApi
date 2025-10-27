@@ -1,7 +1,7 @@
 import './Blog.css';
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 import MetaData from '@pages/noPage/MetaData';
 import {
   FaCalendarAlt,
@@ -14,8 +14,6 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
 
 export default function Blog() {
-  const backendBaseUrl =
-    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +31,7 @@ export default function Blog() {
     setError(null);
     try {
       const response = await axios.get(
-        `${backendBaseUrl}/posts/list-all-posts`,
+        `/posts/list-all-posts`,
         {
           headers: {
             'Content-Type': 'application/json',

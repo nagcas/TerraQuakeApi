@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 import Spinner from '@/components/spinner/Spinner';
 
 export default function GithubAuth() {
@@ -30,7 +30,7 @@ export default function GithubAuth() {
           text: message,
           icon: 'error',
           confirmButtonText: 'Ok',
-        }).then(() => navigate('/signin'));
+        }).then(() => navigate('/signin', { replace: true }));
       } else {
         // Token is missing without a backend message
         Swal.fire({
@@ -38,7 +38,7 @@ export default function GithubAuth() {
           text: 'No token received. Please try signing in again.',
           icon: 'error',
           confirmButtonText: 'Ok',
-        }).then(() => navigate('/signin'));
+        }).then(() => navigate('/signin', { replace: true }));
       }
       return;
     }
@@ -48,7 +48,7 @@ export default function GithubAuth() {
 
     // Fetch user data from backend using the token
     axios
-      .get(`${import.meta.env.VITE_URL_BACKEND}/users/me`, {
+      .get(`/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
@@ -76,7 +76,7 @@ export default function GithubAuth() {
           text: message || 'Failed to fetch user data',
           icon: 'error',
           confirmButtonText: 'Ok',
-        }).then(() => navigate('/signin'));
+        }).then(() => navigate('/signin', { replace: true }));
       })
       .finally(() => setLoading(false));
   }, [search, navigate, setIsLoggedIn, setUserLogin]);

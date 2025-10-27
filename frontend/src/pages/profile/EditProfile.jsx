@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../noPage/MetaData';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -16,9 +16,6 @@ export default function EditProfile({ setEditProfile }) {
     useContext(Context);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  const BACKEND_URL =
-    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
 
   // Validation schema using Yup
   const updateUserSchema = yup.object({
@@ -65,7 +62,7 @@ export default function EditProfile({ setEditProfile }) {
       const token = localStorage.getItem('token');
 
       // Send update request to backend
-      const res = await axios.patch(`${BACKEND_URL}/users/me/update`, data, {
+      const res = await axios.patch(`/users/me/update`, data, {
         headers: {
           Authorization: `Bearer ${token}`, // send token in header
         },

@@ -49,7 +49,7 @@ export default function forgotPassword() {
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then(() => {
-          navigate('/');
+          navigate('/', { replace: true });
           setLoading(false);
         });
       })
@@ -67,7 +67,7 @@ export default function forgotPassword() {
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
-          navigate('/signup');
+          navigate('/signup', { replace: true });
           setLoading(false);
         });
       });

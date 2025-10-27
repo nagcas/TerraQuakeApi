@@ -16,11 +16,9 @@ import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 
 export default function BlogDetail() {
-  const backendBaseUrl =
-    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const { slug } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -42,7 +40,7 @@ export default function BlogDetail() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${backendBaseUrl}/posts/list-postSlug/${slug}`
+          `/posts/list-postSlug/${slug}`
         );
         setPost(response.data.data);
         setRelatedPosts(response.data.data);

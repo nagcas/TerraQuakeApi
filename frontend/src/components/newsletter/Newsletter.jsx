@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
 
 export default function Newsletter() {
-  const URL = import.meta.env.VITE_URL_BACKEND;
-
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +14,7 @@ export default function Newsletter() {
     setMessage('');
 
     try {
-      const response = await axios.post(`${URL}/newsletter/subscribe`, {
+      const response = await axios.post(`/newsletter/subscribe`, {
         email,
       });
       setMessage(response.data.message);
