@@ -19,6 +19,12 @@ export default function RequireAuth ({ children, requiredRole = null }) {
     return null
   }
 
+  // No user logged in → redirects to the home page
+  if (!userLogin || !userLogin.role) {
+    navigate('/', { replace: true });
+    return;
+  }
+
   // Role control
   if (requiredRole && !roles.includes(requiredRole)) {
     navigate('/no-access', { replace: true })
