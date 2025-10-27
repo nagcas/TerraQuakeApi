@@ -8,8 +8,16 @@ const usersSchema = new Schema(
     googleId: {
       type: String,
       unique: true,
-      sparse: true, // Allows null values, required for users without a Google login
-      trim: true
+      sparse: true, // Ignores null/undefined values, required for users without a Google login
+      trim: true,
+      default: undefined // Avoid saving empty string
+    },
+    githubId: {
+      type: String,
+      unique: true,
+      sparse: true, // Ignores null/undefined values
+      trim: true,
+      default: undefined
     },
     name: {
       type: String,
@@ -47,14 +55,9 @@ const usersSchema = new Schema(
       type: Boolean,
       default: false
     },
-    githubId: {
-      type: String,
-      default: '',
-      unique: true,
-      sparse: true
-    },
     githubProfileUrl: {
-      type: String
+      type: String,
+      default: ''
     },
     bio: {
       type: String,
@@ -93,12 +96,14 @@ const usersSchema = new Schema(
   }
 )
 
+// Encrypt password before saving
 usersSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next()
   this.password = await encrypt(this.password)
   next()
 })
 
+// Soft delete plugin
 usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
 
 const User = model('users', usersSchema)
