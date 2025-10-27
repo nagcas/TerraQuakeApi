@@ -52,7 +52,7 @@ passport.use(
             linkedin: '',
             bio: '',
             terms: true,
-            role: ['user']
+            role: 'user'
           })
 
           await user.save()

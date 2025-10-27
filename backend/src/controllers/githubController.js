@@ -94,7 +94,7 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
           linkedin: '',
           bio: '',
           terms: true,
-          role: ['user']
+          role: 'user'
         })
       }
 
