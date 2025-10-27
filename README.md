@@ -91,7 +91,7 @@ Visit `http://localhost:5173` for the frontend interface and `http://localhost:5
 
 ## API Reference
 
-The TerraQuake API provides various endpoints for querying earthquake data. For detailed usage, examples, and testing, visit the [API Docs](http://localhost:3000/docs) in the running frontend.
+The TerraQuake API provides various endpoints for querying earthquake data. For detailed usage, examples, and testing, visit the [API Docs](https://api.terraquakeapi.com/v1/earthquakes/docs).
 
 ## 🌍 Earthquake API Endpoints
 

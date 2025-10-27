@@ -1,5 +1,6 @@
 import express from 'express'
 import { githubAuthController } from '../controllers/githubController.js'
+import { buildResponse } from '../utils/buildResponse.js'
 import dotenv from 'dotenv'
 
 // Load environment variables from .env file
@@ -45,6 +46,7 @@ router.get('/', (req, res) => {
 router.get(
   '/callback',
   githubAuthController({
+    buildResponse,
     handleHttpError: (res, msg, code = 500) =>
       res.status(code).json({ success: false, message: msg })
   })

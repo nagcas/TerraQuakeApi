@@ -1,17 +1,17 @@
-import { useContext, useState } from 'react'
-import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa'
-import { Link, useNavigate } from 'react-router-dom'
-import { Context } from '@components/modules/Context'
-import Swal from 'sweetalert2'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import axios from '@config/Axios.js'
-import MetaData from '@pages/noPage/MetaData'
-import BackToTopButton from '@/components/utils/BackToTopButton'
-import { motion } from 'framer-motion'
-import Channels from '@/components/channels/Channels'
-import Spinner from '@/components/spinner/Spinner'
+import { useContext, useState } from 'react';
+import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '@components/modules/Context';
+import Swal from 'sweetalert2';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import axios from '@config/Axios.js';
+import MetaData from '@pages/noPage/MetaData';
+import BackToTopButton from '@/components/utils/BackToTopButton';
+import { motion } from 'framer-motion';
+import Channels from '@/components/channels/Channels';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -34,15 +34,15 @@ export default function SignIn() {
   // Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
     const backendBaseUrl =
-      import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001'
+      import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
 
     if (provider === 'google') {
-      window.location.href = `${backendBaseUrl}/auth/google`
+      window.location.href = `${backendBaseUrl}/auth/google`;
     } else if (provider === 'github') {
       // GitHub OAuth
-      window.location.href = `${backendBaseUrl}/auth/github`
+      window.location.href = `${backendBaseUrl}/auth/github`;
     }
-  }
+  };
 
   // Traditional login
   const handleLoginSubmit = async (data) => {
@@ -193,7 +193,11 @@ export default function SignIn() {
                   className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                   type='submit'
                 >
-                  {loading ? <Spinner /> : <span>Login</span>}
+                  {loading ? (
+                    <Spinner />
+                  ) : (
+                    <span>Login</span>
+                  )}
                 </button>
 
                 {/* Divider */}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FiPlay, FiLoader, FiAlertTriangle, FiX } from 'react-icons/fi';
+import { FiPlay, FiAlertTriangle, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import CodeSnippet from '@/utils/useCases/CodeSnippet';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function ApiPlayground({ url }) {
   const [response, setResponse] = useState(null);
@@ -18,7 +19,6 @@ export default function ApiPlayground({ url }) {
     setError(null);
 
     try {
-      // Simula un leggero delay per effetto visivo
       await new Promise((resolve) => setTimeout(resolve, 600));
 
       const res = await fetch(url);
@@ -53,13 +53,12 @@ export default function ApiPlayground({ url }) {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-            >
-              <FiLoader />
+            >  
             </motion.div>
           ) : (
             <FiPlay />
           )}
-          <span>{isLoading ? 'Fetching...' : 'Run Request'}</span>
+          <span>{isLoading ? <Spinner /> : 'Run Request'}</span>
         </button>
       </div>
 
@@ -80,7 +79,7 @@ export default function ApiPlayground({ url }) {
             </button>
 
             {response && (
-              <div className='relative mt-3 max-h-[400px] overflow-auto rounded-lg bg-black/40 border border-white/10'>
+              <div className='relative mt-3 max-h-[400px] overflow-auto rounded-lg bg-black/20 border border-white/10'>
                 <CodeSnippet
                   code={response}
                   language='json'

@@ -1,7 +1,7 @@
 import './Blog.css';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-// import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
+import { Link, NavLink } from 'react-router-dom';
+import axios from 'axios';
 import MetaData from '@pages/noPage/MetaData';
 import {
   FaCalendarAlt,
@@ -11,147 +11,50 @@ import {
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
-
-// Mock data generation functions
-const generateMockPosts = (page, limit) => {
-  const totalMockPosts = 25; // Total mock posts
-  const startIndex = (page - 1) * limit;
-  const endIndex = Math.min(startIndex + limit, totalMockPosts);
-
-  const mockPosts = [];
-  for (let i = startIndex; i < endIndex; i++) {
-    mockPosts.push({
-      id: i + 1,
-      title: getBlogTitle(i),
-      excerpt: getBlogExcerpt(i),
-      content: getBlogContent(i),
-      author: getRandomAuthor(),
-      date: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
-      slug: getBlogSlug(i),
-      category: getRandomCategory(),
-      readTime: Math.floor(Math.random() * 10) + 2,
-    });
-  }
-
-  return {
-    data: mockPosts,
-    total: totalMockPosts,
-    totalPages: Math.ceil(totalMockPosts / limit),
-    currentPage: page,
-  };
-};
-
-const getBlogTitle = (index) => {
-  const titles = [
-    'Understanding Earthquake Magnitude Scales',
-    'The Science Behind Seismic Waves',
-    'How Earthquake Early Warning Systems Work',
-    'Building Earthquake-Resistant Structures',
-    "The Ring of Fire: Earth's Most Active Seismic Zone",
-    'Predicting Earthquakes: Current Challenges and Future',
-    'The Role of Plate Tectonics in Seismic Activity',
-    "Italy's Seismic History: Lessons from Major Earthquakes",
-    'Modern Seismology: Technology and Innovation',
-    'Community Preparedness for Seismic Events',
-  ];
-  return titles[index % titles.length];
-};
-
-const getBlogExcerpt = (index) => {
-  const excerpts = [
-    'Explore the different scales used to measure earthquake magnitude and understand what the numbers really mean for seismic impact assessment.',
-    "Dive deep into the fascinating world of seismic waves, their types, and how they travel through the Earth's layers.",
-    'Learn about cutting-edge early warning systems that can provide crucial seconds of advance notice before strong shaking arrives.',
-    'Discover the engineering principles and techniques used to construct buildings that can withstand seismic forces.',
-    "An in-depth look at the Pacific Ring of Fire and why this region experiences the majority of the world's earthquakes and volcanic activity.",
-    'Examining the current state of earthquake prediction science and the technological advances that may change the future.',
-    "Understanding how the movement of tectonic plates creates the conditions for earthquakes and shapes our planet's surface.",
-    "A comprehensive overview of Italy's most significant earthquakes and the valuable lessons learned from each event.",
-    'Exploring the latest technologies and methodologies used by seismologists to monitor and study earthquake activity.',
-    'Essential information for communities in seismic zones to prepare for and respond to earthquake emergencies.',
-  ];
-  return excerpts[index % excerpts.length];
-};
-
-const getBlogContent = (index) => {
-  return `This is the full content for blog post ${
-    index + 1
-  }. In a real implementation, this would contain the complete article content.`;
-};
-
-const getBlogSlug = (index) => {
-  const slugs = [
-    'understanding-earthquake-magnitude-scales',
-    'science-behind-seismic-waves',
-    'earthquake-early-warning-systems',
-    'building-earthquake-resistant-structures',
-    'ring-of-fire-seismic-zone',
-    'predicting-earthquakes-challenges-future',
-    'plate-tectonics-seismic-activity',
-    'italy-seismic-history-lessons',
-    'modern-seismology-technology-innovation',
-    'community-preparedness-seismic-events',
-  ];
-  return slugs[index % slugs.length];
-};
-
-const getRandomAuthor = () => {
-  const authors = [
-    'Dr. Elena Rodriguez',
-    'Prof. Marco Antonelli',
-    'Dr. Sarah Chen',
-    'Dr. Ahmed Hassan',
-    'Prof. Lisa Thompson',
-  ];
-  return authors[Math.floor(Math.random() * authors.length)];
-};
-
-const getRandomCategory = () => {
-  const categories = [
-    'Seismology',
-    'Engineering',
-    'Safety',
-    'Research',
-    'Technology',
-  ];
-  return categories[Math.floor(Math.random() * categories.length)];
-};
+import Spinner from '@/components/spinner/Spinner';
 
 export default function Blog() {
+  const backendBaseUrl =
+    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
   const [totalPosts, setTotalPosts] = useState(0);
-  const postsPerPage = 6;
+  const [postsPerPage, setPostsPerPage] = useState(9);
 
-  const fetchPosts = async (page) => {
+  useEffect(() => {
+    listAllPosts();
+  }, [currentPage]);
+
+  const listAllPosts = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
+      const response = await axios.get(
+        `${backendBaseUrl}/posts/list-all-posts`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          params: {
+            page: currentPage,
+            limit: postsPerPage,
+          },
+        }
+      );
 
-      // Since the backend doesn't have a blog endpoint yet, we'll create mock data
-      // TODO: Replace with actual API call when backend blog endpoint is ready
-      // const response = await api.get(`/blog?page=${page}&limit=${postsPerPage}`)
-
-      // Mock data for demonstration
-      const mockResponse = generateMockPosts(page, postsPerPage);
-
-      setPosts(mockResponse.data);
-      setTotalPages(mockResponse.totalPages);
-      setTotalPosts(mockResponse.total);
-    } catch (err) {
+      setPosts(response.data.data.posts);
+      setTotalPages(response.data.data.pagination.totalPages);
+      setTotalPosts(response.data.data.pagination.totalResults);
+    } catch (error) {
       setError('Failed to fetch blog posts. Please try again later.');
-      console.error('Error fetching posts:', err);
+      console.error(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchPosts(currentPage);
-  }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -162,66 +65,91 @@ export default function Blog() {
     });
   };
 
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Manage page changes
+  const handlePageChange = (pageNum) => {
+    if (pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
+      setCurrentPage(pageNum);
     }
   };
 
+  // Generate visible page numbers
   const generatePageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 5;
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = Math.min(totalPages, start + maxVisible - 1);
 
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    if (end - start < maxVisible - 1) {
+      start = Math.max(1, end - maxVisible + 1);
     }
 
-    for (let i = startPage; i <= endPage; i++) {
+    const pages = [];
+    for (let i = start; i <= end; i++) {
       pages.push(i);
     }
-
     return pages;
   };
 
+  // Loading (show spinner first)
   if (loading) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
         <MetaData
           title='Blog - Loading'
           description='Loading blog posts'
         />
-        <div className='container mx-auto px-4'>
-          <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500'></div>
-          </div>
-        </div>
-      </div>
+        <Spinner size='5xl' />
+        <p className='text-gray-400 text-sm mt-4'>Loading blog posts...</p>
+      </section>
     );
   }
 
+  {
+    /* Error */
+  }
   if (error) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
         <MetaData
           title='Blog - Error'
           description='Error loading blog posts'
         />
-        <div className='container mx-auto px-4'>
-          <div className='text-center'>
-            <h2 className='text-2xl font-bold text-red-500 mb-4'>Error</h2>
-            <p className='text-gray-300 mb-4'>{error}</p>
-            <button
-              onClick={() => fetchPosts(currentPage)}
-              className='bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200'
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </div>
+        <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
+          Oops! Something went wrong.
+        </h1>
+        <p className='text-gray-300 mb-4'>{error}</p>
+
+        <button
+          onClick={() => listAllPosts()}
+          className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+        >
+          Retry
+        </button>
+      </section>
+    );
+  }
+
+  // No posts available
+  if (!loading && totalPosts === 0) {
+    return (
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <MetaData
+          title='Blog - No posts available'
+          description='Currently there are no posts available in the blog'
+        />
+        <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
+          No posts yet.
+        </h1>
+        <p className='text-gray-300 mb-4'>
+          We are working on adding new articles. Please check back soon!
+        </p>
+        <NavLink
+          to='/'
+          className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+          aria-label='Navigate to home page'
+        >
+          Back To Home
+        </NavLink>
+      </section>
     );
   }
 
@@ -268,27 +196,30 @@ export default function Blog() {
               Explore the latest research, insights, and developments in
               earthquake science and seismology.
             </p>
-            <div className='mt-4 text-sm text-gray-500'>
+            <div className='mt-4 text-sm text-gray-500 text-center'>
               {totalPosts} articles • Page {currentPage} of {totalPages}
             </div>
           </motion.div>
 
           {/* Blog Posts Grid */}
+
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
             {posts.map((post) => (
               <article
-                key={post.id}
+                key={post._id}
                 className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 group'
               >
                 {/* Post Header */}
                 <div className='p-6'>
-                  <div className='flex items-center justify-between mb-3'>
-                    <span className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'>
-                      {post.category}
-                    </span>
-                    <span className='text-xs text-gray-500'>
-                      {post.readTime} min read
-                    </span>
+                  <div className='flex justify-center gap-1 mb-3'>
+                    {post.categories.map((item, index) => (
+                      <span
+                        key={index}
+                        className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
 
                   <h2 className='text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors duration-200 line-clamp-2'>
@@ -309,18 +240,18 @@ export default function Blog() {
                     <div className='flex items-center space-x-4'>
                       <div className='flex items-center space-x-1'>
                         <FaUser className='text-purple-400' />
-                        <span>{post.author}</span>
+                        <span>{post.author?.name}</span>
                       </div>
                       <div className='flex items-center space-x-1'>
                         <FaCalendarAlt className='text-purple-400' />
-                        <span>{formatDate(post.date)}</span>
+                        <span>{formatDate(post.createdAt)}</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Read More Link */}
-                <div className='px-6 pb-6'>
+                <div className='flex justify-between items-center px-6 pb-6'>
                   <Link
                     to={`/blog/${post.slug}`}
                     className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200'
@@ -340,6 +271,9 @@ export default function Blog() {
                       />
                     </svg>
                   </Link>
+                  <span className='text-xs text-gray-500 ml-2'>
+                    {post.readTime} min read
+                  </span>
                 </div>
               </article>
             ))}
@@ -347,61 +281,54 @@ export default function Blog() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div>
-              <div className='flex flex-col items-center space-y-4'>
-                <div className='flex items-center space-x-2'>
-                  {/* Previous Button */}
+            <div className='flex flex-col items-center space-y-4'>
+              <div className='flex items-center space-x-2'>
+                {/* Prev */}
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded-lg transition-all ${
+                    currentPage === 1
+                      ? 'opacity-50 cursor-not-allowed bg-gray-700'
+                      : 'bg-purple-600 hover:bg-purple-500'
+                  }`}
+                >
+                  <FaChevronLeft />
+                </button>
+
+                {/* Numbers */}
+                {generatePageNumbers().map((pageNum) => (
                   <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className={`relative z-30 flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                      currentPage === 1
-                        ? 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 cursor-not-allowed'
-                        : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:scale-105 cursor-pointer'
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-10 h-10 rounded-lg transition-all duration-200 ${
+                      currentPage === pageNum
+                        ? 'bg-purple-600 text-white scale-110'
+                        : 'bg-white/[0.08] text-white/70 hover:bg-purple-600'
                     }`}
                   >
-                    <FaChevronLeft className='w-4 h-4' />
-                    <span className='hidden sm:inline'>Previous</span>
+                    {pageNum}
                   </button>
+                ))}
 
-                  {/* Page Numbers */}
-                  <div className='relative z-30 flex items-center space-x-1'>
-                    {generatePageNumbers().map((pageNum) => (
-                      <button
-                        key={pageNum}
-                        onClick={() => handlePageChange(pageNum)}
-                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg transition-all duration-200 ${
-                          currentPage === pageNum
-                            ? 'bg-purple-600 text-white/70 scale-110'
-                            : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:text-white hover:scale-105 cursor-pointer'
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    ))}
-                  </div>
+                {/* Next */}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 rounded-lg transition-all ${
+                    currentPage === totalPages
+                      ? 'opacity-50 cursor-not-allowed bg-gray-700'
+                      : 'bg-purple-600 hover:bg-purple-500'
+                  }`}
+                >
+                  <FaChevronRight />
+                </button>
+              </div>
 
-                  {/* Next Button */}
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className={`relative z-30 flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                      currentPage === totalPages
-                        ? 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 cursor-not-allowed'
-                        : 'border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 hover:bg-purple-600 hover:scale-105 cursor-pointer'
-                    }`}
-                  >
-                    <span className='hidden sm:inline'>Next</span>
-                    <FaChevronRight className='w-4 h-4' />
-                  </button>
-                </div>
-
-                {/* Page Info */}
-                <div className='text-sm text-gray-500'>
-                  Showing {(currentPage - 1) * postsPerPage + 1} to{' '}
-                  {Math.min(currentPage * postsPerPage, totalPosts)} of{' '}
-                  {totalPosts} posts
-                </div>
+              <div className='text-sm text-gray-400'>
+                Showing {(currentPage - 1) * postsPerPage + 1} to{' '}
+                {Math.min(currentPage * postsPerPage, totalPosts)} of{' '}
+                {totalPosts} posts
               </div>
             </div>
           )}

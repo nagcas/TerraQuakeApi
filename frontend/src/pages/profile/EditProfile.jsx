@@ -7,8 +7,8 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ImSpinner9 } from 'react-icons/im';
 import Swal from 'sweetalert2';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function EditProfile({ setEditProfile }) {
   // Get user context and login state
@@ -51,6 +51,7 @@ export default function EditProfile({ setEditProfile }) {
         website: userLogin?.website || '',
         portfolio: userLogin?.portfolio || '',
         github: userLogin?.github || '',
+        linkedin: userLogin?.linkedin || '',
       });
     }
   }, [userLogin, reset]);
@@ -270,7 +271,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* Location field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Location
+                    Update Location (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -283,7 +284,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* Website field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Website url
+                    Update Website url (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -296,7 +297,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* Portfolio field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Portfolio url
+                    Update Portfolio url (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -309,7 +310,7 @@ export default function EditProfile({ setEditProfile }) {
                 {/* GitHub field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update GitHub url
+                    Update GitHub url (optional)
                   </label>
                   <input
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -319,10 +320,23 @@ export default function EditProfile({ setEditProfile }) {
                   />
                 </div>
 
+                {/* Linkedin field */}
+                <div>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    Update LinkedIn url (optional)
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder='linkedin'
+                    autoComplete='off'
+                    {...register('linkedin')}
+                  />
+                </div>
+
                 {/* Bio field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Update Bio
+                    Update Bio (optional)
                   </label>
                   <textarea
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -341,7 +355,7 @@ export default function EditProfile({ setEditProfile }) {
                   className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
                 >
                   {loading ? (
-                    <ImSpinner9 className='text-2xl mx-auto animate-spin' />
+                    <Spinner />
                   ) : (
                     'Save Changes'
                   )}

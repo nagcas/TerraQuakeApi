@@ -247,7 +247,7 @@ export const validatorUpdateCurrentUserData = [
     .isURL()
     .withMessage('Linkedin must be a valid URL.'),
 
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for updating a user's role by ID

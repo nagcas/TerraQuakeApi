@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, NavLink } from 'react-router-dom';
-// import api from '@config/axios' // TODO: Uncomment when backend blog endpoint is ready
 import MetaData from '@pages/noPage/MetaData';
 import {
   FaCalendarAlt,
@@ -16,379 +15,18 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
 import BackToTopButton from '@/components/utils/BackToTopButton';
+import Spinner from '@/components/spinner/Spinner';
+import axios from 'axios';
 
 export default function BlogDetail() {
+  const backendBaseUrl =
+    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const { slug } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [relatedPosts, setRelatedPosts] = useState([]);
-
-  const fetchPost = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Since the backend doesn't have a blog endpoint yet, we'll create mock data
-      // TODO: Replace with actual API call when backend blog endpoint is ready
-      // const response = await api.get(`/blog/${slug}`)
-
-      const mockPost = generateMockPostDetail(slug);
-      if (!mockPost) {
-        setError('Blog post not found');
-        return;
-      }
-
-      setPost(mockPost);
-      setRelatedPosts(generateRelatedPosts());
-    } catch (err) {
-      setError('Failed to fetch blog post. Please try again later.');
-      console.error('Error fetching post:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [slug]);
-
-  useEffect(() => {
-    fetchPost();
-  }, [fetchPost]);
-
-  const generateMockPostDetail = (slug) => {
-    const posts = {
-      'understanding-earthquake-magnitude-scales': {
-        id: 1,
-        title: 'Understanding Earthquake Magnitude Scales',
-        content: `# Introduction to Earthquake Magnitude
-
-Earthquake magnitude is a quantitative measure of the size or strength of an earthquake. Understanding these scales is crucial for assessing seismic risk and preparing for potential impacts.
-
-> **Did you know?** The difference between each whole number on magnitude scales represents a dramatic increase in earthquake energy and potential damage.
-
-## The Richter Scale
-
-Developed by **Charles F. Richter** in 1935, the Richter scale was the first widely-used method for measuring earthquake magnitude. It uses a logarithmic scale, meaning each whole number increase represents a tenfold increase in measured amplitude.
-
-### Key Features:
-- Logarithmic scale (base 10)
-- Measures amplitude of seismic waves
-- Most effective for local earthquakes
-- Range typically from 0 to 10
-
-\`\`\`javascript
-// Example: Calculating energy difference
-const richterEnergy = (magnitude) => {
-  return Math.pow(10, 1.5 * magnitude + 4.8);
-};
-
-const mag6Energy = richterEnergy(6.0);
-const mag7Energy = richterEnergy(7.0);
-const energyRatio = mag7Energy / mag6Energy;
-
-console.log(\`A magnitude 7.0 releases \${energyRatio.toFixed(1)}x more energy than 6.0\`);
-// Output: A magnitude 7.0 releases 31.6x more energy than 6.0
-\`\`\`
-
-## Moment Magnitude Scale (Mw)
-
-The **moment magnitude scale**, introduced in the 1970s, is now the most commonly used scale for measuring large earthquakes. It provides more accurate measurements for very large earthquakes than the Richter scale.
-
-### Advantages of Moment Magnitude:
-1. **Accurate for all sizes** - Works for both small and very large earthquakes
-2. **Based on physics** - Uses seismic moment calculation
-3. **No saturation** - Unlike Richter, doesn't "max out" at high magnitudes
-4. **Internationally standardized** - Used globally by seismologists
-
-## Key Differences and Applications
-
-| Scale | Best For | Range | Calculation Based On |
-|-------|----------|-------|---------------------|
-| Richter (ML) | Local earthquakes | 0-6.9 | Wave amplitude |
-| Moment (Mw) | All earthquakes | 0-10+ | Seismic moment |
-| Surface Wave (Ms) | Distant earthquakes | 0-8.5 | Surface wave amplitude |
-
-Understanding these scales helps in:
-
-- ✅ **Assessing building safety requirements**
-- ✅ **Emergency response planning**
-- ✅ **Insurance risk calculations** 
-- ✅ **Public safety communications**
-- ✅ **Scientific research and analysis**
-
-## Real-World Implications
-
-The exponential nature of magnitude scales means that:
-
-\`\`\`python
-import math
-
-def energy_comparison(mag1, mag2):
-    """Calculate energy difference between two magnitudes"""
-    energy_ratio = 10 ** (1.5 * (mag2 - mag1))
-    return energy_ratio
-
-# Examples
-print(f"Mag 7.0 vs 6.0: {energy_comparison(6.0, 7.0):.1f}x more energy")
-print(f"Mag 8.0 vs 7.0: {energy_comparison(7.0, 8.0):.1f}x more energy")
-print(f"Mag 9.0 vs 8.0: {energy_comparison(8.0, 9.0):.1f}x more energy")
-\`\`\`
-
-**Output:**
-- Mag 7.0 vs 6.0: 31.6x more energy
-- Mag 8.0 vs 7.0: 31.6x more energy  
-- Mag 9.0 vs 8.0: 31.6x more energy
-
-## Historical Context
-
-Some of the most significant earthquakes in recorded history:
-
-| Earthquake | Magnitude | Year | Impact |
-|------------|-----------|------|--------|
-| Chile | 9.5 Mw | 1960 | Largest recorded earthquake |
-| Alaska | 9.2 Mw | 1964 | Generated devastating tsunami |
-| Sumatra | 9.1 Mw | 2004 | Indian Ocean tsunami |
-| Japan | 9.1 Mw | 2011 | Fukushima nuclear disaster |
-
-## Conclusion
-
-Understanding earthquake magnitude scales is essential for:
-- **Scientists** conducting seismic research
-- **Engineers** designing earthquake-resistant structures  
-- **Emergency responders** planning disaster response
-- **The public** understanding earthquake risks in their area
-
-*The transition from Richter to Moment Magnitude represents our evolving understanding of seismic processes and the need for more accurate, universally applicable measurement systems.*`,
-        author: 'Dr. Elena Rodriguez',
-        date: '2024-03-15T10:30:00Z',
-        category: 'Seismology',
-        readTime: 8,
-        tags: [
-          'magnitude',
-          'richter-scale',
-          'seismology',
-          'earthquake-measurement',
-          'geophysics',
-        ],
-      },
-      'science-behind-seismic-waves': {
-        id: 2,
-        title: 'The Science Behind Seismic Waves',
-        content: `# Understanding Seismic Waves
-
-Seismic waves are the energy waves that travel through the Earth as a result of earthquakes, explosions, or other disturbances. These waves provide valuable information about both the earthquake source and the Earth's internal structure.
-
-![Seismic Waves Diagram](https://via.placeholder.com/600x300/8b5cf6/ffffff?text=Seismic+Waves+Propagation)
-
-## Types of Seismic Waves
-
-There are **two main categories** of seismic waves: body waves and surface waves.
-
-### Body Waves 🌍
-
-Body waves travel through the Earth's interior and are the first to arrive at seismic stations.
-
-#### P-waves (Primary waves)
-- **Speed**: Fastest seismic waves (6-8 km/s in crust)
-- **Motion**: Compressional (push-pull)
-- **Medium**: Can travel through solids, liquids, and gases
-- **First to arrive**: Always detected first by seismographs
-
-\`\`\`python
-# P-wave velocity calculation
-def p_wave_velocity(bulk_modulus, shear_modulus, density):
-    """Calculate P-wave velocity using elastic moduli"""
-    return ((bulk_modulus + (4/3) * shear_modulus) / density) ** 0.5
-
-# Example for granite
-K = 37e9  # Bulk modulus (Pa)
-G = 25e9  # Shear modulus (Pa) 
-rho = 2650  # Density (kg/m³)
-
-vp = p_wave_velocity(K, G, rho)
-print(f"P-wave velocity in granite: {vp/1000:.2f} km/s")
-\`\`\`
-
-#### S-waves (Secondary waves)
-- **Speed**: Slower than P-waves (3-4 km/s in crust)
-- **Motion**: Shear (side-to-side)
-- **Medium**: Only travel through solids
-- **Damage**: Often more destructive due to larger amplitudes
-
-> **Key Insight**: S-waves cannot travel through liquids, which is how scientists discovered that Earth's outer core is liquid!
-
-### Surface Waves 🌊
-
-Surface waves travel along the Earth's surface and are typically the most destructive.
-
-| Wave Type | Motion | Speed | Damage Potential |
-|-----------|--------|-------|------------------|
-| **Love waves** | Horizontal shearing | Slower than body waves | High (buildings) |
-| **Rayleigh waves** | Elliptical rolling | Slowest | Very High (ground) |
-
-## Wave Propagation Physics
-
-The speed and behavior of seismic waves depend on the **elastic properties** of materials:
-
-### Governing Equations
-
-\`\`\`latex
-P-wave velocity: V_p = \\sqrt{\\frac{K + \\frac{4}{3}G}{\\rho}}
-
-S-wave velocity: V_s = \\sqrt{\\frac{G}{\\rho}}
-
-Where:
-- K = Bulk modulus
-- G = Shear modulus  
-- ρ = Density
-\`\`\`
-
-### Factors Affecting Wave Speed
-
-1. **Density** (ρ)
-   - Higher density → Lower velocity
-   - Rock type matters significantly
-
-2. **Temperature** 
-   - Higher temperature → Lower velocity
-   - Affects deep Earth propagation
-
-3. **Pressure**
-   - Higher pressure → Higher velocity
-   - Important for deep waves
-
-4. **Composition**
-   - Different minerals = different velocities
-   - Used for Earth structure studies
-
-## Real-World Applications 🔬
-
-### Earthquake Detection
-\`\`\`javascript
-// Simplified earthquake location using P-S time difference
-function estimateDistance(pArrival, sArrival) {
-  const timeDiff = sArrival - pArrival; // seconds
-  const velocityDiff = 5.0; // km/s (approximate)
-  return timeDiff * velocityDiff;
-}
-
-// Example
-const pTime = new Date('2024-03-10T14:15:23.450Z');
-const sTime = new Date('2024-03-10T14:15:31.680Z');
-const distance = estimateDistance(pTime, sTime);
-
-console.log(\`Earthquake distance: ~\${distance.toFixed(1)} km\`);
-\`\`\`
-
-### Earth's Internal Structure
-
-Seismic waves revealed:
-- ✅ **Crust thickness**: 5-70 km
-- ✅ **Mantle composition**: Solid rock that flows
-- ✅ **Outer core**: Liquid iron-nickel
-- ✅ **Inner core**: Solid iron under extreme pressure
-
-## Seismic Wave Analysis
-
-### Wave Amplitude and Energy
-
-\`\`\`python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Simulate P-wave and S-wave arrival
-time = np.linspace(0, 60, 1000)
-distance = 100  # km
-
-# Wave arrivals
-p_arrival = distance / 6.0  # P-wave at 6 km/s
-s_arrival = distance / 3.5  # S-wave at 3.5 km/s
-
-# Create synthetic seismogram
-p_wave = np.where(time >= p_arrival, 
-                  2 * np.sin(2*np.pi*10*(time-p_arrival)) * 
-                  np.exp(-(time-p_arrival)*0.5), 0)
-
-s_wave = np.where(time >= s_arrival,
-                  5 * np.sin(2*np.pi*5*(time-s_arrival)) * 
-                  np.exp(-(time-s_arrival)*0.3), 0)
-
-seismogram = p_wave + s_wave
-\`\`\`
-
-## Modern Seismology Tools
-
-### Global Seismic Networks
-- **IRIS**: Incorporated Research Institutions for Seismology
-- **GEOFON**: German seismic network
-- **INGV**: Italian National Institute of Geophysics
-
-### Detection Technology
-- Digital seismometers with 24-bit resolution
-- Real-time data transmission via satellite
-- AI-powered earthquake detection algorithms
-
-## Conclusion
-
-Understanding seismic waves is fundamental to:
-- 🔬 **Scientific research** into Earth's structure
-- 🏗️ **Engineering** earthquake-resistant buildings
-- 🚨 **Early warning systems** for tsunami and earthquake alerts
-- 🔍 **Resource exploration** for oil, gas, and minerals
-
-The study of seismic waves continues to evolve with new technologies, providing deeper insights into our planet's dynamic processes and helping us better prepare for seismic hazards.
-
----
-
-*Next: Learn about how seismic networks detect and locate earthquakes in real-time using these wave principles.*`,
-        author: 'Prof. Marco Antonelli',
-        date: '2024-03-10T14:15:00Z',
-        category: 'Research',
-        readTime: 12,
-        tags: [
-          'seismic-waves',
-          'p-waves',
-          's-waves',
-          'earthquake-science',
-          'geophysics',
-          'research',
-        ],
-      },
-    };
-
-    return posts[slug] || null;
-  };
-
-  const generateRelatedPosts = () => {
-    return [
-      {
-        id: 3,
-        title: 'Building Earthquake-Resistant Structures',
-        slug: 'building-earthquake-resistant-structures',
-        excerpt:
-          'Discover the engineering principles and techniques used to construct buildings that can withstand seismic forces.',
-        category: 'Engineering',
-        readTime: 7,
-      },
-      {
-        id: 4,
-        title: "Italy's Seismic History: Lessons from Major Earthquakes",
-        slug: 'italy-seismic-history-lessons',
-        excerpt:
-          "A comprehensive overview of Italy's most significant earthquakes and the valuable lessons learned from each event.",
-        category: 'History',
-        readTime: 9,
-      },
-      {
-        id: 5,
-        title: 'Modern Seismology: Technology and Innovation',
-        slug: 'modern-seismology-technology-innovation',
-        excerpt:
-          'Exploring the latest technologies and methodologies used by seismologists to monitor and study earthquake activity.',
-        category: 'Technology',
-        readTime: 5,
-      },
-    ];
-  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -399,60 +37,89 @@ The study of seismic waves continues to evolve with new technologies, providing 
     });
   };
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${backendBaseUrl}/posts/list-postSlug/${slug}`
+        );
+        setPost(response.data.data);
+        setRelatedPosts(response.data.data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load the blog post. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [slug]);
+
   const handleShare = async () => {
+    const cleanText = post.content.replace(/<[^>]*>/g, '');
+    const shareData = {
+      title: post.title,
+      text: `${cleanText}...`,
+      author: post.author.name,
+      url: window.location.href,
+    };
+
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: post.title,
-          text: post.title,
-          url: window.location.href,
-        });
+        await navigator.share(shareData);
+        console.log('Post shared successfully!');
       } catch (err) {
-        console.log('Error sharing:', err);
+        console.error('Error sharing:', err);
       }
     } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+      // Fallback: copia URL e titolo nel clipboard
+      const fallbackText = `${post.title}\n${cleanText}\n${window.location.href}`;
+      try {
+        await navigator.clipboard.writeText(fallbackText);
+      } catch (err) {
+        console.error('Failed to copy to clipboard:', err);
+      }
     }
   };
 
+  // Loading (show spinner first)
   if (loading) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
         <MetaData
-          title='Loading...'
-          description='Loading blog post'
+          title='Blog - Loading'
+          description='Loading blog posts'
         />
-        <div className='container mx-auto px-4'>
-          <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500'></div>
-          </div>
-        </div>
-      </div>
+        <Spinner size='5xl' />
+        <p className='text-gray-400 text-sm mt-4'>Loading post...</p>
+      </section>
     );
   }
 
+  {
+    /* Error */
+  }
   if (error) {
     return (
-      <div className='min-h-screen pt-24 pb-16'>
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white'>
         <MetaData
-          title='Error'
-          description='Error loading blog post'
+          title='Blog - Error'
+          description='Error loading blog posts'
         />
-        <div className='container mx-auto px-4'>
-          <div className='text-center'>
-            <h2 className='text-2xl font-bold text-red-500 mb-4'>Error</h2>
-            <p className='text-gray-300 mb-4'>{error}</p>
-            <button
-              onClick={() => navigate('/blog')}
-              className='bg-purple-600 hover:bg-purple-700 text-white/70 font-bold py-2 px-4 rounded transition-colors duration-200 cursor-pointer'
-            >
-              Back to Blog
-            </button>
-          </div>
-        </div>
-      </div>
+        <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
+          Oops! Something went wrong.
+        </h1>
+        <p className='text-gray-300 mb-4'>{error}</p>
+
+        <button
+          onClick={() => navigate('/blog')}
+          className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+        >
+          Back to Blog
+        </button>
+      </section>
     );
   }
 
@@ -533,21 +200,30 @@ The study of seismic waves continues to evolve with new technologies, providing 
           <article className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl text-white/70 overflow-hidden'>
             <div className='p-8'>
               {/* Category and Share */}
-              <div className='flex items-center justify-between mb-6'>
-                <span className='text-sm font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'>
-                  {post.category}
-                </span>
-                <button
-                  onClick={handleShare}
-                  className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors duration-200'
-                >
-                  <FaShare className='w-4 h-4' />
-                  <span className='text-sm cursor-pointer'>Share</span>
-                </button>
+              <div className='grid grid-cols-2 mb-6'>
+                <div className='flex flex-col md:flex-row justify-start gap-2'>
+                  {post.categories.map((item, index) => (
+                    <span
+                      key={index}
+                      className='text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full'
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <div className='z-50 flex justify-end'>
+                  <button
+                    onClick={handleShare}
+                    className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors duration-200 cursor-pointer'
+                  >
+                    <FaShare className='w-4 h-4' />
+                    <span className='text-sm cursor-pointer'>Share</span>
+                  </button>
+                </div>
               </div>
 
               {/* Title */}
-              <h1 className='text-3xl md:text-4xl font-bold text-white mb-6 leading-tight'>
+              <h1 className='text-3xl md:text-4xl text-center md:text-left font-bold text-white mb-6 leading-tight'>
                 {post.title}
               </h1>
 
@@ -555,11 +231,11 @@ The study of seismic waves continues to evolve with new technologies, providing 
               <div className='flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-8 pb-6 border-b border-gray-800'>
                 <div className='flex items-center space-x-2'>
                   <FaUser className='text-purple-400' />
-                  <span>{post.author}</span>
+                  <span>{post.author?.name}</span>
                 </div>
                 <div className='flex items-center space-x-2'>
                   <FaCalendarAlt className='text-purple-400' />
-                  <span>{formatDate(post.date)}</span>
+                  <span>{formatDate(post.createdAt)}</span>
                 </div>
                 <div className='flex items-center space-x-2'>
                   <FaClock className='text-purple-400' />

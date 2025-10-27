@@ -1,43 +1,53 @@
 import mongoose from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
+import User from './userModels.js'
 
 // NOTE: Schema post
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   excerpt: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   slug: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: User,
     required: true
   },
   categories: [
     {
       type: String,
-      required: true
+      required: true,
+      trim: true
     }
   ],
   content: {
     type: String,
     required: true
   },
+  readTime: {
+    type: String,
+    trim: true
+  },
   tags: [
     {
-      type: String
+      type: String,
+      trim: true
     }
   ]
 }, {
-  timestamps: true, // adds createdAt and updatedAt
+  timestamps: true,
   versionKey: false,
   collection: 'posts'
 })
@@ -45,4 +55,5 @@ const postSchema = new mongoose.Schema({
 postSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
 
 const Post = mongoose.model('Post', postSchema)
+
 export default Post

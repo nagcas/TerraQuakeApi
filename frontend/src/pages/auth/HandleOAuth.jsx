@@ -4,6 +4,7 @@ import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
 import { ImSpinner9 } from 'react-icons/im';
 import { motion } from 'framer-motion';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function HandleOAuth() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function HandleOAuth() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+    const message = params.get('message');
     const token = params.get('token');
     const userId = params.get('user_id');
     const name = params.get('name');
@@ -26,6 +28,7 @@ export default function HandleOAuth() {
     const website = params.get('website');
     const portfolio = params.get('portfolio');
     const github = params.get('github');
+    const linkedin = params.get('linkedin');
 
     if (token && userId) {
       // Save token and user data in localStorage
@@ -42,6 +45,7 @@ export default function HandleOAuth() {
         website: website || '',
         portfolio: portfolio || '',
         github: github || '',
+        linkedin: linkedin || '',
       };
 
       localStorage.setItem('token', token);
@@ -54,7 +58,7 @@ export default function HandleOAuth() {
       // Redirect after success
       Swal.fire({
         title: 'Login Successful!',
-        text: 'You have been logged in.',
+        text: message || 'Login with Google successful!',
         icon: 'success',
         confirmButtonText: 'Profile',
       }).then(() => {
@@ -86,7 +90,7 @@ export default function HandleOAuth() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <ImSpinner9 className='text-5xl animate-spin text-purple-500' />
+          <Spinner />
           <motion.span
             className='text-lg font-medium tracking-wide text-gray-300'
             initial={{ opacity: 0 }}

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ImSpinner9 } from 'react-icons/im';
+import Spinner from '../spinner/Spinner';
 
 export default function ApiPlayground({
   title = 'API Playground',
@@ -229,9 +229,9 @@ export default function ApiPlayground({
           </div>
 
           {loading && (
-            <p className='text-yellow-400 mb-4 flex items-center gap-2'>
-              <ImSpinner9 className='spinner' /> Loading...
-            </p>
+            <div className='my-6'>
+              <Spinner />
+            </div>
           )}
 
           {errorMessage && (
@@ -241,7 +241,7 @@ export default function ApiPlayground({
           )}
 
           {responseData && (
-            <div className='bg-black/40 rounded-lg p-4 text-sm text-yellow-400 max-h-[400px] overflow-auto'>
+            <div className='bg-black/40 rounded-lg p-4 text-sm text-gray-300 max-h-[400px] overflow-auto'>
               <pre className='text-left font-mono break-words'>
                 {JSON.stringify(responseData, null, 2)}
               </pre>
@@ -319,7 +319,7 @@ export default function ApiPlayground({
                 </button>
               </div>
 
-              <pre className='text-left font-mono text-green-400 text-sm overflow-auto break-words p-3 bg-black/60 rounded-lg'>
+              <pre className='text-left font-mono text-white/90 text-sm overflow-auto break-words p-3 bg-[#0c0c12] rounded-lg'>
                 {currentSnippet()}
               </pre>
             </div>

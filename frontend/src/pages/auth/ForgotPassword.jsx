@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
-import { ImSpinner9 } from 'react-icons/im';
 import { useNavigate, Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +8,7 @@ import * as yup from 'yup';
 import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
+import Spinner from '@/components/spinner/Spinner';
 
 export default function forgotPassword() {
   const [loading, setLoading] = useState(false);
@@ -143,9 +143,7 @@ export default function forgotPassword() {
                 aria-label='Recover your account password'
               >
                 {loading ? (
-                  <p className='text-white'>
-                    <ImSpinner9 className='text-2xl mx-auto spinner' />
-                  </p>
+                  <Spinner />
                 ) : (
                   <span>Send reset link</span>
                 )}

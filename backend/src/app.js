@@ -15,6 +15,7 @@ import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import routeStation from './routes/stationsRoutes.js'
+import routeDocsEarthquakes from './routes/docsEarthquakesRoutes.js'
 import routeGitHub from './routes/githubAuthRoutes.js'
 import newsletterRoutes from './routes/newsletterRoutes.js'
 import dbConnect from './config/mongoConfig.js'
@@ -64,6 +65,7 @@ app.use(
 
 // Public route: earthquakes data, accessible from any origin
 app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeDocsEarthquakes)
 app.use('/v1/stations', cors({ origin: '*' }), apiLimiter, routeStation)
 
 // Protected routes

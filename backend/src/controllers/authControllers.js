@@ -37,6 +37,7 @@ export const signUp = ({
           existingUser.website = data.website || ''
           existingUser.portfolio = data.portfolio || ''
           existingUser.github = data.github || ''
+          existingUser.linkedin = data.linkedin || ''
           existingUser.terms = data.terms || false
 
           const restoredUser = await existingUser.save()
@@ -108,10 +109,12 @@ export const signIn = ({
 }) => {
   return async (req, res) => {
     try {
+      // Sanitize and validate request data
       req.body = matchedData(req)
 
+      // Find user by email
       const user = await User.findOne({ email: req.body.email })
-        .select('password name email role experience student bio location website portfolio github')
+        .select('password name email role experience student bio location website portfolio github linkedin githubId googleId')
         .lean()
 
       if (!user) {
@@ -122,13 +125,26 @@ export const signIn = ({
         )
       }
 
+      // Check if user registered via Google or GitHub
+      if (!user.password) {
+        const provider = user.githubId ? 'GitHub' : user.googleId ? 'Google' : 'an external provider'
+        return handleHttpError(
+          res,
+          `This email is already registered via ${provider}. Please sign in with ${provider}.`,
+          400
+        )
+      }
+
+      // Compare provided password with hashed one
       const isPasswordValid = await compare(req.body.password, user.password)
       if (!isPasswordValid) {
         return handleHttpError(res, 'Incorrect password.', 401)
       }
 
+      // Remove password before returning user data
       delete user.password
 
+      // Send success response with JWT token
       return res.status(200).json(
         buildResponse(req, 'Logged in successfully!', user, null, {
           token: await tokenSign(user)
@@ -320,14 +336,16 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
 export const logout = ({ buildResponse, handleHttpError, invalidateToken }) => {
   return async (req, res) => {
     try {
-      // Get token from Authorization header or from req object (set by middleware)
-      const token = req.token || req.get('Authorization')?.split(' ')[1]
+      // Retrieve token from Authorization header
+      const authHeader = req.headers.authorization
 
-      if (!token) {
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return handleHttpError(res, 'No token provided', 400)
       }
 
-      // Invalidate the token (add to blacklist)
+      const token = authHeader.split(' ')[1]
+
+      // Invalidate the token (add it to blacklist)
       const success = await invalidateToken(token)
 
       if (!success) {
@@ -396,6 +414,7 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
     successUrl.searchParams.append('website', user.website || '')
     successUrl.searchParams.append('portfolio', user.portfolio || '')
     successUrl.searchParams.append('github', user.github || '')
+    successUrl.searchParams.append('linkedin', user.linkedin || '')
 
     // Redirect the user to the frontend with all data attached
     return res.redirect(successUrl.toString())
