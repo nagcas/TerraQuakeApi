@@ -2,7 +2,6 @@ import { useEffect, useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
-import { ImSpinner9 } from 'react-icons/im';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/spinner/Spinner';
 

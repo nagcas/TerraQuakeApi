@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@/components/modules/Context';
@@ -7,8 +7,6 @@ import MetaData from '../noPage/MetaData';
 import Spinner from '@/components/spinner/Spinner';
 
 export default function DeleteProfile() {
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
-
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
 
@@ -33,7 +31,7 @@ export default function DeleteProfile() {
         return;
       }
 
-      const res = await axios.delete(`${BACKEND_URL}/users/me/delete`, {
+      const res = await axios.delete(`/users/me/delete`, {
         headers: {
           Authorization: `Bearer ${token}`, // send token in header
         },

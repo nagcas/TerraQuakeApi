@@ -1,6 +1,5 @@
 import './ApiDocs.css';
 import { useState } from 'react';
-import { ImSpinner9 } from 'react-icons/im';
 import Spinner from '../spinner/Spinner';
 
 export default function ApiDocsEarthquakes({ setEarthquakeData }) {

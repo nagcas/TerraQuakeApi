@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '@config/Axios.js';
 
 export default function Metrics() {
-  const BACKEND_URL = import.meta.env.VITE_URL_BACKEND;
   const [highlightMetrics, setHighlightMetrics] = useState([]);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [metricsError, setMetricsError] = useState(null);
@@ -11,7 +10,7 @@ export default function Metrics() {
     const fetchMetrics = async () => {
       try {
         setLoadingMetrics(true);
-        const res = await axios.get(`${BACKEND_URL}/v1/metrics/json`);
+        const res = await axios.get(`/v1/metrics/json`);
         const data = res.data.data;
 
         setHighlightMetrics([

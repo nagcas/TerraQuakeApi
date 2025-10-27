@@ -95,7 +95,7 @@ export default function ChangePassword() {
           confirmButtonText: 'Ok',
         }).then(() => {
           reset(); // clear the form
-          navigate('/profile');
+          navigate('/profile', { replace: true });
         });
       })
       .catch((err) => {

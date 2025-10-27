@@ -1,14 +1,11 @@
-import axios from 'axios';
+import axios from '@config/Axios.js';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ImSpinner9 } from 'react-icons/im';
 import Swal from 'sweetalert2';
 import { Context } from '@components/modules/Context';
 import Spinner from '@/components/spinner/Spinner';
 
 export default function Logout() {
-  const backendBaseUrl =
-    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setUserLogin, setIsLoggedIn } = useContext(Context);
@@ -23,7 +20,7 @@ export default function Logout() {
       }
 
       const res = await axios.post(
-        `${backendBaseUrl}/auth/logout`,
+        `/auth/logout`,
         {},
         {
           headers: {
