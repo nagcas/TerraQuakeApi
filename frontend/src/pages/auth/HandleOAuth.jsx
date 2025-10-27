@@ -34,6 +34,7 @@ export default function HandleOAuth() {
       // Save token and user data in localStorage
       const userData = {
         _id: userId,
+        googleId: googleId || '',
         name: name || 'Anonymous',
         email: email || '',
         avatar: avatar || '',
