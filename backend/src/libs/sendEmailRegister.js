@@ -17,7 +17,9 @@ export const sendEmailRegister = async (user) => {
         <p><strong>We recommend completing your profile</strong> to personalize your experience and get the most out of our services.</p>
 
         <div style="text-align: center; margin: 24px 0;">
-          <a href="${process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT}"
+          <a href="${
+            process.env.FRONTEND_PRODUCTION || process.env.FRONTEND_DEVELOPMENT
+          }"
              style="background: #A48DC7; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
             Complete Your Profile
           </a>
@@ -40,7 +42,7 @@ export const sendEmailRegister = async (user) => {
       from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🎉 Welcome to TerraQuake API!',
-      html
+      html,
     })
 
     console.log('Registration email sent:', result)

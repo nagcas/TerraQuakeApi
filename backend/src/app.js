@@ -20,10 +20,15 @@ import routeGitHub from './routes/githubAuthRoutes.js'
 import newsletterRoutes from './routes/newsletterRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
-import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
+import {
+  apiLimiter,
+  authLimiter,
+  contactLimiter,
+} from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
 import routeMetrics from './routes/metricsRouters.js'
 import postRoutes from './routes/postRoutes.js'
+import adminRoutes from './routes/admin.js'
 
 dotenv.config()
 const devEnv = process.env.DEV_ENV || 'development'
@@ -49,13 +54,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(metricsMiddleware)
 
 // === GLOBAL CORS per endpoint protetti ===
-app.use(cors({
-  origin: [
-    process.env.FRONTEND_PRODUCTION,
-    process.env.FRONTEND_DEVELOPMENT
-  ],
-  credentials: true
-}))
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_PRODUCTION, process.env.FRONTEND_DEVELOPMENT],
+    credentials: true,
+  })
+)
 
 // === ROUTES ===
 
@@ -76,12 +80,15 @@ app.use('/contact', contactLimiter, routeContact)
 app.use('/newsletter', newsletterRoutes)
 app.use('/posts', postRoutes)
 
+// Admin routes (protected)
+app.use('/api/admin', adminRoutes)
+
 // === ERROR HANDLER ===
 app.use((err, req, res, next) => {
   console.error('Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
-    message: devEnv === 'development' ? err.message : 'Internal Server Error'
+    message: devEnv === 'development' ? err.message : 'Internal Server Error',
   })
 })
 

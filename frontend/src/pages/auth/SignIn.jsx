@@ -14,22 +14,22 @@ import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
 
 export default function SignIn() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const { setUserLogin, setIsLoggedIn } = useContext(Context);
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const { setUserLogin, setIsLoggedIn } = useContext(Context)
 
   // Validation schema
   const loginSchema = yup.object({
     email: yup.string().email('Invalid email!').required('Email is required!'),
     password: yup.string().required('Password is required!'),
-  });
+  })
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(loginSchema) });
+  } = useForm({ resolver: yupResolver(loginSchema) })
 
   // Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
@@ -47,16 +47,16 @@ export default function SignIn() {
   // Traditional login
   const handleLoginSubmit = async (data) => {
     try {
-      setLoading(true);
+      setLoading(true)
 
       const res = await axios.post('/auth/signin', data, {
         headers: { 'Content-Type': 'application/json' },
-      });
+      })
 
-      setUserLogin(res.data.data);
-      setIsLoggedIn(true);
-      localStorage.setItem('user', JSON.stringify(res.data.data));
-      localStorage.setItem('token', res.data.token);
+      setUserLogin(res.data.data)
+      setIsLoggedIn(true)
+      localStorage.setItem('user', JSON.stringify(res.data.data))
+      localStorage.setItem('token', res.data.token)
 
       Swal.fire({
         title: 'Success!',
@@ -64,14 +64,14 @@ export default function SignIn() {
         icon: 'success',
         confirmButtonText: 'Profile',
       }).then(() => {
-        setLoading(false);
-        navigate('/profile', { replace: true });
-      });
+        setLoading(false)
+        navigate('/profile', { replace: true })
+      })
     } catch (err) {
       const errorMessage =
         err?.response?.data?.message ||
         err?.response?.data?.error ||
-        'Login failed. Please try again.';
+        'Login failed. Please try again.'
 
       Swal.fire({
         title: 'Error!',
@@ -79,12 +79,12 @@ export default function SignIn() {
         icon: 'error',
         confirmButtonText: 'Ok',
       }).then(() => {
-        setLoading(false);
-      });
+        setLoading(false)
+      })
     }
-  };
+  }
 
-  const togglePassword = () => setShowPassword((prev) => !prev);
+  const togglePassword = () => setShowPassword((prev) => !prev)
 
   return (
     <>
@@ -251,5 +251,5 @@ export default function SignIn() {
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
-  );
+  )
 }

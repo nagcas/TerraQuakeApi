@@ -9,9 +9,9 @@ import AvatarUser from '../utils/AvatarUser';
 import Logout from '@/pages/auth/Logout';
 
 export default function NavbarMenu() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
-    useContext(Context);
+    useContext(Context)
 
   const [stars, setStars] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -43,36 +43,36 @@ export default function NavbarMenu() {
     { name: 'Messages', path: '/contact' },
     { name: 'Documentation', path: '/docs' },
     { name: 'Information', path: '/info' },
-  ];
+  ]
 
   useEffect(() => {
-    const urlGitHub = 'https://api.github.com/repos/nagcas/TerraQuakeApi';
-    let mounted = true;
+    const urlGitHub = 'https://api.github.com/repos/nagcas/TerraQuakeApi'
+    let mounted = true
     axios
       .get(urlGitHub)
       .then(({ data }) => {
-        if (mounted) setStars(data?.stargazers_count ?? 0);
+        if (mounted) setStars(data?.stargazers_count ?? 0)
       })
       .catch((err) => {
-        console.error('GitHub stars fetch error', err?.message ?? err);
-      });
+        console.error('GitHub stars fetch error', err?.message ?? err)
+      })
     return () => {
-      mounted = false;
-    };
-  }, []);
+      mounted = false
+    }
+  }, [])
 
   useEffect(() => {
     function onDocClick(e) {
       if (resourcesRef.current && !resourcesRef.current.contains(e.target))
         setIsResourcesOpen(false);
       if (profileRef.current && !profileRef.current.contains(e.target))
-        setIsProfileOpen(false);
+        setIsProfileOpen(false)
       if (mobileRef.current && !mobileRef.current.contains(e.target))
-        setIsMobileOpen(false);
+        setIsMobileOpen(false)
     }
-    document.addEventListener('mousedown', onDocClick);
-    return () => document.removeEventListener('mousedown', onDocClick);
-  }, []);
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [])
 
   return (
     <header className='fixed top-0 left-0 w-full backdrop-blur-2xl bg-black/60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50'>
@@ -180,10 +180,7 @@ export default function NavbarMenu() {
         </a>
 
         {isLoggedIn ? (
-          <div
-            ref={profileRef}
-            className='relative'
-          >
+          <div ref={profileRef} className='relative'>
             <button
               onClick={() => setIsProfileOpen((s) => !s)}
               className='flex items-center gap-2 hover:bg-gray-800/50 rounded-lg px-2 py-1 transition-colors duration-200 cursor-pointer'
@@ -216,9 +213,16 @@ export default function NavbarMenu() {
                         isActive
                           ? 'text-purple-400 font-semibold bg-purple-500/20'
                           : 'text-gray-300'
+                      } ${
+                        item.name === 'Admin Dashboard'
+                          ? 'border-l-2 border-purple-500 bg-purple-500/5'
+                          : ''
                       }`
                     }
                   >
+                    {item.name === 'Admin Dashboard' && (
+                      <span className='text-purple-400 mr-2'>👑</span>
+                    )}
                     {item.name}
                   </NavLink>
                 ))}
@@ -296,8 +300,8 @@ export default function NavbarMenu() {
               <button
                 className='border border-gray-400 text-gray-300 font-medium py-2 px-6 rounded-full w-full max-w-[260px]'
                 onClick={() => {
-                  navigate('/signin');
-                  setIsMobileOpen(false);
+                  navigate('/signin')
+                  setIsMobileOpen(false)
                 }}
               >
                 Sign In
@@ -305,8 +309,8 @@ export default function NavbarMenu() {
               <button
                 className='bg-gradient-to-r from-pink-500 to-purple-600 py-2 px-6 rounded-full w-full max-w-[260px]'
                 onClick={() => {
-                  navigate('/signup');
-                  setIsMobileOpen(false);
+                  navigate('/signup')
+                  setIsMobileOpen(false)
                 }}
               >
                 Sign Up
@@ -316,5 +320,5 @@ export default function NavbarMenu() {
         </div>
       </div>
     </header>
-  );
+  )
 }

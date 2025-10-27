@@ -49,7 +49,8 @@ const usersSchema = new Schema(
     githubId: {
       type: String,
       default: '',
-      unique: true
+      unique: true,
+      sparse: true
     },
     githubProfileUrl: {
       type: String
@@ -82,12 +83,12 @@ const usersSchema = new Schema(
       type: String,
       default: '',
       trim: true
-    }
+    },
   },
   {
     timestamps: true,
     versionKey: false,
-    collection: 'users'
+    collection: 'users',
   }
 )
 
