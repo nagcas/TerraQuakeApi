@@ -403,7 +403,7 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
     // Append all necessary query parameters
     successUrl.searchParams.append('token', token)
     successUrl.searchParams.append('user_id', user._id.toString() || '')
-    successUrl.searchParams.append('googleId', user.googleId.toString() || '')
+    successUrl.searchParams.append('googleId', user.googleId || '')
     successUrl.searchParams.append('name', user.name || '')
     successUrl.searchParams.append('email', user.email || '')
     successUrl.searchParams.append('avatar', user.avatar || '')
