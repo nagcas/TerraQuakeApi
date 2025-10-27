@@ -16,6 +16,7 @@ export default function ChangePassword() {
   const { isLoggedIn } = useContext(Context);
   const token = localStorage.getItem('token'); // JWT token from localStorage
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false); // toggle password visibility
   const togglePassword = () => setShowPassword((prev) => !prev);
@@ -73,6 +74,7 @@ export default function ChangePassword() {
 
   // Handle password change submission
   const handleChangePassword = async (data) => {
+    setLoading(true);
     const formData = {
       passwordOld: data.passwordOld,
       passwordNew: data.passwordNew,
@@ -106,7 +108,10 @@ export default function ChangePassword() {
           confirmButtonText: 'Ok',
         });
         reset(); // clear the form
-      });
+      })
+      .finally(
+        setLoading(false)
+      )
   };
 
   return (
