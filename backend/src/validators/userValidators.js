@@ -66,7 +66,7 @@ export const validatorSignUp = [
     }),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for user sign-in
@@ -86,7 +86,7 @@ export const validatorSignIn = [
     .isLength({ min: 8, max: 16 })
     .withMessage('Password must be between 8 and 16 characters long.'),
 
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for forgot password request
@@ -97,7 +97,7 @@ export const validatorForgotPassword = [
     .notEmpty()
     .isEmail()
     .withMessage('Please enter a valid email address.'),
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for resetting password
@@ -125,7 +125,7 @@ export const validatorResetPassword = [
     .custom((value, { req }) => value === req.body.password1)
     .withMessage('Passwords must match.'),
 
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for changing password
@@ -161,13 +161,13 @@ export const validatorChangePassword = [
     .custom((value, { req }) => value === req.body.passwordNew)
     .withMessage('Passwords must match.'),
 
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for getting a specific user item by ID
 export const validatorGetItem = [
   check('userId').exists().notEmpty().isMongoId(),
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 // NOTE: Validator for updating current user data
@@ -257,5 +257,5 @@ export const validatorUpdateRoleById = [
     .isIn(['admin', 'user', 'contributor'])
     .withMessage('Role must be either admin, user, or contributor.'),
 
-  (req, res, next) => validateResults(req, res, next),
+  (req, res, next) => validateResults(req, res, next)
 ]

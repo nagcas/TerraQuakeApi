@@ -22,12 +22,12 @@ router.get('/stats', authMiddleware, requireAdmin, (req, res) => {
           id: req.user._id,
           email: req.user.email,
           role: req.user.role,
-          name: req.user.name,
+          name: req.user.name
         },
         stats: {
           timestamp: new Date().toISOString(),
-          serverStatus: 'operational',
-        },
+          serverStatus: 'operational'
+        }
       },
       'Admin dashboard data retrieved successfully'
     )
@@ -37,7 +37,7 @@ router.get('/stats', authMiddleware, requireAdmin, (req, res) => {
     console.error('Admin stats error:', error)
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve admin statistics',
+      message: 'Failed to retrieve admin statistics'
     })
   }
 })
@@ -53,9 +53,9 @@ router.get('/dashboard', authMiddleware, requireAdmin, (req, res) => {
           email: req.user.email,
           role: req.user.role,
           name: req.user.name,
-          createdAt: req.user.createdAt,
+          createdAt: req.user.createdAt
         },
-        permissions: ['read', 'write', 'delete', 'admin'],
+        permissions: ['read', 'write', 'delete', 'admin']
       },
       'Admin dashboard access confirmed'
     )
@@ -65,7 +65,7 @@ router.get('/dashboard', authMiddleware, requireAdmin, (req, res) => {
     console.error('Admin dashboard error:', error)
     res.status(500).json({
       success: false,
-      message: 'Failed to access admin dashboard',
+      message: 'Failed to access admin dashboard'
     })
   }
 })
@@ -79,9 +79,9 @@ router.get('/system', authMiddleware, requireAdmin, (req, res) => {
           uptime: process.uptime(),
           memory: process.memoryUsage(),
           nodeVersion: process.version,
-          platform: process.platform,
+          platform: process.platform
         },
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       },
       'System information retrieved'
     )
@@ -91,7 +91,7 @@ router.get('/system', authMiddleware, requireAdmin, (req, res) => {
     console.error('Admin system info error:', error)
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve system information',
+      message: 'Failed to retrieve system information'
     })
   }
 })

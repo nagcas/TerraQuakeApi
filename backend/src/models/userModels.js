@@ -83,12 +83,12 @@ const usersSchema = new Schema(
       type: String,
       default: '',
       trim: true
-    },
+    }
   },
   {
     timestamps: true,
     versionKey: false,
-    collection: 'users',
+    collection: 'users'
   }
 )
 
