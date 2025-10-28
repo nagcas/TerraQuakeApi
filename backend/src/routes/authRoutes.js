@@ -8,14 +8,14 @@ import {
   resetPassword,
   changePassword,
   googleAuthCallback,
-  logout,
+  logout
 } from '../controllers/authControllers.js'
 import {
   validatorSignIn,
   validatorSignUp,
   validatorForgotPassword,
   validatorResetPassword,
-  validatorChangePassword,
+  validatorChangePassword
 } from '../validators/userValidators.js'
 
 import User from '../models/userModels.js'
@@ -26,7 +26,7 @@ import { buildResponse } from '../utils/buildResponse.js'
 import handleHttpError from '../utils/handleHttpError.js'
 import {
   authenticateUser,
-  authMiddleware,
+  authMiddleware
 } from '../middleware/authMiddleware.js'
 import { sendEmailRegister } from '../libs/sendEmailRegister.js'
 import { sendForgotPassword } from '../libs/sendForgotPassword.js'
@@ -44,7 +44,7 @@ router.post(
     buildResponse,
     handleHttpError,
     matchedData,
-    sendEmailRegister,
+    sendEmailRegister
   })
 )
 
@@ -58,7 +58,7 @@ router.post(
     handleHttpError,
     tokenSign,
     matchedData,
-    compare,
+    compare
   })
 )
 
@@ -71,7 +71,7 @@ router.post(
     buildResponse,
     handleHttpError,
     matchedData,
-    sendForgotPassword,
+    sendForgotPassword
   })
 )
 
@@ -92,7 +92,7 @@ router.post(
     handleHttpError,
     buildResponse,
     matchedData,
-    sendChangePassword,
+    sendChangePassword
   })
 )
 
@@ -114,7 +114,7 @@ router.get('/me', async (req, res) => {
       return res.status(200).json({
         success: true,
         data: { user: null },
-        message: 'No token provided',
+        message: 'No token provided'
       })
     }
 
@@ -124,7 +124,7 @@ router.get('/me', async (req, res) => {
       return res.status(200).json({
         success: true,
         data: { user: null },
-        message: 'Invalid or expired token',
+        message: 'Invalid or expired token'
       })
     }
 
@@ -135,21 +135,21 @@ router.get('/me', async (req, res) => {
       return res.status(200).json({
         success: true,
         data: { user: null },
-        message: 'User not found',
+        message: 'User not found'
       })
     }
 
     res.status(200).json({
       success: true,
       data: { user },
-      message: 'User info retrieved successfully',
+      message: 'User info retrieved successfully'
     })
   } catch (error) {
     console.error('Auth me error:', error)
     res.status(200).json({
       success: true,
       data: { user: null },
-      message: 'Authentication error',
+      message: 'Authentication error'
     })
   }
 })
@@ -167,11 +167,11 @@ router.get(
   '/google/callback',
   passport.authenticate('google', {
     session: false,
-    failureRedirect: '/auth/failure',
+    failureRedirect: '/auth/failure'
   }),
   googleAuthCallback({
     buildResponse,
-    handleHttpError,
+    handleHttpError
   })
 )
 
@@ -179,7 +179,7 @@ router.get(
 router.get('/failure', (req, res) => {
   res.status(401).json({
     success: false,
-    message: 'Google authentication failed',
+    message: 'Google authentication failed'
   })
 })
 

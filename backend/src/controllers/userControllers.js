@@ -134,11 +134,23 @@ export const updateCurrentUserData = ({
 /**
 * NOTE: Controller: Soft delete the currently authenticated user's account.
  */
-export const deleteCurrentUser = ({ User, buildResponse, handleHttpError }) => {
+export const deleteCurrentUser = ({ User, buildResponse, handleHttpError, invalidateToken }) => {
   return async (req, res) => {
     try {
-      if (!req.user || !req.user.role?.length) {
-        return handleHttpError(res, 'Unauthorized', 401)
+      // Retrieve token from Authorization header
+      const authHeader = req.headers.authorization
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return handleHttpError(res, 'No token provided', 400)
+      }
+
+      const token = authHeader.split(' ')[1]
+
+      // Invalidate the token (add it to blacklist)
+      const success = await invalidateToken(token)
+
+      if (!success) {
+        return handleHttpError(res, 'Failed to delete account.', 400)
       }
 
       // Find user first to use its data for email
