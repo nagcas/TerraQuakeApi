@@ -24,6 +24,7 @@ export default function AccessRestricted() {
         >
           Log In
         </button>
+        
         <button
           onClick={() => navigate('/signup')}
           className='py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-600 to-purple-700 rounded-full font-bold text-white shadow-lg hover:scale-105 transition-transform text-sm sm:text-base cursor-pointer'
