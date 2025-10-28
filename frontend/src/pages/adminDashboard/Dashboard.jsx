@@ -1,16 +1,28 @@
-import './Dashboard.css'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useContext } from 'react'
-import { Context } from '@components/modules/Context'
-import Statistics from './statistics/Statistics'
-import ListUsers from './users/ListUsers'
-import ListPosts from './posts/ListPosts'
-import ListMessages from './messages/ListMessages'
-import ListNewsletters from './newsletters/ListNewsletters'
+import './Dashboard.css';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useContext } from 'react';
+import { Context } from '@components/modules/Context';
+import Statistics from './statistics/Statistics';
+import ListUsers from './users/ListUsers';
+import ListPosts from './posts/ListPosts';
+import ListMessages from './messages/ListMessages';
+import ListNewsletters from './newsletters/ListNewsletters';
+import ListEmailNewsletters from './emailsNewsletters/ListEmailNewsletters';
+import ListReviews from './reviews/ListReviews';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminDashboard() {
-  const { userLogin } = useContext(Context)
+  const { userLogin } = useContext(Context);
+  const navigate = useNavigate();
+
+  const handleProfile = () => {
+    navigate('/profile', { replace: true });
+  };
+
+  const handleBlog = () => {
+    navigate('/blog', { replace: true });
+  };
 
   return (
     <motion.div
@@ -27,11 +39,11 @@ export default function AdminDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          <h1 className='text-4xl md:text-6xl text-white font-extrabold tracking-tighter mb-4'>
+          <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
             Admin Dashboard
+            <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
           </h1>
-          <div className='h-0.5 w-1/4 bg-gradient-to-r from-purple-500 via-pink-500 to-violet-500 my-4 rounded-full' />
-          <p className='text-xl text-white/70'>
+          <p className='text-xl text-center text-white/70'>
             Welcome back, {userLogin?.name || 'Administrator'}
           </p>
         </motion.div>
@@ -93,6 +105,30 @@ export default function AdminDashboard() {
             <ListNewsletters />
           </motion.div>
 
+          {/* Emails Management */}
+          <motion.div
+            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <h3 className='text-xl font-bold text-white mb-4'>
+              Emails Register
+            </h3>
+            <ListEmailNewsletters />
+          </motion.div>
+
+          {/* Reviews Management */}
+          <motion.div
+            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <h3 className='text-xl font-bold text-white mb-4'>Reviews</h3>
+            <ListReviews />
+          </motion.div>
+
           {/* Quick Actions */}
           <motion.div
             className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
@@ -102,19 +138,43 @@ export default function AdminDashboard() {
           >
             <h3 className='text-xl font-bold text-white mb-4'>Quick Actions</h3>
             <div className='space-y-3'>
-              <button className='w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300'>
+              <button className='w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
                 Create New Post
               </button>
-              <button className='w-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300'>
+              <button className='w-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
                 Send Newsletter
               </button>
-              <button className='w-full bg-gradient-to-r from-green-600 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300'>
+              <button className='w-full bg-gradient-to-r from-green-600 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
                 View Reports
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Quick Menu */}
+          <motion.div
+            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            <h3 className='text-xl font-bold text-white mb-4'>Quick Menu</h3>
+            <div className='space-y-3'>
+              <button
+                onClick={() => handleProfile()}
+                className='w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
+              >
+                Profile
+              </button>
+              <button 
+                onClick={() => handleBlog()}
+                className='w-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
+              >
+                Blog
               </button>
             </div>
           </motion.div>
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
