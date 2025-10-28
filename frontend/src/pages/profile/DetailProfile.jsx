@@ -40,6 +40,7 @@ export default function DetailProfile() {
           <a 
             href={userLogin?.website || ''}
             target='_blank'
+            rel='noopener noreferrer'
             className='hover:text-pink-400'
           >
             {userLogin?.website || ''}
@@ -51,6 +52,7 @@ export default function DetailProfile() {
           <a 
             href={userLogin?.portfolio || ''} 
             target='_blank'
+            rel='noopener noreferrer'
             className='hover:text-pink-400'
           >
             {userLogin?.portfolio || ''}
@@ -61,6 +63,7 @@ export default function DetailProfile() {
           <a 
             href={userLogin?.github || ''} 
             target='_blank'
+            rel='noopener noreferrer'
             className='hover:text-pink-400'
           >
             {userLogin?.github || ''}
@@ -71,6 +74,7 @@ export default function DetailProfile() {
           <a 
             href={userLogin?.linkedin || ''} 
             target='_blank'
+            rel='noopener noreferrer'
             className='hover:text-pink-400'
           >
             {userLogin?.linkedin || ''}

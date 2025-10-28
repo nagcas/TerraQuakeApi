@@ -788,6 +788,8 @@ export default function Docs() {
                   <li>
                     <a
                       href='https://github.com/nagcas/TerraQuakeApi/issues'
+                      target='_blank'
+                      rel='noopener noreferrer'
                       className='text-pink-300 hover:underline'
                     >
                       GitHub Issues
@@ -796,6 +798,8 @@ export default function Docs() {
                   <li>
                     <a
                       href='https://github.com/nagcas/TerraQuakeApi/discussions'
+                      target='_blank'
+                      rel='noopener noreferrer'
                       className='text-pink-300 hover:underline'
                     >
                       Discussions
