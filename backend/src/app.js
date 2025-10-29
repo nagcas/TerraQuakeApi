@@ -17,7 +17,12 @@ import routeEarthquakes from './routes/earthquakesRoutes.js'
 import routeStation from './routes/stationsRoutes.js'
 import routeDocsEarthquakes from './routes/docsEarthquakesRoutes.js'
 import routeGitHub from './routes/githubAuthRoutes.js'
+import routeMetrics from './routes/metricsRouters.js'
+import postRoutes from './routes/postRoutes.js'
 import newsletterRoutes from './routes/newsletterRoutes.js'
+import adminRoutes from './routes/admin.js'
+import routeFaq from './routes/faqRoutes.js'
+
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
 import {
@@ -26,9 +31,6 @@ import {
   contactLimiter
 } from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
-import routeMetrics from './routes/metricsRouters.js'
-import postRoutes from './routes/postRoutes.js'
-import adminRoutes from './routes/admin.js'
 
 dotenv.config()
 const devEnv = process.env.DEV_ENV || 'development'
@@ -75,6 +77,7 @@ app.use('/auth', authLimiter, routeAuth)
 app.use('/auth/github', authLimiter, routeGitHub)
 app.use('/users', authLimiter, authenticateUser, routeUsers)
 app.use('/contact', contactLimiter, routeContact)
+app.use('/faq', routeFaq)
 
 // Public routes
 app.use('/newsletter', newsletterRoutes)

@@ -1,0 +1,85 @@
+/**
+ * NOTE: Controller: Create a new faq.
+ *
+ * - Accepts `request`, `answer`
+ * - Saves a new `Faq` document to the database.
+ * - Responds with `200 OK` and the created contact object on success.
+ * - Returns a structured error response if validation or DB error occurs.
+ */
+export const createFaq = () => {
+  return async (req, res) => {
+    try {
+      res.status(200).json('create faq')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Retrieve all faq.
+ *
+ * - Supports pagination: `page`, `limit`.
+ * - Supports sorting: `sort` field and `sortDirection` (asc/desc).
+ * - Returns total count, total pages, and pagination metadata.
+ * - Responds with `200 OK` and an array of faq on success.
+ */
+export const listAllFaq = () => {
+  return async (req, res) => {
+    try {
+      res.status(200).json('list all faq')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Retrieve a single faq by ID.
+ *
+ * - Validates that the provided ID is a valid MongoDB ObjectId.
+ * - Responds with `404 Not Found` if no faq exists with the given ID.
+ * - Returns `200 OK` and the faq document on success.
+ */
+export const listOneFaq = () => {
+  return async (req, res) => {
+    try {
+      res.status(200).json('list one faq')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Update a FAQ by ID.
+ *
+ * - To be implemented: should update an existing FAQ entry based on its ID.
+ * - In the future, consider implementing a soft-delete mechanism instead of physically removing records from the database.
+ * - Currently returns a placeholder response.
+ */
+export const updateFaq = () => {
+  return async (req, res) => {
+    try {
+      res.status(200).json('update faq')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Soft-delete a faq by ID.
+ *
+ * - To be implemented: should mark a message as deleted without removing it from the DB.
+ * - Currently returns a placeholder response.
+ */
+export const deleteFaq = () => {
+  return async (req, res) => {
+    try {
+      res.status(200).json('delete faq')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
