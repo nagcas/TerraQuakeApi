@@ -38,6 +38,7 @@ import Unsubscribe from './components/newsletter/Unsubscribe'
 import AdminDashboard from '@pages/adminDashboard/Dashboard'
 import NoAccess from '@pages/NoAccess'
 import RequireAuth from '@components/RequireAuth'
+import TablePosts from './pages/adminDashboard/posts/TablePosts'
 
 export default function App() {
   return (
@@ -90,6 +91,14 @@ export default function App() {
                 element={
                   <RequireAuth requiredRole='admin'>
                     <AdminDashboard />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path='/table-posts'
+                element={
+                  <RequireAuth requiredRole='admin'>
+                    <TablePosts />
                   </RequireAuth>
                 }
               />
