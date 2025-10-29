@@ -1,6 +1,21 @@
 import handleHttpError from '../utils/handleHttpError.js'
 import { buildResponse } from '../utils/buildResponse.js'
 
+/**
+ * NOTE: GET /start
+ *
+ * Endpoint to check if the server is running and return basic API information.
+ *
+ * Responds with a JSON object containing server status, project metadata,
+ * and environment information.
+ *
+ * @async
+ * @function getStart
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @returns {Promise<void>} Sends a JSON response with server and API info
+ */
+
 export const getStart = async (req, res) => {
   try {
     res.status(200).json(

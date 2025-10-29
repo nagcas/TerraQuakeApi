@@ -1,0 +1,58 @@
+[
+  {
+    "question": "What is TerraQuake API?",
+    "answer": "TerraQuake API is a comprehensive seismic data service that provides real-time and historical earthquake information. It offers developers and researchers easy access to global earthquake data through RESTful API endpoints."
+  },
+  {
+    "question": "What kind of data does it provide?",
+    "answer": "The API provides detailed earthquake data including magnitude, location (latitude/longitude), depth, time of occurrence, and region information. It also offers additional metadata like tsunami warnings and seismic station data."
+  },
+  {
+    "question": "Is the API free to use?",
+    "answer": "Yes, TerraQuake API offers a free tier with basic access to earthquake data. Premium features may require a subscription, but core functionality remains free for developers and researchers."
+  },
+  {
+    "question": "How can I contribute to the project?",
+    "answer": "You can contribute to TerraQuake API by submitting bug reports, suggesting new features, or contributing code on our GitHub repository. We welcome community involvement to improve and expand the service."
+  },
+  {
+    "question": "How often is the earthquake data updated?",
+    "answer": "TerraQuake API updates its data in near real-time, typically within seconds after official seismic networks detect and process an event. Update frequency may vary depending on the region and data provider."
+  },
+  {
+    "question": "Do I need an API key to use TerraQuake API?",
+    "answer": "Yes, you need to register for an API key to access TerraQuake endpoints. The key helps us monitor usage and ensure fair access to all users. Basic registration is free and takes only a few minutes."
+  },
+  {
+    "question": "What response formats does the API support?",
+    "answer": "The API primarily returns data in JSON format, which is easy to integrate into modern web and mobile applications. XML support may be added in future versions."
+  },
+  {
+    "question": "Can I filter earthquakes by magnitude or region?",
+    "answer": "Yes, TerraQuake API provides query parameters that allow filtering by magnitude range, region, date, and depth. You can customize your requests to retrieve only the data relevant to your project."
+  },
+  {
+    "question": "Is historical data available?",
+    "answer": "Absolutely. TerraQuake API offers access to a historical database of seismic events dating back several decades, depending on the region. This data is valuable for research, analysis, and risk assessment."
+  },
+  {
+    "question": "Can I integrate the API into my research project or app?",
+    "answer": "Yes, the API is designed for developers, researchers, and organizations who want to integrate earthquake data into their projects, dashboards, or applications."
+  },
+  {
+    "question": "Does TerraQuake API provide notifications or webhooks?",
+    "answer": "Yes, premium users can subscribe to webhook alerts for real-time earthquake notifications. This feature enables instant event updates directly to your systems or applications."
+  },
+  {
+    "question": "How reliable is the data provided?",
+    "answer": "TerraQuake API aggregates data from trusted international and national seismic agencies, ensuring high accuracy and reliability. However, minor discrepancies may occur due to continuous data refinement."
+  },
+  {
+    "question": "Is there any usage limit or rate restriction?",
+    "answer": "The free tier includes a limited number of daily API calls to ensure fair access for all users. Higher rate limits are available through paid plans or institutional access."
+  },
+  {
+    "question": "Where can I report a bug or request a new feature?",
+    "answer": "You can report bugs or suggest new features directly on our GitHub Issues page. We value community feedback and continuously improve the API based on user input."
+  }
+]

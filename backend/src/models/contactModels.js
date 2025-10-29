@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import mongooseDelete from 'mongoose-delete'
 
-// Schema contact
+// NOTE: Schema contact
 const contactsSchema = new Schema(
   {
     name: {
@@ -16,14 +16,32 @@ const contactsSchema = new Schema(
     },
     email: {
       type: String,
+      trim: true,
+      required: true,
+      match: [
+        /^\S+@\S+\.\S+$/,
+        'Please provide a valid email address'
+      ]
+    },
+    subject: {
+      type: String,
+      required: [true, 'Subject is required'],
       trim: true
     },
-    content: {
+    message: {
       type: String,
-      required: true
+      required: [true, 'Message is required']
     },
     answer: {
       type: String
+    },
+    answered: {
+      type: Boolean,
+      default: false
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
     }
   },
   {

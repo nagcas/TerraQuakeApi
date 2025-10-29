@@ -1,0 +1,69 @@
+
+/* Spinner Animation */
+.spinner {
+  animation: spin 1.2s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Card and Section Styles */
+.api-card {
+  background: linear-gradient(135deg, #2d2d4d 0%, #3a1c71 100%);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px 0 rgba(58,28,113,0.25);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.api-card:hover {
+  box-shadow: 0 12px 40px 0 rgba(58,28,113,0.35);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Tab Button Styles */
+.api-tab-btn {
+  background: linear-gradient(90deg, #ff6a88 0%, #6a5cff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  margin: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(106,92,255,0.12);
+  transition: background 0.3s, transform 0.2s;
+}
+.api-tab-btn:hover {
+  background: linear-gradient(90deg, #6a5cff 0%, #ff6a88 100%);
+  transform: scale(1.05);
+}
+
+/* Typography */
+.api-title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff6a88 0%, #6a5cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+.api-desc {
+  color: #e0e0f6;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.api-section {
+  background: rgba(44, 44, 84, 0.7);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}

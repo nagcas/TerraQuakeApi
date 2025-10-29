@@ -1,22 +1,23 @@
-/*
+/**
  * Utility to standardize API responses.
  *
  * @param {import("express").Request} req - Express request object
  * @param {string} message - Human-readable message
  * @param {Object|Object[]} data - Response payload
  * @param {number|null} [total=null] - Optional total count (defaults to data length)
+ * @param {Object} [rest={}] - Optional extra fields to merge into response
  * @returns {Object} A consistent response object with metadata
  */
-export const buildResponse = (req, message, data, total = null, { ...rest }) => ({
+export const buildResponse = (req = {}, message = '', data = null, total = null, rest = {}) => ({
   success: true,
   code: 200,
   status: 'OK',
   message,
   total: total ?? (Array.isArray(data) ? data.length : 1),
-  user: data,
+  data, // payload
   meta: {
-    method: req.method.toUpperCase(),
-    path: req.originalUrl,
+    method: req.method?.toUpperCase() || null,
+    path: req.originalUrl || null,
     timestamp: new Date().toISOString()
   },
   ...rest

@@ -3,88 +3,111 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
+import passport from 'passport'
+import './config/passportConfig.js'
+import mongoSanitize from 'express-mongo-sanitize'
+import xss from 'xss-clean'
+import hpp from 'hpp'
 
 import routeAuth from './routes/authRoutes.js'
 import routeUsers from './routes/usersRoutes.js'
 import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
+import routeStation from './routes/stationsRoutes.js'
+import routeDocsEarthquakes from './routes/docsEarthquakesRoutes.js'
+import routeGitHub from './routes/githubAuthRoutes.js'
+import newsletterRoutes from './routes/newsletterRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
-import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
+import {
+  apiLimiter,
+  authLimiter,
+  contactLimiter
+} from './middleware/rateLimiter.js'
+import { metricsMiddleware } from './middleware/metrics.js'
+import routeMetrics from './routes/metricsRouters.js'
+import postRoutes from './routes/postRoutes.js'
+import adminRoutes from './routes/admin.js'
 
 dotenv.config()
-
 const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
-// 🔹 Trust the first proxy (Render)
+// 🔹 Trust proxy
 app.set('trust proxy', 1)
 
-// === MIDDLEWARE ===
-app.use(helmet())
-app.use(express.json())
+// === PASSPORT ===
+app.use(passport.initialize())
+
+// === SECURITY MIDDLEWARE ===
+app.use(helmet({ contentSecurityPolicy: false }))
+app.use(mongoSanitize())
+app.use(xss())
+app.use(hpp())
+
+// === BODY PARSER ===
+app.use(express.json({ limit: '10kb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// Debug middleware (utile per test)
-app.use((req, res, next) => {
-  console.log('METHOD:', req.method, 'URL:', req.originalUrl)
-  console.log('HEADERS:', req.headers)
-  console.log('BODY:', req.body)
-  next()
-})
+// === METRICS MIDDLEWARE ===
+app.use(metricsMiddleware)
 
-// === CORS ===
-// Only /v1/earthquakes is public
+// === GLOBAL CORS per endpoint protetti ===
 app.use(
-  '/v1/earthquakes',
-  cors(), // Allow requests from any origin
-  apiLimiter,
-  routeEarthquakes
+  cors({
+    origin: [process.env.FRONTEND_PRODUCTION, process.env.FRONTEND_DEVELOPMENT],
+    credentials: true
+  })
 )
 
-// Authenticated routes
-const corsAuthOptions = {
-  origin: [
-    process.env.FRONTEND_PRODUCTION,
-    process.env.FRONTEND_DEVELOPMENT
-  ],
-  credentials: true
-}
+// === ROUTES ===
 
-app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
-app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
-app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
-app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
+// Public route: earthquakes data, accessible from any origin
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeDocsEarthquakes)
+app.use('/v1/stations', cors({ origin: '*' }), apiLimiter, routeStation)
 
-// ===== ERROR HANDLER =====
+// Protected routes
+app.use('/v1/test', apiLimiter, routeGetStart)
+app.use('/v1', routeMetrics)
+app.use('/auth', authLimiter, routeAuth)
+app.use('/auth/github', authLimiter, routeGitHub)
+app.use('/users', authLimiter, authenticateUser, routeUsers)
+app.use('/contact', contactLimiter, routeContact)
+
+// Public routes
+app.use('/newsletter', newsletterRoutes)
+app.use('/posts', postRoutes)
+
+// Admin routes (protected)
+app.use('/admin', adminRoutes)
+
+// === ERROR HANDLER ===
 app.use((err, req, res, next) => {
-  console.error('🔥 Error:', err.message)
+  console.error('Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Internal Server Error'
+    message: devEnv === 'development' ? err.message : 'Internal Server Error'
   })
 })
 
-// ===== START SERVER =====
+// === START SERVER ===
 const port = process.env.PORT || 5000
+const urlBackend = process.env.BACKEND_URL || 'http://localhost:5001'
 
 const startServer = async () => {
   try {
     console.clear()
     await dbConnect()
-
     app.listen(port, () => {
       console.log(`Server running in ${devEnv} environment`)
-      console.log(`Started at: http://localhost:${port}`)
-      console.log(`Test endpoint: http://localhost:${port}/v1/test`)
-
-      const endPoints = expressListEndpoints(app)
-      console.log('List of available endpoints:')
-      console.table(endPoints)
+      console.log(`Started at: ${urlBackend}`)
+      console.log(`Test endpoint: ${urlBackend}/v1/test`)
+      console.table(expressListEndpoints(app))
     })
   } catch (error) {
-    console.log('Server startup error:', error.message)
+    console.error('Server startup error:', error.message)
     process.exit(1)
   }
 }

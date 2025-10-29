@@ -2,8 +2,23 @@ import { Schema, model } from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
 import { encrypt } from '../utils/handlePassword.js'
 
+// NOTE: Schema user
 const usersSchema = new Schema(
   {
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Ignores null/undefined values, required for users without a Google login
+      trim: true,
+      default: undefined // Avoid saving empty string
+    },
+    githubId: {
+      type: String,
+      unique: true,
+      sparse: true, // Ignores null/undefined values
+      trim: true,
+      default: undefined
+    },
     name: {
       type: String,
       trim: true
@@ -22,20 +37,56 @@ const usersSchema = new Schema(
       trim: true
     },
     role: {
-      type: ['user', 'admin', 'contributor'],
+      type: String,
+      enum: ['user', 'admin', 'contributor'],
       default: 'user'
     },
     experience: {
       type: String,
+      default: '',
       trim: true
     },
     student: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: 'No',
+      trim: true
     },
     terms: {
       type: Boolean,
       default: false
+    },
+    githubProfileUrl: {
+      type: String,
+      default: ''
+    },
+    bio: {
+      type: String,
+      default: ''
+    },
+    location: {
+      type: String,
+      default: '',
+      trim: true
+    },
+    website: {
+      type: String,
+      default: '',
+      trim: true
+    },
+    portfolio: {
+      type: String,
+      default: '',
+      trim: true
+    },
+    github: {
+      type: String,
+      default: '',
+      trim: true
+    },
+    linkedin: {
+      type: String,
+      default: '',
+      trim: true
     }
   },
   {
@@ -45,12 +96,14 @@ const usersSchema = new Schema(
   }
 )
 
+// Encrypt password before saving
 usersSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next()
   this.password = await encrypt(this.password)
   next()
 })
 
+// Soft delete plugin
 usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
 
 const User = model('users', usersSchema)

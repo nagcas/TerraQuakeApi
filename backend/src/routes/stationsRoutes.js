@@ -1,25 +1,34 @@
 import express from 'express'
+import { getAllStations } from '../controllers/seimiscStationsControllers.js'
+import { buildResponse } from '../utils/buildResponse.js'
+import handleHttpError from '../utils/handleHttpError.js'
 
 const router = express.Router()
 
-// NOTE: CATEGORIA -> Stazioni sismiche in Italia
+// NOTE: CATEGORY -> Seismic stations in Italy
 
-// NOTE: elenco e dettagli delle stazioni sismiche attive
-router.get('/')
+// NOTE: List and details of active seismic stations
+// GET / — retrieves a list of seismic stations and their details
+router.get('/', getAllStations({ buildResponse, handleHttpError }))
 
-// NOTE: restituisce una singola stazione sismica per codice
+// NOTE: Returns a single seismic station by code
+// GET /:code — retrieves details of a specific seismic station identified by its code
 router.get('/:code')
 
-// NOTE: restituisce tutte le stazioni sismiche in formato GeoJSON (per mappe)
+// NOTE: Returns all seismic stations in GeoJSON format (for mapping purposes)
+// GET /geojson — provides GeoJSON data of all seismic stations
 router.get('/geojson')
 
-// NOTE: elenca stazioni attive
+// NOTE: Lists active stations
+// GET /status/open — retrieves a list of seismic stations that are currently active
 router.get('/status/open')
 
-// NOTE: elenca stazioni chiuse
+// NOTE: Lists closed stations
+// GET /status/closed — retrieves a list of seismic stations that are currently closed
 router.get('/status/closed')
 
-// NOTE: statistiche sulle stazioni sismiche (es. totali, attive, per rete)
+// NOTE: Statistics about seismic stations (e.g., total, active, by network)
+// GET /statistics — provides statistical summaries for seismic stations
 router.get('/statistics')
 
 export default router

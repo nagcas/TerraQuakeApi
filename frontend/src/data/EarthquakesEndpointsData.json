@@ -1,0 +1,131 @@
+[
+  {
+    "key": "recent",
+    "label": "recent",
+    "method": "GET",
+    "path": "/v1/earthquakes/recent",
+    "subtitle": "Latest sismic events",
+    "description": "This endpoint retrieves all recent seismic events from the beginning of the year until today via the TerraQuake API sorted from the most recent to the least recent.\nIt provides users with insight into ongoing seismic activity for the current year.\nThe response includes details such as magnitude, location, depth, time, and unique event ID.\n\nQuery Parameters:\n- limit: (Optional) The number of earthquake events to return. Defaults to 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "today",
+    "label": "today",
+    "method": "GET",
+    "path": "/v1/earthquakes/today",
+    "subtitle": "Today seismic events",
+    "description": "This endpoint retrieves all seismic events that occurred today (from 00:00 UTC to the current time) from the TerraQuake API.\nIt allows users to monitor real-time seismic activity and provides a daily overview of ongoing earthquakes.\nThe response includes detailed information such as magnitude, location, depth, event time, and coordinates.\n\nQuery Parameters:\n- limit: (Optional) The number of earthquake events to return. Default is 50 if not provided.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "last-week",
+    "label": "last-week",
+    "method": "GET",
+    "path": "/v1/earthquakes/last-week",
+    "subtitle": "Last 7 days",
+    "description": "This endpoint retrieves all seismic events that occurred in the last 7 days from the TerraQuake API.\nIt allows users to monitor and analyze recent seismic activity over the past week, providing insights into short-term trends and regional patterns.\n\nQuery Parameters:\n- limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "month",
+    "label": "month",
+    "method": "GET",
+    "path": "/v1/earthquakes/month",
+    "subtitle": "By month/year",
+    "description": "This endpoint retrieves all seismic events that occurred during a specific month and year from the TerraQuake API.\nIt allows users to explore historical earthquake data for a given period. The response includes detailed event information such as magnitude, location, depth, and timestamp.\n\nQuery Parameters:\n- year: (Required) The target year (e.g., 2025).\n- month: (Required) The target month in numeric format (01 to 12).\n- limit: (Optional) The number of events to return. Default is 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "year", "label": "year", "placeholder": "2025", "defaultValue": "2025", "required": true },
+      { "name": "month", "label": "month", "placeholder": "03", "defaultValue": "03", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "location",
+    "label": "location",
+    "method": "GET",
+    "path": "/v1/earthquakes/location",
+    "subtitle": "Near latitude/longitude",
+    "description": "This endpoint fetches seismic events close to a given geographical location, defined by latitude and longitude, with an optional search radius.\nIt retrieves earthquakes that occurred from the beginning of the year up to the current date.\n\nQuery Parameters:\n- latitude: (Required) The latitude of the location (e.g., 40.835459).\n- longitude: (Required) The longitude of the location (e.g., 14.117358).\n- radius: (Optional) The search radius in kilometers. Default is 50 km if not specified.\n- limit: (Optional) The number of events to return. Default is 50.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "latitude", "label": "latitude", "placeholder": "41.7142", "required": true },
+      { "name": "longitude", "label": "longitude", "placeholder": "15.9577", "required": true },
+      { "name": "radius", "label": "radius (km)", "placeholder": "10" },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "region",
+    "label": "region",
+    "method": "GET",
+    "path": "/v1/earthquakes/region",
+    "subtitle": "By Italian region",
+    "description": "This endpoint retrieves all seismic events that occurred within a specific Italian region from the TerraQuake API, from the start of the current year up to today.\nIt allows users to filter earthquakes by regional boundaries for localized seismic analysis.\n\nQuery Parameters:\n- region: (Required) The name of the Italian region to filter by (e.g., Campania, Sicilia, Lazio). Case-insensitive.\n- limit: (Optional) The number of events to return. Defaults to 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "region", "label": "region", "placeholder": "Campania", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "depth",
+    "label": "depth",
+    "method": "GET",
+    "path": "/v1/earthquakes/depth",
+    "subtitle": "By focal depth (km)",
+    "description": "This endpoint retrieves all seismic events that occurred at a specific focal depth, measured in kilometers, from the TerraQuake API, from the start of the current year up to today.\nIt allows users to analyze earthquakes based on their depth, which can help assess their potential surface impact.\n\nQuery parameters:\n- depth: (Required) The focal depth of the earthquakes in kilometers (e.g., 10).\n- limit: (Optional) The number of events to return. Default is 10 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "depth", "label": "depth (km)", "placeholder": "10", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "range-time",
+    "label": "range-time",
+    "method": "GET",
+    "path": "/v1/earthquakes/range-time",
+    "subtitle": "By time range",
+    "description": "This endpoint retrieves all seismic events that occurred within a specific time range, using a custom start and end date.\nIt allows users to query historical earthquake data over any desired period, making it ideal for research, reports, or time-based visualizations.\n\nQuery Parameters:\n- startdate: (Required) The start date of the time range (format: YYYY-MM-DD).\n- enddate: (Required) The end date of the time range (format: YYYY-MM-DD).\n- limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "startdate", "label": "startdate", "placeholder": "YYYY-MM-DD", "required": true },
+      { "name": "enddate", "label": "enddate", "placeholder": "YYYY-MM-DD", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "magnitude",
+    "label": "magnitude",
+    "method": "GET",
+    "path": "/v1/earthquakes/magnitude",
+    "subtitle": "Min magnitude",
+    "description": "This endpoint retrieves all seismic events that have a specific or greater magnitude from the TerraQuake API, from the start of the current year up to today.\nIt is useful for filtering earthquakes based on their strength and analyzing seismic intensity patterns over time or across regions.\n\nQuery Parameters:\n- mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude > 2.0).\n- limit: (Optional) Number of earthquake events to return. Default is 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "mag", "label": "mag", "placeholder": "1", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "eventId",
+    "label": "eventId",
+    "method": "GET",
+    "path": "/v1/earthquakes/eventId",
+    "subtitle": "By event ID",
+    "description": "This endpoint retrieves a specific seismic event by its unique event ID from the TerraQuake API.\nIt allows users to access detailed information about a single earthquake event, including magnitude, location, depth, and precise timestamp.\n\nQuery Parameters:\n- eventId: (Required) The unique identifier of the earthquake event to retrieve.",
+    "params": [
+      { "name": "eventId", "label": "eventId", "placeholder": "44061482", "required": true }
+    ]
+  }
+]

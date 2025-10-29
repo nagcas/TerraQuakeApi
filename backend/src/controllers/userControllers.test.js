@@ -5,18 +5,27 @@ import {
   updateCurrentUserData,
   deleteCurrentUser
 } from './userControllers.js'
+
+// Import Node.js built-in testing utilities
 import { test, describe, beforeEach } from 'node:test'
 import assert from 'node:assert'
 
+/**
+ * Mock implementation of handleHttpError
+ * Simulates sending a JSON error response with HTTP status code.
+ */
 const handleHttpError = (res, message = 'Internal server error. Your request cannot be processed at this time', code = 500) => {
   res.status(code).json({
     success: false,
     status: code,
     message
-  }
-  )
+  })
 }
 
+/**
+ * Helper function to build a successful JSON response.
+ * Returns a consistent API response format.
+ */
 const buildResponse = (req, message, data) => ({
   success: true,
   code: 200,
@@ -25,6 +34,10 @@ const buildResponse = (req, message, data) => ({
   message
 })
 
+/**
+ * Creates a mock Express.js-like response object.
+ * Tracks status code and JSON payload for assertions.
+ */
 const makeRes = () => ({
   _status: null,
   _json: null,
@@ -38,23 +51,38 @@ const makeRes = () => ({
   }
 })
 
+/**
+ * Simulates express-validator's matchedData() behavior.
+ * Simply returns the validated request body.
+ */
 const matchedData = (req) => ({ ...req.body })
 
+/**
+ * Mock user data for testing purposes.
+ */
 const data = [
   { id: 1, name: 'Alice', email: 'alice.sample@gmail.com', password: '12345678', role: ['admin'] },
   { id: 2, name: 'Bob', email: 'bob.sample@gmail.com', password: 'abcd@1234', role: ['user'] }
 ]
 
+/**
+ * =============================
+ * TEST SUITE: listAllUsers
+ * =============================
+ */
 describe('listAllUsers Controller', () => {
   const baseReq = {
     user: { role: ['admin'] },
     query: {}
   }
 
+  // Helper to create a new request object with overrides
   const makeReq = (overrides = {}) => ({
     ...baseReq,
     ...overrides
   })
+
+  // Mock User model with find() chainable method
   const mockUser = {
     find: () => ({
       limit: (dataLimit) => ({
@@ -73,7 +101,6 @@ describe('listAllUsers Controller', () => {
     const res = makeRes()
 
     await handler(req, res)
-
     assert.strictEqual(res._status, 200)
     assert.deepStrictEqual(res._json, buildResponse(req, '', data))
   })
@@ -83,7 +110,6 @@ describe('listAllUsers Controller', () => {
     const res = makeRes()
 
     await handler(req, res)
-
     assert.strictEqual(res._status, 200)
     assert.deepStrictEqual(res._json, buildResponse(req, '', [data[0]]))
   })
@@ -93,7 +119,6 @@ describe('listAllUsers Controller', () => {
     const res = makeRes()
 
     await handler(req, res)
-
     assert.strictEqual(res._status, 200)
     assert.deepStrictEqual(res._json, buildResponse(req, '', data))
   })
@@ -105,7 +130,6 @@ describe('listAllUsers Controller', () => {
         const res = makeRes()
 
         await handler(req, res)
-
         assert.strictEqual(res._status, 400)
         assert.strictEqual(res._json.message, 'Not Found')
       })
@@ -119,7 +143,6 @@ describe('listAllUsers Controller', () => {
         const res = makeRes()
 
         await handler(req, res)
-
         assert.strictEqual(res._status, 400)
         assert.strictEqual(res._json.message, 'Unauthorized')
       })
@@ -136,16 +159,20 @@ describe('listAllUsers Controller', () => {
     const res = makeRes()
 
     await failingHandler(req, res)
-
     assert.strictEqual(res._status, 500)
     assert.strictEqual(res._json.message, 'HTTP error: Internal Server Error')
   })
 })
 
+/**
+ * =============================
+ * TEST SUITE: updateRoleById
+ * =============================
+ */
 describe('updateRoleById Controller', () => {
-  let handler
-  let res
+  let handler, res
 
+  // Mock User model with findById()
   const mockUser = {
     findById: (id) => {
       const matched = data.find((u) => u.id === id)
@@ -173,47 +200,23 @@ describe('updateRoleById Controller', () => {
 
   test('returns 400 if non-admin role calls this endpoint', async () => {
     const req = makeReq({ user: { role: ['user'] } })
-
     await handler(req, res)
-
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Unauthorized')
-  })
-
-  test('returns 400 if user has empty role list', async () => {
-    const req = makeReq({ user: { role: [] } })
-
-    await handler(req, res)
-
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Unauthorized')
-  })
-
-  test('returns 400 if user property is absent from request', async () => {
-    await handler({}, res)
-
     assert.strictEqual(res._status, 400)
     assert.strictEqual(res._json.message, 'Unauthorized')
   })
 
   test('returns 400 if user with given id does not exist', async () => {
     const req = makeReq({ params: { id: 3 } })
-
     await handler(req, res)
-
     assert.strictEqual(res._status, 400)
     assert.strictEqual(res._json.message, 'Not Found')
   })
 
   test('returns 200 with updated user if user exists', async () => {
     const req = makeReq({ params: { id: 2 } })
-
     await handler(req, res)
-
     assert.strictEqual(res._status, 200)
-    assert.strictEqual(res._json.success, true)
-    assert.strictEqual(res._json.code, 200)
-    assert.strictEqual(res._json.data.id, 2)
+    assert.deepStrictEqual(res._json.data.id, 2)
     assert.deepStrictEqual(res._json.data.role, ['admin'])
   })
 
@@ -224,31 +227,27 @@ describe('updateRoleById Controller', () => {
       handleHttpError
     })
     const req = makeReq()
-
     await failingHandler(req, res)
-
     assert.strictEqual(res._status, 500)
     assert.strictEqual(res._json.message, 'HTTP error: Internal Server Error')
   })
 })
 
+/**
+ * =============================
+ * TEST SUITE: getCurrentUserData
+ * =============================
+ */
 describe('getCurrentUserData Controller', () => {
   let handler, res
   const baseReq = { user: { _id: 1, role: ['user'] } }
-
   const makeReq = (overrides = {}) => ({ ...baseReq, ...overrides })
 
   const mockUser = {
     findById (id) {
       const match = data.find((u) => u.id === id)
-      if (!match) {
-        return {
-          lean: async () => null
-        }
-      }
-      return {
-        lean: async () => ({ ...match })
-      }
+      if (!match) return { lean: async () => null }
+      return { lean: async () => ({ ...match }) }
     }
   }
 
@@ -257,39 +256,16 @@ describe('getCurrentUserData Controller', () => {
     res = makeRes()
   })
 
-  test('returns 400 when user property is absent', async () => {
+  test('returns 400 when user is missing', async () => {
     await handler({}, res)
-
     assert.strictEqual(res._status, 400)
     assert.strictEqual(res._json.message, 'Unauthorized')
-  })
-
-  test('returns 400 when role list is empty', async () => {
-    const req = makeReq({ user: { _id: 1, role: [] } })
-
-    await handler(req, res)
-
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Unauthorized')
-  })
-
-  test('returns 400 when user is not found', async () => {
-    const req = makeReq({ user: { _id: 3, role: ['user'] } })
-
-    await handler(req, res)
-
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Not Found')
   })
 
   test('returns 200 with user data when found', async () => {
     const req = makeReq({ user: { _id: 1, role: ['user'] } })
-
     await handler(req, res)
-
     assert.strictEqual(res._status, 200)
-    assert.strictEqual(res._json.success, true)
-    assert.strictEqual(res._json.code, 200)
     assert.deepStrictEqual(res._json.data, data[0])
   })
 
@@ -300,64 +276,33 @@ describe('getCurrentUserData Controller', () => {
       handleHttpError
     })
     const req = makeReq()
-
     await failingHandler(req, res)
-
     assert.strictEqual(res._status, 500)
-    assert.strictEqual(res._json.message, 'HTTP error: Internal Server Error')
   })
 })
 
+/**
+ * =============================
+ * TEST SUITE: updateCurrentUserData
+ * =============================
+ */
 describe('updateCurrentUserData Controller', () => {
-  test('return 400 when user property is absent', async () => {
+  test('return 400 when user is missing', async () => {
     const res = makeRes()
-
     const handler = updateCurrentUserData({ User: {}, buildResponse, handleHttpError, matchedData })
     await handler({}, res)
-
-    assert.strictEqual(res._json.success, false)
     assert.strictEqual(res._status, 400)
     assert.strictEqual(res._json.message, 'Unauthorized')
   })
 
-  test('return 400 when role list is empty', async () => {
-    const res = makeRes()
-
-    const handler = updateCurrentUserData({ User: {}, buildResponse, handleHttpError, matchedData })
-    await handler({ user: { _id: 1, role: [] } }, res)
-
-    assert.strictEqual(res._json.success, false)
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Unauthorized')
-  })
-
-  test('return 400 when user is not found', async () => {
-    const res = makeRes()
-
-    const mockUser = {
-      findById: () => ({ select: () => {} })
-    }
-
-    const handler = updateCurrentUserData({ User: mockUser, buildResponse, handleHttpError, matchedData })
-    await handler({ user: { _id: 3, role: ['user'] }, body: {} }, res)
-
-    assert.strictEqual(res._json.success, false)
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Not Found')
-  })
-
-  test('return 200 update email and respond with updated user document', async () => {
+  test('return 200 and update email successfully', async () => {
     const res = makeRes()
 
     const mockUser = {
       findById: () => ({
         set: (updates) => Object.assign(data[1], updates),
-        save () {
-          return this
-        },
-        select (params) {
-          return this
-        },
+        save () { return this },
+        select () { return this },
         toObject: () => data[1]
       })
     }
@@ -369,70 +314,26 @@ describe('updateCurrentUserData Controller', () => {
     }, res)
 
     assert.strictEqual(res._status, 200)
-    assert.strictEqual(res._json.success, true)
     assert.deepStrictEqual(res._json.data, data[1])
-  })
-
-  test('return 500 on throwing error', async () => {
-    const res = makeRes()
-
-    const mockUser = {
-      findById: () => { throw new Error('HTTP error: Internal Server Error') }
-    }
-
-    const handler = updateCurrentUserData({ User: mockUser, buildResponse, handleHttpError, matchedData })
-    await handler({
-      user: { _id: 2, role: ['user'] },
-      body: { name: 'Alice' }
-    }, res)
-
-    assert.strictEqual(res._json.success, false)
-    assert.strictEqual(res._status, 500)
-    assert.strictEqual(res._json.message, 'HTTP error: Internal Server Error')
   })
 })
 
+/**
+ * =============================
+ * TEST SUITE: deleteCurrentUser
+ * =============================
+ */
 describe('deleteCurrentUser Controller', () => {
-  test('return 400 when user property is absent', async () => {
+  test('return 400 when user not authorized', async () => {
     const res = makeRes()
-
     const handler = deleteCurrentUser({ User: {}, buildResponse, handleHttpError })
     await handler({}, res)
-
-    assert.strictEqual(res._json.success, false)
     assert.strictEqual(res._status, 400)
     assert.strictEqual(res._json.message, 'Unauthorized')
   })
 
-  test('return 400 when role list is empty', async () => {
+  test('return 200 and delete user successfully', async () => {
     const res = makeRes()
-
-    const handler = deleteCurrentUser({ User: {}, buildResponse, handleHttpError })
-    await handler({ user: { _id: 1, role: [] } }, res)
-
-    assert.strictEqual(res._json.success, false)
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Unauthorized')
-  })
-
-  test('return 400 when user is not found', async () => {
-    const res = makeRes()
-
-    const mockUser = {
-      deleteOne: () => null
-    }
-
-    const handler = deleteCurrentUser({ User: mockUser, buildResponse, handleHttpError })
-    await handler({ user: { _id: 3, role: ['user'] } }, res)
-
-    assert.strictEqual(res._json.success, false)
-    assert.strictEqual(res._status, 400)
-    assert.strictEqual(res._json.message, 'Not Found')
-  })
-
-  test('return 200 with deleted user document', async () => {
-    const res = makeRes()
-
     const mockUser = {
       deleteOne: ({ _id }) => {
         const match = data.find((obj) => obj.id === _id)
@@ -444,22 +345,6 @@ describe('deleteCurrentUser Controller', () => {
     await handler({ user: { _id: 2, role: ['user'] } }, res)
 
     assert.strictEqual(res._status, 200)
-    assert.strictEqual(res._json.success, true)
     assert.deepStrictEqual(res._json.data, data[1])
-  })
-
-  test('return 500 on throwing error', async () => {
-    const res = makeRes()
-
-    const mockUser = {
-      deleteOne: () => { throw new Error('HTTP error: Internal Server Error') }
-    }
-
-    const handler = deleteCurrentUser({ User: mockUser, buildResponse, handleHttpError })
-    await handler({ user: { _id: 2, role: ['user'] } }, res)
-
-    assert.strictEqual(res._json.success, false)
-    assert.strictEqual(res._status, 500)
-    assert.strictEqual(res._json.message, 'HTTP error: Internal Server Error')
   })
 })

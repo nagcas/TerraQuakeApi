@@ -1,6 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;1,500;1,700&display=swap');
 @import "tailwindcss";
 
+:root {
+  --color-primary: #6b21a8;
+  --color-primary-hover: #8b5cf6;
+  --color-secondary: #0f0c29;
+  --color-border: #8b5cf6;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e0e0e0;
+  --color-bg-body: #0f0c29;
+  --color-bg-light: #1a1733;
+  --scrollbar-width: 12px;
+  --radius-md: 6px;
+}
+
+/* These font classes do not need changes */
 .poppins-bold {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
@@ -20,33 +34,41 @@
 }
 
 
+/* ================================================================ */
+/* 👇 2. REFACTOR EXISTING STYLES TO USE THE VARIABLES 👇 */
+/* ================================================================ */
 
-/* Tutta la scrollbar */
+/* Tutta la scrollbar (for Webkit browsers like Chrome, Safari) */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: var(--scrollbar-width);
 }
 
 /* Sfondo della scrollbar */
 ::-webkit-scrollbar-track {
-  background: #0f0c29;
+  background: var(--color-secondary);
+  /* CHANGED */
 }
 
 /* Thumb (parte mobile) */
 ::-webkit-scrollbar-thumb {
-  background-color: #6b21a8;
-  border-radius: 6px;
+  background-color: var(--color-primary);
+  /* CHANGED */
+  border-radius: var(--radius-md);
+  /* CHANGED */
   border: 3px solid transparent;
   background-clip: content-box;
 }
 
 /* Al passaggio del mouse */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #8b5cf6;
+  background-color: var(--color-primary-hover);
+  /* CHANGED */
 }
 
 /* Per Firefox */
 html {
-  scrollbar-color: #6b21a8 #0f0c29; /* thumb / track */
+  scrollbar-color: var(--color-primary) var(--color-secondary);
+  /* CHANGED: thumb / track */
   scrollbar-width: thin;
 }
 
@@ -55,8 +77,124 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-style: normal;
+  /* ADDED these lines to apply the global theme */
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
 }
 
 .custom-swal-popup {
-  border: #8b5cf6;
+  border-color: var(--color-border);
+  /* CHANGED */
+  /* Note: 'border' needs a style and width, e.g., 'border: 1px solid var(--color-border)'. 
+     I've used 'border-color' to be safe. */
+}
+
+
+/* These animation classes do not need changes */
+@keyframes dangle-bouncy {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(15deg);
+  }
+
+  50% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.group:hover .dangle-on-hover {
+  animation: dangle-bouncy 1.2s ease-in-out infinite;
+}
+
+@keyframes subtle-bounce {
+
+  0%,
+  100% {
+    transform: translateY(-15%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.group:hover .icon-bounces {
+  animation: subtle-bounce 0.8s infinite;
+}
+
+/* SweetAlert2 TerraQuake Custom Theme */
+.swal2-popup {
+  background: #1e1917 !important; /* warm volcanic dark */
+  color: #f3f4f6 !important;
+  border-radius: 1rem !important;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.2); /* soft purple glow */
+  animation: quakeFadeIn 0.45s ease forwards;
+}
+
+
+.swal2-confirm,
+.swal2-cancel {
+  border-radius: 0.75rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-confirm {
+  background-color: #9333ea !important; /* purple quake accent */
+  color: #fff !important;
+}
+
+.swal2-confirm:hover {
+  background-color: #7e22ce !important;
+  transform: scale(1.05);
+}
+
+.swal2-cancel {
+  background-color: #3f3f46 !important;
+  color: #f3f4f6 !important;
+}
+
+.swal2-cancel:hover {
+  background-color: #52525b !important;
+}
+
+/* Animations */
+@keyframes quakeFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(10px);
+    box-shadow: 0 0 0 rgba(147, 51, 234, 0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 0 30px rgba(147, 51, 234, 0.25);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.2);
+  }
+}
+
+/* Optional subtle shake when alert appears (quake effect) */
+.swal2-show {
+  animation: quakeShake 0.4s ease;
+}
+
+@keyframes quakeShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
 }

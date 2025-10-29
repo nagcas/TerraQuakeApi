@@ -6,6 +6,7 @@ import {
 import { test, describe, beforeEach } from 'node:test'
 import assert from 'node:assert'
 
+// Utility function for handling HTTP errors consistently
 const handleHttpError = (res, message = 'Internal server error. Your request cannot be processed at this time', code = 500) => {
   res.status(code).json(
     {
@@ -16,6 +17,7 @@ const handleHttpError = (res, message = 'Internal server error. Your request can
   )
 }
 
+// Helper for building consistent API responses
 const buildResponse = (req, message, data, total = null, { ...rest }) => ({
   success: true,
   code: 200,
@@ -24,6 +26,7 @@ const buildResponse = (req, message, data, total = null, { ...rest }) => ({
   message
 })
 
+// Mock Express.js response object
 const makeRes = () => ({
   _status: null,
   _json: null,
@@ -37,16 +40,23 @@ const makeRes = () => ({
   }
 })
 
+// Helper to mimic express-validator’s matchedData
 const matchedData = (req) => ({ ...req.body })
 
+// Mock password comparison (simulates bcrypt.compare)
 const compare = async (actualPassword, enteredPassword) => (actualPassword === enteredPassword)
 
+// Mock user dataset for testing
 const mockData = [
   { id: 1, name: 'Alice', email: 'alice.sample@gmail.com', password: '12345678', role: ['admin'] },
   { id: 2, name: 'Bob', email: 'bob.sample@gmail.com', password: 'abcd@1234', role: ['user'] }
 ]
 
+/* ================================
+   SIGN UP CONTROLLER TESTS
+================================ */
 describe('signUp Controller', () => {
+  // Mock User model for testing user registration
   class MockUser {
     save () {
       return this
@@ -57,6 +67,7 @@ describe('signUp Controller', () => {
     }
 
     constructor (data) {
+      // Simulate checking for existing user by email
       const matchedEmail = mockData.filter((obj) => obj.email === data.email)
       if (matchedEmail.length) throw new Error('User Exists')
       this._data = data
@@ -64,6 +75,7 @@ describe('signUp Controller', () => {
     }
   }
 
+  // Mock email sending function (e.g., Mailgun)
   const sendEmailRegister = async () => {}
 
   test('returns 400 if user exists', async () => {
@@ -79,7 +91,7 @@ describe('signUp Controller', () => {
     assert.strictEqual(res._json.success, false)
   })
 
-  test('returns 200 on succesful user creation', async () => {
+  test('returns 200 on successful user creation', async () => {
     const res = makeRes()
     const handler = signUp({ User: MockUser, buildResponse, handleHttpError, matchedData, sendEmailRegister })
     await handler({
@@ -93,9 +105,13 @@ describe('signUp Controller', () => {
   })
 })
 
+/* ================================
+   SIGN IN CONTROLLER TESTS
+================================ */
 describe('signIn Controller', () => {
   let handler, res
 
+  // Mock User model for login authentication
   const mockUser = {
     findOne ({ email }) {
       const matchedData = mockData.filter((obj) => obj.email === email)
@@ -111,6 +127,7 @@ describe('signIn Controller', () => {
     }
   }
 
+  // Mock JWT generation function
   const tokenSign = async (user) => 'token'
 
   beforeEach(() => {
@@ -180,8 +197,13 @@ describe('signIn Controller', () => {
   })
 })
 
+/* ================================
+   RESET PASSWORD CONTROLLER TESTS
+================================ */
 describe('resetPassword Controller', () => {
   let res, handler
+
+  // Mock User model for password reset logic
   const mockUser = {
     findOne ({ email }) {
       const matchedData = mockData.filter((obj) => obj.email === email)
