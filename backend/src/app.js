@@ -23,7 +23,7 @@ import { authenticateUser } from './middleware/authMiddleware.js'
 import {
   apiLimiter,
   authLimiter,
-  contactLimiter,
+  contactLimiter
 } from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
 import routeMetrics from './routes/metricsRouters.js'
@@ -57,7 +57,7 @@ app.use(metricsMiddleware)
 app.use(
   cors({
     origin: [process.env.FRONTEND_PRODUCTION, process.env.FRONTEND_DEVELOPMENT],
-    credentials: true,
+    credentials: true
   })
 )
 
@@ -81,14 +81,14 @@ app.use('/newsletter', newsletterRoutes)
 app.use('/posts', postRoutes)
 
 // Admin routes (protected)
-app.use('/api/admin', adminRoutes)
+app.use('/admin', adminRoutes)
 
 // === ERROR HANDLER ===
 app.use((err, req, res, next) => {
   console.error('Error:', err.message)
   res.status(err.status || 500).json({
     success: false,
-    message: devEnv === 'development' ? err.message : 'Internal Server Error',
+    message: devEnv === 'development' ? err.message : 'Internal Server Error'
   })
 })
 
