@@ -133,7 +133,7 @@ export const sendChangePassword = async (user) => {
       </html>
     `
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🔒 Your TerraQuake API Password Has Been Changed',
       html

@@ -39,7 +39,7 @@ export const sendDeleteAccountConfirmation = async (user) => {
     `
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '👋 Your TerraQuake API Account Has Been Deleted',
       html

@@ -39,10 +39,10 @@ export const sendEmailRegister = async (user) => {
     `
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🎉 Welcome to TerraQuake API!',
-      html,
+      html
     })
 
     console.log('Registration email sent:', result)

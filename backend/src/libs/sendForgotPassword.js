@@ -29,7 +29,7 @@ export const sendForgotPassword = async (user, token) => {
     `
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🔑 Reset Your TerraQuake API Password',
       html

@@ -35,7 +35,7 @@ export const sendConfirmationEmail = async (email, unsubscribeLink) => {
     `
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `"TerraQuake API" <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `"TerraQuake API" <support@${process.env.MAILGUN_DOMAIN}>`,
       to: email,
       subject: 'Welcome to TerraQuake API Newsletter',
       html
@@ -61,7 +61,7 @@ export const sendBulkNewsletter = async (
       const unsubscribeLink = generateUnsubscribeLink(subscriber.email)
 
       await client.messages.create(process.env.MAILGUN_DOMAIN, {
-        from: `"TerraQuake API" <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+        from: `"TerraQuake API" <support@${process.env.MAILGUN_DOMAIN}>`,
         to: subscriber.email,
         subject,
         html: `

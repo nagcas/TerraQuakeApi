@@ -44,7 +44,7 @@ export const sendEmailConfirmContact = async (contact) => {
     `
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `TerraQuake API <postmaster@${process.env.MAILGUN_DOMAIN}>`,
+      from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: contact.email,
       subject: '📩 We’ve received your message!',
       html
