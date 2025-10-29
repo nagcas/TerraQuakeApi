@@ -15,7 +15,7 @@ import { Context } from '@components/modules/Context';
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
-  const { setUserLogin, setIsLoggedIn } = useContext(Context);
+  const { setUserLogin, isLoggedIn, setIsLoggedIn } = useContext(Context);
 
   const signUpSchema = yup
     .object({
