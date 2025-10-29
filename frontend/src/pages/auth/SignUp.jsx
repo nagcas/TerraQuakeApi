@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
@@ -11,9 +11,11 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
+import { Context } from '@/components/modules/Context';
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
+  const { isLoggedIn } = useContext(Context);
 
   const signUpSchema = yup
     .object({
@@ -106,6 +108,15 @@ export default function SignUp() {
         });
       });
   };
+
+  // If the user is already logged in, redirect them to their profile page
+  // This prevents authenticated users from accessing the Sign In or Sign Up pages
+  // The "replace: true" option removes the current route from the history stack
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/profile', { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <>
