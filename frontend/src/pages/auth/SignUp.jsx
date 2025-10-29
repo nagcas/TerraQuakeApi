@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,11 +11,11 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
-import { Context } from '@/components/modules/Context';
+import { Context } from '@components/modules/Context';
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useContext(Context);
+  const { setUserLogin, setIsLoggedIn } = useContext(Context);
 
   const signUpSchema = yup
     .object({
@@ -78,15 +78,47 @@ export default function SignUp() {
 
     axios
       .post('auth/signup', formData)
-      .then((res) => {
-        Swal.fire({
-          title: 'Success!',
-          text: `${res.data.message}`,
-          icon: 'success',
-          confirmButtonText: 'Log In',
-        }).then(() => {
-          navigate('/signin', { replace: true });
-        });
+      .then(async (res) => {
+        // After successful sign-up, automatically sign the user in
+        try {
+          const loginRes = await axios.post('/auth/signin', {
+            email: data.email,
+            password: data.password,
+          }, {
+            headers: { 'Content-Type': 'application/json' },
+          });
+
+          setUserLogin(loginRes.data.data);
+          setIsLoggedIn(true);
+          localStorage.setItem('user', JSON.stringify(loginRes.data.data));
+          localStorage.setItem('token', loginRes.data.token);
+
+          Swal.fire({
+            title: 'Welcome!',
+            text: 'Your account was created and you are now logged in.',
+            icon: 'success',
+            confirmButtonText: 'Go to Profile',
+          }).then(() => {
+            setLoading(false);
+            navigate('/profile', { replace: true });
+          });
+        } catch (loginErr) {
+          // If auto-login fails, fall back to manual login screen with message
+          const errorMessage =
+            loginErr?.response?.data?.message ||
+            loginErr?.response?.data?.error ||
+            'Account created, but automatic login failed. Please sign in.';
+
+          Swal.fire({
+            title: 'Almost there!',
+            text: errorMessage,
+            icon: 'warning',
+            confirmButtonText: 'Sign In',
+          }).then(() => {
+            setLoading(false);
+            navigate('/signin', { replace: true });
+          });
+        }
       })
       .catch((err) => {
         // Build a reliable error message from several possible shapes
