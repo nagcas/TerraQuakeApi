@@ -10,19 +10,15 @@ export default function DeleteProfile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
   
-
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleDelete = async () => {
-    console.log('sono qui')
     try {
       setLoading(true);
 
       // Retrieve token from localStorage
       const token = localStorage.getItem('token');
-      console.log(token)
-
 
       // If no token is found, show an error alert
       if (!token) {
@@ -60,8 +56,6 @@ export default function DeleteProfile() {
         },
       });
 
-      console.log(res)
-
       // Show success message after account deletion
       await Swal.fire({
         title: 'Deleted!',
@@ -84,7 +78,6 @@ export default function DeleteProfile() {
         err?.response?.data?.error ||
         err?.message ||
         'An error occurred. Please try again.';
-
         console.log(errorMessage)
       Swal.fire({
         title: 'Error!',
