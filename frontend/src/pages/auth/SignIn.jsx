@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
@@ -17,7 +17,7 @@ export default function SignIn() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const { setUserLogin, setIsLoggedIn } = useContext(Context)
+  const { setUserLogin, isLoggedIn, setIsLoggedIn } = useContext(Context)
 
   // Validation schema
   const loginSchema = yup.object({
@@ -85,6 +85,15 @@ export default function SignIn() {
   }
 
   const togglePassword = () => setShowPassword((prev) => !prev)
+
+  // If the user is already logged in, redirect them to their profile page
+  // This prevents authenticated users from accessing the Sign In or Sign Up pages
+  // The "replace: true" option removes the current route from the history stack
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/profile', { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <>

@@ -96,8 +96,7 @@ export default function ApiPlayground({
     `curl -s -X ${active.method || 'GET'} "${buildUrl()}"`;
 
   const sampleFetch = () =>
-    `fetch('${buildUrl()}', { method: '${
-      active.method || 'GET'
+    `fetch('${buildUrl()}', { method: '${active.method || 'GET'
     }' })\n  .then(r => r.json())\n  .then(console.log)\n  .catch(console.error)`;
 
   const sampleAxios = () => {
@@ -122,10 +121,10 @@ export default function ApiPlayground({
     });
     const dict = Object.entries(paramsObj).length
       ? '{\n' +
-        Object.entries(paramsObj)
-          .map(([k, v]) => `  '${k}': '${v}'`)
-          .join(',\n') +
-        '\n}'
+      Object.entries(paramsObj)
+        .map(([k, v]) => `  '${k}': '${v}'`)
+        .join(',\n') +
+      '\n}'
       : '{}';
     return `import requests\n\nurl = '${base}'\nparams = ${dict}\n\nresp = requests.get(url, params=params)\nprint(resp.json())`;
   };
@@ -161,11 +160,10 @@ export default function ApiPlayground({
             <button
               key={ep.key}
               onClick={() => onChangeActive(ep.key)}
-              className={`py-2 px-4 rounded-full font-semibold transition-colors ${
-                activeKey === ep.key
+              className={`py-2 px-4 rounded-full font-semibold transition-colors ${activeKey === ep.key
                   ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white cursor-pointer'
                   : 'border-white/5 bg-white/[0.03] p-6 shadow-xl hover:bg-pink-500 text-white cursor-pointer'
-              }`}
+                }`}
             >
               {ep.label}
             </button>
@@ -260,15 +258,14 @@ export default function ApiPlayground({
                         l === 'javascript'
                           ? 'fetch'
                           : l === 'shell'
-                          ? 'curl'
-                          : 'requests'
+                            ? 'curl'
+                            : 'requests'
                       );
                     }}
-                    className={`text-sm lg:text-md py-1 px-3 rounded-full ${
-                      langTab === l
+                    className={`text-sm lg:text-md py-1 px-3 rounded-full ${langTab === l
                         ? 'bg-gradient-to-r from-pink-500 to-purple-600'
                         : 'bg-white/10 hover:bg-white/20'
-                    } cursor-pointer`}
+                      } cursor-pointer`}
                   >
                     {l}
                   </button>
@@ -281,11 +278,10 @@ export default function ApiPlayground({
                     <button
                       key={v}
                       onClick={() => setVariantTab(v)}
-                      className={`text-md py-1 px-3 rounded-full ${
-                        variantTab === v
+                      className={`text-md py-1 px-3 rounded-full ${variantTab === v
                           ? 'bg-pink-500'
                           : 'bg-white/10 hover:bg-white/20'
-                      } cursor-pointer`}
+                        } cursor-pointer`}
                     >
                       {v}
                     </button>

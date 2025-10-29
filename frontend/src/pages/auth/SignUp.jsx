@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
@@ -140,6 +140,15 @@ export default function SignUp() {
         });
       });
   };
+
+  // If the user is already logged in, redirect them to their profile page
+  // This prevents authenticated users from accessing the Sign In or Sign Up pages
+  // The "replace: true" option removes the current route from the history stack
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/profile', { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <>

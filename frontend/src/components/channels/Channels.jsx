@@ -11,6 +11,7 @@ export default function Channels() {
       detail: 'github.com/terraquake-api',
       href: 'https://github.com/nagcas/TerraQuakeApi',
       target: '_blank',
+      rel: 'noopener noreferrer',
     },
     {
       icon: <FaXTwitter className='text-2xl' />, 
@@ -18,6 +19,7 @@ export default function Channels() {
       detail: 'x.com/nagcas',
       href: 'https://x.com/nagcas',
       target: '_blank',
+      rel: 'noopener noreferrer',
     },
     {
       icon: <FaLinkedin className='text-2xl' />,
@@ -25,6 +27,7 @@ export default function Channels() {
       detail: 'in/gianluca-chiaravalloti-5694081a2',
       href: 'https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/',
       target: '_blank',
+      rel: 'noopener noreferrer',
     }
   ];
 

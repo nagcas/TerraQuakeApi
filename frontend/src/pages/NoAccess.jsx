@@ -58,7 +58,6 @@ export default function NoAccess() {
             transition={{ duration: 0.7, delay: 0.3 }}
           >
             <div className='p-8 md:p-12 border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl mb-8'>
-              <div className='text-6xl mb-6'>🚫</div>
               <h3 className='text-2xl font-bold text-white mb-4'>
                 Insufficient Permissions
               </h3>

@@ -1,25 +1,30 @@
 import React, { useContext, useState } from 'react';
-import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@/components/modules/Context';
 import MetaData from '../noPage/MetaData';
 import Spinner from '@/components/spinner/Spinner';
+import axios from '@/config/Axios.js';
 
 export default function DeleteProfile() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
+  
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleDelete = async () => {
+    console.log('sono qui')
     try {
       setLoading(true);
 
-      // Retrieve token (e.g. from localStorage or context)
+      // Retrieve token from localStorage
       const token = localStorage.getItem('token');
+      console.log(token)
 
+
+      // If no token is found, show an error alert
       if (!token) {
         Swal.fire({
           title: 'Error!',
@@ -31,26 +36,48 @@ export default function DeleteProfile() {
         return;
       }
 
+      // Ask for confirmation before performing the delete request
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      });
+
+      // If the user cancels, stop the process
+      if (!result.isConfirmed) {
+        setLoading(false);
+        return;
+      }
+
+      // Perform account deletion request
       const res = await axios.delete(`/users/me/delete`, {
         headers: {
-          Authorization: `Bearer ${token}`, // send token in header
+          Authorization: `Bearer ${token}`, // Send token in authorization header
         },
       });
 
-      Swal.fire({
-        title: 'Success!',
+      console.log(res)
+
+      // Show success message after account deletion
+      await Swal.fire({
+        title: 'Deleted!',
         text: res.data.message || 'Your account has been deleted successfully.',
         icon: 'success',
         confirmButtonText: 'Home page',
-      }).then(() => {
-        setUserLogin({});
-        setIsLoggedIn(false);
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-
-        navigate('/', { replace: true });
       });
+
+      // Clear user session and redirect to home
+      setUserLogin({});
+      setIsLoggedIn(false);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      navigate('/', { replace: true });
     } catch (err) {
+      // Handle possible errors and display them
       const errorMessage =
         err?.response?.data?.message ||
         err?.response?.data?.errors?.[0]?.msg ||
@@ -58,13 +85,15 @@ export default function DeleteProfile() {
         err?.message ||
         'An error occurred. Please try again.';
 
+        console.log(errorMessage)
       Swal.fire({
         title: 'Error!',
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',
       });
-
+    } finally {
+      // Always stop loading, regardless of the result
       setLoading(false);
     }
   };
@@ -83,14 +112,14 @@ export default function DeleteProfile() {
       />
       {/* SEO Stuff */}
 
-      <section className='text-left py-4'>
+      <section className='col-span-1 lg:col-span-2 bg-black/30 backdrop-blur-xl border border-pink-500/10 rounded-2xl shadow-lg p-6 sm:p-8 mt-6'>
         {isLoggedIn ? (
           <div className='flex flex-col items-center gap-4 mt-20'>
-            <p className='text-2xl text-center pt-5 text-gray-300 max-w-max'>
+            <p className='text-2xl text-center pt-5 text-gray-300'>
               We’re truly sorry to see you go. Deleting your account is a
               permanent action and will remove all of your data.
             </p>
-            <p className='text-xl text-center text-gray-300 max-w-max'>
+            <p className='text-xl text-center text-gray-300'>
               If there’s anything we can do to improve your experience, we’d
               love to hear your feedback before you leave.
             </p>

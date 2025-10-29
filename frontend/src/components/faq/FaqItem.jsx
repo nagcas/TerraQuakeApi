@@ -11,9 +11,8 @@ export default function FaqItem({ question, answer }) {
       >
         <span className='text-lg font-medium text-white'>{question}</span>
         <svg
-          className={`w-6 h-6 transform ${
-            isOpen ? 'rotate-180' : ''
-          } transition-transform text-white`}
+          className={`w-6 h-6 transform ${isOpen ? 'rotate-180' : ''
+            } transition-transform text-white`}
           fill='none'
           stroke='currentColor'
           viewBox='0 0 24 24'

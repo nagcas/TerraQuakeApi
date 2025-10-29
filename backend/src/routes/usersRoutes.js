@@ -18,6 +18,7 @@ import handleHttpError from '../utils/handleHttpError.js'
 import User from '../models/userModels.js'
 import { authenticateUser } from '../middleware/authMiddleware.js'
 import { adminMiddleware } from '../middleware/adminMiddlewares.js'
+import { invalidateToken } from '../utils/handleJwt.js'
 
 const router = express.Router()
 
@@ -45,6 +46,6 @@ router.delete('/preferences/:id')
 
 // NOTE: Delete the current logged-in user's account
 // DELETE /me/delete — permanently deletes the logged-in user's account
-router.delete('/me/delete', authenticateUser, deleteCurrentUser({ User, buildResponse, handleHttpError }))
+router.delete('/me/delete', authenticateUser, deleteCurrentUser({ User, buildResponse, handleHttpError, invalidateToken }))
 
 export default router

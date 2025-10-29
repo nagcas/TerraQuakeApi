@@ -47,6 +47,7 @@ export default function Socials() {
             key={item.title}
             href={item.url}
             target='_blank'
+            rel='noopener noreferrer'
             whileHover={{ scale: 1.2, y: -3 }}
             transition={{ type: 'spring', stiffness: 200, damping: 10 }}
             className='hover:text-violet-400 transition duration-300 text-slate-400'
