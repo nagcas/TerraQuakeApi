@@ -14,7 +14,7 @@ export default function forgotPassword() {
   const [loading, setLoading] = useState(false);
   const forgotPasswordSchema = yup
     .object({
-      email: yup.string().email().required('Email is required !'),
+      email: yup.string().email().required('Email is required!'),
     })
     .required();
 
@@ -41,7 +41,7 @@ export default function forgotPassword() {
       .then((res) => {
         localStorage.setItem(
           'passwordChangeRequestingEmail',
-          res.data.user.email
+          res.data.data.email
         );
         Swal.fire({
           title: 'Success!',
