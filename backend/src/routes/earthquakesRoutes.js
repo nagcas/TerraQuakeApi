@@ -16,36 +16,36 @@ import handleHttpError from '../utils/handleHttpError.js'
 
 const router = express.Router()
 
-// NOTE: CATEGORIA -> Terremoti
+// NOTE: CATEGORY -> Earthquakes
 
-// NOTE: lista completa eventi sismici più recenti
+// NOTE: Retrieve the complete list of the most recent earthquake events
 router.get('/recent', getEarthquakesByRecent({ buildResponse, handleHttpError }))
 
-// NOTE: lista completa eventi sismici della data odierna
+// NOTE: Retrieve all earthquake events that occurred today
 router.get('/today', getEarthquakesByToday({ buildResponse, handleHttpError }))
 
-// NOTE: lista completa eventi sismici dell'ultima settimana
+// NOTE: Retrieve all earthquake events from the last 7 days
 router.get('/last-week', getEarthquakesByLastWeek({ buildResponse, handleHttpError }))
 
-// NOTE: lista completa eventi sismici per mese specifico (es. marzo 2025)
+// NOTE: Retrieve all earthquake events for a specific month (e.g., March 2025)
 router.get('/month', getEarthquakesByMonth({ buildResponse, handleHttpError }))
 
-// NOTE: cerca eventi sismici vicino a latitudine/longitudine specifica
+// NOTE: Retrieve earthquake events near a specific latitude/longitude
 router.get('/location', getEarthquakesLocation({ buildResponse, handleHttpError }))
 
-// NOTE: lista completa eventi sismici per regione geografica (es. Calabria)
+// NOTE: Retrieve earthquake events by geographic region (e.g., Calabria)
 router.get('/region', getEarthquakesByRegion({ buildResponse, handleHttpError }))
 
-// NOTE: filtra eventi sismici per profondità (es. > 100Km)
+// NOTE: Filter earthquake events by depth (e.g., deeper than 100 km)
 router.get('/depth', getEarthquakesByDepth({ buildResponse, handleHttpError }))
 
-// NOTE: filtra eventi sismici per un intervallo di tempo startdate e enddate
+// NOTE: Filter earthquake events by date range (startDate and endDate)
 router.get('/range-time', getEarthquakesByDateRange({ buildResponse, handleHttpError }))
 
-// NOTE: filtra eventi sismici per magnitudo (es. 4.0)
+// NOTE: Filter earthquake events by magnitude (e.g., ≥ 4.0)
 router.get('/magnitude', getEarthquakesByMagnitude({ buildResponse, handleHttpError }))
 
-// NOTE: dettagli di un singolo evento sismico specifico
+// NOTE: Retrieve detailed information for a specific earthquake event by its ID
 router.get('/eventId', getEarthquakesById({ buildResponse, handleHttpError }))
 
 export default router
