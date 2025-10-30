@@ -11,6 +11,7 @@ import ListNewsletters from './newsletters/ListNewsletters';
 import ListEmailNewsletters from './emailsNewsletters/ListEmailNewsletters';
 import ListReviews from './reviews/ListReviews';
 import { useNavigate } from 'react-router-dom';
+import ListFaqs from './faq/ListFaqs';
 
 export default function AdminDashboard() {
   const { userLogin } = useContext(Context);
@@ -116,6 +117,17 @@ export default function AdminDashboard() {
               Emails Register
             </h3>
             <ListEmailNewsletters />
+          </motion.div>
+
+          {/* faq Management */}
+          <motion.div
+            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <h3 className='text-xl font-bold text-white mb-4'>Faq</h3>
+            <ListFaqs />
           </motion.div>
 
           {/* Reviews Management */}
