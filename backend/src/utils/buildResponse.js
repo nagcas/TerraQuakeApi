@@ -8,12 +8,11 @@
  * @param {Object} [rest={}] - Optional extra fields to merge into response
  * @returns {Object} A consistent response object with metadata
  */
-export const buildResponse = (req = {}, message = '', data = null, total = null, rest = {}) => ({
+export const buildResponse = (req = {}, message = '', data = null, rest = {}) => ({
   success: true,
   code: 200,
   status: 'OK',
   message,
-  total: total ?? (Array.isArray(data) ? data.length : 1),
   data, // payload
   meta: {
     method: req.method?.toUpperCase() || null,
