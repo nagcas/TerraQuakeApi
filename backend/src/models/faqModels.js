@@ -4,7 +4,7 @@ import mongooseDelete from 'mongoose-delete'
 // NOTE: Schema faq
 const faqSchema = new Schema(
   {
-    request: {
+    question: {
       type: String
     },
     answer: {
