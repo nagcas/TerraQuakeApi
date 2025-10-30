@@ -5,14 +5,19 @@ import FaqItem from './FaqItem';
 import { useEffect, useState } from 'react';
 import axios from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
+import Pagination from '../utils/Pagination';
 
 export default function Faq() {
   const [loading, setLoading] = useState(false);
   const [faqData, setFaqData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
+  const [totalFaq, setTotalFaq] = useState(0);
+  const [faqPerPage, setFaqPerPage] = useState(10);
 
   useEffect(() => {
     fetchAllFaq();
-  }, []);
+  }, [currentPage]);
 
   const fetchAllFaq = async () => {
     setLoading(true);
@@ -21,8 +26,14 @@ export default function Faq() {
         headers: {
           'Content-Type': 'applications/json',
         },
+        params: {
+          page: currentPage,
+          limit: faqPerPage,
+        },
       });
       setFaqData(response.data.data.faqs);
+      setTotalPages(response.data.data.pagination.totalPages);
+      setTotalFaq(response.data.data.pagination.totalResults);
     } catch (error) {
       setError('Failed to fetch faq. Please try again later.');
       console.error(error.response?.data?.message || error.message);
@@ -97,6 +108,15 @@ export default function Faq() {
             ))}
           </div>
         </div>
+
+        {/* Pagination */}
+        <Pagination 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          totalItems={totalFaq} 
+          itemsPerPage={faqPerPage} 
+          setCurrentPage={setCurrentPage}
+        />
       </motion.section>
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />

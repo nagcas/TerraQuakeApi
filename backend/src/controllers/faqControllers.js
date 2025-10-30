@@ -49,10 +49,9 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
 
       // Count total documents
       const totalFaq = await Faq.countDocuments()
-      console.log(totalFaq)
 
       // Get filtered + paginated faq
-      const faqs = await Faq.findWithDeleted()
+      const faqs = await Faq.find()
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
