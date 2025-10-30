@@ -8,31 +8,10 @@ import mongoose from 'mongoose'
  * - Responds with `200 OK` and the created contact object on success.
  * - Returns a structured error response if validation or DB error occurs.
  */
-export const createFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
+export const createFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const { question, answer } = req.body
-
-      // Retrieve token from Authorization header
-      const authHeader = req.headers.authorization
-
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 401)
-      }
-
-      const token = authHeader.split(' ')[1]
-
-      // Verify the token with the function you defined
-      const decoded = await verifyToken(token)
-
-      if (!decoded) {
-        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
-      }
-
-      // Check that you are an admin
-      if (decoded.role !== 'admin') {
-        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
-      }
 
       const faq = new Faq({ question, answer })
 
@@ -111,31 +90,10 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
  * - Responds with `404 Not Found` if no faq exists with the given ID.
  * - Returns `200 OK` and the faq document on success.
  */
-export const listOneFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
+export const listOneFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const faqId = req.params.id
-
-      // Retrieve token from Authorization header
-      const authHeader = req.headers.authorization
-
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 401)
-      }
-
-      const token = authHeader.split(' ')[1]
-
-      // Verify the token with the function you defined
-      const decoded = await verifyToken(token)
-
-      if (!decoded) {
-        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
-      }
-
-      // Check that you are an admin
-      if (decoded.role !== 'admin') {
-        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
-      }
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
         return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
@@ -173,32 +131,11 @@ export const listOneFaq = ({ Faq, buildResponse, handleHttpError, verifyToken })
  * - In the future, consider implementing a soft-delete mechanism instead of physically removing records from the database.
  * - Currently returns a placeholder response.
  */
-export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
+export const updateFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const { question, answer } = req.body
       const faqId = req.params.id
-
-      // Retrieve token from Authorization header
-      const authHeader = req.headers.authorization
-
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 401)
-      }
-
-      const token = authHeader.split(' ')[1]
-
-      // Verify the token with the function you defined
-      const decoded = await verifyToken(token)
-
-      if (!decoded) {
-        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
-      }
-
-      // Check that you are an admin
-      if (decoded.role !== 'admin') {
-        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
-      }
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
         return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
@@ -244,31 +181,10 @@ export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) 
  * - To be implemented: should mark a message as deleted without removing it from the DB.
  * - Currently returns a placeholder response.
  */
-export const deleteFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
+export const deleteFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const faqId = req.params.id
-
-      // Retrieve token from Authorization header
-      const authHeader = req.headers.authorization
-
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 401)
-      }
-
-      const token = authHeader.split(' ')[1]
-
-      // Verify the token with the function you defined
-      const decoded = await verifyToken(token)
-
-      if (!decoded) {
-        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
-      }
-
-      // Check that you are an admin
-      if (decoded.role !== 'admin') {
-        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
-      }
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
         return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
