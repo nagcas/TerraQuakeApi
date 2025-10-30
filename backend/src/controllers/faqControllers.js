@@ -22,14 +22,14 @@ export const createFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) 
 
       const token = authHeader.split(' ')[1]
 
-      // Verifica il token con la funzione che hai definito
+      // Verify the token with the function you defined
       const decoded = await verifyToken(token)
 
       if (!decoded) {
         return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
       }
 
-      // Controllo che sia un admin
+      // Check that you are an admin
       if (decoded.role !== 'admin') {
         return handleHttpError(res, 'Access denied: admin privileges required.', 403)
       }
@@ -127,14 +127,14 @@ export const listOneFaq = ({ Faq, buildResponse, handleHttpError, verifyToken })
 
       const token = authHeader.split(' ')[1]
 
-      // Verifica il token con la funzione che hai definito
+      // Verify the token with the function you defined
       const decoded = await verifyToken(token)
 
       if (!decoded) {
         return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
       }
 
-      // Controllo che sia un admin
+      // Check that you are an admin
       if (decoded.role !== 'admin') {
         return handleHttpError(res, 'Access denied: admin privileges required.', 403)
       }
@@ -190,14 +190,14 @@ export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) 
 
       const token = authHeader.split(' ')[1]
 
-      // Verifica il token con la funzione che hai definito
+      // Verify the token with the function you defined
       const decoded = await verifyToken(token)
 
       if (!decoded) {
         return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
       }
 
-      // Controllo che sia un admin
+      // Check that you are an admin
       if (decoded.role !== 'admin') {
         return handleHttpError(res, 'Access denied: admin privileges required.', 403)
       }
@@ -246,12 +246,53 @@ export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) 
  * - To be implemented: should mark a message as deleted without removing it from the DB.
  * - Currently returns a placeholder response.
  */
-export const deleteFaq = () => {
+export const deleteFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
   return async (req, res) => {
     try {
-      res.status(200).json('delete faq')
+      const faqId = req.params.id
+
+      // Retrieve token from Authorization header
+      const authHeader = req.headers.authorization
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return handleHttpError(res, 'No token provided', 401)
+      }
+
+      const token = authHeader.split(' ')[1]
+
+      // Verify the token with the function you defined
+      const decoded = await verifyToken(token)
+
+      if (!decoded) {
+        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
+      }
+
+      // Check that you are an admin
+      if (decoded.role !== 'admin') {
+        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
+      }
+
+      if (!mongoose.Types.ObjectId.isValid(faqId)) {
+        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
+      }
+
+      // Soft delete using mongoose-delete
+      const deleted = await Faq.delete({ _id: faqId }) // plugin handles deletedAt & overrideMethods
+
+      if (!deleted) {
+        return handleHttpError(res, 'Faq not found', 404)
+      }
+
+      // Respond with success message
+      res.json(
+        buildResponse(req, 'Faq deleted successfully', faqId, null, {})
+      )
     } catch (error) {
-      console.log(error)
+      console.error('Error in the faq controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }

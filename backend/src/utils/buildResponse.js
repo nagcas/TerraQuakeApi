@@ -8,7 +8,7 @@
  * @param {Object} [rest={}] - Optional extra fields to merge into response
  * @returns {Object} A consistent response object with metadata
  */
-export const buildResponse = (req = {}, message = '', data = null, rest = {}) => ({
+export const buildResponse = (req = {}, message = '', data = null, total = null, rest = {}) => ({
   success: true,
   code: 200,
   status: 'OK',
