@@ -33,7 +33,11 @@ export const getAllStations = ({ buildResponse, handleHttpError }) => {
 
       // Return the response including the stations and pagination metadata
       res.status(200).json({
-        ...buildResponse(req, 'List stations seismic INGV', limitedStations),
+        ...buildResponse(
+          req,
+          'List stations seismic INGV',
+          limitedStations
+        ),
         pagination: {
           limit, // Number of stations requested
           total: stations.length, // Total stations retrieved from INGV

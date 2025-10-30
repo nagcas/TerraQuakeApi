@@ -78,6 +78,7 @@ export const listAllContacts = ({ Contact, buildResponse, handleHttpError }) => 
 
       res.json(
         buildResponse(req, 'Contacts retrieved successfully', {
+          totalContacts,
           contacts,
           pagination: {
             page,
