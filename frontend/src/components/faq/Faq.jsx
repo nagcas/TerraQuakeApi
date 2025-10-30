@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
 import Pagination from '../utils/Pagination';
+import Swal from 'sweetalert2';
 
 export default function Faq() {
   const [loading, setLoading] = useState(false);
@@ -25,22 +26,36 @@ export default function Faq() {
     try {
       const response = await axios.get('/faq/list-all-faq', {
         headers: {
-          'Content-Type': 'applications/json',
+          'Content-Type': 'application/json',
         },
         params: {
           page: currentPage,
           limit: faqPerPage,
         },
       });
-      
+
       const { payload } = response.data;
 
       setFaqData(payload.faqs);
       setTotalPages(payload.pagination.totalPages);
       setTotalFaq(payload.pagination.totalResults);
     } catch (error) {
-      setError('Failed to fetch faq. Please try again later.');
-      console.error(error.response?.data?.message || error.message);
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        'Unable to load FAQs. Please check your connection or try again later.';
+
+      Swal.fire({
+        title: 'Failed to Load FAQs',
+        text: errorMessage,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+
+      console.error(
+        'Error fetching FAQs:',
+        error.response?.data || error.message
+      );
     } finally {
       setLoading(false);
     }
@@ -114,11 +129,11 @@ export default function Faq() {
         </div>
 
         {/* Pagination */}
-        <Pagination 
-          currentPage={currentPage} 
-          totalPages={totalPages} 
-          totalItems={totalFaq} 
-          itemsPerPage={faqPerPage} 
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalFaq}
+          itemsPerPage={faqPerPage}
           setCurrentPage={setCurrentPage}
         />
       </motion.section>
