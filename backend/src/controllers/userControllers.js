@@ -1,5 +1,4 @@
 import { sendDeleteAccountConfirmation } from '../libs/sendDeleteAccountConfirmation.js'
-import { getPositiveInt } from '../utils/httpQuery.js'
 
 /**
  * NOTE: Controller: List all users (Admin only).
@@ -7,16 +6,43 @@ import { getPositiveInt } from '../utils/httpQuery.js'
 export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      if (!req.user || !req.user.role?.includes('admin')) {
-        return handleHttpError(res, 'Unauthorized', 401)
-      }
+      const { name } = req.query
+      const page = parseInt(req.query.page) || 1
+      const limit = parseInt(req.query.limit) || 50
+      const sort = req.query.sort || 'createdAt'
+      const sortDirection = req.query.sortDirection === 'asc' ? 1 : -1
+      const skip = (page - 1) * limit
 
-      const limit = getPositiveInt(req.query, 'limit', { max: 100, def: 50 })
-      if (!limit) return handleHttpError(res, 'Invalid limit parameter', 400)
+      // Build filters only if provided
+      const filter = {}
+      if (name) filter.name = { $regex: name, $options: 'i' }
 
-      const documents = await User.find({}).limit(limit).lean()
+      // Count including soft-deleted users
+      const totalUsers = await User.countDocumentsWithDeleted(filter)
 
-      return res.status(200).json(buildResponse(req, '', documents, null, {}))
+      // Fetch filtered or all users
+      const users = await User.findWithDeleted(filter)
+        .sort({ [sort]: sortDirection })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+
+      const totalPages = Math.ceil(totalUsers / limit)
+      const hasMore = page < totalPages
+
+      // Respond with paginated posts
+      res.json(
+        buildResponse(req, 'Users retrieved successfully', {
+          users,
+          pagination: {
+            page,
+            totalPages,
+            limit,
+            hasMore,
+            totalResults: totalUsers
+          }
+        })
+      )
     } catch (error) {
       console.error('Error in listAllUsers:', error.message)
       handleHttpError(

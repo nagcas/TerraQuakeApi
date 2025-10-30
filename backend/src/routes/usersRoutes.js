@@ -26,7 +26,7 @@ const router = express.Router()
 
 // NOTE: List all users (admin only)
 // GET /all — returns a complete list of users, accessible only to admins
-router.get('/all-users', adminMiddleware, listAllUsers({ User, buildResponse, handleHttpError }))
+router.get('/list-all-users', adminMiddleware, listAllUsers({ User, buildResponse, handleHttpError }))
 
 // NOTE: Change a user's role (admin only)
 // POST /:id/role — updates the role of a specified user by ID
