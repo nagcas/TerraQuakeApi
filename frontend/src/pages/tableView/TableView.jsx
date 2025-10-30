@@ -231,19 +231,19 @@ export default function TableView() {
                     <tr>
                       <th
                         onClick={() => requestSort('time')}
-                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
                         Date & Time (UTC){getSortIndicator('time')}
                       </th>
                       <th
                         onClick={() => requestSort('mag')}
-                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
                         Magnitude{getSortIndicator('mag')}
                       </th>
                       <th
                         onClick={() => requestSort('depth')}
-                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
                         Depth (km){getSortIndicator('depth')}
                       </th>
@@ -255,7 +255,7 @@ export default function TableView() {
                       </th>
                       <th
                         onClick={() => requestSort('place')}
-                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+                        className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
                         Location{getSortIndicator('place')}
                       </th>
