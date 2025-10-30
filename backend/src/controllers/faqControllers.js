@@ -8,26 +8,30 @@ import mongoose from 'mongoose'
  * - Responds with `200 OK` and the created contact object on success.
  * - Returns a structured error response if validation or DB error occurs.
  */
-export const createFaq = ({ Faq, buildResponse, handleHttpError, invalidateToken }) => {
+export const createFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
   return async (req, res) => {
     try {
       const { request, answer } = req.body
 
       // Retrieve token from Authorization header
       const authHeader = req.headers.authorization
-      console.log(authHeader)
 
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 400)
+        return handleHttpError(res, 'No token provided', 401)
       }
 
       const token = authHeader.split(' ')[1]
 
-      // Invalidate the token (add it to blacklist)
-      const success = await invalidateToken(token)
+      // Verifica il token con la funzione che hai definito
+      const decoded = await verifyToken(token)
 
-      if (!success) {
-        return handleHttpError(res, 'Failed to created faq.', 400)
+      if (!decoded) {
+        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
+      }
+
+      // Controllo che sia un admin
+      if (decoded.role !== 'admin') {
+        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
       }
 
       const faq = new Faq({ request, answer })
@@ -66,6 +70,7 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
 
       // Count total documents
       const totalFaq = await Faq.countDocuments()
+      console.log(totalFaq)
 
       // Get filtered + paginated faq
       const faqs = await Faq.findWithDeleted()
@@ -81,6 +86,7 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
 
       res.json(
         buildResponse(req, 'Faq retrieved successfully', {
+          totalFaq,
           faqs,
           pagination: {
             page,
@@ -107,26 +113,30 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
  * - Responds with `404 Not Found` if no faq exists with the given ID.
  * - Returns `200 OK` and the faq document on success.
  */
-export const listOneFaq = ({ Faq, buildResponse, handleHttpError, invalidateToken }) => {
+export const listOneFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
   return async (req, res) => {
     try {
       const faqId = req.params.id
 
       // Retrieve token from Authorization header
       const authHeader = req.headers.authorization
-      console.log(authHeader)
 
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 400)
+        return handleHttpError(res, 'No token provided', 401)
       }
 
       const token = authHeader.split(' ')[1]
 
-      // Invalidate the token (add it to blacklist)
-      const success = await invalidateToken(token)
+      // Verifica il token con la funzione che hai definito
+      const decoded = await verifyToken(token)
 
-      if (!success) {
-        return handleHttpError(res, 'Failed to view faq.', 400)
+      if (!decoded) {
+        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
+      }
+
+      // Controllo che sia un admin
+      if (decoded.role !== 'admin') {
+        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
       }
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
@@ -165,12 +175,67 @@ export const listOneFaq = ({ Faq, buildResponse, handleHttpError, invalidateToke
  * - In the future, consider implementing a soft-delete mechanism instead of physically removing records from the database.
  * - Currently returns a placeholder response.
  */
-export const updateFaq = () => {
+export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
   return async (req, res) => {
     try {
-      res.status(200).json('update faq')
+      const { request, answer } = req.body
+      const faqId = req.params.id
+
+      // Retrieve token from Authorization header
+      const authHeader = req.headers.authorization
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return handleHttpError(res, 'No token provided', 401)
+      }
+
+      const token = authHeader.split(' ')[1]
+
+      // Verifica il token con la funzione che hai definito
+      const decoded = await verifyToken(token)
+
+      if (!decoded) {
+        return handleHttpError(res, 'Invalid, expired, or revoked token. Please log in again.', 401)
+      }
+
+      // Controllo che sia un admin
+      if (decoded.role !== 'admin') {
+        return handleHttpError(res, 'Access denied: admin privileges required.', 403)
+      }
+
+      if (!mongoose.Types.ObjectId.isValid(faqId)) {
+        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
+      }
+
+      const updateFaq = await Faq.findByIdAndUpdate(
+        faqId,
+        {
+          request,
+          answer
+        },
+        {
+          new: true
+        }
+      )
+
+      if (!updateFaq) {
+        return handleHttpError(res, 'Faq not found', 404)
+      }
+
+      res.json(
+        buildResponse(
+          req,
+          'Faq updated successfully',
+          updateFaq,
+          null,
+          {}
+        )
+      )
     } catch (error) {
-      console.log(error)
+      console.error('Error in the faq controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }
