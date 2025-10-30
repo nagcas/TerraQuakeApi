@@ -9,6 +9,7 @@ import Pagination from '../utils/Pagination';
 
 export default function Faq() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [faqData, setFaqData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
@@ -31,9 +32,12 @@ export default function Faq() {
           limit: faqPerPage,
         },
       });
-      setFaqData(response.data.data.faqs);
-      setTotalPages(response.data.data.pagination.totalPages);
-      setTotalFaq(response.data.data.pagination.totalResults);
+      
+      const { payload } = response.data;
+
+      setFaqData(payload.faqs);
+      setTotalPages(payload.pagination.totalPages);
+      setTotalFaq(payload.pagination.totalResults);
     } catch (error) {
       setError('Failed to fetch faq. Please try again later.');
       console.error(error.response?.data?.message || error.message);
