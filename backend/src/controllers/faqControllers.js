@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 /**
  * NOTE: Controller: Create a new faq.
  *
@@ -105,12 +107,53 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
  * - Responds with `404 Not Found` if no faq exists with the given ID.
  * - Returns `200 OK` and the faq document on success.
  */
-export const listOneFaq = () => {
+export const listOneFaq = ({ Faq, buildResponse, handleHttpError, invalidateToken }) => {
   return async (req, res) => {
     try {
-      res.status(200).json('list one faq')
+      const faqId = req.params.id
+
+      // Retrieve token from Authorization header
+      const authHeader = req.headers.authorization
+      console.log(authHeader)
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return handleHttpError(res, 'No token provided', 400)
+      }
+
+      const token = authHeader.split(' ')[1]
+
+      // Invalidate the token (add it to blacklist)
+      const success = await invalidateToken(token)
+
+      if (!success) {
+        return handleHttpError(res, 'Failed to view faq.', 400)
+      }
+
+      if (!mongoose.Types.ObjectId.isValid(faqId)) {
+        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
+      }
+
+      const faq = await Faq.findById(faqId)
+
+      if (!faq) {
+        return handleHttpError(res, `No faq found with ID: ${faqId}`, 404)
+      }
+
+      res.json(
+        buildResponse(
+          req,
+          'Faq retrived successfully',
+          faq,
+          null,
+          {}
+        )
+      )
     } catch (error) {
-      console.log(error)
+      console.error('Error in the faq controller', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }

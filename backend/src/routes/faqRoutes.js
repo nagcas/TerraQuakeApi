@@ -31,7 +31,7 @@ router.get('/list-all-faq', listAllFaq({ Faq, buildResponse, handleHttpError }))
  * @desc Retrieve a single FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.get('/list-one-faq/:id', adminMiddleware, listOneFaq({ Faq }))
+router.get('/list-one-faq/:id', adminMiddleware, listOneFaq({ Faq, buildResponse, handleHttpError, invalidateToken }))
 
 /**
  * @route PATCH /update-faq/:id
