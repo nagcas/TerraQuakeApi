@@ -196,6 +196,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       // Respond with paginated posts
       res.json(
         buildResponse(req, 'Posts retrieved successfully', {
+          totalPosts,
           posts,
           pagination: {
             page,

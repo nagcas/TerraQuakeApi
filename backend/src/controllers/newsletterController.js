@@ -134,10 +134,10 @@ export const sendNewsletter = ({ Newsletter, buildResponse, handleHttpError }) =
 export const getSubscriberCount = ({ Newsletter, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const count = await Newsletter.countDocuments({ isSubscribed: true })
+      const totalEmails = await Newsletter.countDocuments({ isSubscribed: true })
 
       res.json(
-        buildResponse(req, 'Newsletter count', count, null, {})
+        buildResponse(req, 'Newsletter count', totalEmails, null, {})
       )
     } catch (error) {
       console.error('Get subscriber count error:', error)
