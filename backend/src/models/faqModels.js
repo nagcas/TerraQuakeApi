@@ -14,7 +14,7 @@ const faqSchema = new Schema(
   {
     timestamps: true,
     versionKey: false,
-    collection: 'contacts'
+    collection: 'faqs'
   }
 )
 
