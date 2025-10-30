@@ -45,6 +45,6 @@ router.patch('/update-faq/:id', adminMiddleware, updateFaq({ Faq, buildResponse,
  * @desc Delete an FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.delete('/delete-faq/:id', adminMiddleware, deleteFaq({ Faq }))
+router.delete('/delete-faq/:id', adminMiddleware, deleteFaq({ Faq, buildResponse, handleHttpError, verifyToken }))
 
 export default router
