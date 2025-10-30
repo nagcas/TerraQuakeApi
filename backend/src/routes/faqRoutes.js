@@ -24,7 +24,7 @@ router.post('/create-faq', adminMiddleware, createFaq({ Faq, buildResponse, hand
  * @desc Retrieve all FAQ entries from the database.
  * @access Public
  */
-router.get('/list-all-faq', listAllFaq({ Faq }))
+router.get('/list-all-faq', listAllFaq({ Faq, buildResponse, handleHttpError }))
 
 /**
  * @route GET /list-one-faq/:id

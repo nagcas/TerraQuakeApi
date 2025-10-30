@@ -53,12 +53,47 @@ export const createFaq = ({ Faq, buildResponse, handleHttpError, invalidateToken
  * - Returns total count, total pages, and pagination metadata.
  * - Responds with `200 OK` and an array of faq on success.
  */
-export const listAllFaq = () => {
+export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      res.status(200).json('list all faq')
+      const page = parseInt(req.query.page) || 1
+      const limit = parseInt(req.query.limit) || 10
+      const sort = req.query.sort || 'createdAt'
+      const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1
+      const skip = (page - 1) * limit
+
+      // Count total documents
+      const totalFaq = await Faq.countDocuments()
+
+      // Get filtered + paginated faq
+      const faqs = await Faq.findWithDeleted()
+        .sort({ [sort]: sortDirection })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+
+      console.log(faqs)
+
+      const totalPages = Math.ceil(totalFaq / limit)
+      const hasMore = page < totalPages
+
+      res.json(
+        buildResponse(req, 'Faq retrieved successfully', {
+          faqs,
+          pagination: {
+            page,
+            totalPages,
+            limit,
+            hasMore,
+            totalResults: totalFaq
+          }
+        })
+      )
     } catch (error) {
-      console.log(error)
+      console.error('Error in the faq controller.', error.message)
+      handleHttpError(
+        res, error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }
