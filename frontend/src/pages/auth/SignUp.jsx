@@ -257,7 +257,7 @@ export default function SignUp() {
                   <button
                     type='button'
                     onClick={togglePassword}
-                    className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                    className='absolute top-12 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
                     aria-label='Toggle password view'
                   >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -281,7 +281,7 @@ export default function SignUp() {
                     <button
                       type='button'
                       onClick={togglePassword}
-                      className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                      className='absolute top-12 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
                       aria-label='Toggle password view'
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -294,7 +294,7 @@ export default function SignUp() {
                     </label>
                     <select
                       defaultValue=''
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50 cursor-pointer'
                       {...register('experience')}
                     >
                       <option
@@ -331,7 +331,7 @@ export default function SignUp() {
                     </label>
                     <select
                       defaultValue=''
-                      className='w-full px-5 py-3 border-2 rounded-xl  bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      className='w-full px-5 py-3 border-2 rounded-xl  bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50 cursor-pointer'
                       {...register('student')}
                     >
                       <option
@@ -363,11 +363,11 @@ export default function SignUp() {
                       {...register('terms', {
                         required: 'You must accept the Terms and Conditions!',
                       })}
-                      className='mt-1 w-5 h-5 text-purple-600 bg-gray-800 border-gray-600 rounded focus:ring-purple-500'
+                      className='mt-1 w-6 h-6 text-purple-600 bg-gray-800 border-gray-600 rounded focus:ring-purple-500 cursor-pointer'
                     />
                     <label
                       htmlFor='terms'
-                      className='mt-1 ml-4 text-sm text-white cursor-pointer select-none'
+                      className='mt-1.5 ml-4 text-sm text-white cursor-pointer select-none'
                     >
                       I accept the{' '}
                       <Link
