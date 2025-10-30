@@ -11,7 +11,7 @@ import mongoose from 'mongoose'
 export const createFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
   return async (req, res) => {
     try {
-      const { request, answer } = req.body
+      const { question, answer } = req.body
 
       // Retrieve token from Authorization header
       const authHeader = req.headers.authorization
@@ -34,7 +34,7 @@ export const createFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) 
         return handleHttpError(res, 'Access denied: admin privileges required.', 403)
       }
 
-      const faq = new Faq({ request, answer })
+      const faq = new Faq({ question, answer })
 
       const newFaq = await faq.save()
 
@@ -78,8 +78,6 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
         .skip(skip)
         .limit(limit)
         .lean()
-
-      console.log(faqs)
 
       const totalPages = Math.ceil(totalFaq / limit)
       const hasMore = page < totalPages
@@ -178,7 +176,7 @@ export const listOneFaq = ({ Faq, buildResponse, handleHttpError, verifyToken })
 export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) => {
   return async (req, res) => {
     try {
-      const { request, answer } = req.body
+      const { question, answer } = req.body
       const faqId = req.params.id
 
       // Retrieve token from Authorization header
@@ -209,7 +207,7 @@ export const updateFaq = ({ Faq, buildResponse, handleHttpError, verifyToken }) 
       const updateFaq = await Faq.findByIdAndUpdate(
         faqId,
         {
-          request,
+          question,
           answer
         },
         {

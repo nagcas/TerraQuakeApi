@@ -2,9 +2,45 @@ import MetaData from '@/pages/noPage/MetaData';
 import BackToTopButton from '../utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import FaqItem from './FaqItem';
-import faqData from '../../data/FaqData.json';
+import { useEffect, useState } from 'react';
+import axios from '@config/Axios.js';
+import Spinner from '../spinner/Spinner';
 
 export default function Faq() {
+  const [loading, setLoading] = useState(false);
+  const [faqData, setFaqData] = useState([]);
+
+  useEffect(() => {
+    fetchAllFaq();
+  }, []);
+
+  const fetchAllFaq = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/faq/list-all-faq', {
+        headers: {
+          'Content-Type': 'applications/json',
+        },
+      });
+      setFaqData(response.data.data.faqs);
+    } catch (error) {
+      setError('Failed to fetch faq. Please try again later.');
+      console.error(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Show loading screen while fetching token and user data
+  if (loading) {
+    return (
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
+        <Spinner size='4xl' />
+        <p className='mt-6 mx-auto md:text-xl text-gray-300'>Loading faq...</p>
+      </section>
+    );
+  }
+
   return (
     <>
       {/* SEO Stuff */}
@@ -52,9 +88,9 @@ export default function Faq() {
           {/* FAQ Content Section */}
 
           <div className='space-y-6'>
-            {faqData.map((faq, index) => (
+            {faqData.map((faq) => (
               <FaqItem
-                key={index}
+                key={faq._id}
                 question={faq.question}
                 answer={faq.answer}
               />
