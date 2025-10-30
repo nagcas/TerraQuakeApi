@@ -8,7 +8,6 @@ import Faq from '../models/faqModels.js'
 import { adminMiddleware } from '../middleware/adminMiddlewares.js'
 import { buildResponse } from '../utils/buildResponse.js'
 import handleHttpError from '../utils/handleHttpError.js'
-import { verifyToken } from '../utils/handleJwt.js'
 
 const router = express.Router()
 
@@ -17,7 +16,7 @@ const router = express.Router()
  * @desc Create a new FAQ entry.
  * @access Private (Admin only)
  */
-router.post('/create-faq', adminMiddleware, createFaq({ Faq, buildResponse, handleHttpError, verifyToken }))
+router.post('/create-faq', adminMiddleware, createFaq({ Faq, buildResponse, handleHttpError }))
 
 /**
  * @route GET /list-all-faq
@@ -31,20 +30,20 @@ router.get('/list-all-faq', listAllFaq({ Faq, buildResponse, handleHttpError }))
  * @desc Retrieve a single FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.get('/list-one-faq/:id', adminMiddleware, listOneFaq({ Faq, buildResponse, handleHttpError, verifyToken }))
+router.get('/list-one-faq/:id', adminMiddleware, listOneFaq({ Faq, buildResponse, handleHttpError }))
 
 /**
  * @route PATCH /update-faq/:id
  * @desc Update an existing FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.patch('/update-faq/:id', adminMiddleware, updateFaq({ Faq, buildResponse, handleHttpError, verifyToken }))
+router.patch('/update-faq/:id', adminMiddleware, updateFaq({ Faq, buildResponse, handleHttpError }))
 
 /**
  * @route DELETE /delete-faq/:id
  * @desc Delete an FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.delete('/delete-faq/:id', adminMiddleware, deleteFaq({ Faq, buildResponse, handleHttpError, verifyToken }))
+router.delete('/delete-faq/:id', adminMiddleware, deleteFaq({ Faq, buildResponse, handleHttpError }))
 
 export default router
