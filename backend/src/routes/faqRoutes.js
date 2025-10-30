@@ -6,6 +6,9 @@ import {
 } from '../controllers/faqControllers.js'
 import Faq from '../models/faqModels.js'
 import { adminMiddleware } from '../middleware/adminMiddlewares.js'
+import { buildResponse } from '../utils/buildResponse.js'
+import handleHttpError from '../utils/handleHttpError.js'
+import { invalidateToken } from '../utils/handleJwt.js'
 
 const router = express.Router()
 
@@ -14,7 +17,7 @@ const router = express.Router()
  * @desc Create a new FAQ entry.
  * @access Private (Admin only)
  */
-router.post('/create-faq', adminMiddleware, createFaq({ Faq }))
+router.post('/create-faq', adminMiddleware, createFaq({ Faq, buildResponse, handleHttpError, invalidateToken }))
 
 /**
  * @route GET /list-all-faq

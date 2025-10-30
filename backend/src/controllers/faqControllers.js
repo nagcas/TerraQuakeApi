@@ -6,12 +6,41 @@
  * - Responds with `200 OK` and the created contact object on success.
  * - Returns a structured error response if validation or DB error occurs.
  */
-export const createFaq = () => {
+export const createFaq = ({ Faq, buildResponse, handleHttpError, invalidateToken }) => {
   return async (req, res) => {
     try {
-      res.status(200).json('create faq')
+      const { request, answer } = req.body
+
+      // Retrieve token from Authorization header
+      const authHeader = req.headers.authorization
+      console.log(authHeader)
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return handleHttpError(res, 'No token provided', 400)
+      }
+
+      const token = authHeader.split(' ')[1]
+
+      // Invalidate the token (add it to blacklist)
+      const success = await invalidateToken(token)
+
+      if (!success) {
+        return handleHttpError(res, 'Failed to created faq.', 400)
+      }
+
+      const faq = new Faq({ request, answer })
+
+      const newFaq = await faq.save()
+
+      res.json(
+        buildResponse(req, 'Faq created successfully', newFaq, null, {})
+      )
     } catch (error) {
-      console.log(error)
+      console.error('error in the faq controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
     }
   }
 }
