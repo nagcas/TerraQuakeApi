@@ -49,28 +49,31 @@ export default function SignIn() {
     try {
       setLoading(true)
 
-      const res = await axios.post('/auth/signin', data, {
+      const response = await axios.post('/auth/signin', data, {
         headers: { 'Content-Type': 'application/json' },
-      })
+      });
 
-      setUserLogin(res.data.data)
+      const { payload } = response.data;
+
+
+      setUserLogin(payload)
       setIsLoggedIn(true)
-      localStorage.setItem('user', JSON.stringify(res.data.data))
-      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('user', JSON.stringify(payload))
+      localStorage.setItem('token', response.data.token)
 
       Swal.fire({
         title: 'Success!',
-        text: res.data.message,
+        text: response.data.message,
         icon: 'success',
         confirmButtonText: 'Profile',
       }).then(() => {
         setLoading(false)
         navigate('/profile', { replace: true })
       })
-    } catch (err) {
+    } catch (error) {
       const errorMessage =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
         'Login failed. Please try again.'
 
       Swal.fire({

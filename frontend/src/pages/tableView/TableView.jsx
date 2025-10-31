@@ -28,9 +28,11 @@ export default function TableView() {
         const response = await axios.get(
           `${BACKEND_URL}/v1/earthquakes/recent?limit=1000`
         );
-        setEarthquakes(response.data.data);
+        const { payload } = response.data;
+
+        setEarthquakes(payload);
         setLoading(false);
-      } catch (err) {
+      } catch (error) {
         Swal.fire({
           title: 'Error!',
           text: 'Failed to fetch earthquake data. Please ensure the backend server is running.',
