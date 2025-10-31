@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import Socials from '../socials/Socials';
 import Copyright from '../copyright/Copyright';
+import VersionAPI from '../utils/VersionAPI';
 
 export default function Footer() {
   const navLinks = [
@@ -100,7 +101,11 @@ export default function Footer() {
 
         {/* Social / Sponsor */}
         <Socials />
+
       </div>
+      
+      {/* Version API */}
+      <VersionAPI />
 
       {/* Copyright + Extended License */}
       <Copyright />
