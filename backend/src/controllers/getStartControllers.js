@@ -1,39 +1,41 @@
-import handleHttpError from '../utils/handleHttpError.js'
-import { buildResponse } from '../utils/buildResponse.js'
-
 /**
- * NOTE: GET /start
- *
- * Endpoint to check if the server is running and return basic API information.
- *
- * Responds with a JSON object containing server status, project metadata,
- * and environment information.
- *
- * @async
- * @function getStart
- * @param {import('express').Request} req - Express request object
- * @param {import('express').Response} res - Express response object
- * @returns {Promise<void>} Sends a JSON response with server and API info
+ * @route GET /start
+ * @desc Health check endpoint — verifies that the API is running and returns basic metadata.
+ * @access Public
  */
-
-export const getStart = async (req, res) => {
-  try {
-    res.status(200).json(
-      buildResponse(req, 'Server started successfully', undefined, null, {
-        author: 'Gianluca Chiaravalloti',
-        version: '1.0.0',
-        date: '01.01.2025',
+export const getStart = ({ buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      // Basic API information
+      const apiInfo = {
+        author: 'Dr. Gianluca Chiaravalloti',
+        version: '1.0.1',
+        date: '2025.01.01',
         description:
-          'This is the test endpoint for TerraQuake API, used to verify server status and basic configuration.',
+          'This is the test endpoint for TerraQuake API, used to verify server status and configuration.',
         project: 'TerraQuake API — Open-source seismic data API',
         documentation: 'https://github.com/nagcas/TerraQuakeAPI#readme',
         contact: 'terraquakeapi@gmail.com',
+        web: 'https://terraquakeapi.com',
         status: 'stable',
         environment: process.env.NODE_ENV || 'development'
-      })
-    )
-  } catch (error) {
-    console.error('Error in the getStart controller:', error.message)
-    handleHttpError(res)
+      }
+
+      // Build standardized success response
+      const response = buildResponse(req, 'Server started successfully', null, null, apiInfo)
+
+      return res.status(200).json(response)
+    } catch (error) {
+      console.error('Error in getStart controller:', error)
+
+      // Safely extract message
+      const message =
+        error?.message?.includes('HTTP error')
+          ? error.message
+          : 'Unexpected error while starting the server'
+
+      // Send structured error response
+      return handleHttpError(res, message, 500)
+    }
   }
 }
