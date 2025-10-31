@@ -54,7 +54,7 @@ export default function Info() {
         </h2>
 
         {/* Description */}
-        <p className='text-white text-lg w-[95%] lg:w-6xl mx-auto'>
+        <p className='text-white text-lg w-[95%] xl:w-6xl mx-auto'>
           Earthquakes are natural phenomena caused by a sudden release of energy
           in the Earth's crust, generating seismic waves. Understanding and
           monitoring them is crucial for risk management and scientific
@@ -69,7 +69,7 @@ export default function Info() {
       </div>
 
       {/* Cards container */}
-      <div className='max-w-7xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6 md:mb-16 p-6 md:p-0'>
+      <div className='max-w-7xl mx-auto grid gap-6 md:grid-cols-2 xl:grid-cols-4 mb-6 md:mb-16 p-6 md:p-0'>
           {introCard.map((item, index) => (
             <div
               key={item.title}

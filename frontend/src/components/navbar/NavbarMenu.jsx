@@ -80,7 +80,7 @@ export default function NavbarMenu() {
       </Link>
 
       {/* Desktop Menu */}
-      <nav className='hidden lg:flex justify-center gap-6 text-[12px] xl:text-[14px] relative'>
+      <nav className='hidden lg:flex justify-center gap-4 text-[12px] xl:text-[14px] relative'>
         {primaryNavItems.map((item) => (
           <NavLink
             key={item.name}
@@ -152,7 +152,7 @@ export default function NavbarMenu() {
       </nav>
 
       {/* Auth / profile area */}
-      <div className='lg:flex items-center ml-2 gap-3 text-[14px] lg:text-[16px] relative'>
+      <div className='lg:flex items-center ml-2 gap-2 text-[12px] lg:text-[14px] relative'>
         {/* Stars GitHub TerraQuake API*/}
         <StarsGitHub />
 
