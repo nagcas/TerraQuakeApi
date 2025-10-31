@@ -44,11 +44,11 @@ export default function Logout() {
       }).then(() => {
         navigate('/', { replace: true });
       });
-    } catch (err) {
+    } catch (error) {
       const errorMessage =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
-        err.message ||
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error.message ||
         'Logout failed. Please try again.';
 
       Swal.fire({

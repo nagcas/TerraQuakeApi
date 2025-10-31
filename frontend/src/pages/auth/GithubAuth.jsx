@@ -51,11 +51,11 @@ export default function GithubAuth() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        const data = response.data;
-        if (data?.data) {
+        const { payload } = response.data;
+        if (payload) {
           // Save user info in localStorage and update context
-          localStorage.setItem('user', JSON.stringify(data.data));
-          setUserLogin(data.data);
+          localStorage.setItem('user', JSON.stringify(payload));
+          setUserLogin(payload);
           setIsLoggedIn(true);
 
           Swal.fire({
@@ -68,8 +68,8 @@ export default function GithubAuth() {
           throw new Error('User data missing');
         }
       })
-      .catch((err) => {
-        console.error('Axios fetch user error:', err);
+      .catch((error) => {
+        console.error('Axios fetch user error:', error);
         Swal.fire({
           title: 'Error!',
           text: message || 'Failed to fetch user data',

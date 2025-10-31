@@ -39,9 +39,10 @@ export default function forgotPassword() {
         },
       })
       .then((res) => {
+        const { payload } = res.data;
         localStorage.setItem(
           'passwordChangeRequestingEmail',
-          res.data.data.email
+          payload.email
         );
         Swal.fire({
           title: 'Success!',
@@ -53,13 +54,13 @@ export default function forgotPassword() {
           setLoading(false);
         });
       })
-      .catch((err) => {
+      .catch((error) => {
         // Build a reliable error message from several possible shapes
         const errorMessage =
-          err?.response?.data?.message || // your handleHttpError -> message
-          err?.response?.data?.errors?.[0]?.msg || // express-validator array
-          err?.response?.data?.error || // fallback
-          err?.message || // axios/node error message
+          error?.response?.data?.message || // your handleHttpError -> message
+          error?.response?.data?.errors?.[0]?.msg || // express-validator array
+          error?.response?.data?.error || // fallback
+          error?.message || // axios/node error message
           'An error occurred. Please try again.';
         Swal.fire({
           title: 'Error!',

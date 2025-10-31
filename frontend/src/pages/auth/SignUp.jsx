@@ -81,17 +81,19 @@ export default function SignUp() {
       .then(async (res) => {
         // After successful sign-up, automatically sign the user in
         try {
-          const loginRes = await axios.post('/auth/signin', {
+          const response = await axios.post('/auth/signin', {
             email: data.email,
             password: data.password,
           }, {
             headers: { 'Content-Type': 'application/json' },
           });
 
-          setUserLogin(loginRes.data.data);
+          const { payload } = response.data;
+
+          setUserLogin(payload);
           setIsLoggedIn(true);
-          localStorage.setItem('user', JSON.stringify(loginRes.data.data));
-          localStorage.setItem('token', loginRes.data.token);
+          localStorage.setItem('user', JSON.stringify(payload));
+          localStorage.setItem('token', response.data.token);
 
           Swal.fire({
             title: 'Welcome!',
@@ -120,13 +122,13 @@ export default function SignUp() {
           });
         }
       })
-      .catch((err) => {
+      .catch((error) => {
         // Build a reliable error message from several possible shapes
         const errorMessage =
-          err?.response?.data?.message || // your handleHttpError -> message
-          err?.response?.data?.errors?.[0]?.msg || // express-validator array
-          err?.response?.data?.error || // fallback
-          err?.message || // axios/node error message
+          error?.response?.data?.message || // your handleHttpError -> message
+          error?.response?.data?.errors?.[0]?.msg || // express-validator array
+          error?.response?.data?.error || // fallback
+          error?.message || // axios/node error message
           'An error occurred. Please try again.';
 
         Swal.fire({
