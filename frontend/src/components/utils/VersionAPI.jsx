@@ -30,9 +30,9 @@ export default function VersionAPI() {
 
   return (
     <section className="my-4">
-      <div className="max-w-md md:max-w-[1024px] mx-auto bg-white-800/2 backdrop-blur-md rounded-lg shadow-lg p-4 flex flex-col gap-4 text-white">
+      <div className="max-w-md mx-auto shadow-lg p-4 flex flex-col gap-4 text-white">
         <h3 className="text-lg font-bold text-purple-400">API Information</h3>
-        <div className="flex flex-col items-center sm:flex-row sm:justify-between gap-4 sm:gap-4">
+        <div className="flex items-center sm:justify-center gap-16 xl:gap-4">
           <div className="bg-purple-400/20 py-2 px-6 rounded-md text-black font-semibold">
             Version: <p className="font-bold">{api.version}</p>
           </div>
@@ -42,10 +42,10 @@ export default function VersionAPI() {
           <div className="text-sm text-gray-300">
             Author: <p className="font-medium">{api.author}</p>
           </div>
-          <div className="text-sm text-gray-300">
-            Project: <p className="font-medium">{api.project}</p>
-          </div>
         </div>
+      </div>
+      <div className="text-sm text-gray-300">
+        Project: <p className="font-medium">{api.project}</p>
       </div>
     </section>
   );

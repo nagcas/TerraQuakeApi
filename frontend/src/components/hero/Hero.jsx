@@ -37,7 +37,7 @@ export default function Hero() {
 
   return (
     <>
-      <section className='relative z-30 w-full min-h-screen flex flex-col gap-10 lg:flex-row justify-center items-center text-center px-6 lg:px-32 py-20 text-white animate-fadeIn'>
+      <section className='relative z-30 w-full min-h-screen flex flex-col xl:flex-row gap-10 justify-center items-center text-center px-6 lg:px-32 py-20 text-white animate-fadeIn'>
         {/* Background Gradient / Mesh */}
         <div className='absolute inset-0 z-0 overflow-hidden'>
           <div className='absolute top-0 left-0 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob' />

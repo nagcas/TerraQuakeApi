@@ -87,7 +87,7 @@ export default function Metrics() {
         System Performance and Reliability Metrics
       </h2>
 
-      <div className='max-w-7xl mx-auto grid gap-4 md:grid-cols-4 mb-6 md:mb-[150px]'>
+      <div className='max-w-7xl mx-auto grid gap-4 grid-cols-2 p-6 xl:grid-cols-4 mb-6 md:mb-[150px]'>
         {highlightMetrics.map((metric) => (
           <div
             key={metric.label}
