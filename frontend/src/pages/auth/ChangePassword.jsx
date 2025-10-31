@@ -98,11 +98,11 @@ export default function ChangePassword() {
           navigate('/profile', { replace: true });
         });
       })
-      .catch((err) => {
+      .catch((error) => {
         Swal.fire({
           title: 'Error!',
           text:
-            err.response?.data?.message ||
+            error.response?.data?.message ||
             'Something went wrong. Please try again.',
           icon: 'error',
           confirmButtonText: 'Ok',
