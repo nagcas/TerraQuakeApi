@@ -7,16 +7,16 @@ export default function Metrics() {
   const [metricsError, setMetricsError] = useState(null);
 
   useEffect(() => {
+    let firstLoad = true;
+
     const fetchMetrics = async () => {
       try {
-        setLoadingMetrics(true);
-        const response = await axios.get(`/v1/metrics/json`,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        );
+        if (firstLoad) setLoadingMetrics(true);
+
+        const response = await axios.get('/v1/metrics/json', {
+          headers: { 'Content-Type': 'application/json' },
+        });
+
         const { payload } = response.data;
 
         setHighlightMetrics([
@@ -43,18 +43,19 @@ export default function Metrics() {
         ]);
       } catch (error) {
         console.error('Error fetching metrics:', error);
-        const message =
+        setMetricsError(
           error?.response?.data?.message ||
-          error?.response?.data?.error ||
-          'Unable to load metrics. Please try again later.';
-        setMetricsError(message);
+            error?.response?.data?.error ||
+            'Unable to load metrics. Please try again later.'
+        );
       } finally {
         setLoadingMetrics(false);
+        firstLoad = false;
       }
     };
 
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 10000); // refresh every 10s
+    const interval = setInterval(fetchMetrics, 10000);
     return () => clearInterval(interval);
   }, []);
 
