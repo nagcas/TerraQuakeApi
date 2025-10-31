@@ -22,7 +22,7 @@ export default function ViewMap({ earthquakeData }) {
 
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
-  const data = earthquakeData?.data;
+  const data = earthquakeData?.payload;
 
   useEffect(() => {
     setCurrentEarthquakeData(earthquakeData);
