@@ -256,8 +256,7 @@ export default function Docs() {
                     <code>page</code> — integer, default <strong>1</strong>
                   </li>
                   <li>
-                    <code>limit</code> — integer, default <strong>50</strong>,
-                    max <strong>1000</strong>
+                    <code>limit</code> — integer, default <strong>50</strong>
                   </li>
                 </ul>
                 <p className='text-white/70 text-sm mt-2'>
@@ -294,7 +293,7 @@ export default function Docs() {
   "total": 150,
   "page": 1,
   "limit": 50,
-  "data": [...]
+  "payload": [...]
 }`}
                 </SyntaxHighlighter>
               </section>
@@ -813,9 +812,6 @@ export default function Docs() {
                 <p className='mt-4 text-sm text-white/60'>
                   Project lead: Dr. Gianluca Chiaravalloti — Web Developer &
                   Geologist
-                </p>
-                <p className='mt-2 text-sm text-white/60'>
-                  Last updated: October 2025 · API v1.0
                 </p>
               </section>
             </main>
