@@ -54,7 +54,7 @@ export default function ShowProperties({ mapInstance }) {
 
       if (feature && feature.get('properties')) {
         const props = feature.get('properties');
-        const depth = feature.getGeometry()?.getCoordinates()?.[2] || 'N/A';
+        const depth = feature.getGeometry()?.getCoordinates()?.[2];
         const longitude = feature.getGeometry()?.getCoordinates()?.[0];
         const latitude = feature.getGeometry()?.getCoordinates()?.[1];
         const latDirection = latitude > 0 ? 'N' : 'S';
