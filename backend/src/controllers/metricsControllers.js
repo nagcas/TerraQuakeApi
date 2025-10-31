@@ -1,11 +1,11 @@
 import promClient from 'prom-client'
 
-const buildResponse = (req, message, data) => ({
+const buildResponse = (req, message, payload) => ({
   success: true,
   code: 200,
   status: 'OK',
   message,
-  data,
+  payload,
   meta: {
     method: req.method.toUpperCase(),
     path: req.originalUrl,
