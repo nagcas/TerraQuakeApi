@@ -30,7 +30,7 @@ const fetchINGV = async (url) => {
  * @description
  *  - Retrieves earthquake data from the INGV API.
  *  - Supports pagination through `limit`, `page`, and sorting.
- *  - Counts the total number of earthquakes in the selected period, not only those limited by the query.
+ *  - Counts the total number of earthquakes in the selected period.
  *  - Returns metadata including total results and pagination info.
  */
 export const getEarthquakesByRecent = ({ buildResponse, handleHttpError }) => {
@@ -38,11 +38,20 @@ export const getEarthquakesByRecent = ({ buildResponse, handleHttpError }) => {
     try {
       const urlINGV = process.env.URL_INGV
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
 
-      if (limit === null) {
+      if (limit === null || limit <= 0) {
         return handleHttpError(
           res,
           'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
+
+      if (page <= 0) {
+        return handleHttpError(
+          res,
+          'The page parameter must be a positive integer greater than 0. Example: ?page=2',
           400
         )
       }
@@ -52,36 +61,37 @@ export const getEarthquakesByRecent = ({ buildResponse, handleHttpError }) => {
         .toISOString()
         .split('T')[0]
 
-      // Base URL for both total count and limited data fetch
+      // Base URL for all events since start of the year
       const baseUrl = `${urlINGV}?orderby=time&starttime=${startOfYear}&endtime=${now}&format=geojson`
 
-      // Fetch all events to calculate the total number of earthquakes since the start of the year
+      // Fetch all data (INGV doesn't support offset)
       const totalData = await fetchINGV(baseUrl)
-      const totalCount = totalData.features?.length || 0
+      const allFeatures = totalData.features || []
+      const totalCount = allFeatures.length
 
-      // Fetch only the limited number of events for current page visualization
-      let url = baseUrl
-      if (limit) url += `&limit=${limit}`
+      // Calculate pagination indexes
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
 
-      const data = await fetchINGV(url)
+      // Paginate data manually
+      const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
       // Increment metrics for monitoring (optional)
-      eventsProcessed.inc(data.features.length || 0)
+      eventsProcessed.inc(paginatedFeatures.length || 0)
 
-      // Process and sort data according to query parameters
-      const result = processFeatures(data.features, req.query, {
+      // Process and sort paginated data
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      // Calculate pagination details
-      const totalPages = Math.ceil(totalCount / result.limit)
-      const hasMore = result.page < totalPages
+      // Calculate pagination metadata
+      const totalPages = Math.ceil(totalCount / limit)
 
       const message = 'Earthquakes recent events'
 
-      // Send successful response with data and pagination info
+      // Send successful response
       res.status(200).json({
         ...buildResponse(
           req,
@@ -90,17 +100,15 @@ export const getEarthquakesByRecent = ({ buildResponse, handleHttpError }) => {
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
+          page,
           totalPages,
-          limit: result.limit,
-          hasMore
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log detailed error for debugging
       console.error('Error retrieving recent earthquakes controller:', error.message)
 
-      // Send user-friendly error response
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -121,8 +129,9 @@ export const getEarthquakesByToday = ({ buildResponse, handleHttpError }) => {
     try {
       const urlINGV = process.env.URL_INGV
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
 
-      if (limit === null) {
+      if (limit === null || limit <= 0) {
         return handleHttpError(
           res,
           'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
@@ -130,51 +139,65 @@ export const getEarthquakesByToday = ({ buildResponse, handleHttpError }) => {
         )
       }
 
+      if (page <= 0) {
+        return handleHttpError(
+          res,
+          'Invalid "page" parameter. It must be a positive integer (e.g., ?page=2).',
+          400
+        )
+      }
+
       const nowUTC = new Date()
       const dateStr = nowUTC.toISOString().split('T')[0]
 
-      // Base URL for both total count and limited data fetch
+      // Base URL for today's events
       const baseUrl = `${urlINGV}?starttime=${dateStr}T00:00:00&endtime=${dateStr}T23:59:59&orderby=time&format=geojson`
 
-      // Fetch all events to calculate the total number of earthquakes
+      // Fetch all today's events (INGV doesn't support offset)
       const totalData = await fetchINGV(baseUrl)
-      const totalCount = totalData.features?.length || 0
+      const allFeatures = totalData.features || []
+      const totalCount = allFeatures.length
 
-      // Fetch only the limited number of events for current page visualization
-      let url = `${urlINGV}?starttime=${dateStr}T00:00:00&endtime=${dateStr}T23:59:59&orderby=time&format=geojson`
-      if (limit) url += `&limit=${limit}`
+      // Calculate pagination indexes
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
 
-      const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
-      const result = processFeatures(data.features, req.query, {
+      // Paginate data manually
+      const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
+
+      // Increment metrics for monitoring (optional)
+      eventsProcessed.inc(paginatedFeatures.length || 0)
+
+      // Process only paginated data
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      const message = 'Earthquakes events for today'
+      // Calculate pagination details
+      const totalPages = Math.ceil(totalCount / limit)
+
+      const message = 'Earthquake events for today'
 
       // Send successful response with data and pagination info
       res.status(200).json({
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore: result.hasMore
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log error to the server console
-      console.error('Error retrieving earthquakes today controller', error.message)
+      console.error('Error retrieving earthquakes today controller:', error.message)
 
-      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -195,64 +218,76 @@ export const getEarthquakesByLastWeek = ({ buildResponse, handleHttpError }) => 
     try {
       const urlINGV = process.env.URL_INGV
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
 
-      if (limit === null) {
+      // Validate query params
+      if (limit === null || limit <= 0) {
         return handleHttpError(
           res,
-          'The limit parameter must be a positive integer greater than 0. Example:limit=50',
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
           400
         )
       }
 
+      if (page === null || page <= 0) {
+        return handleHttpError(
+          res,
+          'The "page" parameter must be a positive integer (e.g., ?page=2).',
+          400
+        )
+      }
+
+      // Calculate date range
       const today = new Date()
       const endDate = today.toISOString().split('T')[0]
-
       const lastWeekDate = new Date(today)
       lastWeekDate.setDate(today.getDate() - 7)
       const startDate = lastWeekDate.toISOString().split('T')[0]
 
-      // Base URL for both total count and limited data fetch
+      // Base INGV URL
       const baseUrl = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-      // Fetch all events to calculate the total number of earthquakes
+      // Fetch data
       const totalData = await fetchINGV(baseUrl)
-      const totalCount = totalData.features?.length || 0
+      const allFeatures = totalData.features || []
+      const totalCount = allFeatures.length
 
-      // Fetch only the limited number of events for current page visualization
-      let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
-      if (limit) url += `&limit=${limit}`
+      // Manual pagination
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
-      const result = processFeatures(data.features, req.query, {
+      // Metrics (optional)
+      eventsProcessed.inc(paginatedFeatures.length || 0)
+
+      // Process and sort
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      const message = `Earthquakes events from ${startDate} to ${endDate}`
+      const totalPages = Math.ceil(totalCount / limit)
 
-      // Send successful response with data and pagination info
+      const message = `Earthquake events from the last 7 days (${startDate} to ${endDate})`
+
+      // Response
       res.status(200).json({
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore: result.hasMore
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log error to the server console
-      console.error('Error retrieving earthquakes last week controller', error.message)
-
-      // Handle unexpected errors gracefully
+      console.error('Error retrieving earthquakes last week controller:', error.message)
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -262,11 +297,11 @@ export const getEarthquakesByLastWeek = ({ buildResponse, handleHttpError }) => 
 }
 
 /**
- * NOTE: Get seismic events for a specific month.
+ * NOTE: Get seismic events filtered by specific month and year.
  *
  * @route GET /earthquakes/month
  * @query {number} year - Year in YYYY format.
- * @query {number} month - Month in MM format.
+ * @query {number} month - Month in MM format (1-12).
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -276,72 +311,105 @@ export const getEarthquakesByMonth = ({ buildResponse, handleHttpError }) => {
       const urlINGV = process.env.URL_INGV
       const { year, month } = req.query
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
 
-      if (limit === null) {
+      // Validate pagination
+      if (limit === null || limit <= 0) {
         return handleHttpError(
           res,
-          'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
           400
         )
       }
 
-      if (!parseInt(year) || !parseInt(month)) {
+      if (page === null || page <= 0) {
         return handleHttpError(
           res,
-          'Year and month are required in the URL parameters (e.g., ?year=2025&month=03)',
+          'The "page" parameter must be a positive integer greater than 0. Example: ?page=2',
           400
         )
       }
 
-      const startDate = `${year}-${String(month).padStart(2, '0')}-01`
+      // Validate year and month
+      const parsedYear = parseInt(year)
+      const parsedMonth = parseInt(month)
+
+      if (isNaN(parsedYear) || isNaN(parsedMonth)) {
+        return handleHttpError(
+          res,
+          'Both "year" and "month" parameters are required and must be numbers. Example: ?year=2025&month=03',
+          400
+        )
+      }
+
+      if (parsedMonth < 1 || parsedMonth > 12) {
+        return handleHttpError(
+          res,
+          'The "month" parameter must be between 1 and 12. Example: ?month=07 for July',
+          400
+        )
+      }
+
+      const currentYear = new Date().getFullYear()
+      if (parsedYear < 1900 || parsedYear > currentYear + 1) {
+        return handleHttpError(
+          res,
+          `The "year" parameter must be between 1900 and ${currentYear + 1}`,
+          400
+        )
+      }
+
+      // Build date range for the selected month
+      const startDate = `${parsedYear}-${String(parsedMonth).padStart(2, '0')}-01`
       const nextMonth = new Date(`${startDate}T00:00:00Z`)
       nextMonth.setMonth(nextMonth.getMonth() + 1)
       const yyyy = nextMonth.getFullYear()
       const mm = String(nextMonth.getMonth() + 1).padStart(2, '0')
       const endDate = `${yyyy}-${mm}-01`
 
-      // Base URL for both total count and limited data fetch
+      // Base URL (INGV doesn’t support offset pagination)
       const baseUrl = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-      // Fetch all events to calculate the total number of earthquakes
-      const totalData = await fetchINGV(baseUrl)
-      const totalCount = totalData.features?.length || 0
+      // Fetch data
+      const data = await fetchINGV(baseUrl)
+      const allFeatures = data.features || []
+      const totalCount = allFeatures.length
 
-      // Fetch only the limited number of events for current page visualization
-      let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
-      if (limit) url += `&limit=${limit}`
+      // Pagination logic
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
-      const result = processFeatures(data.features, req.query, {
+      // Increment monitoring metrics (optional)
+      eventsProcessed.inc(paginatedFeatures.length || 0)
+
+      // Process results
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      const message = `Earthquakes events of ${year}-${String(month).padStart(2, '0')}`
+      const totalPages = Math.ceil(totalCount / limit)
+      const message = `Earthquake events for ${parsedYear}-${String(parsedMonth).padStart(2, '0')}`
 
-      // Send successful response with data and pagination info
+      // Return successful response
       res.status(200).json({
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore: result.hasMore
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log error to the server console
-      console.error('Error retrieving earthquakes month controller', error.message)
-
-      // Handle unexpected errors gracefully
+      console.error('Error retrieving earthquakes by month:', error.message)
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -351,10 +419,10 @@ export const getEarthquakesByMonth = ({ buildResponse, handleHttpError }) => {
 }
 
 /**
- * NOTE: Get seismic events by Italian region (from start of year until today).
+ * NOTE: Get seismic events filtered by Italian region (from start of year until today).
  *
  * @route GET /earthquakes/region
- * @query {string} region - Region name.
+ * @query {string} region - Region name (case-insensitive).
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -364,69 +432,96 @@ export const getEarthquakesByRegion = ({ buildResponse, handleHttpError }) => {
       const urlINGV = process.env.URL_INGV
       const { region } = req.query
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
 
-      if (limit === null) {
+      // Validate region parameter
+      if (!region || typeof region !== 'string' || !region.trim()) {
         return handleHttpError(
           res,
-          'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+          'The "region" parameter is required and must be a valid string. Example: ?region=Calabria',
           400
         )
       }
 
-      if (!regionBoundingBoxes[region?.toLowerCase()?.trim()]) {
-        return handleHttpError(res, `Region ${region} not supported`, 400)
+      const normalizedRegion = region.toLowerCase().trim()
+      const boundingBox = regionBoundingBoxes[normalizedRegion]
+
+      if (!boundingBox) {
+        return handleHttpError(
+          res,
+          `Region "${region}" is not supported. Please provide a valid Italian region.`,
+          400
+        )
       }
 
-      const { minlatitude, maxlatitude, minlongitude, maxlongitude } =
-        regionBoundingBoxes[region.toLowerCase().trim()]
+      // Validate pagination parameters
+      if (limit === null || limit <= 0) {
+        return handleHttpError(
+          res,
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
 
+      if (page === null || page <= 0) {
+        return handleHttpError(
+          res,
+          'The "page" parameter must be a positive integer greater than 0. Example: ?page=2',
+          400
+        )
+      }
+
+      const { minlatitude, maxlatitude, minlongitude, maxlongitude } = boundingBox
+
+      // Time range: from start of current year to today
       const today = new Date()
       const startOfYear = new Date(today.getFullYear(), 0, 1)
       const startDate = startOfYear.toISOString().split('T')[0]
       const endDate = today.toISOString().split('T')[0]
 
-      // Base URL for both total count and limited data fetch
+      // Build INGV query URL
       const baseUrl = `${urlINGV}?minlatitude=${minlatitude}&maxlatitude=${maxlatitude}&minlongitude=${minlongitude}&maxlongitude=${maxlongitude}&starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-      // Fetch all events to calculate the total number of earthquakes
-      const totalData = await fetchINGV(baseUrl)
-      const totalCount = totalData.features?.length || 0
+      // Fetch all events (INGV doesn't support pagination)
+      const data = await fetchINGV(baseUrl)
+      const allFeatures = data.features || []
+      const totalCount = allFeatures.length
 
-      // Fetch only the limited number of events for current page visualization
-      let url = `${urlINGV}?minlatitude=${minlatitude}&maxlatitude=${maxlatitude}&minlongitude=${minlongitude}&maxlongitude=${maxlongitude}&starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
-      if (limit) url += `&limit=${limit}`
+      // Manual pagination
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
-      const result = processFeatures(data.features, req.query, {
+      // Increment Prometheus metric (optional)
+      eventsProcessed.inc(paginatedFeatures.length || 0)
+
+      // Process data
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      const message = `Earthquakes events in region ${region} from ${startDate} to ${endDate}`
+      const totalPages = Math.ceil(totalCount / limit)
+      const message = `Earthquake events detected in the region "${region}" from ${startDate} to ${endDate}`
 
-      // Send successful response with data and pagination info
+      // Send response
       res.status(200).json({
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore: result.hasMore
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log error to the server console
-      console.error('Error retrieving earthquakes region controller', error.message)
-
-      // Handle unexpected errors gracefully
+      console.error('Error retrieving earthquakes by region:', error.message)
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -447,20 +542,37 @@ export const getEarthquakesByDepth = ({ buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       const urlINGV = process.env.URL_INGV
+      const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
       const { depth } = req.query
 
       if (depth === undefined) {
-        return handleHttpError(res, 'The depth parameter is required and must be a positive number greater than 0', 400)
+        return handleHttpError(
+          res,
+          'The depth parameter is required and must be a positive number greater than 0',
+          400
+        )
+      }
+
+      if (limit === null) {
+        return handleHttpError(
+          res,
+          'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
+
+      if (page <= 0) {
+        return handleHttpError(
+          res,
+          'The page parameter must be a positive integer greater than 0. Example: ?page=2',
+          400
+        )
       }
 
       const depthValue = parseFloat(depth)
       if (isNaN(depthValue) || depthValue <= 0) {
         return handleHttpError(res, 'The depth parameter must be a positive number greater than 0', 400)
-      }
-
-      const limit = getPositiveInt(req.query, 'limit', { def: 50 })
-      if (limit === null) {
-        return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
       }
 
       const today = new Date()
@@ -471,31 +583,32 @@ export const getEarthquakesByDepth = ({ buildResponse, handleHttpError }) => {
       // Base URL (full dataset from INGV for current year)
       const baseUrl = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-      // Fetch all events to determine total count based on depth filter
-      const allData = await fetchINGV(baseUrl)
-      const allFeatures = allData.features || []
+      // Fetch all earthquakes from INGV (they don’t support offset pagination)
+      const data = await fetchINGV(baseUrl)
+      const allFeatures = data.features || []
 
-      // Filter earthquakes deeper than the provided depth
+      // Filter earthquakes by magnitude
       const filteredFeatures = allFeatures.filter(
-        feature => feature.geometry.coordinates[2] > depthValue
+        (feature) => feature.geometry.coordinates[2] >= depthValue
       )
 
-      // Total count of earthquakes that meet the depth condition
       const totalCount = filteredFeatures.length
+      const totalPages = Math.ceil(totalCount / limit)
 
-      // Apply limit only for visualization (pagination)
-      const limitedFeatures = filteredFeatures.slice(0, limit)
+      // Manual pagination
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedFeatures = filteredFeatures.slice(startIndex, endIndex)
 
-      // Process and sort features
-      const result = processFeatures(limitedFeatures, req.query, {
+      // Increment metrics for monitoring (optional)
+      eventsProcessed.inc(paginatedFeatures.length || 0)
+
+      // Process only paginated data
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
-
-      // Calculate pagination info
-      const totalPages = Math.ceil(totalCount / limit)
-      const hasMore = result.page < totalPages
 
       const message = `Earthquake events with depth > ${depthValue} km`
 
@@ -504,14 +617,14 @@ export const getEarthquakesByDepth = ({ buildResponse, handleHttpError }) => {
         ...buildResponse(
           req,
           message,
-          result.items, result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
@@ -528,11 +641,15 @@ export const getEarthquakesByDepth = ({ buildResponse, handleHttpError }) => {
 }
 
 /**
- * NOTE: Get seismic events within a date range.
+ * NOTE: Get seismic events within a date range, with optional filters and pagination.
  *
  * @route GET /earthquakes/range
  * @query {string} startdate - Start date (YYYY-MM-DD).
  * @query {string} enddate - End date (YYYY-MM-DD).
+ * @query {number} [minmag] - Minimum magnitude filter.
+ * @query {number} [maxdepth] - Maximum depth filter (in km).
+ * @query {number} [limit=50] - Number of results per page.
+ * @query {number} [page=1] - Page number (starting from 1).
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -540,21 +657,32 @@ export const getEarthquakesByDateRange = ({ buildResponse, handleHttpError }) =>
   return async (req, res) => {
     try {
       const urlINGV = process.env.URL_INGV
-      const { startdate, enddate } = req.query
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
+      const { startdate, enddate, minmag, maxdepth } = req.query
 
-      if (limit === null) {
+      // 🔹 Validation: limit & page
+      if (limit === null || limit <= 0) {
         return handleHttpError(
           res,
-          'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
           400
         )
       }
 
+      if (page === null || page <= 0) {
+        return handleHttpError(
+          res,
+          'The "page" parameter must be a positive integer greater than 0. Example: ?page=2',
+          400
+        )
+      }
+
+      // 🔹 Validation: dates
       if (!startdate || !enddate) {
         return handleHttpError(
           res,
-          'The parameters startdate and enddate are required. Example: ?startdate=2024-01-01&enddate=2024-01-31',
+          'Both "startdate" and "enddate" parameters are required. Example: ?startdate=2024-01-01&enddate=2024-01-31',
           400
         )
       }
@@ -563,53 +691,83 @@ export const getEarthquakesByDateRange = ({ buildResponse, handleHttpError }) =>
       if (!isoRegex.test(startdate) || !isoRegex.test(enddate)) {
         return handleHttpError(
           res,
-          'Use the ISO date format: YYYY-MM-DD. Example: ?starttime=2024-01-01',
+          'Invalid date format. Use ISO format: YYYY-MM-DD. Example: ?startdate=2024-01-01',
           400
         )
       }
 
-      // Base URL for both total count and limited data fetch
+      const start = new Date(startdate)
+      const end = new Date(enddate)
+      if (start > end) {
+        return handleHttpError(
+          res,
+          '"startdate" must be earlier than or equal to "enddate".',
+          400
+        )
+      }
+
+      // 🔹 Build base URL
       const baseUrl = `${urlINGV}?starttime=${startdate}&endtime=${enddate}&orderby=time&format=geojson`
 
-      // Fetch all events to calculate the total number of earthquakes
-      const totalData = await fetchINGV(baseUrl)
-      const totalCount = totalData.features?.length || 0
+      // Fetch all events for the given range
+      const data = await fetchINGV(baseUrl)
+      let features = data.features || []
 
-      // Fetch only the limited number of events for current page visualization
-      let url = `${urlINGV}?starttime=${startdate}&endtime=${enddate}&orderby=time&format=geojson`
-      if (limit) url += `&limit=${limit}`
+      // 🔹 Apply filters
+      if (minmag) {
+        const magValue = parseFloat(minmag)
+        if (isNaN(magValue) || magValue < 0) {
+          return handleHttpError(res, '"minmag" must be a positive number.', 400)
+        }
+        features = features.filter(f => f.properties.mag >= magValue)
+      }
 
-      const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
-      const result = processFeatures(data.features, req.query, {
+      if (maxdepth) {
+        const depthValue = parseFloat(maxdepth)
+        if (isNaN(depthValue) || depthValue < 0) {
+          return handleHttpError(res, '"maxdepth" must be a positive number.', 400)
+        }
+        features = features.filter(f => f.properties.depth <= depthValue)
+      }
+
+      // Pagination logic
+      const totalCount = features.length
+      const totalPages = Math.ceil(totalCount / limit)
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+
+      const paginatedFeatures = features.slice(startIndex, endIndex)
+
+      eventsProcessed.inc(paginatedFeatures.length || 0)
+
+      // Process paginated results
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      const message = `Earthquakes events between ${startdate} and ${enddate}`
+      const message = `Earthquake events between ${startdate} and ${enddate}${
+        minmag ? ` with magnitude ≥ ${minmag}` : ''
+      }${maxdepth ? ` and depth ≤ ${maxdepth} km` : ''}`
 
-      // Send successful response with data and pagination info
+      // Build response
       res.status(200).json({
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore: result.hasMore
+          page,
+          limit,
+          totalPages,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log error to the server console
-      console.error('Error retrieving earthquakes range-time controller', error.message)
-
-      // Handle unexpected errors gracefully
+      console.error('Error retrieving earthquakes by date range:', error.message)
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -619,10 +777,12 @@ export const getEarthquakesByDateRange = ({ buildResponse, handleHttpError }) =>
 }
 
 /**
- * NOTE: Get seismic events filtered by magnitude.
+ * NOTE: Get seismic events filtered by magnitude with pagination.
  *
  * @route GET /earthquakes/magnitude
  * @query {number} mag - Minimum magnitude threshold.
+ * @query {number} [page=1] - Page number (must be positive).
+ * @query {number} [limit=50] - Number of results per page (must be positive).
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -630,13 +790,30 @@ export const getEarthquakesByMagnitude = ({ buildResponse, handleHttpError }) =>
   return async (req, res) => {
     try {
       const urlINGV = process.env.URL_INGV
+      const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
       const { mag } = req.query
 
-      // Magnitude is mandatory
+      if (limit === null || limit <= 0) {
+        return handleHttpError(
+          res,
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
+
+      if (page === null || page <= 0) {
+        return handleHttpError(
+          res,
+          'The "page" parameter must be a positive integer greater than 0. Example: ?page=2',
+          400
+        )
+      }
+
       if (mag === undefined) {
         return handleHttpError(
           res,
-          'The mag parameter is required and must be a positive number greater than 0',
+          'The "mag" parameter is required and must be a positive number greater than 0.',
           400
         )
       }
@@ -645,7 +822,7 @@ export const getEarthquakesByMagnitude = ({ buildResponse, handleHttpError }) =>
       if (isNaN(magValue) || magValue <= 0) {
         return handleHttpError(
           res,
-          'The mag parameter must be a positive number greater than 0',
+          'The "mag" parameter must be a positive number greater than 0.',
           400
         )
       }
@@ -655,66 +832,55 @@ export const getEarthquakesByMagnitude = ({ buildResponse, handleHttpError }) =>
       const startDate = startOfYear.toISOString().split('T')[0]
       const endDate = today.toISOString().split('T')[0]
 
-      // Base URL (full dataset from INGV for current year)
+      // Base URL to fetch data
       const baseUrl = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-      // Fetch all events to determine total count based on depth filter
-      const allData = await fetchINGV(baseUrl)
-      const allFeatures = allData.features || []
+      // Fetch all earthquakes from INGV (they don’t support offset pagination)
+      const data = await fetchINGV(baseUrl)
+      const allFeatures = data.features || []
 
-      // Filter earthquakes deeper than the provided depth
+      // Filter earthquakes by magnitude
       const filteredFeatures = allFeatures.filter(
-        feature => feature.properties.mag > magValue
+        (feature) => feature.properties.mag > magValue
       )
 
-      // Total count of earthquakes that meet the depth condition
       const totalCount = filteredFeatures.length
+      const totalPages = Math.ceil(totalCount / limit)
 
-      const limit = getPositiveInt(req.query, 'limit', { def: 50 })
-      if (limit === null) {
-        return handleHttpError(
-          res,
-          'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
-          400
-        )
-      }
+      // Manual pagination
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedFeatures = filteredFeatures.slice(startIndex, endIndex)
 
-      // Fetch only the limited number of events for current page visualization
-      let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson&limit=${limit}`
-      url += `&minmagnitude=${magValue}`
+      // Increment monitoring metric
+      eventsProcessed.inc(paginatedFeatures.length || 0)
 
-      const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
-
-      const result = processFeatures(data.features, req.query, {
+      // Process paginated results
+      const result = processFeatures(paginatedFeatures, req.query, {
         defaultSort: '-time',
         sortWhitelist: ['time', 'magnitude', 'depth'],
         fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
       })
 
-      const message = `Earthquakes events with magnitude > ${magValue}`
+      const message = `Earthquake events with magnitude > ${magValue}`
 
-      // Send successful response with data and pagination info
+      // Response with pagination metadata
       res.status(200).json({
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
-          page: result.page,
-          totalPages: result.totalPages,
-          limit: result.limit,
-          hasMore: result.hasMore
+          page,
+          limit,
+          totalPages,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
-      // Log error to the server console
-      console.error('Error retrieving earthquakes magnitude controller', error.message)
-
-      // Handle unexpected errors gracefully
+      console.error('Error retrieving earthquakes by magnitude:', error.message)
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -768,8 +934,7 @@ export const getEarthquakesById = ({ buildResponse, handleHttpError }) => {
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         )
       })
     } catch (error) {
@@ -801,6 +966,7 @@ export const getEarthquakesLocation = ({ buildResponse, handleHttpError }) => {
       const urlINGV = process.env.URL_INGV
       const { latitude, longitude } = req.query
       const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
       const radiusNum = getPositiveInt(req.query, 'radius', {
         min: 0.1,
         def: 50
@@ -810,6 +976,22 @@ export const getEarthquakesLocation = ({ buildResponse, handleHttpError }) => {
         return handleHttpError(
           res,
           'Please provide valid latitude and longitude',
+          400
+        )
+      }
+
+      if (limit === null) {
+        return handleHttpError(
+          res,
+          'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
+
+      if (page <= 0) {
+        return handleHttpError(
+          res,
+          'The page parameter must be a positive integer greater than 0. Example: ?page=2',
           400
         )
       }
@@ -872,8 +1054,7 @@ export const getEarthquakesLocation = ({ buildResponse, handleHttpError }) => {
         ...buildResponse(
           req,
           message,
-          result.items,
-          result.totalFetched
+          result.items
         ),
         totalEarthquakes: totalCount,
         pagination: {
