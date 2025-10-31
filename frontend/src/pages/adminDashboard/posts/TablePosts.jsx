@@ -42,9 +42,11 @@ export default function TablePosts() {
         },
       });
 
-      setPosts(response.data.data.posts);
-      setTotalPages(response.data.data.pagination.totalPages);
-      setTotalPosts(response.data.data.pagination.totalResults);
+      const { payload } = response.data;
+
+      setPosts(payload.posts);
+      setTotalPages(payload.pagination.totalPages);
+      setTotalPosts(payload.pagination.totalResults);
     } catch (error) {
       Swal.fire({
         title: 'Error!',
