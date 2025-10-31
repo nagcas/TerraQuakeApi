@@ -14,7 +14,6 @@ export default function Docs() {
 
   const sections = useMemo(
     () => [
-      { id: 'api-information', label: 'API Information' },
       { id: 'getting-started', label: 'Getting Started' },
       { id: 'common-parameters', label: 'Common Parameters' },
       { id: 'response-format', label: 'Response Format' },
@@ -27,6 +26,7 @@ export default function Docs() {
       { id: 'code-examples', label: 'Code Examples' },
       { id: 'data-fields', label: 'Data Field Reference' },
       { id: 'support', label: 'Support & Feedback' },
+      { id: 'api-information', label: 'API Information' },
     ],
     []
   );
@@ -169,16 +169,7 @@ export default function Docs() {
             <main
               ref={contentRef}
               className='col-span-1 lg:col-span-9 prose prose-invert max-w-none'
-            >
-              {/* API Information */}
-               <section
-                id='api-information'
-                className='scroll-mt-28'
-              >
-                <VersionAPI />
-              </section>
-              
-
+            >             
               {/* Getting Started */}
               <section
                 id='getting-started'
@@ -422,9 +413,9 @@ export default function Docs() {
                 id='time-queries'
                 className='scroll-mt-28 py-6'
               >
-                <h3 className='text-xl font-bold text-white'>
+                <h2 className='text-xl font-bold text-white'>
                   Time-Based Queries
-                </h3>
+                </h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
@@ -477,9 +468,9 @@ export default function Docs() {
                 id='location-queries'
                 className='scroll-mt-28 py-6'
               >
-                <h3 className='text-xl font-bold text-white'>
+                <h2 className='text-xl font-bold text-white'>
                   Location-Based Queries
-                </h3>
+                </h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
@@ -508,9 +499,9 @@ export default function Docs() {
                 id='property-queries'
                 className='scroll-mt-28 py-6'
               >
-                <h3 className='text-xl font-bold text-white'>
+                <h2 className='text-xl font-bold text-white'>
                   Property-Based Queries
-                </h3>
+                </h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
@@ -538,9 +529,9 @@ export default function Docs() {
                 id='event-queries'
                 className='scroll-mt-28 py-6'
               >
-                <h3 className='text-xl font-bold text-white'>
+                <h2 className='text-xl font-bold text-white'>
                   Event-Based Queries
-                </h3>
+                </h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
@@ -813,6 +804,17 @@ export default function Docs() {
                   Project lead: Dr. Gianluca Chiaravalloti — Web Developer &
                   Geologist
                 </p>
+              </section>
+
+              {/* API Information */}
+               <section
+                id='api-information'
+                className='scroll-mt-28 py-6'
+              >
+                 <h2 className='text-2xl font-bold text-white'>
+                  API Information
+                </h2>
+                <VersionAPI />
               </section>
             </main>
           </div>
