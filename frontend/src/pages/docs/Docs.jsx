@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CopyButton } from './CopyButton';
+import VersionAPI from '@/components/utils/VersionAPI';
 
 export default function Docs() {
   const contentRef = useRef(null);
@@ -13,6 +14,7 @@ export default function Docs() {
 
   const sections = useMemo(
     () => [
+      { id: 'api-information', label: 'API Information' },
       { id: 'getting-started', label: 'Getting Started' },
       { id: 'common-parameters', label: 'Common Parameters' },
       { id: 'response-format', label: 'Response Format' },
@@ -160,13 +162,6 @@ export default function Docs() {
                     </li>
                   ))}
                 </ul>
-                {/* Quick links (small footer in sidebar) */}
-                <div className='mt-4 text-xs text-white/60'>
-                  <div>
-                    API Version: <strong>1.0</strong>
-                  </div>
-                  <div className='mt-2'>Last updated: October 2025</div>
-                </div>
               </nav>
             </aside>
 
@@ -175,6 +170,15 @@ export default function Docs() {
               ref={contentRef}
               className='col-span-1 lg:col-span-9 prose prose-invert max-w-none'
             >
+              {/* API Information */}
+               <section
+                id='api-information'
+                className='scroll-mt-28'
+              >
+                <VersionAPI />
+              </section>
+              
+
               {/* Getting Started */}
               <section
                 id='getting-started'
