@@ -62,13 +62,14 @@ export default function EditProfile({ setEditProfile }) {
       const token = localStorage.getItem('token');
 
       // Send update request to backend
-      const res = await axios.patch(`/users/me/update`, data, {
+      const response = await axios.patch(`/users/me/update`, data, {
         headers: {
           Authorization: `Bearer ${token}`, // send token in header
         },
       });
 
-      const updatedUser = res.data.data;
+      const { payload } = response.data;
+      const updatedUser = payload?.user || payload;
 
       // Update Context and localStorage
       setUserLogin(updatedUser);
@@ -86,13 +87,13 @@ export default function EditProfile({ setEditProfile }) {
       // Re-sync the form with new data
       reset(updatedUser);
       setEditProfile(false);
-    } catch (err) {
+    } catch (error) {
       // Extract and display error message from backend or network
       const errorMessage =
-        err?.response?.data?.message ||
-        err?.response?.data?.errors?.[0]?.msg ||
-        err?.response?.data?.error ||
-        err?.message ||
+        error?.response?.data?.message ||
+        error?.response?.data?.errors?.[0]?.msg ||
+        error?.response?.data?.error ||
+        error?.message ||
         'An error occurred. Please try again.';
 
       Swal.fire({

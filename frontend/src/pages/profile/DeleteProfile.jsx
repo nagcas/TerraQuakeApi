@@ -50,7 +50,7 @@ export default function DeleteProfile() {
       }
 
       // Perform account deletion request
-      const res = await axios.delete(`/users/me/delete`, {
+      const response = await axios.delete(`/users/me/delete`, {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in authorization header
         },
@@ -59,7 +59,7 @@ export default function DeleteProfile() {
       // Show success message after account deletion
       await Swal.fire({
         title: 'Deleted!',
-        text: res.data.message || 'Your account has been deleted successfully.',
+        text: response.data.message || 'Your account has been deleted successfully.',
         icon: 'success',
         confirmButtonText: 'Home page',
       });
@@ -70,13 +70,13 @@ export default function DeleteProfile() {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       navigate('/', { replace: true });
-    } catch (err) {
+    } catch (error) {
       // Handle possible errors and display them
       const errorMessage =
-        err?.response?.data?.message ||
-        err?.response?.data?.errors?.[0]?.msg ||
-        err?.response?.data?.error ||
-        err?.message ||
+        error?.response?.data?.message ||
+        error?.response?.data?.errors?.[0]?.msg ||
+        error?.response?.data?.error ||
+        error?.message ||
         'An error occurred. Please try again.';
         console.log(errorMessage)
       Swal.fire({
