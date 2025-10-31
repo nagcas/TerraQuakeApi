@@ -6,6 +6,7 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CopyButton } from './CopyButton';
 import VersionAPI from '@/components/utils/VersionAPI';
+import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
 
 export default function Docs() {
   const contentRef = useRef(null);
@@ -18,6 +19,7 @@ export default function Docs() {
       { id: 'common-parameters', label: 'Common Parameters' },
       { id: 'response-format', label: 'Response Format' },
       { id: 'endpoints', label: 'API Endpoints' },
+      { id: 'magnitude-legend', label: 'Magnitude Legend' },
       { id: 'time-queries', label: 'Time-Based Queries' },
       { id: 'location-queries', label: 'Location-Based Queries' },
       { id: 'property-queries', label: 'Property-Based Queries' },
@@ -406,6 +408,17 @@ export default function Docs() {
                     {snippets.exampleResponse}
                   </SyntaxHighlighter>
                 </div>
+              </section>
+
+              {/* Magnitude Legend */}
+              <section
+                id='magnitude-legend'
+                className='scroll-mt-28 py-6'
+              >
+                <h2 className='text-xl font-bold text-white'>
+                  Magnitude Legend
+                </h2>
+                <MagnitudeLegend />
               </section>
 
               {/* Time-Based Queries */}
