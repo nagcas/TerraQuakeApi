@@ -11,7 +11,6 @@ export default function ShowInfo({ earthquakeData }) {
     'Interactive map with zoom and pan',
     'Markers indicating earthquake epicenters',
     'Click markers for detailed info',
-    'Responsive design for all devices',
     'Download map data and image',
     'Clear all markers with a button',
   ];

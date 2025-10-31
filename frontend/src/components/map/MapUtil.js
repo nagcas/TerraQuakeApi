@@ -262,6 +262,7 @@ export const addEarthquakeMarkers = (map, data) => {
         fromLonLat([
           feature.geometry.coordinates[0],
           feature.geometry.coordinates[1],
+          feature.geometry.coordinates[2],
         ])
       ),
     });
