@@ -7,6 +7,7 @@ import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import EarthquakesEndpointsData from '../../data/EarthquakesEndpointsData.json';
+import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
 
 export default function ExploreData() {
   const [earthquakeData, setEarthquakeData] = useState(null);
@@ -73,6 +74,20 @@ export default function ExploreData() {
               setEarthquakeData={setEarthquakeData}
             />
             <ViewMap earthquakeData={earthquakeData} />
+          </div>
+          {/* Magnitude Legend Component */}
+          <div className='grid grid-cols-1 lg:grid-cols-1 gap-10'>
+            <div className='text-center mb-4'>
+              <h2 className='text-3xl md:text-5xl font-bold mb-2'>
+                Seismic Magnitude Legend
+              </h2>
+              <p className='text-gray-400 max-w-2xl mx-auto text-lg'>
+                Magnitudes measure the energy released by an earthquake.
+                Different scales are used depending on the type of waves
+                recorded and the distance from the epicenter.
+              </p>
+            </div>
+            <MagnitudeLegend />
           </div>
         </div>
       </motion.section>
