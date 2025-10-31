@@ -17,6 +17,7 @@ import 'prismjs/themes/prism-tomorrow.css';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
 import axios from '@config/Axios.js';
+import Swal from 'sweetalert2';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -39,14 +40,32 @@ export default function BlogDetail() {
     const fetchPost = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `/posts/list-postSlug/${slug}`
+        const response = await axios.get(`/posts/list-postSlug/${slug}`, {
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const { payload } = response.data;
+
+        setPost(payload);
+        setRelatedPosts(payload);
+      } catch (error) {
+        const errorMessage =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          'Unable to load post. Please check your connection or try again later.';
+
+        Swal.fire({
+          title: 'Failed to Load Post',
+          text: errorMessage,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+
+        console.error(
+          'Error fetching post:',
+          error.response?.data || error.message
         );
-        setPost(response.data.data);
-        setRelatedPosts(response.data.data);
-      } catch (err) {
-        console.error(err);
-        setError('Failed to load the blog post. Please try again later.');
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
