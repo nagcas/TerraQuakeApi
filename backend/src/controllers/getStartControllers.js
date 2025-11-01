@@ -10,7 +10,7 @@ export const getStart = ({ buildResponse, handleHttpError }) => {
       const apiInfo = {
         author: 'Dr. Gianluca Chiaravalloti',
         version: '1.0.1',
-        date: '31.10.2025',
+        date: '2025.10.31',
         description:
           'This is the test endpoint for TerraQuake API, used to verify server status and configuration.',
         project: 'TerraQuake API — Open-source seismic data API',

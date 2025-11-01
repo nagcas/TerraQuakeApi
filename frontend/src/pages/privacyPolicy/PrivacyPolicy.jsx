@@ -1,8 +1,13 @@
+import { useState } from 'react';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
 import { motion } from 'framer-motion';
+import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function PrivacyPolicy() {
+  const date = import.meta.env.VITE_DATE_UPDATE;
+  const [dateUpdate, setDateUpdate] = useState(date);
+
   return (
     <>
       {/* SEO Stuff */}
@@ -43,7 +48,7 @@ export default function PrivacyPolicy() {
               <div className='h-0.5 w-1/4 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-md text-center md:text-left text-white/70 max-w-7xl'>
-              Last updated: 22-09-2025.
+              Last updated: {formatDate(dateUpdate)}.
             </p>
           </motion.div>
 
