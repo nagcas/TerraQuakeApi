@@ -18,6 +18,7 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
+import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -26,15 +27,6 @@ export default function BlogDetail() {
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
 
   useEffect(() => {
     const fetchPost = async () => {

@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MetaData from '../noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
+import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function TermsAndConditions() {
+  const date = import.meta.env.VITE_DATE_UPDATE;
+  const [dateUpdate, setDateUpdate] = useState(date);
+
   return (
     <>
       {/* SEO Stuff */}
@@ -44,7 +49,7 @@ export default function TermsAndConditions() {
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-md text-center md:text-left text-white/70 max-w-7xl'>
-              Last updated: 22-09-2025.
+              Last updated: {formatDate(dateUpdate)}.
             </p>
           </motion.div>
 

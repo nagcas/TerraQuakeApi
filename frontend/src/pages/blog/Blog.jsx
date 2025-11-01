@@ -9,6 +9,7 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
 import Pagination from '@/components/utils/Pagination';
 import Swal from 'sweetalert2';
+import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
@@ -63,15 +64,6 @@ export default function Blog() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   };
 
   // Loading state

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
+import { formatDate } from './FormatDate.js';
 
 export default function VersionAPI() {
   const [api, setApi] = useState(null);
@@ -47,7 +48,7 @@ export default function VersionAPI() {
             <p className="text-xs uppercase text-purple-300/70 tracking-wider">
               Last updated
             </p>
-            <p className="text-sm sm:text-base font-medium">{api.date}</p>
+            <p className="text-sm sm:text-base font-medium">{formatDate(api.date)}</p>
           </div>
 
           <div className="bg-purple-400/10 py-3 px-4 rounded-md">

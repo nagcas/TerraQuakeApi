@@ -19,6 +19,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
+import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -813,15 +814,6 @@ The science of seismic waves continues to evolve, with new technologies and meth
         image: 'https://via.placeholder.com/300x200/10b981/ffffff?text=AI+Tech',
       },
     ];
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   };
 
   const handleShare = async () => {

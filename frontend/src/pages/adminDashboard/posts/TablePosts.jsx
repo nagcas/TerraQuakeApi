@@ -10,6 +10,7 @@ import DeletePost from './DeletePost';
 import SharePost from './SharePost';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import BackToTopButton from '@/components/utils/BackToTopButton';
+import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function TablePosts() {
   const [loading, setLoading] = useState(false);
@@ -60,15 +61,6 @@ export default function TablePosts() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
   };
 
   // Manage page changes
