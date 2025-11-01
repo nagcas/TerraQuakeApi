@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { formatDate } from '@/components/utils/FormatDate.js';
 
 export default function PrivacyPolicy() {
-  const date = import.meta.env.VITE_DATE_UPDATE;
-  const [dateUpdate, setDateUpdate] = useState(date);
+  const data = import.meta.env.VITE_DATE_UPDATE;
+  const [dateUpdate, setDateUpdate] = useState(data);
 
   return (
     <>
