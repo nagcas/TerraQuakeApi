@@ -67,9 +67,9 @@ export default function MagnitudeLegend() {
   ];
 
   return (
-    <section className='w-full text-white py-6 min-h-[70vh] flex flex-col items-center'>
+    <section className='overflow-x-auto border border-white/5 bg-white/[0.03] bg-opacity-50 rounded-lg'>
       <div className='overflow-x-auto'>
-        <table className='min-w-full text-sm text-gray-200 border-collapse'>
+        <table className='min-w-full text-sm text-gray-200 border-collapse rounded-lg'>
           <thead>
             <tr className='bg-purple-500/20 text-purple-300 uppercase text-xs tracking-wider'>
               <th className='py-3 px-4 text-left'>Code</th>

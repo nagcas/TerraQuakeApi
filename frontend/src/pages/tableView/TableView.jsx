@@ -231,7 +231,7 @@ export default function TableView() {
               <div className='overflow-x-auto border border-white/5 bg-white/[0.03] bg-opacity-50 rounded-lg'>
                 <table className='min-w-full divide-y divide-gray-700'>
                   <thead className='bg-gray-800 bg-opacity-70'>
-                    <tr>
+                    <tr className='bg-purple-500/20 text-purple-300 uppercase text-xs tracking-wider'>
                       <th
                         onClick={() => requestSort('time')}
                         className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
@@ -268,7 +268,7 @@ export default function TableView() {
                     {paginatedData.map((quake) => (
                       <tr
                         key={quake.properties.eventId}
-                        className='hover:bg-gray-800 transition-colors'
+                        className=' hover:bg-purple-500/10 transition-colors'
                       >
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {new Date(quake.properties.time).toLocaleString()}

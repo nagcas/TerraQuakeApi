@@ -154,7 +154,7 @@ export default function TablePosts() {
               <div className='overflow-x-auto border border-white/5 bg-white/[0.03] bg-opacity-50 rounded-lg'>
                 <table className='min-w-full divide-y divide-gray-700'>
                   <thead className='bg-gray-800 bg-opacity-70'>
-                    <tr>
+                    <tr className='bg-purple-500/20 text-purple-300 uppercase text-xs tracking-wider'>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
                         Id
                       </th>
@@ -179,7 +179,7 @@ export default function TablePosts() {
                     {posts.map((item) => (
                       <tr
                         key={item._id}
-                        className='hover:bg-gray-800 transition-colors'
+                        className=' hover:bg-purple-500/10 transition-colors'
                       >
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item._id.slice(0, 6)}...

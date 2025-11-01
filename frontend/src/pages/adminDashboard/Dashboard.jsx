@@ -27,7 +27,7 @@ export default function AdminDashboard() {
 
   return (
     <motion.div
-      className='min-h-screen pt-24 pb-12'
+      className='relative z-10 min-h-screen pt-24 pb-12'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
