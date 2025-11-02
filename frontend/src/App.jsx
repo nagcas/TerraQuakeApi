@@ -39,6 +39,9 @@ import AdminDashboard from '@pages/adminDashboard/Dashboard'
 import NoAccess from '@pages/NoAccess'
 import RequireAuth from '@components/RequireAuth'
 import TablePosts from './pages/adminDashboard/posts/TablePosts'
+import TableUsers from './pages/adminDashboard/users/TableUsers'
+import TableMessages from './pages/adminDashboard/messages/TableMessages'
+import TableFaqs from './pages/adminDashboard/faq/TableFaqs'
 
 export default function App() {
   return (
@@ -95,10 +98,34 @@ export default function App() {
                 }
               />
               <Route
+                path='/table-users'
+                element={
+                  <RequireAuth requiredRole='admin'>
+                    <TableUsers />
+                  </RequireAuth>
+                }
+              />
+              <Route
                 path='/table-posts'
                 element={
                   <RequireAuth requiredRole='admin'>
                     <TablePosts />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path='/table-messages'
+                element={
+                  <RequireAuth requiredRole='admin'>
+                    <TableMessages />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path='/table-faqs'
+                element={
+                  <RequireAuth requiredRole='admin'>
+                    <TableFaqs />
                   </RequireAuth>
                 }
               />

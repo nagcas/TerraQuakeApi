@@ -95,6 +95,19 @@ export default function AdminDashboard() {
             <ListMessages />
           </motion.div>
 
+          {/* Emails Management */}
+          <motion.div
+            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <h3 className='text-xl font-bold text-white mb-4'>
+              Registered Emails
+            </h3>
+            <ListEmailNewsletters />
+          </motion.div>
+
           {/* Newsletter Management */}
           <motion.div
             className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
@@ -106,27 +119,14 @@ export default function AdminDashboard() {
             <ListNewsletters />
           </motion.div>
 
-          {/* Emails Management */}
+          {/* Faq Management */}
           <motion.div
             className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>
-              Emails Register
-            </h3>
-            <ListEmailNewsletters />
-          </motion.div>
-
-          {/* faq Management */}
-          <motion.div
-            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <h3 className='text-xl font-bold text-white mb-4'>Faq</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>Faqs</h3>
             <ListFaqs />
           </motion.div>
 
@@ -150,38 +150,20 @@ export default function AdminDashboard() {
           >
             <h3 className='text-xl font-bold text-white mb-4'>Quick Actions</h3>
             <div className='space-y-3'>
-              <button className='w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
-                Create New Post
-              </button>
-              <button className='w-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
-                Send Newsletter
-              </button>
-              <button className='w-full bg-gradient-to-r from-green-600 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
-                View Reports
-              </button>
-            </div>
-          </motion.div>
-
-          {/* Quick Menu */}
-          <motion.div
-            className='p-6 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl'
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-          >
-            <h3 className='text-xl font-bold text-white mb-4'>Quick Menu</h3>
-            <div className='space-y-3'>
               <button
                 onClick={() => handleProfile()}
                 className='w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
               >
                 Profile
               </button>
-              <button 
+              <button
                 onClick={() => handleBlog()}
                 className='w-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
               >
                 Blog
+              </button>
+              <button className='w-full bg-gradient-to-r from-green-600 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
+                View Reports
               </button>
             </div>
           </motion.div>
