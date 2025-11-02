@@ -1,6 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function ListFaqs() {
+  const navigate = useNavigate();
+
+  const handleTableFaqs = () => {
+    navigate('/table-faqs', { replace: true });
+  };
+
   return (
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
@@ -10,8 +17,11 @@ export default function ListFaqs() {
       <div className='text-sm text-white/70'>
         Total Faq View: <span className='text-blue-400 font-semibold'>23</span>
       </div>
-      <button className='w-full mt-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold py-2 px-3 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
-        View Faq
+      <button 
+        onClick={() => handleTableFaqs()}
+        className='w-full mt-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold py-2 px-3 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
+      >
+        Manage Faqs
       </button>
     </div>
   )

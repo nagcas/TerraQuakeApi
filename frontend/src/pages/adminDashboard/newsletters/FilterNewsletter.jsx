@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function FilterNewsletter() {
   return (
-    <div>FilterNewsletter</div>
+    <div>Filter</div>
   )
 }

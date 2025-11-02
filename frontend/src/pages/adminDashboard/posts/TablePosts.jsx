@@ -19,7 +19,7 @@ export default function TablePosts() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [totalPosts, setTotalPosts] = useState(0);
-  const [postsPerPage, setPostsPerPage] = useState(50);
+  const [postsPerPage, setPostsPerPage] = useState(20);
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');

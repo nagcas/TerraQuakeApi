@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Tablenewsletters() {
+export default function TableNewsletters() {
   return (
-    <div>Tablenewsletters</div>
+    <div>Table</div>
   )
 }

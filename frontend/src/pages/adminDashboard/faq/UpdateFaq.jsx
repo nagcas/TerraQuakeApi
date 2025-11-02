@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function UpdateNewsletter() {
+export default function UpdateFaq() {
   return (
     <div>Update</div>
   )
