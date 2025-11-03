@@ -15,13 +15,13 @@ export default function TableUsers() {
 
    const {
     users,
-    totalPages,
+    totalPagesUsers,
     totalUsers,
-    currentPage,
-    setCurrentPage,
+    currentPageUser,
+    setCurrentPageUser,
     usersPerPage,
-    loading,
-    error,
+    loadingUser,
+    errorUser,
   } = useUsers(page, limit);
 
   useEffect(() => {
@@ -64,14 +64,14 @@ export default function TableUsers() {
             </h1>
           </motion.div>
 
-          {loading && (
+          {loadingUser && (
             <p className='flex justify-center mt-16 text-center text-2xl'>
               <Spinner size='4xl' />
             </p>
           )}
-          {error && <p className='text-red-500'>{error}</p>}
+          {errorUser && <p className='text-red-500'>{errorUser}</p>}
 
-          {!loading && !error && (
+          {!loadingUser && !errorUser && (
             <>
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
@@ -151,11 +151,11 @@ export default function TableUsers() {
 
         {/* Pagination */}
         <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
+          currentPage={currentPageUser}
+          totalPages={totalPagesUsers}
           totalItems={totalUsers}
           itemsPerPage={usersPerPage}
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={setCurrentPageUser}
         />
       </motion.section>
       {/* Floating Back-to-Top Button Component */}

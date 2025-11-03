@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ListUsers({
   totalUsers,
-  totalPages,
-  currentPage,
+  totalPagesUsers,
+  currentPageUser,
   usersPerPage,
 }) {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function ListUsers({
   const handleTableUsers = () => {
     navigate('/table-users', {
       state: {
-        page: currentPage,
+        page: currentPageUser,
         limit: usersPerPage,
       },
     });

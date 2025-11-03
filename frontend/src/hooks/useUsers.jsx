@@ -6,11 +6,11 @@ import Swal from 'sweetalert2';
 export default function useUsers(initialPage = 1, initialLimit = 20) {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(false);
+  const [errorUser, setErrorUser] = useState(null);
   const [users, setUsers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [totalPages, setTotalPages] = useState(null);
+  const [currentPageUser, setCurrentPageUser] = useState(initialPage);
+  const [totalPagesUsers, setTotalPagesUsers] = useState(null);
   const [totalUsers, setTotalUsers] = useState(0);
   const [usersPerPage, setUsersPerPage] = useState(initialLimit);
 
@@ -18,11 +18,11 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
 
    useEffect(() => {
     listAllUsers();
-  }, [currentPage, usersPerPage]);
+  }, [currentPageUser, usersPerPage]);
 
   const listAllUsers = async () => {
-    setLoading(true);
-    setError(null);
+    setLoadingUser(true);
+    setErrorUser(null);
     try {
       const response = await axios.get(`/users/list-all-users`, {
         headers: {
@@ -30,7 +30,7 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
           Authorization: `Bearer ${token}`,
         },
         params: {
-          page: currentPage,
+          page: currentPageUser,
           limit: usersPerPage,
         },
       });
@@ -38,11 +38,11 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
       const { payload } = response.data;
 
       setUsers(payload.users);
-      setTotalPages(payload.pagination.totalPages);
+      setTotalPagesUsers(payload.pagination.totalPages);
       setTotalUsers(payload.pagination.totalResults);
     } catch (error) {
-      setError(error);
-      setLoading(false);
+      setErrorUser(error);
+      setLoadingUser(false);
 
       Swal.fire({
         title: 'Error!',
@@ -53,18 +53,18 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
         setTimeout(() => navigate('/admin', { replace: true }), 0);
       });
     } finally {
-      setLoading(false);
+      setLoadingUser(false);
     }
   };
 
   return {
     users,
     totalUsers,
-    totalPages,
-    currentPage,
-    setCurrentPage,
+    totalPagesUsers,
+    currentPageUser,
+    setCurrentPageUser,
     usersPerPage,
-    loading,
-    error,
+    loadingUser,
+    errorUser,
   };
 }

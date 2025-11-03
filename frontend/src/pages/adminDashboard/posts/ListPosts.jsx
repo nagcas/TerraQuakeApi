@@ -1,7 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function ListPosts() {
+export default function ListPosts({
+  totalPosts,
+  totalPagesPosts,
+  currentPagePost,
+  postsPerPage,
+}) {
   const navigate = useNavigate();
 
   const handleTablePosts = () => {
@@ -11,13 +16,13 @@ export default function ListPosts() {
   return (
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
-        Total Posts: <span className='text-purple-400 font-semibold'>156</span>
+        Total Posts: <span className='text-purple-400 font-semibold'>{totalPosts}</span>
       </div>
       <div className='text-sm text-white/70'>
-        Published: <span className='text-green-400 font-semibold'>142</span>
+        Published: <span className='text-green-400 font-semibold'>...</span>
       </div>
       <div className='text-sm text-white/70'>
-        Drafts: <span className='text-yellow-400 font-semibold'>14</span>
+        Drafts: <span className='text-yellow-400 font-semibold'>...</span>
       </div>
       <button 
         onClick={() => handleTablePosts()}
