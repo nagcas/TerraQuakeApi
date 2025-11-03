@@ -77,7 +77,7 @@ export default function Pagination({ currentPage, totalPages, totalItems, itemsP
           <div className='text-sm text-gray-400'>
             Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
             {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{' '}
-            posts
+            items
           </div>
         </div>
       )}

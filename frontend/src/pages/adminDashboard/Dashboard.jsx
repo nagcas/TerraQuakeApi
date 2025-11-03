@@ -12,10 +12,22 @@ import ListEmailNewsletters from './emailsNewsletters/ListEmailNewsletters';
 import ListReviews from './reviews/ListReviews';
 import { useNavigate } from 'react-router-dom';
 import ListFaqs from './faq/ListFaqs';
+import useUsers from '@/hooks/useUsers';
 
 export default function AdminDashboard() {
   const { userLogin } = useContext(Context);
   const navigate = useNavigate();
+
+  const {
+    users,
+    totalPages,
+    totalUsers,
+    currentPage,
+    setCurrentPage,
+    usersPerPage,
+    loading,
+    error,
+  } = useUsers();
 
   const handleProfile = () => {
     navigate('/profile', { replace: true });
@@ -70,7 +82,15 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Users</h3>
-            <ListUsers />
+            <ListUsers
+              users={users}
+              totalUsers={totalUsers}
+              totalPages={totalPages}
+              currentPage={currentPage}
+              usersPerPage={usersPerPage}
+              loading={loading}
+              error={error}
+            />
           </motion.div>
 
           {/* Posts Management */}
