@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
 import { Context } from '@components/modules/Context';
+import LoginSocial from '@/components/utils/LoginSocial';
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -411,6 +412,10 @@ export default function SignUp() {
                     <span>Create your account</span>
                   )}
                 </button>
+            
+                {/* Social Buttons */}
+                <LoginSocial />
+            
                 <div className='mt-6 flex flex-col items-center'>
                   <p className='text-gray-200 text-sm cursor-default'>
                     Already have an account?
@@ -425,6 +430,8 @@ export default function SignUp() {
                 </div>
               </form>
             </motion.div>
+
+            
 
             {/* Right Column: Other channels */}
             <Channels />
