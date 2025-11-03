@@ -13,21 +13,15 @@ import ListReviews from './reviews/ListReviews';
 import { useNavigate } from 'react-router-dom';
 import ListFaqs from './faq/ListFaqs';
 import useUsers from '@/hooks/useUsers';
+import usePosts from '@/hooks/usePosts';
 
 export default function AdminDashboard() {
   const { userLogin } = useContext(Context);
   const navigate = useNavigate();
-
-  const {
-    users,
-    totalPages,
-    totalUsers,
-    currentPage,
-    setCurrentPage,
-    usersPerPage,
-    loading,
-    error,
-  } = useUsers();
+  
+  // Hooks
+  const { users, totalPagesUsers, totalUsers, currentPageUser, setCurrentPageUser, usersPerPage, loadingUser, errorUser } = useUsers();
+  const { posts, totalPagesPosts, totalPosts, currentPagePost, setCurrentPagePost, postsPerPage, loadingPost, errorPost } = usePosts();
 
   const handleProfile = () => {
     navigate('/profile', { replace: true });
@@ -85,11 +79,11 @@ export default function AdminDashboard() {
             <ListUsers
               users={users}
               totalUsers={totalUsers}
-              totalPages={totalPages}
-              currentPage={currentPage}
+              totalPagesUsers={totalPagesUsers}
+              currentPageUser={currentPageUser}
               usersPerPage={usersPerPage}
-              loading={loading}
-              error={error}
+              loadingUser={loadingUser}
+              errorUser={errorUser}
             />
           </motion.div>
 
@@ -101,7 +95,15 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Posts</h3>
-            <ListPosts />
+            <ListPosts 
+              posts={posts}
+              totalPosts={totalPosts}
+              totalPagesPosts={totalPagesPosts}
+              currentPagePost={currentPagePost}
+              postsPerPage={postsPerPage}
+              loadingPost={loadingPost}
+              errorPost={errorPost}
+            />
           </motion.div>
 
           {/* Messages Management */}

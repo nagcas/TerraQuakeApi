@@ -1,91 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@/config/Axios.js';
-import Swal from 'sweetalert2';
 import ViewPost from './ViewPost';
 import UpdatePost from './UpdatePost';
 import DeletePost from './DeletePost';
 import SharePost from './SharePost';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { formatDate } from '@/components/utils/FormatDate.js';
+import usePosts from '@/hooks/usePosts';
+import Pagination from '@/components/utils/Pagination';
 
 export default function TablePosts() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(null);
-  const [totalPosts, setTotalPosts] = useState(0);
-  const [postsPerPage, setPostsPerPage] = useState(20);
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { page = 1, limit = 20 } = location.state || {};
 
-  const token = localStorage.getItem('token');
+  const {
+    posts,
+    totalPagesPosts,
+    totalPosts,
+    currentPagePost,
+    setCurrentPagePost,
+    postsPerPage,
+    loadingPost,
+    errorPost,
+  } = usePosts(page, limit);
 
   useEffect(() => {
-    listAllPosts();
-  }, [currentPage]);
-
-  const listAllPosts = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get(`/posts/list-all-posts`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          page: currentPage,
-          limit: postsPerPage,
-        },
-      });
-
-      const { payload } = response.data;
-
-      setPosts(payload.posts);
-      setTotalPages(payload.pagination.totalPages);
-      setTotalPosts(payload.pagination.totalResults);
-    } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to fetch posts data. Please ensure the backend server is running.',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      }).then(() => {
-        setLoading(false);
-        navigate('/admin', { replace: true });
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Manage page changes
-  const handlePageChange = (pageNum) => {
-    if (pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
-      setCurrentPage(pageNum);
-    }
-  };
-
-  // Generate visible page numbers
-  const generatePageNumbers = () => {
-    const maxVisible = 5;
-    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-    let end = Math.min(totalPages, start + maxVisible - 1);
-
-    if (end - start < maxVisible - 1) {
-      start = Math.max(1, end - maxVisible + 1);
-    }
-
-    const pages = [];
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-    return pages;
-  };
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -123,14 +66,14 @@ export default function TablePosts() {
             </h1>
           </motion.div>
 
-          {loading && (
+          {loadingPost && (
             <p className='flex justify-center mt-16 text-center text-2xl'>
               <Spinner size='4xl' />
             </p>
           )}
-          {error && <p className='text-red-500'>{error}</p>}
+          {errorPost && <p className='text-red-500'>{errorPost}</p>}
 
-          {!loading && !error && (
+          {!loadingPost && !errorPost && (
             <>
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
@@ -204,60 +147,13 @@ export default function TablePosts() {
         </div>
 
         {/* Pagination */}
-        <div className='relative z-50 my-6'>
-          {totalPages > 1 && (
-            <div className='flex flex-col items-center space-y-4'>
-              <div className='flex items-center space-x-2'>
-                {/* Prev */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    currentPage === 1
-                      ? 'opacity-50 cursor-not-allowed bg-gray-700'
-                      : 'bg-purple-600 hover:bg-purple-500 cursor-pointer'
-                  }`}
-                >
-                  <FaChevronLeft />
-                </button>
-
-                {/* Numbers */}
-                {generatePageNumbers().map((pageNum) => (
-                  <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    className={`w-10 h-10 rounded-lg transition-all duration-200 ${
-                      currentPage === pageNum
-                        ? 'bg-purple-600 text-white scale-110 curspor-pointer'
-                        : 'bg-white/[0.08] text-white/70 hover:bg-purple-600 cursor-pointer'
-                    }`}
-                  >
-                    {pageNum}
-                  </button>
-                ))}
-
-                {/* Next */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    currentPage === totalPages
-                      ? 'opacity-50 cursor-not-allowed bg-gray-700'
-                      : 'bg-purple-600 hover:bg-purple-500 cursor-pointer'
-                  }`}
-                >
-                  <FaChevronRight />
-                </button>
-              </div>
-
-              <div className='text-sm text-gray-400'>
-                Showing {(currentPage - 1) * postsPerPage + 1} to{' '}
-                {Math.min(currentPage * postsPerPage, totalPosts)} of {totalPosts}{' '}
-                posts
-              </div>
-            </div>
-          )}
-        </div>
+        <Pagination
+          currentPage={currentPagePost}
+          totalPages={totalPagesPosts}
+          totalItems={totalPosts}
+          itemsPerPage={postsPerPage}
+          setCurrentPage={setCurrentPagePost}
+        />
       </motion.section>
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
