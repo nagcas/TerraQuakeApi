@@ -1,37 +1,41 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
+import Spinner from './spinner/Spinner';
 
 export default function RequireAuth({ children, requiredRole = null }) {
-  const { userLogin, isLoggedIn } = useContext(Context);
+  const { userLogin, isLoggedIn, isLoadingUser } = useContext(Context);
   const navigate = useNavigate();
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    // Transform role into array if it isn't already
-    const roles = userLogin
-      ? Array.isArray(userLogin.role)
-        ? userLogin.role
-        : [userLogin.role]
-      : [];
+    if (isLoadingUser) return;
 
-    // Authentication check
-    if (!userLogin || !isLoggedIn) {
+    if (!isLoggedIn || !userLogin) {
       navigate('/signin', { replace: true });
       return;
     }
 
-    // No user logged in → redirects to the home page
-    if (!userLogin || !userLogin.role) {
-      navigate('/', { replace: true });
-      return;
-    }
+    const roles = Array.isArray(userLogin.role)
+      ? userLogin.role
+      : [userLogin.role];
 
-    // Role control
     if (requiredRole && !roles.includes(requiredRole)) {
       navigate('/no-access', { replace: true });
       return;
     }
-  }, [isLoggedIn, userLogin, navigate, requiredRole]);
+
+    setChecked(true);
+  }, [isLoggedIn, userLogin, requiredRole, navigate, isLoadingUser]);
+
+  if (isLoadingUser || !checked) {
+    return (
+      <div className="flex items-center justify-center h-screen text-white">
+        <Spinner size='4xl'/>
+        Loading...
+      </div>
+    );
+  }
 
   return children;
 }

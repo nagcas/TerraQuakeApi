@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import MetaData from '../noPage/MetaData';
 import { Context } from '@/components/modules/Context';
-import { useNavigate } from 'react-router-dom';
 import EditProfile from './EditProfile';
 import DeleteProfile from './DeleteProfile';
 import { motion } from 'framer-motion';
@@ -14,9 +13,8 @@ import GenerateTokenAPI from './GenerateTokenAPI';
 import FunctionsProfile from './FunctionsProfile';
 
 export default function Profile() {
-  const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =
+  const { userLogin, isLoggedIn } =
     useContext(Context);
-  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(null);
 
   return (

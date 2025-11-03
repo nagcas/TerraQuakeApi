@@ -4,8 +4,8 @@ import { Context } from './Context';
 export const AuthProvider = ({ children }) => {
   const [userLogin, setUserLogin] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
-  // Al primo render recupera user e token da localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
@@ -13,16 +13,24 @@ export const AuthProvider = ({ children }) => {
     if (storedUser && storedToken) {
       try {
         const parsedUser = JSON.parse(storedUser);
+
         if (parsedUser && typeof parsedUser === 'object') {
           setUserLogin(parsedUser);
           setIsLoggedIn(true);
+        } else {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
         }
       } catch (error) {
         console.warn('Invalid user in localStorage:', error);
         localStorage.removeItem('user');
         localStorage.removeItem('token');
       }
+    } else {
+      setIsLoggedIn(false);
     }
+
+    setIsLoadingUser(false);
   }, []);
 
   return (
@@ -32,9 +40,11 @@ export const AuthProvider = ({ children }) => {
         setUserLogin,
         isLoggedIn,
         setIsLoggedIn,
+        isLoadingUser,
       }}
     >
       {children}
     </Context.Provider>
   );
 };
+
