@@ -100,7 +100,7 @@ export default function Profile() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className='col-span-1 lg:col-span-2 bg-black/30 backdrop-blur-xl border border-pink-500/10 rounded-2xl shadow-lg p-6 sm:p-8 mt-6'
+                className='col-span-1 lg:col-span-2 bg-black/10 border border-pink-500/10 rounded-2xl p-6 sm:p-8 mt-6'
               >
                 {/* Detail Profile */}
                 <DetailProfile />

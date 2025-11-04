@@ -6,8 +6,8 @@ export default function DetailProfile() {
     useContext(Context);
 
   return (
-    <>
-      <h2 className='text-xl sm:text-2xl font-semibold text-pink-400 mb-4'>
+    <section>
+      <h2 className='pointer-events-none text-xl sm:text-2xl font-semibold text-pink-400 mb-4'>
         Account Details
       </h2>
       <div className='grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base'>
@@ -87,6 +87,6 @@ export default function DetailProfile() {
           <span>{userLogin?.bio || ''}</span>
         </p>
       </div>
-    </>
+    </section>
   );
 }
