@@ -1,24 +1,34 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function ListMessages() {
+export default function ListMessages({
+  totalMessages,
+  totalPagesMessages,
+  currentPageMessage,
+  messagePerPage,
+}) {
   const navigate = useNavigate();
 
   const handleTableMessages = () => {
-    navigate('/table-messages', { replace: true })
+    navigate('/table-messages', {
+      state: {
+        page: currentPageMessage,
+        limit: messagePerPage,
+      },
+    });
   };
 
   return (
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
         Total Messages:{' '}
-        <span className='text-purple-400 font-semibold'>89</span>
+        <span className='text-purple-400 font-semibold'>{totalMessages}</span>
       </div>
       <div className='text-sm text-white/70'>
-        Unread: <span className='text-red-400 font-semibold'>12</span>
+        Unread: <span className='text-red-400 font-semibold'>...</span>
       </div>
       <div className='text-sm text-white/70'>
-        This Week: <span className='text-blue-400 font-semibold'>23</span>
+        This Week: <span className='text-blue-400 font-semibold'>...</span>
       </div>
       <button 
         onClick={() => handleTableMessages()}
