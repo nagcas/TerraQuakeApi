@@ -10,10 +10,10 @@ import useMessages from '@/hooks/useMessages';
 import Pagination from '@/components/utils/Pagination';
 
 export default function TableMessages() {
- const location = useLocation();
-   const { page = 1, limit = 20 } = location.state || {};
+  const location = useLocation();
+  const { page = 1, limit = 20 } = location.state || {};
 
-   const {
+  const {
     messages,
     totalPagesMessages,
     totalMessages,

@@ -1,90 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@/config/Axios.js';
-import Swal from 'sweetalert2';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { formatDate } from '@/components/utils/FormatDate.js';
 import ViewFaq from './ViewFaq';
 import DeleteFaq from './DeleteFaq';
 import UpdateFaq from './UpdateFaq';
+import useFaqs from '@/hooks/useFaqs';
+import Pagination from '@/components/utils/Pagination';
 
 export default function TableFaqs() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [faqs, setFaqs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(null);
-  const [totalFaqs, setTotalFaqs] = useState(0);
-  const [faqsPerPage, setFaqsPerPage] = useState(20);
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { page = 1, limit = 20 } = location.state || {};
 
-  const token = localStorage.getItem('token');
+  const {
+    faqs,
+    totalPagesFaqs,
+    totalFaqs,
+    currentPageFaq,
+    setCurrentPageFaq,
+    faqsPerPage,
+    loadingFaq,
+    errorFaq,
+  } = useFaqs(page, limit);
 
   useEffect(() => {
-    listAllFaqs();
-  }, [currentPage]);
-
-  const listAllFaqs = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get(`/faq/list-all-faq`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          page: currentPage,
-          limit: faqsPerPage,
-        },
-      });
-
-      const { payload } = response.data;
-
-      setFaqs(payload.faqs);
-      setTotalPages(payload.pagination.totalPages);
-      setTotalFaqs(payload.pagination.totalResults);
-    } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to fetch Faqs data. Please ensure the backend server is running.',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      }).then(() => {
-        setLoading(false);
-        navigate('/admin', { replace: true });
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Manage page changes
-  const handlePageChange = (pageNum) => {
-    if (pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
-      setCurrentPage(pageNum);
-    }
-  };
-
-  // Generate visible page numbers
-  const generatePageNumbers = () => {
-    const maxVisible = 5;
-    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-    let end = Math.min(totalPages, start + maxVisible - 1);
-
-    if (end - start < maxVisible - 1) {
-      start = Math.max(1, end - maxVisible + 1);
-    }
-
-    const pages = [];
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-    return pages;
-  };
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -122,14 +66,14 @@ export default function TableFaqs() {
             </h1>
           </motion.div>
 
-          {loading && (
+          {loadingFaq && (
             <p className='flex justify-center mt-16 text-center text-2xl'>
               <Spinner size='4xl' />
             </p>
           )}
-          {error && <p className='text-red-500'>{error}</p>}
+          {errorFaq && <p className='text-red-500'>{errorFaq}</p>}
 
-          {!loading && !error && (
+          {!loadingFaq && !errorFaq && (
             <>
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
@@ -202,60 +146,13 @@ export default function TableFaqs() {
         </div>
 
         {/* Pagination */}
-        <div className='relative z-50 my-6'>
-          {totalPages > 1 && (
-            <div className='flex flex-col items-center space-y-4'>
-              <div className='flex items-center space-x-2'>
-                {/* Prev */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    currentPage === 1
-                      ? 'opacity-50 cursor-not-allowed bg-gray-700'
-                      : 'bg-purple-600 hover:bg-purple-500 cursor-pointer'
-                  }`}
-                >
-                  <FaChevronLeft />
-                </button>
-
-                {/* Numbers */}
-                {generatePageNumbers().map((pageNum) => (
-                  <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    className={`w-10 h-10 rounded-lg transition-all duration-200 ${
-                      currentPage === pageNum
-                        ? 'bg-purple-600 text-white scale-110 curspor-pointer'
-                        : 'bg-white/[0.08] text-white/70 hover:bg-purple-600 cursor-pointer'
-                    }`}
-                  >
-                    {pageNum}
-                  </button>
-                ))}
-
-                {/* Next */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    currentPage === totalPages
-                      ? 'opacity-50 cursor-not-allowed bg-gray-700'
-                      : 'bg-purple-600 hover:bg-purple-500 cursor-pointer'
-                  }`}
-                >
-                  <FaChevronRight />
-                </button>
-              </div>
-
-              <div className='text-sm text-gray-400'>
-                Showing {(currentPage - 1) * faqsPerPage + 1} to{' '}
-                {Math.min(currentPage * faqsPerPage, totalFaqs)} of {totalFaqs}{' '}
-                faqs
-              </div>
-            </div>
-          )}
-        </div>
+        <Pagination
+          currentPage={currentPageFaq}
+          totalPages={totalPagesFaqs}
+          totalItems={totalFaqs}
+          itemsPerPage={faqsPerPage}
+          setCurrentPage={setCurrentPageFaq}
+        />
       </motion.section>
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
