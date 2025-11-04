@@ -26,7 +26,7 @@ export default function TableMessages() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [currentPageMessage]);
 
   return (
     <>

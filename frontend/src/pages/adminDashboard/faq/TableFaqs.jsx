@@ -28,7 +28,7 @@ export default function TableFaqs() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [currentPageFaq]);
 
   return (
     <>

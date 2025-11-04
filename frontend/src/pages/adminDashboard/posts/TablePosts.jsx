@@ -28,7 +28,7 @@ export default function TablePosts() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [currentPagePost]);
 
   return (
     <>
