@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
 import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
 
-export default function TableView() {
+export default function TableViewEarthquakes() {
   const BACKEND_URL =
     import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const [earthquakes, setEarthquakes] = useState([]);
@@ -48,6 +48,10 @@ export default function TableView() {
 
     fetchEarthquakes();
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const sortedAndFilteredEarthquakes = useMemo(() => {
     let sortableItems = [...earthquakes];
@@ -173,7 +177,7 @@ export default function TableView() {
         <div className='relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12'>
           <div className='mb-8'>
             <Link
-              to='/explore-data'
+              to='/explore-data/earthquakes'
               className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
             >
               ← Back to Map View

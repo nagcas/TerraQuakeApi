@@ -4,7 +4,7 @@ import Spinner from '../spinner/Spinner';
 export default function ApiPlayground({
   title = 'API Playground',
   endpoints = [],
-  setEarthquakeData,
+  setData,
 }) {
   const BACKEND_URL =
     import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
@@ -83,7 +83,7 @@ export default function ApiPlayground({
         );
       }
       setResponseData(data);
-      setEarthquakeData(data);
+      setData(data);
     } catch (err) {
       setErrorMessage('Request failed: ', err);
       setResponseData(null);
@@ -154,7 +154,7 @@ export default function ApiPlayground({
         <h2 className='text-left text-3xl md:text-4xl font-bold'>{title}</h2>
       </div>
 
-      <div className='w-full flex flex-col space-y-6'>
+      <div className='w-full flex text-left flex-col space-y-6'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-6'>
           {endpoints.map((ep) => (
             <button

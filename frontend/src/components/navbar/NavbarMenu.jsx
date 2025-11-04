@@ -13,16 +13,16 @@ export default function NavbarMenu() {
     useContext(Context);
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isExploreOpen, setIsExploreOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+  const exploreRef = useRef(null);
   const resourcesRef = useRef(null);
   const profileRef = useRef(null);
   const mobileRef = useRef(null);
 
   const primaryNavItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Explore Data', path: '/explore-data' },
     { name: 'Use Cases', path: '/use-cases' },
     { name: 'Blog', path: '/blog' },
     { name: 'About', path: '/about' },
@@ -33,6 +33,11 @@ export default function NavbarMenu() {
     { name: 'API Access', path: '/api-access' },
     { name: 'Docs', path: '/docs' },
     { name: 'Faq', path: '/faq' },
+  ];
+
+  const exploreDataNavItems = [
+    { name: 'Earthquakes API', path: '/explore-data/earthquakes' },
+    { name: 'Stations API', path: '/explore-data/stations' },
   ];
 
   const profileItems = [
@@ -51,6 +56,8 @@ export default function NavbarMenu() {
 
   useEffect(() => {
     function onDocClick(e) {
+      if (exploreRef.current && !exploreRef.current.contains(e.target))
+        setIsExploreOpen(false);
       if (resourcesRef.current && !resourcesRef.current.contains(e.target))
         setIsResourcesOpen(false);
       if (profileRef.current && !profileRef.current.contains(e.target))
@@ -81,25 +88,54 @@ export default function NavbarMenu() {
 
       {/* Desktop Menu */}
       <nav className='hidden lg:flex justify-center gap-4 text-[12px] xl:text-[14px] relative'>
-        {primaryNavItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            className={({ isActive }) =>
-              `hover:text-purple-400 ${
-                isActive
-                  ? 'text-purple-400 font-semibold border-b-2 border-purple-500'
-                  : 'text-gray-300'
-              }`
-            }
-            onClick={() => {
-              setIsResourcesOpen(false);
-              setIsProfileOpen(false);
-            }}
+        {/* Explore Data dropdown */}
+        <div
+          ref={exploreRef}
+          className='relative'
+        >
+          <button
+            onClick={() => setIsExploreOpen((s) => !s)}
+            className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer ${
+              exploreDataNavItems.some(
+                (item) => window.location.pathname === item.path
+              )
+                ? 'text-purple-400 font-semibold'
+                : 'text-gray-300'
+            }`}
+            aria-expanded={isExploreOpen}
           >
-            {item.name}
-          </NavLink>
-        ))}
+            Explore Data{' '}
+            <FaChevronDown
+              className={`text-xs transition-transform ${
+                isExploreOpen ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
+          </button>
+
+          {isExploreOpen && (
+            <div
+              className='absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-xl border border-purple-500/50 rounded-2xl shadow-lg z-50 py-2 animate-fade-in'
+              onClick={(e) => e.stopPropagation()}
+            >
+              {exploreDataNavItems.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  onClick={() => setIsExploreOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-sm hover:text-purple-400 hover:bg-purple-500/10 transition-colors duration-200 ${
+                      isActive
+                        ? 'text-purple-400 font-semibold bg-purple-500/20'
+                        : 'text-gray-300'
+                    }`
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Resources dropdown */}
         <div
@@ -149,6 +185,26 @@ export default function NavbarMenu() {
             </div>
           )}
         </div>
+
+        {primaryNavItems.map((item) => (
+          <NavLink
+            key={item.name}
+            to={item.path}
+            className={({ isActive }) =>
+              `hover:text-purple-400 ${
+                isActive
+                  ? 'text-purple-400 font-semibold border-b-2 border-purple-500'
+                  : 'text-gray-300'
+              }`
+            }
+            onClick={() => {
+              setIsResourcesOpen(false);
+              setIsProfileOpen(false);
+            }}
+          >
+            {item.name}
+          </NavLink>
+        ))}
       </nav>
 
       {/* Auth / profile area */}

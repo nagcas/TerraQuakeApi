@@ -59,7 +59,7 @@ export default function ExploreData() {
             </p>
             <div className='mt-16'>
               <Link
-                to='/explore-data/table'
+                to='/explore-data/table-earthquakes'
                 className='py-4 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
               >
                 Switch to Tabular View
@@ -71,7 +71,7 @@ export default function ExploreData() {
             <ApiPlayground
               title='Earthquakes'
               endpoints={EarthquakesEndpointsData}
-              setEarthquakeData={setEarthquakeData}
+              setData={setEarthquakeData}
             />
             <ViewMap earthquakeData={earthquakeData} />
           </div>
