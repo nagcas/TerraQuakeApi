@@ -32,7 +32,8 @@ import Contribute from '@pages/contribute/Contribute'
 import GithubAuth from '@pages/auth/GithubAuth'
 import HandleOAuth from '@pages/auth/HandleOAuth'
 import NoPage from '@pages/noPage/NoPage'
-import TableView from '@pages/tableView/TableView'
+import TableViewEarthquakes from './pages/tableView/TableViewEarthquakes'
+import TableViewStations from './pages/tableView/TableViewStations'
 import Faq from './components/faq/Faq'
 import Unsubscribe from './components/newsletter/Unsubscribe'
 import AdminDashboard from '@pages/adminDashboard/Dashboard'
@@ -42,6 +43,7 @@ import TablePosts from './pages/adminDashboard/posts/TablePosts'
 import TableUsers from './pages/adminDashboard/users/TableUsers'
 import TableMessages from './pages/adminDashboard/messages/TableMessages'
 import TableFaqs from './pages/adminDashboard/faq/TableFaqs'
+import StationsData from './pages/stationsData/StationsData'
 
 export default function App() {
   return (
@@ -58,8 +60,10 @@ export default function App() {
 
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/explore-data' element={<ExploreData />} />
-              <Route path='/explore-data/table' element={<TableView />} />
+              <Route path='/explore-data/earthquakes' element={<ExploreData />} />
+              <Route path='/explore-data/stations' element={<StationsData />} />
+              <Route path='/explore-data/table-earthquakes' element={<TableViewEarthquakes />} />
+              <Route path='/explore-data/table-stations' element={<TableViewStations />} />
               <Route path='/api-access' element={<ApiAccess />} />
               <Route path='/docs' element={<Docs />} />
               <Route path='/use-cases' element={<UseCases />} />

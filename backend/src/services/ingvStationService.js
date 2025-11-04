@@ -5,10 +5,6 @@ import xml2js from 'xml2js'
 // Load environment variables from .env file
 dotenv.config()
 
-// Base URL for the INGV FDSN Station web service
-const INGV_STATION_BASE_URL =
-  process.env.URL_INGV_STATION || 'https://webservices.ingv.it/fdsnws/station/1/query'
-
 /**
  * Fetches seismic stations from INGV FDSN web service.
  * @param {Object} options - Options for the API request
@@ -16,10 +12,10 @@ const INGV_STATION_BASE_URL =
  * @param {string} options.format - Response format, 'xml' by default
  * @returns {Array} Array of station objects retrieved from INGV
  */
-export async function fetchINGVStations ({ network = 'IV', format = 'xml' } = {}) {
+export async function fetchINGVStations ({ baseUrl, network = 'IV', format = 'xml' } = {}) {
   try {
     // Construct the full API URL with query parameters
-    const url = `${INGV_STATION_BASE_URL}?network=${network}&level=station&format=${format}`
+    const url = `${baseUrl}?network=${network}&level=station&format=${format}`
 
     // Make HTTP GET request to INGV API
     const resp = await axios.get(url)

@@ -1,0 +1,14 @@
+[
+  {
+    "key": "stations",
+    "label": "stations",
+    "method": "GET",
+    "path": "/v1/stations",
+    "subtitle": "List stations seismic INGV",
+    "description": "This endpoint retrieves information about all seismic monitoring stations available in the TerraQuake API. It provides users with detailed metadata on each station, including its network code, site name, geographic coordinates (latitude and longitude), elevation, operational status, and start date.\n\nThese stations are part of the seismic monitoring network used to detect and record earthquake events in real time.\n\nQuery Parameters:\n- limit: (Optional) The number of stations to return per page. Defaults to 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  }
+]
