@@ -15,6 +15,7 @@ import ListFaqs from './faq/ListFaqs';
 import useUsers from '@/hooks/useUsers';
 import usePosts from '@/hooks/usePosts';
 import useMessages from '@/hooks/useMessages';
+import useFaqs from '@/hooks/useFaqs';
 
 export default function AdminDashboard() {
   const { userLogin } = useContext(Context);
@@ -24,6 +25,7 @@ export default function AdminDashboard() {
   const { users, totalPagesUsers, totalUsers, currentPageUser, setCurrentPageUser, usersPerPage, loadingUser, errorUser } = useUsers();
   const { posts, totalPagesPosts, totalPosts, currentPagePost, setCurrentPagePost, postsPerPage, loadingPost, errorPost } = usePosts();
   const { messages, totalPagesMessages, totalMessages, currentPageMessage, setCurrentPageMessage, messagesPerPage, loadingMessage, errorMessage } = useMessages();
+  const { faqs, totalPagesFaqs, totalFaqs, currentPageFaq, setCurrentPageFaq, faqsPerPage, loadingFaq, errorFaq } = useFaqs();
 
   const handleProfile = () => {
     navigate('/profile', { replace: true });
@@ -159,7 +161,15 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Faqs</h3>
-            <ListFaqs />
+            <ListFaqs 
+              faqs={faqs}
+              totalFaqs={totalFaqs}
+              totalPagesFaqs={totalPagesFaqs}
+              currentPageFaq={currentPageFaq}
+              faqsPerPage={faqsPerPage}
+              loadingFaq={loadingFaq}
+              errorFaq={errorFaq}
+            />
           </motion.div>
 
           {/* Reviews Management */}

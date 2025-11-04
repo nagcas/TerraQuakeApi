@@ -1,21 +1,31 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function ListFaqs() {
+export default function ListFaqs({
+  totalFaqs,
+  totalPagesFaqs,
+  currentPageFaq,
+  faqPerPage,
+}) {
   const navigate = useNavigate();
 
   const handleTableFaqs = () => {
-    navigate('/table-faqs', { replace: true });
+    navigate('/table-faqs', { 
+      state: {
+        page: currentPageFaq,
+        limit: faqPerPage,
+      },
+    });
   };
 
   return (
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
         Total Faq:{' '}
-        <span className='text-purple-400 font-semibold'>89</span>
+        <span className='text-purple-400 font-semibold'>{totalFaqs}</span>
       </div>
       <div className='text-sm text-white/70'>
-        Total Faq View: <span className='text-blue-400 font-semibold'>23</span>
+        Total Faq View: <span className='text-blue-400 font-semibold'>...</span>
       </div>
       <button 
         onClick={() => handleTableFaqs()}
