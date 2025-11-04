@@ -1,3 +1,4 @@
+import { eventsProcessed } from '../middleware/metrics.js'
 import { fetchINGVStations } from '../services/ingvStationService.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
 
@@ -45,6 +46,9 @@ export const getAllStations = ({ buildResponse, handleHttpError }) => {
       const startIndex = (page - 1) * limit
       const endIndex = startIndex + limit
       const paginatedStations = stations.slice(startIndex, endIndex)
+
+      // Increment metrics for monitoring (optional)
+      eventsProcessed.inc(paginatedStations.length || 0)
 
       const message = 'List of seismic monitoring stations (INGV Network)'
 
