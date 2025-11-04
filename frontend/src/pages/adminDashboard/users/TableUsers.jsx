@@ -26,7 +26,7 @@ export default function TableUsers() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [currentPageUser]);
 
   return (
     <>
