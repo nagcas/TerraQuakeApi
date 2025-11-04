@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import ListFaqs from './faq/ListFaqs';
 import useUsers from '@/hooks/useUsers';
 import usePosts from '@/hooks/usePosts';
+import useMessages from '@/hooks/useMessages';
 
 export default function AdminDashboard() {
   const { userLogin } = useContext(Context);
@@ -22,6 +23,7 @@ export default function AdminDashboard() {
   // Hooks
   const { users, totalPagesUsers, totalUsers, currentPageUser, setCurrentPageUser, usersPerPage, loadingUser, errorUser } = useUsers();
   const { posts, totalPagesPosts, totalPosts, currentPagePost, setCurrentPagePost, postsPerPage, loadingPost, errorPost } = usePosts();
+  const { messages, totalPagesMessages, totalMessages, currentPageMessage, setCurrentPageMessage, messagesPerPage, loadingMessage, errorMessage } = useMessages();
 
   const handleProfile = () => {
     navigate('/profile', { replace: true });
@@ -114,7 +116,15 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Messages</h3>
-            <ListMessages />
+            <ListMessages 
+              messages={messages}
+              totalMessages={totalMessages}
+              totalPagesMessages={totalPagesMessages}
+              currentPageMessage={currentPageMessage}
+              messagesPerPage={messagesPerPage}
+              loadingMessage={loadingMessage}
+              errorMessage={errorMessage}
+            />
           </motion.div>
 
           {/* Emails Management */}
