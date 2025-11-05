@@ -189,8 +189,10 @@ It allows users to access detailed information about a single earthquake event, 
                 <p className='text-white font-medium'>Example:</p>
                 <pre className='bg-black/30 text-green-400 text-sm rounded-md p-4 overflow-auto whitespace-pre'>
                   {`fetch('${BACKEND_URL}${ep.example}')
-      .then(res => res.json())
-        .then(data => console.log(data));`}
+      .then((respose) => response.json())
+        .then((data) => console.log(data)
+        .catch((error) => console.error(error))
+        );`}
                 </pre>
               </div>
 

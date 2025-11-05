@@ -11,7 +11,8 @@ export default function AccordionItem({
   expandedIndex,
   toggleExpand,
 }) {
-  const isOpen = index === expandedIndex;
+  const isOpen = expandedIndex.includes(index);
+
   const navigate = useNavigate();
 
   const [showSnippets, setShowSnippets] = useState(false);
@@ -70,35 +71,45 @@ export default function AccordionItem({
           <FiChevronDown size={24} />
         </motion.div>
       </div>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeInOut' }}
-            className='overflow-hidden'
+     <AnimatePresence initial={false}>
+  {isOpen && (
+    <motion.div
+      key="accordion-content"
+      layout
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="overflow-hidden border-t border-white/10 relative z-0"
+    >
+      <div className="p-6">
+        <ul className="text-gray-300 leading-relaxed text-sm list-disc list-inside space-y-2">
+          {item.points.map((p, i) => (
+            <li key={i}>{p}</li>
+          ))}
+        </ul>
+
+        <div className="mt-4">
+          <ApiPlayground url={item.exampleUrl} />
+        </div>
+
+        <div className="mt-4">
+          <LanguageTabs snippets={item.snippets} />
+        </div>
+
+        <div className="mt-6 text-right">
+          <button
+            onClick={() => goToDocs(item.exampleUrl)}
+            className="text-purple-400 hover:text-purple-300 text-sm underline transition-all cursor-pointer"
           >
-            <div className='border-t border-white/10 p-6'>
-              <ul className='text-gray-300 leading-relaxed text-sm list-disc list-inside space-y-2'>
-                {item.points.map((p, i) => (
-                  <li key={i}>{p}</li>
-                ))}
-              </ul>
-              <ApiPlayground url={item.exampleUrl} />
-              <LanguageTabs snippets={item.snippets} />
-              <div className='mt-6 text-right'>
-                <button
-                  onClick={() => goToDocs(item.exampleUrl)}
-                  className='text-purple-400 hover:text-purple-300 text-sm underline transition-all cursor-pointer'
-                >
-                  View API Documentation →
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            View API Documentation →
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </motion.article>
   );
 }

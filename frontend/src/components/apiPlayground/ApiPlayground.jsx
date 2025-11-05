@@ -97,7 +97,7 @@ export default function ApiPlayground({
 
   const sampleFetch = () =>
     `fetch('${buildUrl()}', { method: '${active.method || 'GET'
-    }' })\n  .then(r => r.json())\n  .then(console.log)\n  .catch(console.error)`;
+    }' })\n  .then((response) => response.json())\n  .then((data) => console.log(data))\n  .catch((error) => console.error(error))`;
 
   const sampleAxios = () => {
     const base = `${BACKEND_URL}${active.path}`;
@@ -108,7 +108,7 @@ export default function ApiPlayground({
         paramsObj[p.name] = v;
     });
     const paramsJson = JSON.stringify(paramsObj, null, 2).replace(/\n/g, '\n');
-    return `import axios from 'axios'\n\naxios.get('${base}', { params: ${paramsJson} })\n  .then(res => console.log(res.data))\n  .catch(console.error)`;
+    return `import axios from 'axios'\n\naxios.get('${base}', { params: ${paramsJson} })\n  .then((response) => console.log(response.data))\n  .catch((error) => console.error(error))`;
   };
 
   const samplePythonRequests = () => {
@@ -126,7 +126,7 @@ export default function ApiPlayground({
         .join(',\n') +
       '\n}'
       : '{}';
-    return `import requests\n\nurl = '${base}'\nparams = ${dict}\n\nresp = requests.get(url, params=params)\nprint(resp.json())`;
+    return `import requests\n\nurl = '${base}'\nparams = ${dict}\n\nresponse = requests.get(url, params=params)\nprint(response.json())`;
   };
 
   const currentSnippet = () => {

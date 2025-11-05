@@ -6,10 +6,12 @@ import AccordionItem from '@/utils/useCases/AccordionItem';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 
 export default function UseCases() {
-  const [expandedIndex, setExpandedIndex] = useState(0);
+  const [expandedIndex, setExpandedIndex] = useState([]);
 
   const toggleExpand = (index) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+    setExpandedIndex((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
   };
 
   return (
