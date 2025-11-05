@@ -14,7 +14,11 @@ export const useCaseDocs = [
     exampleUrl: `${API_BASE}/v1/earthquakes/recent?limit=10`,
     snippets: {
       JavaScript: `// Fetch the 10 most recent earthquakes of the current year
-fetch('${API_BASE}/v1/earthquakes/recent?limit=10')
+
+const url = \'${API_BASE}/v1/earthquakes/recent';
+const limit = 10;
+
+fetch(\`\${url}?limit=\${limit}\`)
   .then((response) => response.json())
   .then((data) => {
     if (data.success) {
@@ -22,10 +26,12 @@ fetch('${API_BASE}/v1/earthquakes/recent?limit=10')
     }
   })
   .catch((error) => console.error('API Error:', error));`,
-      Python: `import requests
+      Python: `# Fetch the 10 most recent earthquakes of the current year
+
+import requests
       
 # Fetch the 10 most recent earthquakes
-url = "https://api.terraquakeapi.com/v1/earthquakes/recent"
+url = \"${API_BASE}/v1/earthquakes/recent"
 params = {"limit": 10}
 
 response = requests.get(url, params=params)
@@ -35,12 +41,11 @@ if response.status_code == 200:
     if data.get("success") and "payload" in data:
         for event in data["payload"]:
             props = event.get("properties", {})
-            print(f"{props.get('mag', 'N/A')} - {props.get('place', 'Unknown')}")
+            print(f"{props.get("mag", "N/A")} - {props.get("place", "Unknown")}')
     else:
         print("No earthquake data found.")
 else:
     print(f"Error: {response.status_code} - {response.text}")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/recent?limit=10"`,
     },
   },
   {
@@ -57,27 +62,38 @@ else:
     exampleUrl: `${API_BASE}/v1/earthquakes/range-time?startdate=2025-09-01&enddate=2025-09-15`,
     snippets: {
       JavaScript: `// Get all quakes within a specific 15-day period
+
+const url = \'${API_BASE}/v1/earthquakes/range-time';
 const params = new URLSearchParams({
   startdate: '2025-09-01',
   enddate: '2025-09-15',
   limit: 100
 });
-fetch(\`\${API_BASE}/v1/earthquakes/range-time?\${params}\`)
+
+fetch(\`\${url}?\${params}\`)
   .then((response) => response.json())
-  .then((data) => console.log(\`Found \${data.totalEarthquakes} quakes in the specified range.\`));`,
-      Python: `import requests
+  .then((data) => {
+    if (data.success) {
+      console.log(\`Found \${data.totalEarthquakes} quakes in the specified range.\`);
+    }
+  });`,
+      Python: `# Get all quakes within a specific 15-day period
+
+import requests
 
 # Get all quakes within a specific 15-day period
 params = {
-    'startdate': '2025-09-01',
-    'enddate': '2025-09-15',
-    'limit': 100
+    "startdate": "2025-09-01",
+    "enddate': "2025-09-15",
+    "limit": 100
 }
 response = requests.get(f"${API_BASE}/v1/earthquakes/range-time", params=params)
 data = response.json()
-print(f"Found {data['totalEarthquakes']} quakes for the research period.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/range-time?startdate=2025-09-01&enddate=2025-09-15"`,
-    },
+if data.get("payload"):
+    print(f"Found {data["totalEarthquakes"]} quakes for the research period.")
+else:
+    print("No earthquakes found in this date range.");`,
+},
   },
   {
     title: 'Civil Protection Applications',
@@ -90,25 +106,46 @@ print(f"Found {data['totalEarthquakes']} quakes for the research period.")`,
       'Support early warning systems that notify communities and infrastructure.',
       'Enhance disaster planning, drills, and situational awareness.',
     ],
-    exampleUrl: `${API_BASE}/v1/earthquakes/magnitude?mag=5.5&limit=10`,
+    exampleUrl: `${API_BASE}/v1/earthquakes/magnitude?mag=5.5&limit=1000`,
     snippets: {
       JavaScript: `// Fetch recent quakes with a magnitude of 5.5 or greater
-fetch('${API_BASE}/v1/earthquakes/magnitude?mag=5.5&limit=10')
-  .then((response) => (response).json())
-  .then(data => {
+
+const url = \'${API_BASE}/v1/earthquakes/magnitude';
+const mag = 5.5;
+const limit = 10000;
+
+fetch(\`\${url}?mag=\${mag}&limit=\${limit}\`)
+  .then((response) => response.json())
+  .then((data) => {
     if (data.totalEarthquakes > 0) {
       console.log('Significant quakes detected:', data.payload);
       // triggerEmergencyProtocol(data.payload);
-    }
+    } else {
+      console.log('No significant events at this time.')}
   });`,
-      Python: `import requests
+      Python: `# Fetch recent quakes with a magnitude of 5.5 or greater
+
+import requests
 
 # Poll for high-impact events to notify emergency services
-response = requests.get(f"${API_BASE}/v1/earthquakes/magnitude", params={'mag': 5.5, 'limit': 10})
-significant_quakes = response.json()['data']
+params = {
+    "mag": 5.5,
+    "limit": 1000
+}
+
+response = requests.get(f"${API_BASE}/v1/earthquakes/magnitude", params=params)
+
+if response.status_code != 200:
+    print("Error contacting TerraQuake API:", response.status_code, response.txt)
+    exit()
+
+data = response.json()
+significant_quakes = data.get("payload", [])
+
 if significant_quakes:
-    print(f"Alert! {len(significant_quakes)} significant events detected.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/magnitude?mag=5.5&limit=10"`,
+    print(f"Alert! {len(significant_quakes)} significant events detected.")
+else:
+    print("No significant events at this time.")`,
     },
   },
   {
@@ -124,18 +161,98 @@ if significant_quakes:
     ],
     exampleUrl: `${API_BASE}/v1/earthquakes/region?region=Sicilia`,
     snippets: {
-      JavaScript: `// Fetch all recent quakes in the Sicilia region of Italy
-fetch('${API_BASE}/v1/earthquakes/region?region=Sicilia&limit=50')
-  .then((response) => response.json())
-  .then((data) => console.log(\`Sicilia region: \${data.totalEarthquakes} quakes found.\`));`,
-      Python: `import requests
+  JavaScript: `// Fetch all recent quakes in the Sicilia region of Italy
+
+const url = \'${API_BASE}/v1/earthquakes/region';
+const region = 'Sicilia';
+const limit = 50;
+
+fetch(\`\${url}?region=\${region}&limit=\${limit}\`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(\`API Error: \${response.status} \${response.statusText}\`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const quakes = data.payload || [];
+
+    console.log(\`Region: \${region}\`);
+    console.log(\`Total earthquakes found: \${data.totalEarthquakes ?? quakes.length}\`);
+
+    if (quakes.length === 0) {
+      console.log('No recent seismic events recorded for this region.');
+      return;
+    }
+
+    // Basic magnitude statistics
+    const magnitudes = quakes.map(q => q.properties.mag).filter(Boolean);
+    if (magnitudes.length > 0) {
+      const avg = (magnitudes.reduce((a, b) => a + b, 0) / magnitudes.length).toFixed(2);
+      const max = Math.max(...magnitudes);
+      const min = Math.min(...magnitudes);
+
+      console.log('\\nMagnitude Summary:');
+      console.log(\`• Average Magnitude: \${avg}\`);
+      console.log(\`• Highest Magnitude: \${max}\`);
+      console.log(\`• Lowest Magnitude: \${min}\`);
+    }
+
+    // Show sample of events
+    console.log('\\nSample Events (max 5):');
+    quakes.slice(0, 5).forEach(eq =>
+      console.log(\`- M\${eq.properties.mag} | \${eq.properties.place}\`)
+    );
+  })
+  .catch((error) => console.error('Error retrieving data:', error.message));`,
+      Python: `# Fetch all recent quakes in the Sicilia region of Italy
+      
+import requests
 
 # Get data for a specific Italian region for policy analysis
-params = {'region': 'Sicilia', 'limit': 50}
-response = requests.get(f"${API_BASE}/v1/earthquakes/region", params=params)
+url = \"${API_BASE}/v1/earthquakes/region"
+params = {
+    "region": "Sicilia", 
+    "limit": 50
+}
+
+response = requests.get(f"\{url}", params=params)
+
+# Check response validity
+if response.status_code != 200:
+    print(f"API error: {response.status_code} - {response.txt}")
+    exit()
+
 data = response.json()
-print(f"Analysis for {data['data'][0]['properties']['place']}: {data['totalEarthquakes']} seismic events found.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/region?region=Sicilia"`,
+quakes = data.get("payload", [])
+
+# Handle case with no results
+if not quakes:
+    print("No seismic events found for the specified region.")
+    exit()
+
+print(f"Region: {params['region']}")
+print(f"Total Earthquakes Found: {data.get("totalEarthquakes", len(quakes))}")
+
+# Optional: Extract magnitude distribution for basic analysis
+magnitudes = [eq["properties"]["mag"] for eq in quakes if eq["properties"]["mag"] is not None]
+
+if magnitudes:
+    avg_mag = sum(magnitudes) / len(magnitudes)
+    max_mag = max(magnitudes)
+    min_mag = min(magnitudes)
+    
+    print(f"Seismic Activity Summary:")
+    print(f"• Average Magnitude: {avg_mag:.2f}")
+    print(f"• Highest Magnitude: {max_mag}")
+    print(f"• Lowest Magnitude: {min_mag}")
+
+    # Print sample events (first 5)
+    print("Sample Events:")
+    for eq in quakes[:5]:
+        print(f"- {eq["properties"]["mag"]} | {eq["properties"]["place"]}")
+else:
+    print("Magnitudes are unavailable for the selected data.")`,
     },
   },
   {
@@ -149,19 +266,79 @@ print(f"Analysis for {data['data'][0]['properties']['place']}: {data['totalEarth
       'Provide datasets for academic assignments and experiments.',
       'Gamify seismic learning with quizzes and real-time earthquake data.',
     ],
-    exampleUrl: `${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500`,
+    exampleUrl: `\${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500`,
     snippets: {
       JavaScript: `// Find recent quakes within 500km of Tokyo for a class project
-fetch('${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500')
-  .then((response) => response.json())
-  .then((data) => console.log(\`Found \${data.totalEarthquakes} quakes near Tokyo.\`));`,
-      Python: `import requests
 
-# Find recent quakes within 500km of Tokyo
-params = {'latitude': 35.6762, 'longitude': 139.6503, 'radius': 500}
-response = requests.get(f"${API_BASE}/v1/earthquakes/location", params=params)
-print(f"Project Data: Found {response.json()['totalEarthquakes']} quakes near Tokyo.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500"`,
+const url = \'${API_BASE}/v1/earthquakes/location';
+const latitude = 35.6762;
+const longitude = 139.6503;
+const radius = 500; // kilometers
+
+fetch(\`\${url}?latitude=\${latitude}&longitude=\${longitude}&radius=\${radius}\`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(\`API Error: \${response.status} - \${response.statusText}\`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const quakes = data.payload || [];
+    console.log(\`Location: Tokyo (latitude: \${latitude}, longitude: \${longitude})\`);
+    console.log(\`Search Radius: \${radius} km\`);
+    console.log(\`Total Earthquakes Found: \${data.totalEarthquakes ?? quakes.length}\`);
+
+    if (quakes.length === 0) {
+      console.log('No recent seismic events detected in this radius.');
+      return;
+    }
+
+    console.log('Sample Events (up to 5):');
+    quakes.slice(0, 5).forEach(eq => {
+      console.log(\`- M\${eq.properties.mag} | \${eq.properties.place}\`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error retrieving earthquake data:', error.message);
+  });`,
+      Python: `# Find recent quakes within 500km of Tokyo for a class project
+      
+import requests
+
+url = \"${API_BASE}/v1/earthquakes/location"
+latitude = 35.6762
+longitude = 139.6503
+radius = 500  # kilometers
+
+params = {
+    "latitude": latitude,
+    "longitude": longitude,
+    "radius": radius
+}
+response = requests.get(url, params=params)
+
+# Check response validity
+if response.status_code != 200:
+    print(f"API Error: {response.status_code} - {response.text}")
+    exit()
+
+data = response.json()
+quakes = data.get("payload", [])
+
+print(f"Location: Tokyo (latitude: {latitude}, longitude: {longitude})")
+print(f"Search Radius: {radius} km")
+print(f"Total Earthquakes Found: {data.get('totalEarthquakes', len(quakes))}")
+
+if not quakes:
+    print("No recent seismic events detected in this radius.")
+    exit()
+
+print("Sample Events (up to 5):")
+for eq in quakes[:5]:
+    mag = eq["properties"]["mag"]
+    place = eq["properties"]["place"]
+    print(f"- M{mag} | {place}")
+`,
     },
   },
   {
@@ -175,25 +352,74 @@ print(f"Project Data: Found {response.json()['totalEarthquakes']} quakes near To
       'Assist in monitoring structural health of bridges, tunnels, and skyscrapers.',
       'Support smart city resilience planning against natural disasters.',
     ],
-    exampleUrl: `${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=250`,
+    exampleUrl: `${API_BASE}/v1/earthquakes/location?latitude=37.5079&longitude=15.0830&radius=200`,
     snippets: {
-      JavaScript: `// Check for significant quakes near Los Angeles
-fetch('${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=250')
-  .then((response) => response.json())
-  .then((data) => {
-    if (data.totalEarthquakes > 0) {
-      console.log('Potential infrastructure impact detected near LA!');
-      // triggerSmartCityAlert(data.payload[0]);
-    }
-  });`,
-      Python: `import requests
+      JavaScript: `// Check for significant quakes near Catania (Italy)
 
-# Query for significant events near Los Angeles to trigger IoT actions
-params = {'latitude': 34.0522, 'longitude': -118.2437, 'radius': 250}
-response = requests.get(f"${API_BASE}/v1/earthquakes/location", params=params)
-if response.json()['data']:
-    print(f"Significant quake near LA detected. Sending IoT alert...")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=250"`,
+const url = \'${API_BASE}/v1/earthquakes/location';
+const latitude = 37.5079;   // Catania latitude
+const longitude = 15.0830;  // Catania longitude
+const radius = 200;         // kilometers
+
+fetch(\`\${url}?latitude=\${latitude}&longitude=\${longitude}&radius=\${radius}\`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(\`API Error: \${response.status} - \${response.statusText}\`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const quakes = data.payload || [];
+    const total = data.totalEarthquakes ?? quakes.length;
+
+    console.log(\`Checking seismic events near Catania (radius: \${radius} km)\`);
+    console.log(\`Total Earthquakes Found: \${total}\`);
+
+    if (total > 0) {
+      console.warn('Potential infrastructure impact detected near LA!');
+      // Example: send alert based on strongest quake
+      // triggerSmartCityAlert(quakes[0]);
+    } else {
+      console.log('No significant seismic events detected in this area.');
+    }
+  })
+  .catch((error) => {
+    console.error('Error retrieving earthquake data:', error.message);
+  });`,
+      Python: `# Check for significant quakes near Catania (Italy)
+      
+import requests
+
+url = "http://localhost:5001/v1/earthquakes/location"
+latitude = 37.5079    # Catania latitude
+longitude = 15.0830   # Catania longitude
+radius = 200          # kilometers
+
+params = {
+    "latitude": latitude,
+    "longitude": longitude,
+    "radius": radius
+}
+
+try:
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    data = response.json()
+except requests.exceptions.RequestException as e:
+    print(f"API request error: {e}")
+    exit()
+
+quakes = data.get("payload", [])
+total = data.get("totalEarthquakes", len(quakes))
+
+print(f"Checking seismic events near Catania (radius: {radius} km)")
+print(f"Total Earthquakes Found: {total}")
+
+if total > 0:
+    print("Potential infrastructure impact detected near Catania!")
+    # Example: triggerSmartCityAlert(quakes[0])
+else:
+    print("No significant seismic events detected in this area.")`,
     },
   },
   {
@@ -209,17 +435,103 @@ if response.json()['data']:
     ],
     exampleUrl: `${API_BASE}/v1/earthquakes/month?year=2025&month=9`,
     snippets: {
-      JavaScript: `// Get all seismic data for September 2025 for analysis
-fetch('${API_BASE}/v1/earthquakes/month?year=2025&month=9&limit=1000')
-  .then((response) => response.json())
-  .then((data) => console.log(\`Risk Assessment: \${data.totalEarthquakes} events recorded in Sept 2025.\`));`,
-      Python: `import requests
+      JavaScript: `// Retrieve all seismic data for September 2025 for risk assessment & research
 
-# Use the /month endpoint for statistical risk assessment
-params = {'year': 2025, 'month': 9, 'limit': 1000}
-response = requests.get(f"${API_BASE}/v1/earthquakes/month", params=params)
-print(f"Risk Report: {response.json()['totalEarthquakes']} events in Sept 2025.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/month?year=2025&month=9"`,
+const url = \'${API_BASE}/v1/earthquakes/month';
+const year = 2025;
+const month = 9;
+const limit = 1000;
+
+fetch(\`\${url}?year=\${year}&month=\${month}&limit=\${limit}\`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(\`API Error: \${response.status} - \${response.statusText}\`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const quakes = data.payload || [];
+    const total = data.totalEarthquakes ?? quakes.length;
+
+    console.log(\`Seismic Risk Assessment - \${year}/\${month}\`);
+    console.log(\`Total Earthquakes Recorded: \${total}\`);
+
+    if (total === 0) {
+      console.log('No seismic events recorded for this period.');
+      return;
+    }
+
+    // Analyze magnitude distribution
+    const magnitudes = quakes
+      .map(eq => eq.properties.mag)
+      .filter(m => m !== null && m !== undefined);
+
+    if (magnitudes.length > 0) {
+      const avg = (magnitudes.reduce((a, b) => a + b, 0) / magnitudes.length).toFixed(2);
+      const max = Math.max(...magnitudes);
+      const min = Math.min(...magnitudes);
+
+      console.log(\'Magnitude Summary:');
+      console.log(\`• Average: \${avg}\`);
+      console.log(\`• Highest: \${max}\`);
+      console.log(\`• Lowest: \${min}\`);
+    }
+
+    console.log(\'Sample Events (up to 5):');
+    quakes.slice(0, 5).forEach((eq, i) => {
+      console.log(\`- #\${i + 1} | M\${eq.properties.mag} | \${eq.properties.place}\`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error retrieving seismic data:', error.message);
+  });`,
+  Python: `# Retrieve all seismic data for September 2025 for risk assessment & research
+import requests
+
+url = \"${API_BASE}/v1/earthquakes/month"
+params = {
+    "year": 2025,
+    "month": 9,
+    "limit": 1000
+}
+
+response = requests.get(url, params=params)
+
+if response.status_code != 200:
+    print(f"API Error: {response.status_code} - {response.text}")
+    exit()
+
+data = response.json()
+quakes = data.get("payload", [])
+total = data.get("totalEarthquakes", len(quakes))
+
+print(f"Seismic Risk Assessment - {params['year']}/{params['month']}")
+print(f"Total Earthquakes Recorded: {total}")
+
+if total == 0:
+    print("No seismic events recorded for this period.")
+    exit()
+
+# Magnitude distribution analysis
+magnitudes = [
+    eq["properties"]["mag"]
+    for eq in quakes
+    if eq["properties"]["mag"] is not None
+]
+
+if magnitudes:
+    avg_mag = sum(magnitudes) / len(magnitudes)
+    max_mag = max(magnitudes)
+    min_mag = min(magnitudes)
+
+    print("Magnitude Summary:")
+    print(f"• Average: {avg_mag:.2f}")
+    print(f"• Highest: {max_mag}")
+    print(f"• Lowest: {min_mag}")
+
+print("Sample Events (up to 5):")
+for eq in quakes[:5]:
+    print(f"- M{eq['properties']['mag']} | {eq['properties']['place']}")`,
     },
   },
   {
@@ -235,21 +547,89 @@ print(f"Risk Report: {response.json()['totalEarthquakes']} events in Sept 2025."
     ],
     exampleUrl: `${API_BASE}/v1/earthquakes/today?limit=1`,
     snippets: {
-      JavaScript: `// Poll every 60 seconds for today's latest quake
-setInterval(() => {
-  fetch('${API_BASE}/v1/earthquakes/today?limit=1')
-    .then((response) => response.json())
-    .then((data) => console.log('Latest Event Today:', data.payload[0].properties.place));
-}, 60000);`,
-      Python: `import requests, time
+      JavaScript: `// Poll every 60 seconds for the latest earthquake recorded today
 
-# Poll every minute to feed data to a structural monitoring dashboard
+const url = \'${API_BASE}/v1/earthquakes/today';
+const limit = 1; // we only want the latest event
+const interval = 60000; // 60 seconds
+
+function fetchLatestQuake() {
+  fetch(\`\${url}?limit=\${limit}\`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(\`API Error: \${response.status} - \${response.statusText}\`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const event = data.payload?.[0];
+
+      if (!event) {
+        console.log('No earthquake events recorded today yet.');
+        return;
+      }
+
+      console.log('Latest Event Today:');
+      console.log(\`• Location: \${event.properties.place}\`);
+      console.log(\`• Magnitude: \${event.properties.mag} \${event.properties.magType}\`);
+      console.log(\`• Time: \${new Date(event.properties.time).toLocaleString()}\`);
+    })
+    .catch((error) => {
+      console.error('Error retrieving latest quake:', error.message);
+    });
+}
+
+// Run immediately, then every 60 seconds
+fetchLatestQuake();
+setInterval(fetchLatestQuake, interval);`,
+      Python: `#  Poll every 60 seconds for the latest earthquake recorded today
+
+import requests
+import time
+from datetime import datetime
+
+url = "http://localhost:5001/v1/earthquakes/today"
+params = {
+    "limit": 1
+}
+interval = 60  # seconds
+
+def fetch_latest_quake():
+    try:
+        response = requests.get(url, params=params)
+        if response.status_code != 200:
+            print(f"API Error: {response.status_code} - {response.text}")
+            return
+
+        data = response.json()
+        event = data.get("payload", [None])[0]
+
+        if not event:
+            print("No earthquake events recorded today yet.")
+            return
+
+        place = event["properties"]["place"]
+        magnitude = event["properties"]["mag"]
+        magnitudeType = event["properties"]["magType"]
+        raw_time = event["properties"]["time"]  # ISO string format
+
+        # Convert ISO timestamp to readable form
+        dt = datetime.fromisoformat(raw_time)
+        time_str = dt.strftime("%Y-%m-%d %H:%M:%S")
+
+        print("Latest Event Today:")
+        print(f"• Location: {place}")
+        print(f"• Magnitude: {magnitude} {magnitudeType}")
+        print(f"• Time: {time_str}")
+
+    except Exception as e:
+        print("Error retrieving latest quake:", str(e))
+
+# Run immediately, then every 60 seconds
+fetch_latest_quake()
 while True:
-    response = requests.get(f"${API_BASE}/v1/earthquakes/today", params={'limit':1})
-    latest_event = response.json()['data'][0]['properties']['place']
-    print(f"Live Dashboard Update: {latest_event}")
-    time.sleep(60)`,
-      Bash: `watch -n 60 'curl -s "${API_BASE}/v1/earthquakes/today?limit=1" | jq .data[0].properties.place'`,
+    time.sleep(interval)
+    fetch_latest_quake()`,
     },
   },
   {
@@ -263,19 +643,79 @@ while True:
       'Visualize seismic events over time and space.',
       'Enable project-based learning with real-world data insights.',
     ],
-    exampleUrl: `${API_BASE}/v1/earthquakes/depth?depth=300`,
+    exampleUrl: `${API_BASE}/v1/earthquakes/depth?depth=10`,
     snippets: {
-      JavaScript: `// Get data on deep-focus earthquakes (300km or deeper)
-fetch('${API_BASE}/v1/earthquakes/depth?depth=300')
-  .then((response) => response.json())
-  .then((data) => console.log('Deep-focus Quakes Study:', data.payload));`,
-      Python: `import requests
+      JavaScript: `// Fetch earthquakes with a depth of 10 km or deeper (deep-focus seismicity)
 
-# Gather data on deep-focus earthquakes for a geology class
-params = {'depth': 300, 'limit': 50}
-response = requests.get(f"${API_BASE}/v1/earthquakes/depth", params=params)
-print(f"Found {response.json()['totalEarthquakes']} deep-focus earthquakes for the project.")`,
-      Bash: `curl "${API_BASE}/v1/earthquakes/depth?depth=300"`,
+const url = \'${API_BASE}/v1/earthquakes/depth';
+const minDepth = 10; // km
+
+fetch(\`\${url}?depth=\${minDepth}\`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(\`API Error: \${response.status} - \${response.statusText}\`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const quakes = data.payload || [];
+    const total = data.totalEarthquakes ?? quakes.length;
+
+    console.log('Deep-Focus Earthquake Study');
+    console.log(\`• Minimum Depth: \${minDepth} km\`);
+    console.log(\`• Total Events Found: \${total}\`);
+
+    if (quakes.length === 0) {
+      console.log('No deep-focus earthquakes recorded.');
+      return;
+    }
+
+    console.log('Sample Events (up to 5):');
+    quakes.slice(0, 5).forEach(eq => {
+      console.log(\`- \${eq.properties.mag} \${eq.properties.magType} at \${eq.geometry.coordinates[2]} km | \${eq.properties.place}\`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error retrieving seismic depth data:', error.message);
+  });`,
+      Python: `# Fetch earthquakes with a depth of 300 km or deeper (deep-focus seismicity)
+
+import requests
+from datetime import datetime
+
+url = \"${API_BASE}/v1/earthquakes/depth"
+min_depth = 10  # km
+
+params = {
+    "depth": min_depth
+}
+
+try:
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    data = response.json()
+except Exception as error:
+    print(f"API Error: {error}")
+    exit()
+
+quakes = data.get("payload", [])
+total = data.get("totalEarthquakes", len(quakes))
+
+print("Deep-Focus Earthquake Study")
+print(f"• Minimum Depth: {min_depth} km")
+print(f"• Total Events Found: {total}")
+
+if not quakes:
+    print("No deep-focus earthquakes recorded.")
+    exit()
+
+print("Sample Events (up to 5):")
+for eq in quakes[:5]:
+    mag = eq["properties"]["mag"]
+    magType = eq["properties"]["magType"]
+    depth = eq["geometry"]["coordinates"][2]
+    place = eq["properties"]["place"]
+    print(f"- {mag} {magType} at {depth} km | {place}")`,
     },
   },
   {
@@ -372,7 +812,6 @@ def get_earthquakes_for_map(latitude, longitude, radius, limit=10):
 #     props = quake['properties']
 #     print(f"Magnitude: {props['mag']}, Place: {props['place']}, Lat: {coords[1]}, Lon: {coords[0]}")
 `,
-      Bash: `curl "${API_BASE}/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=10" | jq '.data[] | {mag: .properties.mag, place: .properties.place, coordinates: .geometry.coordinates}'`,
     },
   },
   {
@@ -388,126 +827,91 @@ def get_earthquakes_for_map(latitude, longitude, radius, limit=10):
     ],
     exampleUrl: `${API_BASE}/v1/earthquakes/magnitude?mag=5.0&limit=10`,
     snippets: {
-      JavaScript: `const API_BASE = 'https://api.terraquakeapi.com';
+      JavaScript: `// Filtering and Searching Earthquakes
 
-// Example 1: Get earthquakes with magnitude >= 5.0
-async function filterByMagnitude(minMag) {
-  const response = await fetch(\`\${API_BASE}/v1/earthquakes/magnitude?mag=\${minMag}&limit=5\`);
-  const data = await response.json();
-  console.log(\`Magnitude >= \${minMag}:\`, data.payload);
-}
+const urlBase = \'${API_BASE}';
 
-// Example 2: Get earthquakes in a specific Italian region
-async function filterByRegion(regionName) {
-  const response = await fetch(\`\${API_BASE}/v1/earthquakes/region?region=\${regionName}&limit=5\`);
-  const data = await response.json();
-  console.log(\`Earthquakes in \${regionName}:\`, data.payload);
-}
+async function fetchEarthquakes(endpoint, params = {}) {
+  const url = new URL(\`\${urlBase}\${endpoint}\`);
 
-// Example 3: Get earthquakes by date range
-async function filterByDateRange(startDate, endDate) {
-  const response = await fetch(\`\${API_BASE}/v1/earthquakes/range-time?startdate=\${startDate}&enddate=\${endDate}&limit=5\`);
-  const data = await response.json();
-  console.log(\`Earthquakes from \${startDate} to \${endDate}:\`, data.payload);
-}
+  // Append query parameters
+  Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value));
 
-// filterByMagnitude(5.0);
-// filterByRegion('Sicilia');
-// filterByDateRange('2025-09-01', '2025-09-07');`,
-      Python: `import requests
-
-API_BASE = 'https://api.terraquakeapi.com'
-
-# Example 1: Get earthquakes by depth
-def filter_by_depth(max_depth):
-    url = f"{API_BASE}/v1/earthquakes/depth"
-    params = {"depth": max_depth, "limit": 5}
-    response = requests.get(url, params=params)
-    print(f"Earthquakes <= {max_depth}km deep:", response.json()['data'])
-
-# Example 2: Get a specific earthquake by Event ID
-def get_by_event_id(event_id):
-    url = f"{API_BASE}/v1/earthquakes/eventId"
-    params = {"eventId": event_id}
-    response = requests.get(url, params=params)
-    print(f"Details for Event ID {event_id}:", response.json()['data'])
-
-# filter_by_depth(10)
-# get_by_event_id(44278572)`,
-      Bash: `# Example 1: Get today's earthquakes
-curl "${API_BASE}/v1/earthquakes/today?limit=5"
-
-# Example 2: Get earthquakes with magnitude >= 6.0
-curl "${API_BASE}/v1/earthquakes/magnitude?mag=6.0&limit=5"
-
-# Example 3: Get earthquakes near specific coordinates (Los Angeles)
-curl "${API_BASE}/v1/earthquakes/location?latitude=34.0522&longitude=-118.2437&radius=100&limit=5"`,
-    },
-  },
-  {
-    title: 'Tutorial: Using the API with Python, JS, or cURL',
-    content:
-      'This tutorial demonstrates how to interact with the TerraQuake API using common tools and programming languages: cURL for command-line, JavaScript (Fetch API/Axios) for web/Node.js, and Python (requests library).',
-    points: [
-      'Execute quick API requests directly from the command line using cURL.',
-      'Integrate API calls into web applications or Node.js services with JavaScript Fetch API or Axios.',
-      'Develop robust data fetching scripts and applications using Python with the requests library.',
-      'Understand how to handle API responses and potential errors in each environment.',
-      'Apply common parameters like `limit` and `page` for efficient data retrieval across languages.',
-    ],
-    exampleUrl: `${API_BASE}/v1/earthquakes/recent?limit=5`,
-    snippets: {
-      JavaScript: `const API_BASE = 'https://api.terraquakeapi.com';
-
-// Using Fetch API (Browser/Node.js)
-async function fetchRecentQuakes() {
   try {
-    const response = await fetch(\`\${API_BASE}/v1/earthquakes/recent?limit=5\`);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(\`HTTP Error: \${response.status}\`);
+    
     const data = await response.json();
-    if (data.success) {
-      console.log('JS Fetch (Recent):', data.payload.map(q => q.properties.place));
-    }
-  } catch (error) { console.error('Fetch Error:', error); }
+    return data.payload || [];
+  } catch (error) {
+    console.error("Request error:", error.message);
+    return [];
+  }
 }
 
-// Using Axios (Node.js/Browser - requires 'npm install axios')
-// import axios from 'axios'; // or const axios = require('axios');
-async function axiosQuakesByMonth(year, month) {
-  try {
-    const response = await axios.get(\`\${API_BASE}/v1/earthquakes/month\`, {
-      params: { year, month, limit: 5 }
-    });
-    if (response.data.success) {
-      console.log(\`JS Axios (\${month}/\${year}):\`, response.data.payload.map(q => q.properties.place));
-    }
-  } catch (error) { console.error('Axios Error:', error.response ? error.response.data : error.message); }
+// Get earthquakes with magnitude >= minMag
+async function filterByMagnitude(minMag, limit = 5) {
+  console.log('Filter by magnitude:')
+  const quakes = await fetchEarthquakes('/v1/earthquakes/magnitude', { mag: minMag, limit });
+  console.log(\`Magnitude >= \${minMag}:\`, quakes);
 }
 
-// fetchRecentQuakes();
-// axiosQuakesByMonth(2025, 9);`,
-      Python: `import requests
+// Get earthquakes in a specific region
+async function filterByRegion(regionName, limit = 5) {
+  console.log('Filter by region:')
+  const quakes = await fetchEarthquakes('/v1/earthquakes/region', { region: regionName, limit });
+  console.log(\`Earthquakes in \${regionName}:\`, quakes);
+}
 
-API_BASE = 'https://api.terraquakeapi.com'
+// Get earthquakes in date range
+async function filterByDateRange(startDate, endDate, limit = 5) {
+  console.log('Filter by date range:')
+  const quakes = await fetchEarthquakes('/v1/earthquakes/range-time', { startdate: startDate, enddate: endDate, limit });
+  console.log(\`Earthquakes from \${startDate} to \${endDate}:\`, quakes);
+}
 
-# Using Python Requests Library
-def get_last_week_quakes():
-    url = f"{API_BASE}/v1/earthquakes/last-week"
-    params = {"limit": 5}
+// Examples:
+filterByMagnitude(5.0);
+filterByRegion('Sicilia');
+filterByDateRange('2025-09-01', '2025-09-07');`,
+      Python: `# Filtering and Searching Earthquakes
+import requests
+
+urlBase = \"${API_BASE}"
+
+def fetch_earthquakes(endpoint, params=None):
     try:
-        response = requests.get(url, params=params)
+        response = requests.get(urlBase + endpoint, params=params)
         response.raise_for_status()
         data = response.json()
-        if data['success']:
-            print('Python (Last Week):', [q['properties']['place'] for q in data['data']])
-    except requests.exceptions.RequestException as e:
-        print(f"Python Request Error: {e}")
+        return data.get("payload", [])
+    except requests.RequestException as error:
+        print("Request error:", error)
+        return []
 
-# get_last_week_quakes()`,
-      Bash: `# cURL Example 1: Get today's earthquakes
-curl "${API_BASE}/v1/earthquakes/today?limit=5" | jq '.data[] | .properties.place'
+def filter_by_magnitude(min_mag, limit=5):
+    print("Filter by magnitude:")
+    quakes = fetch_earthquakes("/v1/earthquakes/magnitude", {"mag": min_mag, "limit": limit})
+    print(f"Magnitude >= {min_mag}:", quakes)
 
-# cURL Example 2: Get earthquake by Event ID
-curl "${API_BASE}/v1/earthquakes/eventId?eventId=44278572" | jq '.data[] | .properties.place'`,
+def filter_by_region(region_name, limit=5):
+    print("Filter by region:")
+    quakes = fetch_earthquakes("/v1/earthquakes/region", {"region": region_name, "limit": limit})
+    print(f"Earthquakes in {region_name}:", quakes)
+
+def filter_by_date_range(start_date, end_date, limit=5):
+    print("Filter by date range:")
+    quakes = fetch_earthquakes("/v1/earthquakes/range-time", {
+        "startdate": start_date,
+        "enddate": end_date,
+        "limit": limit
+    })
+    print(f"Earthquakes from {start_date} to {end_date}:", quakes)
+
+# Examples:
+filter_by_magnitude(5.0)
+filter_by_region("Sicilia")
+filter_by_date_range("2025-09-01", "2025-09-07")`,
     },
   },
 ];
