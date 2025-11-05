@@ -80,7 +80,7 @@ export default function Hero() {
             )}
             <button
               className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
-              onClick={() => navigate('/explore-data')}
+              onClick={() => navigate('/explore-data/earthquakes')}
             >
               Explore Seismic Events
             </button>

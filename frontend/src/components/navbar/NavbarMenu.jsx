@@ -330,7 +330,7 @@ export default function NavbarMenu() {
         }`}
       >
         <div className='flex flex-col items-center gap-4 text-xl mb-4 px-6'>
-          {[...primaryNavItems, ...resourcesNavItems].map((item) => (
+          {[...exploreDataNavItems,...resourcesNavItems, ...primaryNavItems].map((item) => (
             <NavLink
               key={item.name}
               to={item.path}

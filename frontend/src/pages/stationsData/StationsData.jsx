@@ -42,7 +42,7 @@ export default function StationsData() {
             <h1 className='text-3xl md:text-5xl text-white text-center font-extrabold tracking-tighter mb-4'>
               Stations Data for TerraQuake API
             </h1>
-            <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+            <div className='h-1 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl mx-auto'>
               Explore and analyze data from global seismic monitoring stations.
               Visualize station locations on the interactive map, view key
@@ -56,7 +56,7 @@ export default function StationsData() {
               monitoring capabilities with ease.
             </p>
 
-            <div className='mt-16'>
+            <div className='py-16'>
               <Link
                 to='/explore-data/table-stations'
                 className='py-4 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'

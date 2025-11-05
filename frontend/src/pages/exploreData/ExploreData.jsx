@@ -57,7 +57,7 @@ export default function ExploreData() {
               the data in CSV format for further analysis or research. Stay
               informed and monitor global seismic activity with ease.
             </p>
-            <div className='mt-16'>
+            <div className='py-16'>
               <Link
                 to='/explore-data/table-earthquakes'
                 className='py-4 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'

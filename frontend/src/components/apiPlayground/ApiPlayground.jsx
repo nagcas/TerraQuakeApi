@@ -150,7 +150,7 @@ export default function ApiPlayground({
 
   return (
     <section className='relative z-0 w-full min-h-screen pb-12 overflow-hidden text-white/70'>
-      <div className='text-center mb-8'>
+      <div className='text-center py-4'>
         <h2 className='text-left text-3xl md:text-4xl font-bold'>{title}</h2>
       </div>
 
