@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { FaCode, FaBug, FaBook, FaDiscord } from 'react-icons/fa';
-import { IoIosGitPullRequest } from 'react-icons/io';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '@pages/noPage/MetaData';
 import {
@@ -10,7 +9,6 @@ import {
   ISSUE_TRACKER,
   PULL_REQUESTS,
 } from '@/data/Contribute';
-import hacktoberfest from '@images/hacktoberfest.svg';
 import { ContributionCard } from './ContributeCard';
 
 export default function Contribute() {
@@ -134,55 +132,6 @@ export default function Contribute() {
                 </a>
               </div>
             </motion.section>
-
-            {/* Hacktoberfest Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              viewport={{ once: true, amount: 0.8 }}
-              transition={{ type: 'spring', stiffness: 120, damping: 15 }}
-              className='mt-16 max-w-3xl mx-auto p-6 bg-gradient-to-r from-slate-900 to-slate-800/70 backdrop-blur-sm border border-white/10 rounded-2xl shadow-lg'
-            >
-              <div className='flex flex-col sm:flex-row items-center justify-between gap-4'>
-                <a
-                  href='https://hacktoberfest.com/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='flex items-center gap-5'
-                >
-                  <img
-                    className='pt-3 w-48 h-25'
-                    src={hacktoberfest}
-                    alt='Hacktoberfest logo'
-                  />
-                  <div className='text-center sm:text-left'>
-                    <h3 className='text-xl font-bold text-white'>
-                      Join us for Hacktoberfest 2025!
-                    </h3>
-                    <p className='text-gray-400 mt-1'>
-                      Help us improve TerraQuake and get your limited edition
-                      swag.
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href={ISSUE_TRACKER}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='mt-4 sm:mt-0 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all duration-300 transform group'
-                >
-                  <div className='flex gap-2 justify-center items-center'>
-                    <IoIosGitPullRequest
-                      size={25}
-                      className='transition-transform duration-500 origin-top dangle-on-hover text-2xl'
-                    />
-                    <span>Find an Issue</span>
-                  </div>
-                </a>
-              </div>
-            </motion.div>
           </div>
         </div>
       </motion.section>
