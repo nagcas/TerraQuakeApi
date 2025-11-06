@@ -12,6 +12,7 @@ export default function NavbarMenu() {
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
 
+  const [isActive, setIsActive] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
@@ -23,14 +24,14 @@ export default function NavbarMenu() {
   const mobileRef = useRef(null);
 
   const primaryNavItems = [
-    { name: 'Use Cases', path: '/use-cases' },
+    { name: 'API Access', path: '/api-access' },
     { name: 'Blog', path: '/blog' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
 
   const resourcesNavItems = [
-    { name: 'API Access', path: '/api-access' },
+    { name: 'Use Cases', path: '/use-cases' },
     { name: 'Docs', path: '/docs' },
     { name: 'Faq', path: '/faq' },
   ];
@@ -191,11 +192,9 @@ export default function NavbarMenu() {
             key={item.name}
             to={item.path}
             className={({ isActive }) =>
-              `hover:text-purple-400 ${
-                isActive
-                  ? 'text-purple-400 font-semibold border-b-2 border-purple-500'
-                  : 'text-gray-300'
-              }`
+              `relative px-1 pb-1 text-sm transition-colors duration-300 ${
+                isActive ? 'text-purple-400 font-semibold' : 'text-gray-300'
+              } group`
             }
             onClick={() => {
               setIsResourcesOpen(false);
@@ -203,6 +202,11 @@ export default function NavbarMenu() {
             }}
           >
             {item.name}
+            <span
+              className={`absolute left-0 bottom-0 h-[2px] w-0 bg-purple-500 transition-all duration-300 group-hover:w-full ${
+                isActive ? 'w-full' : ''
+              }`}
+            ></span>
           </NavLink>
         ))}
       </nav>
@@ -260,22 +264,18 @@ export default function NavbarMenu() {
                     <NavLink
                       key={item.name}
                       to={item.path}
-                      onClick={() => setIsProfileOpen(false)}
+                      onClick={() => setIsExploreOpen(false)}
                       className={({ isActive }) =>
-                        `block px-4 py-2 text-sm hover:text-purple-400 hover:bg-purple-500/10 transition-colors duration-200 ${
+                        `block px-4 py-2 text-sm rounded-lg transition-all duration-300 transform cursor-pointer
+                        ${
                           isActive
-                            ? 'text-purple-400 font-semibold bg-purple-500/20'
+                            ? 'text-purple-400 font-semibold bg-purple-500/20 shadow-inner'
                             : 'text-gray-300'
-                        }`
+                        } 
+                        hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg`
                       }
                     >
-                      {item.name === 'Admin Dashboard' ? (
-                        <span className='text-purple-400 mr-2 font-semibold'>
-                          {item.name}
-                        </span>
-                      ) : (
-                        item.name
-                      )}
+                      {item.name}
                     </NavLink>
                   );
                 })}
@@ -330,7 +330,11 @@ export default function NavbarMenu() {
         }`}
       >
         <div className='flex flex-col items-center gap-4 text-xl mb-4 px-6'>
-          {[...exploreDataNavItems,...resourcesNavItems, ...primaryNavItems].map((item) => (
+          {[
+            ...exploreDataNavItems,
+            ...resourcesNavItems,
+            ...primaryNavItems,
+          ].map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
@@ -338,7 +342,7 @@ export default function NavbarMenu() {
               className={({ isActive }) =>
                 `hover:text-purple-400 ${
                   isActive
-                    ? 'text-purple-400 font-semibold border-b-2 border-purple-500'
+                    ? 'text-purple-400 font-semibold'
                     : 'text-gray-300'
                 }`
               }
