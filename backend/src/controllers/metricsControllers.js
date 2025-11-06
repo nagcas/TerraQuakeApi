@@ -1,18 +1,5 @@
 import promClient from 'prom-client'
 
-const buildResponse = (req, message, payload) => ({
-  success: true,
-  code: 200,
-  status: 'OK',
-  message,
-  payload,
-  meta: {
-    method: req.method.toUpperCase(),
-    path: req.originalUrl,
-    timestamp: new Date().toISOString()
-  }
-})
-
 // NOTE: Controller that handles the /metrics endpoint
 // It outputs all collected metrics in a format readable by Prometheus
 export const getMetrics = async (req, res) => {
@@ -28,31 +15,64 @@ export const getMetrics = async (req, res) => {
   }
 }
 
-export const getMetricsJSON = async (req, res) => {
-  try {
-    const latencyMetric = promClient.register.getSingleMetric('terraquake_api_latency_seconds')
-    const sum = latencyMetric?.hashMap?.['']?.sum || 0 // total latency in seconds
-    const count = latencyMetric?.hashMap?.['']?.count || 0
+export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      // Get latency metric from Prometheus
+      const latencyMetric = promClient.register.getSingleMetric('terraquake_api_latency_seconds')
+      const sum = latencyMetric?.hashMap?.['']?.sum || 0
+      const count = latencyMetric?.hashMap?.['']?.count || 0
+      const apiLatencyAvgMs = count > 0 ? (sum / count) * 1000 : 0
 
-    const apiLatencyAvgMs = count > 0 ? (sum / count) * 1000 : 0 // convert seconds → ms
+      // Get events processed from Prometheus counter
+      const eventsProcessedItems =
+        promClient.register.getSingleMetric('terraquake_events_processed_total')?.hashMap?.['']?.value || 0
 
-    const metrics = {
-      eventsProcessed: promClient.register.getSingleMetric('terraquake_events_processed_total')?.hashMap?.['']?.value || 0,
-      apiLatencyAvgMs: Number(apiLatencyAvgMs.toFixed(2)), // ms with 2 decimals
-      uptime: Number(process.uptime().toFixed(2)),
-      memoryUsage: process.memoryUsage().rss
-    }
+      const uptime = Number(process.uptime().toFixed(2))
+      const memoryUsage = process.memoryUsage().rss
 
-    // console.log(metrics)
+      // Ensure a single metrics document exists
+      let metricsItem = await Metrics.findOne()
+      if (!metricsItem) {
+        metricsItem = await Metrics.create({
+          eventsProcessed: 0,
+          totalEventsProcessed: 0
+        })
+      }
 
-    res.status(200).json({
-      ...buildResponse(
-        req,
-        'Metrics JSON TerraQuake API',
-        metrics
+      // Calculate increment difference since the last update
+      const diff = eventsProcessedItems - metricsItem.eventsProcessed
+
+      // If Prometheus counter restarted, diff may be negative → reset diff to new current value
+      const increment = diff >= 0 ? diff : eventsProcessedItems
+
+      // Update database with new accumulated total and current stats
+      const updatedMetrics = await Metrics.findOneAndUpdate(
+        {},
+        {
+          $inc: { totalEventsProcessed: increment }, // persistent cumulative count
+          $set: {
+            eventsProcessed: eventsProcessedItems, // current counter snapshot
+            apiLatencyAvgMs,
+            uptime,
+            memoryUsage
+          }
+        },
+        { new: true, upsert: true }
       )
-    })
-  } catch (err) {
-    res.status(500).json({ error: err.message })
+
+      res.status(200).json({
+        ...buildResponse(req, 'Metrics JSON TerraQuake API', {
+          eventsProcessed: updatedMetrics.eventsProcessed,
+          totalEventsProcessed: updatedMetrics.totalEventsProcessed,
+          apiLatencyAvgMs: Number(apiLatencyAvgMs.toFixed(2)),
+          uptime,
+          memoryUsage
+        })
+      })
+    } catch (error) {
+      console.error('Error in getMetricsJSON:', error.message)
+      handleHttpError(res)
+    }
   }
 }
