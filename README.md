@@ -1,4 +1,4 @@
-# 🌋 TerraQuake API
+# TerraQuake API
 
 <div align="center">
 
@@ -112,9 +112,6 @@ All endpoints support **pagination**:
 | GET    | `/v1/earthquakes/magnitude` | Fetches earthquakes of a specific magnitude or higher. | `mag` *(required)*, `page`, `limit` |
 | GET    | `/v1/earthquakes/eventId`   | Fetches details of a specific earthquake by ID. | `eventId` *(required)* |
 
-
----
-
 ### Example Request
 
 ```bash
@@ -129,8 +126,7 @@ URL "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"
   "code": 200,
   "status": "OK",
   "message": "Recent seismic events",
-  "total": 50,
-  "data": [
+  "payload": [
     {
       "type": "Feature",
       "properties": {
@@ -152,7 +148,19 @@ URL "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"
           16.2387,
           37.9982,
           10.5
-        ]
+        ],
+       "meta": {
+          "method": "GET",
+          "path": "/v1/earthquakes/recent?limit=50&page=1",
+          "timestamp": "2025-11-06T00:40:01.490Z"
+        },
+        "totalEarthquakes": 14157,
+        "pagination": {
+          "page": 1,
+          "totalPages": 284,
+          "limit": 50,
+          "hasMore": true
+        }
       }
     }
   ]
@@ -166,13 +174,27 @@ URL "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"
 | `code`                 | HTTP status code                             |
 | `status`               | Status message                               |
 | `message`              | Summary of the response                      |
-| `total`                | Total number of events returned              |
-| `data`                 | Array of seismic event objects               |
+| `payload`              | Array of seismic event objects               |
 | `properties.eventId`   | Unique event ID                              |
 | `properties.time`      | Event timestamp (ISO 8601)                   |
 | `properties.mag`       | Magnitude of the earthquake                  |
 | `properties.place`     | Location description                         |
 | `geometry.coordinates` | `[longitude, latitude, depth]`               |
+| `meta`                 | `[method, path, timestamp]`                  |
+| `meta`                 | `[method, path, timestamp]`                  |
+| `totalEarthquakes`     | Total number of events returned              |
+| `pagination`           | `[page, totalPages, limit, hasMore]`         |
+
+
+## 🌍 Stations API Endpoints
+
+All endpoints support **pagination**:  
+- `page` *(optional, default: 1)* → Page number  
+- `limit` *(optional, default: 50)* → Number of results per page
+
+| Method | Endpoint                    | Description                                    | Query Parameters                                                                 |
+|--------|-----------------------------|------------------------------------------------|----------------------------------------------------------------------------------|
+| GET    | `/v1/stations`              | Fetches recent stations.                       | `page`, `limit` |
 
 ---
 
