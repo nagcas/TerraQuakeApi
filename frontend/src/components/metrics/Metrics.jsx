@@ -6,6 +6,8 @@ export default function Metrics() {
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [metricsError, setMetricsError] = useState(null);
 
+  const [totalEventsProcessed, setTotalEventsProcessed] = useState(0);
+
   useEffect(() => {
     let firstLoad = true;
 
@@ -19,9 +21,11 @@ export default function Metrics() {
 
         const { payload } = response.data;
 
+        setTotalEventsProcessed(payload.totalEventsProcessed);
+
         setHighlightMetrics([
           {
-            value: payload.eventsProcessed?.toLocaleString() || 'N/A',
+            value: payload.totalEventsProcessed?.toLocaleString('it-IT') || 'N/A',
             label: 'Events Processed',
             description: 'Real-time earthquakes normalized and accessible',
           },
@@ -29,11 +33,6 @@ export default function Metrics() {
             value: `${payload.apiLatencyAvgMs} ms`,
             label: 'API Latency',
             description: 'Average API response time',
-          },
-          {
-            value: `${Math.floor(payload.uptime)} s`,
-            label: 'Uptime',
-            description: 'Time since last server restart',
           },
           {
             value: '24/7',
@@ -73,10 +72,10 @@ export default function Metrics() {
   if (metricsError) {
     return (
       <section className='p-6 md:p-0 text-center text-gray-300'>
-        <h2 className='text-3xl md:text-4xl font-bold text-red-500 my-16'>
+        <h2 className='text-3xl md:text-4xl font-bold text-red-400 my-6'>
           Failed to Load Metrics
         </h2>
-        <p>{metricsError}</p>
+        <p className='mb-16'>{metricsError}</p>
       </section>
     );
   }
@@ -87,7 +86,7 @@ export default function Metrics() {
         System Performance and Reliability Metrics
       </h2>
 
-      <div className='max-w-7xl mx-auto grid gap-4 grid-cols-2 p-6 xl:grid-cols-4 mb-6 md:mb-[150px]'>
+      <div className='max-w-7xl mx-auto grid gap-4 grid-cols-2 p-6 xl:grid-cols-3 mb-6 md:mb-[150px]'>
         {highlightMetrics.map((metric) => (
           <div
             key={metric.label}
