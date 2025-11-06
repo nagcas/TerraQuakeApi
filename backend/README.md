@@ -1,4 +1,4 @@
-# 🌋 TerraQuake API
+# TerraQuake API
 
 <div align="center">
 
