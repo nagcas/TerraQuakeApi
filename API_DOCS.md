@@ -1,4 +1,4 @@
-# 🌍 TerraQuake API Documentation
+# TerraQuake API Documentation
 
 [![API Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://api.terraquakeapi.com)
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://api.terraquakeapi.com/status)
@@ -105,11 +105,21 @@ All API responses follow this standard JSON structure:
   "success": true,
   "code": 200,
   "status": "OK",
-  "message": "Human-readable description",
-  "total": 150,
-  "page": 1,
+  "message": "Human-readable description", 
   "limit": 50,
-  "data": [...]
+  "payload": [...],
+   "meta": {
+       "method": "GET",
+       "path": "/v1/earthquakes/recent?limit=50&page=1",
+       "timestamp": "2025-11-06T00:40:01.490Z"
+   },
+   "totalEarthquakes": 14157,
+   "pagination": {
+      "page": 1,
+      "totalPages": 284,
+      "limit": 50,
+      "hasMore": true
+   }
 }
 ```
 
@@ -124,7 +134,7 @@ All API responses follow this standard JSON structure:
 | `total` | integer | Total number of results matching the query |
 | `page` | integer | Current page number (if paginated) |
 | `limit` | integer | Results per page (if paginated) |
-| `data` | array | Array of earthquake event objects (see [Data Field Reference](#data-field-reference)) |
+| `payload` | array | Array of earthquake event objects (see [Data Field Reference](#data-field-reference)) |
 
 [↑ Back to top](#-table-of-contents)
 
@@ -155,11 +165,45 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=100&page=1"
   "success": true,
   "code": 200,
   "status": "OK",
-  "message": "Recent seismic events from 2025",
-  "total": 3456,
-  "page": 1,
-  "limit": 100,
-  "data": [...]
+  "message": "Earthquakes recent events",
+  "payload": [
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": 44604942,
+        "originId": 141077201,
+        "time": "2025-11-05T23:31:48.030000",
+        "author": "SURVEY-INGV-CT#KATALOC",
+        "magType": "ML",
+        "mag": 2.1,
+        "magAuthor": "--",
+        "type": "earthquake",
+        "place": "13 km SE Maletto (CT)",
+        "version": 100,
+        "geojson_creationTime": "2025-11-06T00:40:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.97,
+          37.751,
+          5.5
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "method": "GET",
+    "path": "/v1/earthquakes/recent?limit=1&page=1",
+    "timestamp": "2025-11-06T00:51:33.850Z"
+  },
+  "totalEarthquakes": 14157,
+  "pagination": {
+    "page": 1,
+    "totalPages": 14157,
+    "limit": 1,
+    "hasMore": true
+  }
 }
 ```
 
@@ -381,9 +425,8 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/eventId?eventId=44278572"
   "success": true,
   "code": 200,
   "status": "OK",
-  "message": "Event details retrieved",
-  "total": 1,
-  "data": [
+  "message": "Earthquakes event with id 44278572",
+  "payload": [
     {
       "type": "Feature",
       "properties": {
@@ -392,16 +435,28 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/eventId?eventId=44278572"
         "time": "2025-09-26T19:33:46.440000",
         "author": "SURVEY-INGV",
         "magType": "ML",
-        "mag": 1.0,
+        "mag": 1,
+        "magAuthor": "--",
+        "type": "earthquake",
         "place": "Costa Calabra sud-orientale (Reggio di Calabria)",
-        "lastUpdate": "2025-09-26T19:35:12.000000"
+        "version": 100,
+        "geojson_creationTime": "2025-11-06T00:52:30"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [16.2387, 37.9982, 10.5]
+        "coordinates": [
+          16.2387,
+          37.9982,
+          10.5
+        ]
       }
     }
-  ]
+  ],
+  "meta": {
+    "method": "GET",
+    "path": "/v1/earthquakes/eventId?eventId=44278572",
+    "timestamp": "2025-11-06T00:52:31.974Z"
+  }
 }
 ```
 
@@ -492,24 +547,35 @@ The API uses standard HTTP status codes and returns error details in JSON format
 ```javascript
 // Get recent earthquakes
 async function getRecentEarthquakes() {
-  const response = await fetch(
-    'https://api.terraquakeapi.com/v1/earthquakes/recent?limit=10'
-  );
-  const data = await response.json();
-  
-  if (data.success) {
-    console.log(`Found ${data.total} earthquakes`);
-    data.data.forEach(quake => {
-      console.log(`${quake.properties.mag} - ${quake.properties.place}`);
-    });
+  try {
+    const response = await fetch(
+      'https://api.terraquakeapi.com/v1/earthquakes/recent?limit=10'
+    );
+    const data = await response.json();
+
+    if (data.success) {
+      console.log(`Found ${data.payload.length} earthquakes`);
+      data.payload.forEach(quake => {
+        const props = quake.properties;
+        console.log(`${props.mag} - ${props.place}`);
+      });
+    } else {
+      console.log('No earthquake data found.');
+    }
+  } catch (error) {
+    console.error('API Error:', error);
   }
 }
+
+// Call the function
+getRecentEarthquakes();
 ```
 
 ### Python (requests)
 
 ```python
 import requests
+from datetime import datetime
 
 # Get earthquakes above magnitude 5.0
 url = "https://api.terraquakeapi.com/v1/earthquakes/magnitude"
@@ -518,11 +584,20 @@ params = {"mag": 5.0, "limit": 50}
 response = requests.get(url, params=params)
 data = response.json()
 
-if data['success']:
-    print(f"Found {data['total']} major earthquakes")
-    for quake in data['data']:
-        props = quake['properties']
-        print(f"{props['mag']} - {props['place']} - {props['time']}")
+if data.get('success'):
+    print(f"Found {data.get('totalEarthQuakes', 0)} major earthquakes")
+    for quake in data.get('payload', []):
+        props = quake.get('properties', {})
+        mag = props.get('mag', 'N/A')
+        place = props.get('place', 'Unknown')
+        time_unix = props.get('time')
+        if time_unix:
+            time = datetime.fromtimestamp(time_unix / 1000).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            time = 'Unknown'
+        print(f"{mag} - {place} - {time}")
+else:
+    print("API request failed or no data returned.")
 ```
 
 ### cURL
@@ -554,13 +629,26 @@ async function getEarthquakesByDateRange(startDate, endDate) {
         }
       }
     );
+
+    const data = response.data;
+
+    if (data.success && data.payload.length > 0) {
+      console.log(`Found ${data.payload.length} earthquakes between ${startDate} and ${endDate}:`);
+      data.payload.forEach(quake => {
+        const props = quake.properties;
+        console.log(`${props.mag} - ${props.place} - ${new Date(props.time).toLocaleString()}`);
+      });
+    } else {
+      console.log('No earthquake data found for this range.');
+    }
     
-    return response.data;
+    return data;
   } catch (error) {
-    console.error('API Error:', error.response.data);
+    console.error('API Error:', error.response?.data || error.message);
   }
 }
 
+// Call the function
 getEarthquakesByDateRange('2025-09-01', '2025-09-30');
 ```
 
