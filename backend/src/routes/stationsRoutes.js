@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllStations } from '../controllers/seimiscStationsControllers.js'
+import { getAllStations, getCodeStation } from '../controllers/seimiscStationsControllers.js'
 import { buildResponse } from '../utils/buildResponse.js'
 import handleHttpError from '../utils/handleHttpError.js'
 
@@ -12,8 +12,8 @@ const router = express.Router()
 router.get('/', getAllStations({ buildResponse, handleHttpError }))
 
 // NOTE: Returns a single seismic station by code
-// GET /:code — retrieves details of a specific seismic station identified by its code
-router.get('/:code')
+// GET /code — retrieves details of a specific seismic station identified by its code
+router.get('/code', getCodeStation({ buildResponse, handleHttpError }))
 
 // NOTE: Returns all seismic stations in GeoJSON format (for mapping purposes)
 // GET /geojson — provides GeoJSON data of all seismic stations
