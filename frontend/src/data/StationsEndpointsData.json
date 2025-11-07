@@ -10,5 +10,16 @@
       { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
       { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
     ]
+  },
+  {
+    "key": "code",
+    "label": "code station",
+    "method": "GET",
+    "path": "/v1/stations/code",
+    "subtitle": "By code station",
+    "description": "This endpoint retrieves detailed information for a specific seismic monitoring station, identified by its unique station code.\n\nIt returns station metadata such as network, site name, geographic coordinates, elevation, and operational period.\n\nQuery Parameters:\n- code: (Required) The station code to search for (case-insensitive).",
+    "params": [
+      { "name": "code", "label": "code", "placeholder": "acate", "required": true }
+    ]
   }
 ]
