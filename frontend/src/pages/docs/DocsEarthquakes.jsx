@@ -4,11 +4,11 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { CopyButton } from './CopyButton';
+import { CopyButton } from '@components/utils/CopyButton';
 import VersionAPI from '@/components/utils/VersionAPI';
 import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
 
-export default function Docs() {
+export default function DocsEarthquakes() {
   const contentRef = useRef(null);
   const [activeId, setActiveId] = useState('getting-started');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -79,6 +79,7 @@ export default function Docs() {
     axiosNode: `const axios = require('axios');\n\naxios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {\n  params: { startdate: '2025-09-01', enddate: '2025-09-30', limit: 100 }\n})\n.then((response) => console.log(response.data))\n.catch((error) => console.error(error.response?.data || error.message));`,
     curlLocation: `curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=20"`,
     exampleResponse: `{\n  "success": true,\n  "code": 200,\n  "status": "OK",\n  "message": "Recent seismic events",\n  "total": 50,\n  "data": [ /* GeoJSON Feature objects */ ]\n}`,
+    curlEventId: `curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/eventId?eventId=44278572"`
   };
 
   return (
@@ -178,12 +179,12 @@ export default function Docs() {
                 className='scroll-mt-28 py-6'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Getting Started
+                  Getting Started - Earthquakes
                 </h2>
                 <p className='text-white/80 mt-2'>
                   <strong>Base URL:</strong>{' '}
                   <code className='bg-slate-800 px-2 py-1 rounded'>
-                    https://api.terraquakeapi.com
+                    https://api.terraquakeapi.com/v1/earthquakes
                   </code>
                 </p>
                 <p className='text-white/80 mt-2'>
@@ -296,7 +297,7 @@ export default function Docs() {
                 id='endpoints'
                 className='scroll-mt-28 py-6'
               >
-                <h2 className='text-2xl font-bold text-white'>API Endpoints</h2>
+                <h2 className='text-2xl font-bold text-white'>API Endpoints Earthquakes</h2>
                 <p className='text-white/80 mt-2'>
                   Time, location, property and event-based queries.
                 </p>
@@ -565,8 +566,9 @@ export default function Docs() {
                       marginTop: 8,
                     }}
                   >
-                    {`curl "https://api.terraquakeapi.com/v1/earthquakes/eventId?eventId=44278572"`}
+                    {snippets.curlEventId}
                   </SyntaxHighlighter>
+                  <CopyButton text={snippets.curlEventId} />
                 </article>
               </section>
 
