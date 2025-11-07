@@ -72,3 +72,66 @@ export const getAllStations = ({ buildResponse, handleHttpError }) => {
     }
   }
 }
+
+/**
+ * NOTE: Controller: Get a seismic monitoring station by code (INGV network).
+ *
+ * @route GET /stations/code
+ * @queryParam {string} code - The unique station code to search for (e.g., "ACATE").
+ *
+ * @description
+ *  - Retrieves detailed information for a single seismic monitoring station based on its station code.
+ *  - The station list is fetched from the INGV FDSN Station service (XML converted to JSON).
+ *  - The lookup is case-insensitive (e.g., "acate" and "ACATE" return the same result).
+ *  - Returns a structured payload containing all station metadata (location, elevation, site name, creation date, etc.).
+*/
+export const getCodeStation = ({ buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const urlINGV = process.env.URL_INGV_STATION
+      const { code } = req.query
+
+      // Validate query parameter
+      if (!code) {
+        return handleHttpError(res, "Parameter 'code' is required", 400)
+      }
+
+      // Base URL for the INGV station list fetch
+      const baseUrl = urlINGV
+
+      // Fetch the full station list from INGV source
+      // The function is expected to return an object with a `payload` property (array of stations)
+      const stations = await fetchINGVStations({ baseUrl })
+
+      // Ensure payload structure is valid
+      if (!Array.isArray(stations)) {
+        return handleHttpError(res, 'Invalid station data format received', 500)
+      }
+
+      // Filter stations by matching station code
+      // The code is located inside the "$" field in each station entry
+      const filteredStation = stations.filter(
+        (stations) => stations?.$?.code?.toUpperCase() === code.toUpperCase()
+      )
+
+      // If no station found, return 404
+      if (filteredStation.length === 0) {
+        return handleHttpError(res, `No station found with code '${code}'`, 404)
+      }
+
+      const message = `Station found with code '${code}'`
+
+      // Send formatted response including station data
+      return res.status(200).json({
+        ...buildResponse(req, message, filteredStation),
+        codeStation: code.toUpperCase() // useful reference for the client
+      })
+    } catch (error) {
+      console.error('Error retrieving stations:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
