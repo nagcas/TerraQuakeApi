@@ -11,6 +11,75 @@ export default function ApiAccess() {
     "stations": "https://api.terraquakeapi.com/v1/stations",
   }
 
+  const quickStart = {
+    "earthquakesJavascript": `
+// Fetch the 10 most recent earthquakes of the current year
+
+const fetchRecentEarthquakes = async (limit = 10) => {
+  const url = \`${API_BASE}/v1/earthquakes/recent?limit=\${limit}\`;
+
+  try {
+    const response = await fetch(url);
+
+    // Check HTTP status
+    if (!response.ok) {
+      throw new Error(\`HTTP Error: \${response.status} \${response.statusText}\`);
+    }
+
+    const data = await response.json();
+
+    // Validate API success response
+    if (!data.success || !Array.isArray(data.payload)) {
+      console.warn("Unexpected API response format:", data);
+      return;
+    }
+
+    // Display formatted result
+    console.log(\`Showing \${data.payload.length} recent earthquakes:\`);
+    data.payload.forEach(event => {
+      const props = event.properties || {};
+      const magnitude = props.mag ?? "N/A";
+      const magnitudeType = props.magType;
+      const place = props.place ?? "Unknown";
+      console.log(\`• \${magnitude} {magnitudeType} — \${place}\`);
+    });
+
+  } catch (error) {
+    console.error("API Error:", error.message);
+  }
+};
+
+fetchRecentEarthquakes(10);
+      `,
+    "earthquakesPython": `
+# Fetch the 10 most recent earthquakes of the current year
+
+import requests
+
+url = "http://localhost:5001/v1/earthquakes/recent"
+params = {"limit": 10}
+
+response = requests.get(url, params=params)
+
+if response.status_code == 200:
+    data = response.json()
+
+    if data.get("success") and "payload" in data and isinstance(data["payload"], list):
+        if len(data["payload"]) > 0:
+            for event in data["payload"]:
+                props = event.get("properties", {})
+                magnitude = props.get("mag", "N/A")
+                place = props.get("place", "Unknown")
+                print(f"{magnitude} - {place}")
+        else:
+            print("No earthquake data found.")
+    else:
+        print("Unexpected data format or no payload.")
+else:
+  print(f"Error: {response.status_code} - {response.text}")
+      `
+  }
+
   return (
     <>
       {/* SEO Stuff */}
@@ -297,51 +366,22 @@ export default function ApiAccess() {
 
             <h4 className='text-lg font-semibold text-white mb-2'>
               JavaScript
+              <CopyButton text={quickStart.earthquakesJavascript} />
             </h4>
-            <pre className='bg-black/30 border border-white/10 rounded-xl p-4 text-white/90 text-sm overflow-x-auto'>
-              {`
-              // Fetch the 10 most recent earthquakes of the current year
-              
-              const url = \'${API_BASE}/v1/earthquakes/recent';
-              const limit = 10;
-              
-              fetch(\`\${url}?limit=\${limit}\`)
-                .then((response) => response.json())
-                .then((data) => {
-                  if (data.success) {
-                    console.log('Recent events:', data.payload);
-                  }
-                })
-                .catch((error) => console.error('API Error:', error));
-              `}
+            <pre className='bg-black/30 border border-white/10 rounded-xl p-16 text-white/90 text-sm overflow-x-auto'>
+              <code>
+                {quickStart.earthquakesJavascript}
+              </code>
             </pre>
 
             <h4 className='mt-6 text-lg font-semibold text-white mb-2'>
               Python
+              <CopyButton text={quickStart.earthquakesPython} />
             </h4>
-            <pre className='bg-black/30 border border-white/10 rounded-xl p-4 text-white/90 text-sm overflow-x-auto'>
-              {`
-              # Fetch the 10 most recent earthquakes of the current year
-              
-              import requests
-                    
-              # Fetch the 10 most recent earthquakes
-              url = \"${API_BASE}/v1/earthquakes/recent"
-              params = {"limit": 10}
-              
-              response = requests.get(url, params=params)
-              
-              if response.status_code == 200:
-                  data = response.json()
-                  if data.get("success") and "payload" in data:
-                      for event in data["payload"]:
-                          props = event.get("properties", {})
-                          print(f"{props.get("mag", "N/A")} - {props.get("place", "Unknown")}')
-                  else:
-                      print("No earthquake data found.")
-              else:
-                  print(f"Error: {response.status_code} - {response.text}")
-              `}
+            <pre className='bg-black/30 border border-white/10 rounded-xl p-16 text-white/90 text-sm overflow-x-auto'>
+              <code>
+                {quickStart.earthquakesPython}
+              </code>
             </pre>
           </div>
 
