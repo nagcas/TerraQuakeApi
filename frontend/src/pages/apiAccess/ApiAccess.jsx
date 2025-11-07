@@ -2,8 +2,15 @@ import MetaData from '@pages/noPage/MetaData';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { API_BASE } from '@/data/BaseApi';
+import { CopyButton } from '@components/utils/CopyButton';
 
 export default function ApiAccess() {
+
+  const urlEndpoint = {
+    "earthquakes": "https://api.terraquakeapi.com/v1/earthquakes",
+    "stations": "https://api.terraquakeapi.com/v1/stations",
+  }
+
   return (
     <>
       {/* SEO Stuff */}
@@ -74,18 +81,22 @@ export default function ApiAccess() {
           {/* Base URL */}
           <div className='mb-14'>
             <h3 className='text-xl font-bold text-white mb-2'>Base URL</h3>
-            <pre className='mt-2 bg-black/30 border border-white/10 rounded-xl p-4 text-white/90 text-sm overflow-x-auto'>
-              https://api.terraquakeapi.com/v1/earthquakes
+            <pre className='flex justify-between mt-2 bg-black/30 border border-white/10 rounded-xl p-4 text-white/90 text-sm overflow-x-auto'>
+              <span className='text-pink-400'>Earthquakes: </span>
+              <code>{urlEndpoint.earthquakes}</code>
+              <CopyButton text={urlEndpoint.earthquakes} />
             </pre>
-            <pre className='mt-2 bg-black/30 border border-white/10 rounded-xl p-4 text-white/90 text-sm overflow-x-auto'>
-              https://api.terraquakeapi.com/v1/stations
+            <pre className='flex justify-between mt-2 bg-black/30 border border-white/10 rounded-xl p-4 text-white/90 text-sm overflow-x-auto'>
+              <span className='text-pink-400'>Stations: </span>
+              <code>{urlEndpoint.stations}</code>
+              <CopyButton text={urlEndpoint.stations} />
             </pre>
           </div>
 
           {/* Query Parameters */}
           <div className='mb-14'>
             <h2 className='text-2xl font-bold text-white mb-4'>
-              Query Parameters
+              Query Parameters Earthquakes
             </h2>
             <p className='text-white/70 mb-4'>
               Most endpoints accept these common parameters for pagination and
@@ -201,7 +212,7 @@ export default function ApiAccess() {
           {/* Endpoint List / Table */}
           <div className='mb-14'>
             <h2 className='text-2xl font-bold text-white mb-4'>
-              🌍 Earthquake API Endpoints
+              1) API Endpoints Earthquakes
             </h2>
             <p className='text-white/70 mb-4'>
               All endpoints support pagination using <code>page</code> and{' '}
@@ -281,7 +292,7 @@ export default function ApiAccess() {
           {/* Quick Examples */}
           <div className='mb-14'>
             <h2 className='text-2xl font-bold text-white mb-4'>
-              Quick Start Examples
+              1a) Quick Start Examples
             </h2>
 
             <h4 className='text-lg font-semibold text-white mb-2'>

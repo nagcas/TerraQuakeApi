@@ -32,7 +32,7 @@ export default function NavbarMenu() {
 
   const resourcesNavItems = [
     { name: 'Use Cases', path: '/use-cases' },
-    { name: 'Docs', path: '/docs' },
+    { name: 'Docs Earthquakes', path: '/docs-earthquakes' },
     { name: 'Faq', path: '/faq' },
   ];
 

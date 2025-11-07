@@ -11,7 +11,7 @@ import { AuthProvider } from '@components/modules/AuthProvider'
 import Home from '@pages/home/Home'
 import ExploreData from '@pages/exploreData/ExploreData'
 import ApiAccess from '@pages/apiAccess/ApiAccess'
-import Docs from '@pages/docs/Docs'
+import DocsEarthquakes from './pages/docs/DocsEarthquakes'
 import UseCases from '@pages/useCases/UseCases'
 import About from '@pages/about/About'
 import Contact from '@pages/contact/Contact'
@@ -65,7 +65,7 @@ export default function App() {
               <Route path='/explore-data/table-earthquakes' element={<TableViewEarthquakes />} />
               <Route path='/explore-data/table-stations' element={<TableViewStations />} />
               <Route path='/api-access' element={<ApiAccess />} />
-              <Route path='/docs' element={<Docs />} />
+              <Route path='/docs-earthquakes' element={<DocsEarthquakes />} />
               <Route path='/use-cases' element={<UseCases />} />
               <Route path='/about' element={<About />} />
               <Route path='/contact' element={<Contact />} />
