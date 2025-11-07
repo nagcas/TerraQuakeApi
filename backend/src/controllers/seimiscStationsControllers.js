@@ -47,7 +47,7 @@ export const getAllStations = ({ buildResponse, handleHttpError }) => {
       const endIndex = startIndex + limit
       const paginatedStations = stations.slice(startIndex, endIndex)
 
-      // Increment metrics for monitoring (optional)
+      // Increment metrics for monitoring
       eventsProcessed.inc(paginatedStations.length || 0)
 
       const message = 'List of seismic monitoring stations (INGV Network)'
@@ -113,6 +113,9 @@ export const getCodeStation = ({ buildResponse, handleHttpError }) => {
       const filteredStation = stations.filter(
         (stations) => stations?.$?.code?.toUpperCase() === code.toUpperCase()
       )
+
+      // Increment metrics for monitoring
+      eventsProcessed.inc(filteredStation.length || 0)
 
       // If no station found, return 404
       if (filteredStation.length === 0) {
