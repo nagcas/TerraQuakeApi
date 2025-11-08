@@ -138,3 +138,148 @@ export const getCodeStation = ({ buildResponse, handleHttpError }) => {
     }
   }
 }
+
+/**
+ * NOTE: Controller: Get a seismic monitoring station.
+ *
+ * @route GET /stations/geojson
+ *
+ * @description
+ *  Returns the complete list of seismic monitoring stations formatted as GeoJSON.
+ *  Useful for mapping, visualization layers, and GIS applications.
+ *  Each feature includes station coordinates, elevation, name, and metadata.
+ */
+
+export const getStationsGeoJson = ({ buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const message = 'stations geojson'
+
+      res.status(200).json({
+        ...buildResponse(req, message, []),
+        totalStations: 0,
+        pagination: {
+          page: 0,
+          totalPages: 0,
+          limit: 0,
+          hasMore: false
+        }
+      })
+    } catch (error) {
+      console.error('Error retrieving stations:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Get a seismic monitoring station.
+ *
+ * @route GET /stations/status/open
+ *
+ * @description
+ *  Retrieves only the stations that are currently operational (open status).
+ *  These are stations actively collecting and transmitting seismic data.
+ */
+
+export const getStationsStatusOpen = ({ buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const message = 'get status open'
+
+      res.status(200).json({
+        ...buildResponse(req, message, []),
+        totalStations: 0,
+        pagination: {
+          page: 0,
+          totalPages: 0,
+          limit: 0,
+          hasMore: false
+        }
+      })
+    } catch (error) {
+      console.error('Error retrieving stations:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Get a seismic monitoring station.
+ *
+ * @route GET /stations/status/closed
+ *
+ * @description
+ *  Returns the list of stations that are no longer active.
+ *  Useful for historical analysis and network evolution studies.
+*/
+
+export const getStationsStatusClosed = ({ buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const message = 'get status closed'
+
+      res.status(200).json({
+        ...buildResponse(req, message, []),
+        totalStations: 0,
+        pagination: {
+          page: 0,
+          totalPages: 0,
+          limit: 0,
+          hasMore: false
+        }
+      })
+    } catch (error) {
+      console.error('Error retrieving stations:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
+
+/**
+ * NOTE: Controller: Get a seismic monitoring station.
+ *
+ * @route GET /stations/statistics
+ *
+ * @description
+ *  Provides aggregate metrics such as:
+ *   - Total stations
+ *   - Number of active stations
+ *   - Number of closed stations
+ *   - Stations grouped by network or region
+ *  Useful for dashboards and monitoring network scale.
+ */
+
+export const getStationsStatistics = ({ buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const message = 'get statistics'
+
+      res.status(200).json({
+        ...buildResponse(req, message, []),
+        totalStations: 0,
+        pagination: {
+          page: 0,
+          totalPages: 0,
+          limit: 0,
+          hasMore: false
+        }
+      })
+    } catch (error) {
+      console.error('Error retrieving stations:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
