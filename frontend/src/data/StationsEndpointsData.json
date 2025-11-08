@@ -1,7 +1,7 @@
 [
   {
     "key": "stations",
-    "label": "stations",
+    "label": "Stations",
     "method": "GET",
     "path": "/v1/stations",
     "subtitle": "List stations seismic INGV",
@@ -23,7 +23,7 @@
   },
   {
     "key": "code",
-    "label": "code station",
+    "label": "Code Station",
     "method": "GET",
     "path": "/v1/stations/code",
     "subtitle": "By code station",
@@ -102,5 +102,14 @@
         "defaultValue": "1"
       }
     ]
+  },
+  {
+    "key": "statistics",
+    "label": "Network Statistics",
+    "method": "GET",
+    "path": "/v1/stations/statistics",
+    "subtitle": "Seismic network summary",
+    "description": "This endpoint provides a summary of the seismic monitoring network, returning the total number of stations along with how many are currently operational (open) and how many are inactive or restricted (closed).\n\nUseful for dashboards, network health monitoring, performance analytics, transparency reporting, and historical comparisons of network size and operational status.",
+    "params": []
   }
 ]
