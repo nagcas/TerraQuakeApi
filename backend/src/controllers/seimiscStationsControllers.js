@@ -313,7 +313,7 @@ export const getStationsStatusOpen = ({ buildResponse, handleHttpError }) => {
 
       res.status(200).json({
         ...buildResponse(req, message, paginatedStations),
-        totalStationsOpen: 0,
+        totalStationsOpen: totalCount,
         pagination: {
           page,
           totalPages,
