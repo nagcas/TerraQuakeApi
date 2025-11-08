@@ -911,7 +911,10 @@ export const getEarthquakesById = ({ buildResponse, handleHttpError }) => {
       // Fetch by id
       const url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&format=geojson`
       const data = await fetchINGV(url)
-      eventsProcessed.inc(data.features.length || 0)
+
+      // Increment monitoring metric
+      eventsProcessed.inc()
+
       const { features } = data
 
       const filteredEvent = features.filter(
