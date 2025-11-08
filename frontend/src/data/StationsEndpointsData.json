@@ -80,5 +80,27 @@
         "defaultValue": "1"
       }
     ]
+  },
+  {
+    "key": "closed",
+    "label": "Status: Closed",
+    "method": "GET",
+    "path": "/v1/stations/status/closed",
+    "subtitle": "List of inactive or decommissioned seismic stations",
+    "description": "This endpoint returns seismic monitoring stations that are currently not operational (closed/restricted).\n\nIt provides metadata such as network code, station name, location coordinates, elevation, and deactivation details.\n\nUseful for historical research, network maintenance planning, infrastructure audits, and understanding changes in seismic network coverage.\n\nSupports optional pagination with `limit` and `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
   }
 ]
