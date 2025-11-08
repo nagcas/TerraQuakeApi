@@ -1,7 +1,7 @@
 [
   {
     "key": "recent",
-    "label": "recent",
+    "label": "Recent",
     "method": "GET",
     "path": "/v1/earthquakes/recent",
     "subtitle": "Latest sismic events",
@@ -13,7 +13,7 @@
   },
   {
     "key": "today",
-    "label": "today",
+    "label": "Today",
     "method": "GET",
     "path": "/v1/earthquakes/today",
     "subtitle": "Today seismic events",
@@ -25,7 +25,7 @@
   },
   {
     "key": "last-week",
-    "label": "last-week",
+    "label": "Last-Week",
     "method": "GET",
     "path": "/v1/earthquakes/last-week",
     "subtitle": "Last 7 days",
@@ -37,7 +37,7 @@
   },
   {
     "key": "month",
-    "label": "month",
+    "label": "Month",
     "method": "GET",
     "path": "/v1/earthquakes/month",
     "subtitle": "By month/year",
@@ -51,7 +51,7 @@
   },
   {
     "key": "location",
-    "label": "location",
+    "label": "Location",
     "method": "GET",
     "path": "/v1/earthquakes/location",
     "subtitle": "Near latitude/longitude",
@@ -66,7 +66,7 @@
   },
   {
     "key": "region",
-    "label": "region",
+    "label": "Region",
     "method": "GET",
     "path": "/v1/earthquakes/region",
     "subtitle": "By Italian region",
@@ -79,7 +79,7 @@
   },
   {
     "key": "depth",
-    "label": "depth",
+    "label": "Depth",
     "method": "GET",
     "path": "/v1/earthquakes/depth",
     "subtitle": "By focal depth (km)",
@@ -92,7 +92,7 @@
   },
   {
     "key": "range-time",
-    "label": "range-time",
+    "label": "Range-Time",
     "method": "GET",
     "path": "/v1/earthquakes/range-time",
     "subtitle": "By time range",
@@ -106,7 +106,7 @@
   },
   {
     "key": "magnitude",
-    "label": "magnitude",
+    "label": "Magnitude",
     "method": "GET",
     "path": "/v1/earthquakes/magnitude",
     "subtitle": "Min magnitude",
@@ -119,7 +119,7 @@
   },
   {
     "key": "eventId",
-    "label": "eventId",
+    "label": "Event Id",
     "method": "GET",
     "path": "/v1/earthquakes/eventId",
     "subtitle": "By event ID",

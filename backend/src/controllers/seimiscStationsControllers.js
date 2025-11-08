@@ -434,24 +434,58 @@ export const getStationsStatusClosed = ({ buildResponse, handleHttpError }) => {
  *   - Total stations
  *   - Number of active stations
  *   - Number of closed stations
- *   - Stations grouped by network or region
  *  Useful for dashboards and monitoring network scale.
  */
 
 export const getStationsStatistics = ({ buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const message = 'get statistics'
+      const urlINGV = process.env.URL_INGV_STATION
+
+      // Base URL for the INGV station list fetch
+      const baseUrl = urlINGV
+
+      // Fetch the full station list from INGV source
+      // The function is expected to return an object with a `payload` property (array of stations)
+      const stations = await fetchINGVStations({ baseUrl })
+
+      if (!stations) {
+        return handleHttpError(res, 'Invalid stations data format received', 500)
+      }
+
+      // Ensure payload structure is valid
+      if (!Array.isArray(stations)) {
+        return handleHttpError(res, 'Invalid station data format received', 500)
+      }
+
+      // Filter stations by matching station code
+      // The code is located inside the "$" field in each station entry
+      const filteredStationOpen = stations.filter(
+        (stations) => stations?.$?.restrictedStatus === 'open'
+      )
+
+      // Filter stations by matching station code
+      // The code is located inside the "$" field in each station entry
+      const filteredStationClosed = stations.filter(
+        (stations) => stations?.$?.restrictedStatus === 'closed' || stations?.$?.restrictedStatus === 'inactive' || stations?.$?.restrictedStatus === 'deprecated' || stations?.$?.restrictedStatus === 'unavailable'
+      )
+
+      const totalStations = stations.length
+      const stationsOpen = filteredStationOpen.length
+      const stationsClosed = filteredStationClosed.length
+
+      const statisticsStations = {
+        type: 'data',
+        statistics: {
+          totalStations,
+          stationsOpen,
+          stationsClosed
+        }
+      }
+      const message = 'Statistics stations'
 
       res.status(200).json({
-        ...buildResponse(req, message, []),
-        totalStations: 0,
-        pagination: {
-          page: 0,
-          totalPages: 0,
-          limit: 0,
-          hasMore: false
-        }
+        ...buildResponse(req, message, statisticsStations)
       })
     } catch (error) {
       console.error('Error retrieving stations:', error.message)
