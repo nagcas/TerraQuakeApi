@@ -482,6 +482,10 @@ export const getStationsStatistics = ({ buildResponse, handleHttpError }) => {
           stationsClosed
         }
       }
+
+      // Increment metrics for monitoring
+      eventsProcessed.inc()
+
       const message = 'Statistics stations'
 
       res.status(200).json({
