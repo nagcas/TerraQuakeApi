@@ -58,5 +58,27 @@
         "defaultValue": "1"
       }
     ]
+  },
+  {
+    "key": "open",
+    "label": "Status: Open",
+    "method": "GET",
+    "path": "/v1/stations/status/open",
+    "subtitle": "List of active seismic stations",
+    "description": "This endpoint returns all seismic monitoring stations that are currently operational (active/open).\n\nIt provides station metadata including network code, station name, geographic coordinates, elevation, and operational status.\n\nUseful for monitoring the active seismic network, real-time data acquisition systems, and observatory dashboards.\n\nSupports optional pagination with `limit` and `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
   }
 ]
