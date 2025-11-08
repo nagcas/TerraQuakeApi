@@ -251,16 +251,74 @@ export const getStationsGeoJson = ({ buildResponse, handleHttpError }) => {
 export const getStationsStatusOpen = ({ buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const message = 'get status open'
+      const urlINGV = process.env.URL_INGV_STATION
+      const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
+
+      if (limit === null || limit <= 0) {
+        return handleHttpError(
+          res,
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
+
+      if (page <= 0) {
+        return handleHttpError(
+          res,
+          'The "page" parameter must be a positive integer greater than 0. Example: ?page=2',
+          400
+        )
+      }
+
+      // Base URL for the INGV station list fetch
+      const baseUrl = urlINGV
+
+      // Fetch the full station list from INGV source
+      // The function is expected to return an object with a `payload` property (array of stations)
+      const stations = await fetchINGVStations({ baseUrl })
+
+      if (!stations) {
+        return handleHttpError(res, 'Invalid stations data format received', 500)
+      }
+
+      // Ensure payload structure is valid
+      if (!Array.isArray(stations)) {
+        return handleHttpError(res, 'Invalid station data format received', 500)
+      }
+
+      // Filter stations by matching station code
+      // The code is located inside the "$" field in each station entry
+      const filteredStationOpen = stations.filter(
+        (stations) => stations?.$?.restrictedStatus === 'open'
+      )
+
+      const totalCount = filteredStationOpen.length
+      const totalPages = Math.ceil(totalCount / limit)
+
+      // Manual pagination
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedStations = filteredStationOpen.slice(startIndex, endIndex)
+
+      // Increment metrics for monitoring
+      eventsProcessed.inc(paginatedStations.length || 0)
+
+      // If no station found, return 404
+      if (filteredStationOpen.length === 0) {
+        return handleHttpError(res, 'No station found restrictedStatus open', 404)
+      }
+
+      const message = 'List of active seismic stations'
 
       res.status(200).json({
-        ...buildResponse(req, message, []),
-        totalStations: 0,
+        ...buildResponse(req, message, paginatedStations),
+        totalStationsOpen: 0,
         pagination: {
-          page: 0,
-          totalPages: 0,
-          limit: 0,
-          hasMore: false
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
