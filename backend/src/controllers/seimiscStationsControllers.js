@@ -153,16 +153,79 @@ export const getCodeStation = ({ buildResponse, handleHttpError }) => {
 export const getStationsGeoJson = ({ buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const message = 'stations geojson'
+      const urlINGV = process.env.URL_INGV_STATION
+      const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+      const page = getPositiveInt(req.query, 'page', { def: 1 })
+
+      if (limit === null || limit <= 0) {
+        return handleHttpError(
+          res,
+          'The "limit" parameter must be a positive integer greater than 0. Example: ?limit=50',
+          400
+        )
+      }
+
+      if (page <= 0) {
+        return handleHttpError(
+          res,
+          'The "page" parameter must be a positive integer greater than 0. Example: ?page=2',
+          400
+        )
+      }
+
+      // Base URL for the INGV station list fetch
+      const baseUrl = urlINGV
+
+      // Fetch the full station list from INGV source
+      // The function is expected to return an object with a `payload` property (array of stations)
+      const stations = await fetchINGVStations({ baseUrl })
+
+      if (!stations) {
+        return handleHttpError(res, 'Invalid stations data format received', 500)
+      }
+
+      const geoJson = {
+        type: 'FeatureCollection',
+        features: stations.map((station) => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [
+              station?.Longitude,
+              station?.Latitude,
+              station?.Elevation
+            ]
+          },
+          properties: {
+            code: station?.$?.code,
+            name: station?.$?.name,
+            site: station?.Site?.Name,
+            status: station?.$?.restrictedStatus || 'unknow'
+          }
+        }))
+      }
+
+      const totalCount = geoJson.features.length
+      const totalPages = Math.ceil(totalCount / limit)
+
+      // Manual pagination
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedStations = geoJson.features.slice(startIndex, endIndex)
+
+      // Increment metrics for monitoring
+      eventsProcessed.inc(paginatedStations.length || 0)
+
+      const message = 'Stations format geojson'
 
       res.status(200).json({
-        ...buildResponse(req, message, []),
-        totalStations: 0,
+        ...buildResponse(req, message, paginatedStations),
+        totalStations: totalCount,
         pagination: {
-          page: 0,
-          totalPages: 0,
-          limit: 0,
-          hasMore: false
+          page,
+          totalPages,
+          limit,
+          hasMore: page < totalPages
         }
       })
     } catch (error) {
