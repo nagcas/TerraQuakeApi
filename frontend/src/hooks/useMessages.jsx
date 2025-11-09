@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -16,11 +16,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
 
   const token = localStorage.getItem('token');
 
-   useEffect(() => {
-    listAllMessages();
-  }, [currentPageMessage, messagesPerPage]);
-
-  const listAllMessages = async () => {
+  const listAllMessages = useCallback(async () => {
     setLoadingMessage(true);
     setErrorMessage(null);
     try {
@@ -42,7 +38,6 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
       setTotalMessages(payload.pagination.totalResults);
     } catch (error) {
       setErrorMessage(error);
-      setLoadingMessage(false);
 
       Swal.fire({
         title: 'Error!',
@@ -55,7 +50,11 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
     } finally {
       setLoadingMessage(false);
     }
-  };
+  }, [currentPageMessage, messagesPerPage, token, navigate]);
+
+  useEffect(() => {
+    listAllMessages();
+  }, [listAllMessages]);
 
   return {
     messages,

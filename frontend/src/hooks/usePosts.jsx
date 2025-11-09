@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -16,11 +16,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
 
   const token = localStorage.getItem('token');
 
-   useEffect(() => {
-    listAllPosts();
-  }, [currentPagePost, postsPerPage]);
-
-  const listAllPosts = async () => {
+  const listAllPosts = useCallback(async () => {
     setLoadingPost(true);
     setErrorPost(null);
     try {
@@ -42,7 +38,6 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
       setTotalPosts(payload.pagination.totalResults);
     } catch (error) {
       setErrorPost(error);
-      setLoadingPost(false);
 
       Swal.fire({
         title: 'Error!',
@@ -55,7 +50,11 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
     } finally {
       setLoadingPost(false);
     }
-  };
+  }, [currentPagePost, postsPerPage, token, navigate]);
+
+  useEffect(() => {
+    listAllPosts();
+  }, [listAllPosts]);
 
   return {
     posts,
