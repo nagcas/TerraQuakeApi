@@ -192,6 +192,8 @@ export default function SignIn() {
                 <button
                   className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                   type='submit'
+                  aria-label='Click to loading'
+                  disabled={loading}
                 >
                   {loading ? (
                     <Spinner />
@@ -201,7 +203,7 @@ export default function SignIn() {
                 </button>
 
                 {/* Social Buttons */}
-                <LoginSocial />
+                <LoginSocial setLoading={setLoading} />
 
                 {/* Sign Up Link */}
                 <div className='mt-6 flex flex-col items-center'>

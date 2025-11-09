@@ -142,6 +142,7 @@ export default function forgotPassword() {
                 className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                 type='submit'
                 aria-label='Recover your account password'
+                disabled={loading}
               >
                 {loading ? (
                   <Spinner />

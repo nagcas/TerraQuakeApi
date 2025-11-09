@@ -221,6 +221,7 @@ export default function ApiPlayground({
             <button
               onClick={sendRequest}
               className='bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 transform transition duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer'
+              disabled={loading}
             >
               Send request
             </button>

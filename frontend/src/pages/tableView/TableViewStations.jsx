@@ -6,6 +6,7 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
+import { set } from 'ol/transform';
 
 export default function TableViewStations() {
   const BACKEND_URL =
@@ -122,6 +123,8 @@ export default function TableViewStations() {
 
   // Export CSV
   const handleExport = () => {
+    setLoading(true);
+
     const headers = [
       'Code',
       'Station Name',
@@ -152,6 +155,7 @@ export default function TableViewStations() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setLoading(false);
   };
 
   const formatValue = (val) => {
@@ -240,7 +244,7 @@ export default function TableViewStations() {
                   onClick={handleExport}
                   className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
                 >
-                  Export as CSV
+                  {loading ? <Spinner /> : 'Export as CSV'}
                 </button>
               </div>
 

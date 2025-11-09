@@ -109,9 +109,7 @@ export default function ChangePassword() {
         });
         reset(); // clear the form
       })
-      .finally(
-        setLoading(false)
-      )
+      .finally(setLoading(false));
   };
 
   return (
@@ -248,6 +246,7 @@ export default function ChangePassword() {
                     type='submit'
                     className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                     aria-label='Confirm new password'
+                    disabled={loading}
                   >
                     {loading ? <Spinner /> : <span>Confirm</span>}
                   </button>

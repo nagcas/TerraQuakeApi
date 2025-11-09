@@ -75,7 +75,7 @@ export default function ResetPassword() {
           icon: 'error',
           confirmButtonText: 'Ok',
         });
-      })
+      });
   };
 
   return (
@@ -181,15 +181,15 @@ export default function ResetPassword() {
                 type='submit'
                 className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
                 aria-label='Reset your account password'
+                disabled={loading}
               >
-                Reset
                 {loading ? (
-                                    <p className='text-white'>
-                                      <Spinner />
-                                    </p>
-                                  ) : (
-                                    <span>Reset</span>
-                                  )}
+                  <p className='text-white'>
+                    <Spinner />
+                  </p>
+                ) : (
+                  <span>Reset</span>
+                )}
               </button>
             </form>
             {/* Divider */}
