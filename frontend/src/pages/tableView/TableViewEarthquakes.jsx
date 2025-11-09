@@ -112,6 +112,8 @@ export default function TableViewEarthquakes() {
   };
 
   const handleExport = () => {
+    setLoading(true);
+
     const dataToExport = sortedAndFilteredEarthquakes;
     const headers = [
       'Time (UTC)',
@@ -147,6 +149,7 @@ export default function TableViewEarthquakes() {
       link.click();
       document.body.removeChild(link);
     }
+    setLoading(false);
   };
 
   return (
@@ -228,8 +231,9 @@ export default function TableViewEarthquakes() {
                 <button
                   onClick={handleExport}
                   className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+                  disabled={loading}
                 >
-                  Export as CSV
+                  {loading ? <Spinner /> : 'Export as CSV'}
                 </button>
               </div>
               <div className='overflow-x-auto border border-white/5 bg-white/[0.03] bg-opacity-50 rounded-lg'>

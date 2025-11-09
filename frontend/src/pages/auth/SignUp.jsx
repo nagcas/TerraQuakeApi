@@ -403,6 +403,7 @@ export default function SignUp() {
                   '
                   type='submit'
                   aria-label='Click to create a new account'
+                  disabled={loading}
                 >
                   {loading ? (
                     <p className='text-white'>
@@ -414,7 +415,7 @@ export default function SignUp() {
                 </button>
             
                 {/* Social Buttons */}
-                <LoginSocial />
+                <LoginSocial setLoading={setLoading} />
             
                 <div className='mt-6 flex flex-col items-center'>
                   <p className='text-gray-200 text-sm cursor-default'>

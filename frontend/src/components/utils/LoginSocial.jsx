@@ -1,19 +1,24 @@
 import React from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa6';
 
-export default function LoginSocial() {
+export default function LoginSocial({ setLoading }) {
   // Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
+    setLoading(true);
+
     const backendBaseUrl =
       import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
 
     if (provider === 'google') {
       window.location.href = `${backendBaseUrl}/auth/google`;
+      setLoading(false);
     } else if (provider === 'github') {
       // GitHub OAuth
       window.location.href = `${backendBaseUrl}/auth/github`;
+      setLoading(false);
     }
   };
+
   return (
     <>
       {/* Divider */}
