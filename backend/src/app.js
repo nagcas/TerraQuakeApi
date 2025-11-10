@@ -18,6 +18,7 @@ import routeStation from './routes/stationsRoutes.js'
 import routeDocsEarthquakes from './routes/docsEarthquakesRoutes.js'
 import routeGitHub from './routes/githubAuthRoutes.js'
 import routeMetrics from './routes/metricsRouters.js'
+import routeTestimonial from './routes/testimonialsRoutes.js'
 import postRoutes from './routes/postRoutes.js'
 import newsletterRoutes from './routes/newsletterRoutes.js'
 import adminRoutes from './routes/admin.js'
@@ -78,6 +79,7 @@ app.use('/auth/github', authLimiter, routeGitHub)
 app.use('/users', authLimiter, authenticateUser, routeUsers)
 app.use('/contact', contactLimiter, routeContact)
 app.use('/faq', routeFaq)
+app.use('/testimonials', routeTestimonial)
 
 // Public routes
 app.use('/newsletter', newsletterRoutes)
