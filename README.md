@@ -93,7 +93,7 @@ Visit `http://localhost:5173` for the frontend interface and `http://localhost:5
 
 The TerraQuake API provides various endpoints for querying earthquake data. For detailed usage, examples, and testing, visit the [API Docs](https://api.terraquakeapi.com/v1/earthquakes/docs).
 
-## 🌍 Earthquake API Endpoints
+## Earthquake API Endpoints
 
 All endpoints support **pagination**:  
 - `page` *(optional, default: 1)* → Page number  
@@ -186,15 +186,20 @@ URL "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=50&page=1"
 | `pagination`           | `[page, totalPages, limit, hasMore]`         |
 
 
-## 🌍 Stations API Endpoints
+## Stations API Endpoints
 
 All endpoints support **pagination**:  
 - `page` *(optional, default: 1)* → Page number  
 - `limit` *(optional, default: 50)* → Number of results per page
 
-| Method | Endpoint                    | Description                                    | Query Parameters                                                                 |
-|--------|-----------------------------|------------------------------------------------|----------------------------------------------------------------------------------|
-| GET    | `/v1/stations`              | Fetches recent stations.                       | `page`, `limit` |
+| Method | Endpoint                    | Description                                                    | Query Parameters          |
+|--------|-----------------------------|----------------------------------------------------------------|---------------------------|
+| GET    | `/v1/stations`              | Retrieve all seismic monitoring stations (INGV network).       | `page`, `limit`           |
+| GET    | `/v1/stations/code`         | Retrieve a station by its station code.                        | `code* (required)`        |
+| GET    | `/v1/stations/geojson`      | Retrieve all stations formatted as GeoJSON for mapping tools.  | `page`, `limit`           |
+| GET    | `/v1/stations/status/open`  | List all currently active/operational stations.                | `page`, `limit`           |
+| GET    | `/v1/stations/status/closed`| List stations that are no longer operational.                  | `page`, `limit`           |
+| GET    | `/v1/stations/statistics`   | Provides aggregated information about the station network.     | `no parameters`           |
 
 ---
 
