@@ -2,14 +2,12 @@ import Hero from '@components/hero/Hero';
 import Info from '@components/info/Info';
 import MetaData from '@pages/noPage/MetaData';
 import Newsletter from '@/components/newsletter/Newsletter';
-import { useState } from 'react';
 import Testimonials from '@/components/testimonials/Testimonials';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import GetStarted from '@/components/started/GetStarted';
 import Metrics from '@/components/metrics/Metrics';
 
 export default function Home() {
-  const [earthquakeData, setEarthquakeData] = useState(null);
   return (
     <>
       {/* SEO Stuff */}
@@ -28,6 +26,7 @@ export default function Home() {
       <Info />
       <Metrics />
       <GetStarted />
+      <Testimonials />
       <Newsletter />
 
       {/* Floating Back-to-Top Button Component */}

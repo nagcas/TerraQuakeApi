@@ -264,7 +264,7 @@ export default function NavbarMenu() {
                     <NavLink
                       key={item.name}
                       to={item.path}
-                      onClick={() => setIsExploreOpen(false)}
+                      onClick={() => setIsProfileOpen(false)}
                       className={({ isActive }) =>
                         `block px-4 py-2 text-sm rounded-lg transition-all duration-300 transform cursor-pointer
                         ${
