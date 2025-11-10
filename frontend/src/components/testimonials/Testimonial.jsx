@@ -1,4 +1,4 @@
-import { use, useRef } from 'react';
+import { useRef } from 'react';
 import { TimelineContent } from '@/components/testimonials/TimelineAnimation';
 import AvatarUser from '../utils/AvatarUser';
 import useTestimonials from '@/hooks/useTestimonials';
