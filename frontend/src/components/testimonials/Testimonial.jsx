@@ -26,8 +26,6 @@ export default function ClientFeedback() {
     },
   };
 
-  console.log(testimonials);
-
   const filterReview = useCallback(() => {
     if (!testimonials) return;
 
