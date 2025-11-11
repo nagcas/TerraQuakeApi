@@ -104,7 +104,7 @@ export default function ViewReview({ userId }) {
                           </p>
                         </div>
                       </div>
-                      <div className='flex flex-col md:flex-row justify-center items-center gap-6'>
+                      <div className='flex flex-col md:flex-row justify-center items-center mt-6 gap-6'>
                         <button
                           onClick={() => setUpdateReview(true)}
                           className='w-26 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
