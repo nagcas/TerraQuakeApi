@@ -155,7 +155,7 @@ export default function About() {
                 className={`absolute inset-0 bg-gradient-to-br ${item.gradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
               />
 
-              <div className='relative bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:border-purple-400/30 h-full'>
+              <div className='relative bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-6 transition-all duration-500 hover:scale-105 hover:border-purple-400/30 h-full'>
                 <div className='flex flex-col items-start h-full'>
                   <div className='mb-3'>{item.icon}</div>
                   <h2 className='text-xl md:text-2xl font-bold text-white mb-5 relative'>

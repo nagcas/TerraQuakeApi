@@ -138,9 +138,9 @@ export default function EditProfile({ setEditProfile }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
             >
-              <h1 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
+              <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
                 Edit your Profile
-              </h1>
+              </h2>
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
               <p className='text-xl text-left text-white/70 max-w-7xl'>
                 In the Edit Profile section, you can update your personal
@@ -352,11 +352,7 @@ export default function EditProfile({ setEditProfile }) {
                   aria-label='Save Changes'
                   className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
                 >
-                  {loading ? (
-                    <Spinner />
-                  ) : (
-                    'Save Changes'
-                  )}
+                  {loading ? <Spinner /> : 'Save Changes'}
                 </button>
               </form>
             </motion.div>

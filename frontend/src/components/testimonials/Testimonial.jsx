@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { TimelineContent } from '@/components/testimonials/TimelineAnimation';
 import AvatarUser from '../utils/AvatarUser';
 import useTestimonials from '@/hooks/useTestimonials';
@@ -6,8 +6,8 @@ import { formatDate } from '../utils/FormatDate';
 
 export default function ClientFeedback() {
   const { testimonials } = useTestimonials();
-
   const testimonialRef = useRef(testimonials);
+  const [review, setReview] = useState([]);
 
   const revealVariants = {
     visible: (i) => ({
@@ -26,6 +26,21 @@ export default function ClientFeedback() {
     },
   };
 
+  console.log(testimonials);
+
+  const filterReview = useCallback(() => {
+    if (!testimonials) return;
+
+    const visibleReviews = testimonials.filter(
+      (item) => item.deleted === false
+    );
+
+    setReview(visibleReviews);
+  }, [testimonials]);
+
+  useEffect(() => {
+    filterReview();
+  }, [filterReview]);
 
   return (
     <section
@@ -56,7 +71,7 @@ export default function ClientFeedback() {
         </TimelineContent>
       </article>
       <div className='flex flex-wrap justify-center gap-6 w-full py-10 px-4 mx-auto'>
-        {testimonials.slice(0, 6).map((item) => (
+        {review.slice(0, 6).map((item) => (
           <TimelineContent
             key={item._id}
             animationNum={item._id}
@@ -70,21 +85,20 @@ export default function ClientFeedback() {
               <p className='my-2 font-sm text-gray-500'>
                 {formatDate(item.createdAt)}
               </p>
-              
-              <p className='text-gray-200 leading-relaxed'>
-                {item.message}
-              </p>
+
+              <p className='text-gray-200 leading-relaxed'>{item.message}</p>
 
               <div className='flex justify-between pt-6 items-center relative'>
                 <div>
                   <h2 className='font-semibold text-gray-100 text-base lg:text-lg'>
                     {item.name}
                   </h2>
-                  <p className='text-gray-400 text-sm'>
-                    {item.role}
-                  </p>
+                  <p className='text-gray-400 text-sm'>{item.role}</p>
                 </div>
-                <AvatarUser size='60px' image={item.avatar} />
+                <AvatarUser
+                  size='60px'
+                  image={item.avatar}
+                />
               </div>
             </article>
           </TimelineContent>

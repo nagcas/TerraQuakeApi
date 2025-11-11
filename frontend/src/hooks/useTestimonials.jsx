@@ -9,7 +9,8 @@ export default function useTestimonials(initialPage = 1, initialLimit = 20) {
   const [loadingTestimonial, setLoadingTestimonial] = useState(false);
   const [errorTestimonial, setErrorTestimonial] = useState(null);
   const [testimonials, setTestimonials] = useState([]);
-  const [currentPageTestimonial, setCurrentPageTestimonial] = useState(initialPage);
+  const [currentPageTestimonial, setCurrentPageTestimonial] =
+    useState(initialPage);
   const [totalPagesTestimonials, setTotalPagesTestimonials] = useState(null);
   const [totalTestimonials, setTotalTestimonials] = useState(0);
   const [testimonialsPerPage, setTestimonialsPerPage] = useState(initialLimit);
@@ -62,5 +63,6 @@ export default function useTestimonials(initialPage = 1, initialLimit = 20) {
     testimonialsPerPage,
     loadingTestimonial,
     errorTestimonial,
+    listAllTestimonials,
   };
 }

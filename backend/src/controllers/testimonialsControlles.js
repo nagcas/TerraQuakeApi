@@ -7,8 +7,8 @@ import Testimonial from '../models/testimonialModels.js'
 export const createTestimonial = ({ Testimonial, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { name, email, role, message } = req.body
-      const testimonial = new Testimonial({ name, email, role, message })
+      const { userId, name, avatar, email, role, message } = req.body
+      const testimonial = new Testimonial({ userId, name, avatar, email, role, message })
 
       const newTestimonial = await testimonial.save()
 

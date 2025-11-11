@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MetaData from '../noPage/MetaData';
 import { Context } from '@/components/modules/Context';
 import EditProfile from './EditProfile';
@@ -11,11 +11,19 @@ import Logout from '../auth/Logout';
 import DetailProfile from './DetailProfile';
 import GenerateTokenAPI from './GenerateTokenAPI';
 import FunctionsProfile from './FunctionsProfile';
+import CreateReview from './CreateReview';
+import ViewReview from './ViewReview';
 
 export default function Profile() {
-  const { userLogin, isLoggedIn } =
-    useContext(Context);
+  const { userLogin, isLoggedIn } = useContext(Context);
   const [activeSection, setActiveSection] = useState(null);
+
+  // Scroll to top when updated user datachanges
+  useEffect(() => {
+    if (userLogin || activeSection) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [userLogin, activeSection]);
 
   return (
     <>
@@ -78,7 +86,9 @@ export default function Profile() {
               </p>
 
               {/* Functions profile users */}
-              {activeSection === null && <FunctionsProfile setActiveSection={setActiveSection} />}
+              {activeSection === null && (
+                <FunctionsProfile setActiveSection={setActiveSection} />
+              )}
 
               {activeSection !== null && (
                 <motion.button
@@ -91,11 +101,24 @@ export default function Profile() {
             </div>
 
             {/* Bottom Section */}
-            {activeSection === 'edit' ? (
+            {activeSection === 'edit' && (
               <EditProfile setEditProfile={() => setActiveSection(null)} />
-            ) : activeSection === 'delete' ? (
-              <DeleteProfile />
-            ) : (
+            )}
+
+            {activeSection === 'delete' && <DeleteProfile />}
+
+            {activeSection === 'review' && (
+              <CreateReview setCreateReview={() => setActiveSection(null)} />
+            )}
+
+            {activeSection === 'view' && (
+              <ViewReview
+                userId={userLogin?._id}
+                setUpdateReview={() => setActiveSection(null)}
+              />
+            )}
+
+            {activeSection === null && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -111,12 +134,14 @@ export default function Profile() {
             )}
           </motion.div>
         ) : (
-          // Not Logged In
-          <AccessRestricted />
+          <>
+            {/* Not Logged In */}
+            <AccessRestricted />
+          </>
         )}
+        {/* Floating Button */}
+        <BackToTopButton />
       </section>
-      {/* Floating Button */}
-      <BackToTopButton />
     </>
   );
 }
