@@ -58,7 +58,7 @@ export default function Profile() {
               whileHover={{ scale: 1.02 }}
               className='bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center transition duration-300'
             >
-              <AvatarUser />
+              <AvatarUser image={userLogin?.avatar} />
 
               <h1 className='text-2xl sm:text-3xl font-extrabold mt-5 tracking-tight'>
                 Hello,{' '}
