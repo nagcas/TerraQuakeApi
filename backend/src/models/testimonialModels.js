@@ -1,8 +1,14 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, mongoose } from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
+import User from './userModels.js'
 
 const testimonialsSchema = new Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User,
+      required: true
+    },
     name: {
       type: String,
       required: true
