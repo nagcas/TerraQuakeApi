@@ -45,7 +45,7 @@ export default function ClientFeedback() {
       className='max-w-screen relative text-white bg-white/[0.02] rounded-lg mt-16 py-14'
       ref={testimonialRef}
     >
-      <article className='max-w-screen-md mx-auto text-center space-y-2'>
+      <article className='max-w-screen-md mx-auto text-center space-y-2 p-6'>
         <TimelineContent
           as='h2'
           className={

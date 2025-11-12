@@ -31,7 +31,7 @@ export default function Newsletter() {
   };
 
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-6'>
+    <div className='flex flex-col items-center justify-center relative overflow-hidden p-6'>
       <div className='w-full max-w-6xl mx-4 mt-16 bg-gradient-to-br from-[#1e0341] via-[#180726] to-[#000000] rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-purple-500/30 relative z-10 md:mt-0'>
         {/* Left Panel - Enhanced */}
         <div className='md:w-1/2 p-12 flex flex-col justify-center relative'>
