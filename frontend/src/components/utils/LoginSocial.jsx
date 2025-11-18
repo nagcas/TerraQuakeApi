@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa6';
 
-export default function LoginSocial({ setLoading }) {
+export default function LoginSocial({ setLoading, text }) {
   // Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
     setLoading(true);
@@ -28,21 +28,27 @@ export default function LoginSocial({ setLoading }) {
         <div className='flex-grow border-t border-gray-400'></div>
       </div>
 
-      <div className='flex justify-center gap-4 mb-9'>
+      <div className='flex justify-center items-center gap-4 mb-9'>
         <button
           type='button'
-          className='text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
+          className='px-6 text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
           onClick={() => handleSocialLogin('google')}
         >
-          <FaGoogle className='w-5 h-5' />
+          <span className='flex gap-2'>
+            <p className='mx-auto'>{text}</p>
+            <FaGoogle className='w-5 h-5' />
+          </span>
         </button>
-
+        <span>OR</span>
         <button
           type='button'
-          className='text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
+          className='px-6 text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
           onClick={() => handleSocialLogin('github')}
         >
+          <span className='flex gap-2'>
+          <p className='mx-auto'>{text}</p>
           <FaGithub className='w-5 h-5' />
+          </span>
         </button>
       </div>
     </>

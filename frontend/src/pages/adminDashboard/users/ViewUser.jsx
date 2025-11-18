@@ -4,8 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function ViewUser({ users }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(users);
-
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };

@@ -415,7 +415,7 @@ export default function SignUp() {
                 </button>
             
                 {/* Social Buttons */}
-                <LoginSocial setLoading={setLoading} />
+                <LoginSocial setLoading={setLoading} text='Sign Up with' />
             
                 <div className='mt-6 flex flex-col items-center'>
                   <p className='text-gray-200 text-sm cursor-default'>
