@@ -115,7 +115,7 @@ export default function TableUsers() {
                     {users.map((item) => (
                       <tr
                         key={item._id}
-                        className=' hover:bg-purple-500/10 transition-colors'
+                        className='hover:bg-purple-500/10 transition-colors'
                       >
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item._id.slice(0, 6)}...
@@ -133,10 +133,10 @@ export default function TableUsers() {
                           {item.deleted === true ? 'Yes' : 'No'}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.term === true ? 'Yes' : 'No'}
+                          {item.terms === true ? 'Yes' : 'No'}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
-                          <ViewUser />
+                          <ViewUser users={item} />
                           <UpdateUser />
                           <DeleteUser />
                         </td>
