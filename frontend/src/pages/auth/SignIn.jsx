@@ -203,7 +203,7 @@ export default function SignIn() {
                 </button>
 
                 {/* Social Buttons */}
-                <LoginSocial setLoading={setLoading} />
+                <LoginSocial setLoading={setLoading} text='Login with' />
 
                 {/* Sign Up Link */}
                 <div className='mt-6 flex flex-col items-center'>
