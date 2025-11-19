@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
-import Spinner from './spinner/Spinner';
+import Spinner from '../spinner/Spinner';
 
 export default function RequireAuth({ children, requiredRole = null }) {
   const { userLogin, isLoggedIn, isLoadingUser } = useContext(Context);
