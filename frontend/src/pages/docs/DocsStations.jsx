@@ -25,7 +25,6 @@ export default function DocsStations() {
       { id: 'stations-property', label: 'Property-Based' },
       { id: 'error-handling', label: 'Error Handling' },
       { id: 'code-examples', label: 'Code Examples' },
-      { id: 'data-fields', label: 'Data Field Reference' },
       { id: 'support', label: 'Support & Feedback' },
       { id: 'api-information', label: 'API Information' },
     ],
@@ -784,57 +783,6 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                     </SyntaxHighlighter>
                   </div>
                 </div>
-              </section>
-
-              {/* Data fields */}
-              <section
-                id='data-fields'
-                className='scroll-mt-[120px] py-16'
-              />
-              {/* placeholder if needed */}
-
-              <section
-                id='data-fields'
-                className='scroll-mt-[120px] py-16'
-              >
-                <h2 className='text-2xl font-bold text-white'>
-                  Data Field Reference
-                </h2>
-                <p className='text-white/80 mt-2'>
-                  Each earthquake entry is a GeoJSON Feature. Important fields:
-                </p>
-                <ul className='list-disc list-inside mt-3 text-white/80'>
-                  <li>
-                    <code>eventId</code> — unique event identifier (integer)
-                  </li>
-                  <li>
-                    <code>originId</code> — origin/source id
-                  </li>
-                  <li>
-                    <code>time</code> — ISO 8601 timestamp in UTC
-                  </li>
-                  <li>
-                    <code>author</code> — reporting agency
-                  </li>
-                  <li>
-                    <code>mag</code> — magnitude (float)
-                  </li>
-                  <li>
-                    <code>magType</code> — e.g., ML, Mw
-                  </li>
-                  <li>
-                    <code>place</code> — human-readable location
-                  </li>
-                  <li>
-                    <code>geometry.coordinates</code> — [longitude, latitude,
-                    depth]
-                  </li>
-                </ul>
-
-                <h4 className='mt-4 font-semibold text-white'>Geometry</h4>
-                <p className='text-white/80'>
-                  GeoJSON Point: <code>[lon, lat, depth]</code> (depth in km).
-                </p>
               </section>
 
               {/* Support */}

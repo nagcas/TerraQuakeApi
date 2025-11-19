@@ -8,7 +8,8 @@ export default function Footer() {
   const navLinks = [
     { title: 'Home', path: '/' },
     { title: 'About', path: '/about' },
-    { title: 'Docs', path: '/docs-earthquakes' },
+    { title: 'Docs Earthquakes', path: '/docs-earthquakes' },
+    { title: 'Docs Stations', path: '/docs-stations' },
     { title: 'Contribute', path: '/contribute' },
   ];
 
