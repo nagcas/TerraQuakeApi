@@ -44,6 +44,7 @@ import TableUsers from './pages/adminDashboard/users/TableUsers'
 import TableMessages from './pages/adminDashboard/messages/TableMessages'
 import TableFaqs from './pages/adminDashboard/faq/TableFaqs'
 import StationsData from './pages/stationsData/StationsData'
+import DocsStations from './pages/docs/DocsStations'
 
 export default function App() {
   return (
@@ -66,6 +67,7 @@ export default function App() {
               <Route path='/explore-data/table-stations' element={<TableViewStations />} />
               <Route path='/api-access' element={<ApiAccess />} />
               <Route path='/docs-earthquakes' element={<DocsEarthquakes />} />
+              <Route path='/docs-stations' element={<DocsStations />} />
               <Route path='/use-cases' element={<UseCases />} />
               <Route path='/about' element={<About />} />
               <Route path='/contact' element={<Contact />} />

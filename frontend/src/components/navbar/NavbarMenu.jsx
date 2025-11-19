@@ -33,6 +33,7 @@ export default function NavbarMenu() {
   const resourcesNavItems = [
     { name: 'Use Cases', path: '/use-cases' },
     { name: 'Docs Earthquakes', path: '/docs-earthquakes' },
+    { name: 'Docs Stations', path: '/docs-stations' },
     { name: 'Faq', path: '/faq' },
   ];
 
@@ -46,7 +47,8 @@ export default function NavbarMenu() {
     { name: 'Admin Dashboard', path: '/admin' },
     { name: 'Change Password', path: '/change-password' },
     { name: 'Messages', path: '/contact' },
-    { name: 'Documentation', path: '/docs' },
+    { name: 'Docs Earthquakes', path: '/docs-earthquakes' },
+    { name: 'Docs Stations', path: '/docs-stations' },
     { name: 'Information', path: '/info' },
   ];
 
