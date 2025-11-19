@@ -28,7 +28,7 @@ export default function LoginSocial({ setLoading, text }) {
         <div className='flex-grow border-t border-gray-400'></div>
       </div>
 
-      <div className='flex justify-center items-center gap-4 mb-9'>
+      <div className='flex flex-col md:flex-row justify-center items-center gap-4 mb-9'>
         <button
           type='button'
           className='px-6 text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
