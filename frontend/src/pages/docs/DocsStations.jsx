@@ -6,9 +6,8 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CopyButton } from '@components/utils/CopyButton';
 import VersionAPI from '@/components/utils/VersionAPI';
-import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
 
-export default function DocsEarthquakes() {
+export default function DocsStations() {
   const contentRef = useRef(null);
   const [activeId, setActiveId] = useState('getting-started');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,11 +19,10 @@ export default function DocsEarthquakes() {
       { id: 'common-parameters', label: 'Common Parameters' },
       { id: 'response-format', label: 'Response Format' },
       { id: 'endpoints', label: 'API Endpoints' },
-      { id: 'magnitude-legend', label: 'Magnitude Legend' },
-      { id: 'time-queries', label: 'Time-Based Queries' },
-      { id: 'location-queries', label: 'Location-Based Queries' },
-      { id: 'property-queries', label: 'Property-Based Queries' },
-      { id: 'event-queries', label: 'Event-Based Queries' },
+      { id: 'stations', label: 'Stations' },
+      { id: 'stations-geojson', label: 'GeoJSON-Based' },
+      { id: 'stations-events', label: 'Event-Based' },
+      { id: 'stations-property', label: 'Property-Based' },
       { id: 'error-handling', label: 'Error Handling' },
       { id: 'code-examples', label: 'Code Examples' },
       { id: 'data-fields', label: 'Data Field Reference' },
@@ -50,9 +48,7 @@ export default function DocsEarthquakes() {
       if (intersectingEntries.length > 0) {
         // Find the entry that is closest to the top of the viewport
         const entry = intersectingEntries.reduce((prev, curr) =>
-          prev.boundingClientRect.top < curr.boundingClientRect.top
-            ? prev
-            : curr
+          prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr
         );
         if (entry) {
           setActiveId(entry.target.id);
@@ -89,9 +85,9 @@ export default function DocsEarthquakes() {
 
   // Code snippets centralized for reuse and copy buttons
   const snippets = {
-    curlRecent: `curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=10&page=1"`,
+    curlRecent: `curl -X GET "https://api.terraquakeapi.com/v1/stations?limit=10&page=1"`,
     fetchRecent: `
-fetch("https://api.terraquakeapi.com/v1/earthquakes/recent?limit=5")
+fetch("https://api.terraquakeapi.com/v1/stations?limit=5")
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => console.error(error));`,
@@ -99,34 +95,36 @@ fetch("https://api.terraquakeapi.com/v1/earthquakes/recent?limit=5")
 import React, { useEffect, useState } from "react";
 
 function RecentEarthquakes() {
-  const [data, setData] = useState([]);
+  const [stations, setStations] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchEarthquakes = async () => {
+    const fetchStations = async () => {
       try {
-        const response = await fetch("https://api.terraquakeapi.com/v1/earthquakes/recent?limit=5");
+        const response = await fetch("https://api.terraquakeapi.com/v1/stations?limit=5");
         if (!response.ok) throw new Error("Network response was not ok");
+
         const json = await response.json();
-        setData(json || []);
+
+        // L'API restituisce json.payload (array)
+        setStations(json.payload || []);
       } catch (err) {
         console.error(err);
         setError(err.message);
       }
     };
-      
-    fetchEarthquakes();
+
+    fetchStations();
   }, []);
-  
+
   if (error) return <p>Error: {error}</p>;
-  
-  if (!data.length) return <p>Loading...</p>;
-  
+  if (!stations.length) return <p>Loading...</p>;
+
   return (
     <ul>
-      {data.map(eq => (
-        <li key={eq.properties.eventId}>
-          {eq.properties.place} — {eq.properties.mag}
+      {stations.map((st) => (
+        <li key={st._id}>
+          {st.code} — {st.name} ({st.network})
         </li>
       ))}
     </ul>
@@ -137,20 +135,57 @@ export default RecentEarthquakes;`,
     pythonRequests: `
 import requests
 
-url = "https://api.terraquakeapi.com/v1/earthquakes/recent?limit=10"
+url = "https://api.terraquakeapi.com/v1/stations"
 
-response = requests.get(url)
-print(response.json())`,
+params = {
+  "limit": 100
+}
+
+try:
+  response = requests.get(url, params=params)
+  response.raise_for_status()
+
+  data = response.json()
+  stations = data.get("payload", [])
+  print(stations)
+except requests.exceptions.RequestException as e:
+  print(f"Error: {e}")`,
     axiosNode: `
 const axios = require('axios');
-axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
-  params: { startdate: '2025-09-01', enddate: '2025-09-30', limit: 100 }
+axios.get('https://api.terraquakeapi.com/v1/stations/open', {
+  params: {
+    limit: 100
+  } 
 })
-  .then((response) => console.log(response.data))
-  .catch((error) => console.error(error.response?.data || error.message));`,
-    curlLocation: `curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/location?latitude=35.6762&longitude=139.6503&radius=500&limit=20"`,
-    exampleResponse: `{\n  "success": true,\n  "code": 200,\n  "status": "OK",\n  "message": "Earthquakes recent events",\n  "Payload": [...],\n  "meta": {\n    "method": "GET",\n    "path": "/v1/earthquakes/recent?limit=10&page=1",\n    "timestamp": "2025-11-19T14:24:49.431Z"\n  },\n  "totalEarthquakes": 14687,\n  "pagination": {\n    "page": 1,\n    "totalPages": 1469,\n    "limit": 10,\n    "hasMore": true\n  }\n`,
-    curlEventId: `curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/eventId?eventId=44278572"`,
+  .then((response) => {
+    console.log(response.data,payload);
+  })
+  .catch((error) => {
+    console.error(error.response?.data || error.message)
+  });`,
+    curlLocation: `curl -X GET "https://api.terraquakeapi.com/v1/earthquakes/stations/closed"`,
+    exampleResponse: `{
+"success": true,
+"code": 200,
+"status": "OK",
+"message": "List of seismic monitoring stations (INGV Network)",
+"payload": [...],
+"meta": 
+  {
+    "method": "GET",
+    "path": "/v1/stations?limit=10&page=1",
+    "timestamp": "2025-11-19T14:22:52.431Z"
+  },
+  "totalStations": 549,
+  "pagination": 
+  {
+    "page": 1,
+    "totalPages": 55,
+    "limit": 10,
+    "hasMore": true
+  }
+}`,
+    curlEventId: `curl -X GET "https://api.terraquakeapi.com/v1/stations/code?code=ACATE"`,
   };
 
   return (
@@ -192,8 +227,9 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Programmatic access to global seismic event data — endpoints,
-              parameters, examples, and best practices.
+              Comprehensive programmatic access to INGV seismic station data —
+              endpoints, query parameters, usage examples, and integration best
+              practices.
             </p>
           </motion.div>
 
@@ -247,15 +283,15 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* Getting Started */}
               <section
                 id='getting-started'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Getting Started - Earthquakes
+                  Getting Started - Stations
                 </h2>
                 <p className='text-white/80 mt-2'>
                   <strong>Base URL:</strong>{' '}
                   <code className='bg-slate-800 px-2 py-1 rounded'>
-                    https://api.terraquakeapi.com/v1/earthquakes
+                    https://api.terraquakeapi.com/v1/stations
                   </code>
                 </p>
                 <p className='text-white/80 mt-2'>
@@ -310,7 +346,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* Common Parameters */}
               <section
                 id='common-parameters'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-6'
               >
                 <h2 className='text-2xl font-bold text-white'>
                   Common Parameters
@@ -335,7 +371,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* Response Format */}
               <section
                 id='response-format'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-6'
               >
                 <h2 className='text-2xl font-bold text-white'>
                   Response Format
@@ -355,60 +391,50 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
   "success": true,
   "code": 200,
   "status": "OK",
-  "message": "Earthquakes recent events",
+  "message": "List of seismic monitoring stations (INGV Network)",
   "payload": [
     {
-      "type": "Feature",
-      "properties": {
-        "eventId": 44688182,
-        "originId": 141360101,
-        "time": "2025-11-19T13:07:32.849000",
-        "author": "SURVEY-INGV-OV#WESSEL",
-        "magType": "Md",
-        "mag": 2,
-        "magAuthor": "--",
-        "type": "earthquake",
-        "place": "Campi Flegrei",
-        "version": 100,
-        "geojson_creationTime": "2025-11-19T14:24:47"
+      "$": {
+        "code": "ACATE",
+        "startDate": "2019-02-28T05:59:00",
+        "restrictedStatus": "open"
       },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          14.127667,
-          40.833333,
-          1.8
-        ]
-      }
+      "Latitude": "37.02398",
+      "Longitude": "14.50064",
+      "Elevation": "210",
+      "Site": {
+        "Name": "ACATE"
+      },
+      "CreationDate": "2019-02-28T05:59:00"
     }
   ],
   "meta": {
     "method": "GET",
-    "path": "/v1/earthquakes/recent?limit=1&page=1",
-    "timestamp": "2025-11-19T14:24:49.431Z"
+    "path": "/v1/stations?limit=1&page=1",
+    "timestamp": "2025-11-19T14:22:52.431Z"
   },
-  "totalEarthquakes": 14687,
+  "totalStations": 549,
   "pagination": {
     "page": 1,
-    "totalPages": 14687,
+    "totalPages": 549,
     "limit": 1,
     "hasMore": true
   }
-}
-`}
+}`}
                 </SyntaxHighlighter>
               </section>
 
               {/* API Endpoints Overview */}
               <section
                 id='endpoints'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  API Endpoints Earthquakes
+                  API Endpoints Stations
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Time, location, property and event-based queries.
+                  Code, geoJson, open, closed and statistics endpoints are
+                  available.
                 </p>
 
                 <div className='mt-4 overflow-x-auto rounded border border-white/5 bg-slate-900/30'>
@@ -426,63 +452,39 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     <tbody>
                       <Row
                         method='GET'
-                        endpoint='/v1/earthquakes/recent'
-                        desc='Latest sismic events (year→today)'
+                        endpoint='/v1/stations'
+                        desc='All stations'
                         params='limit, page'
                       />
                       <Row
                         method='GET'
-                        endpoint='/v1/earthquakes/today'
-                        desc='Today seismic events (UTC)'
+                        endpoint='/v1/stations/code'
+                        desc='Stations detail by code station'
+                        params='code* (req)'
+                      />
+                      <Row
+                        method='GET'
+                        endpoint='/v1/stations/geojson'
+                        desc='Full station dataset (GeoJSON format)'
                         params='limit, page'
                       />
                       <Row
                         method='GET'
-                        endpoint='/v1/earthquakes/last-week'
-                        desc='Last 7 days'
+                        endpoint='/v1/stations/open'
+                        desc='List of active seismic stations'
                         params='limit, page'
                       />
                       <Row
                         method='GET'
-                        endpoint='/v1/earthquakes/month'
-                        desc='By month/year'
-                        params='year* (req), month* (req), limit, page'
+                        endpoint='/v1/stations/closed'
+                        desc='List of inactive or decommissioned seismic stations'
+                        params='limit, page'
                       />
                       <Row
                         method='GET'
-                        endpoint='/v1/earthquakes/location'
-                        desc='Within radius of coords'
-                        params='latitude* (req), longitude* (req), radius (Km), limit, page'
-                      />
-                      <Row
-                        method='GET'
-                        endpoint='/v1/earthquakes/range-time'
-                        desc='Date range'
-                        params='startdate* (req), enddate* (req), limit, page'
-                      />
-                      <Row
-                        method='GET'
-                        endpoint='/v1/earthquakes/region'
-                        desc='By Italian region'
-                        params='region* (req), limit, page'
-                      />
-                      <Row
-                        method='GET'
-                        endpoint='/v1/earthquakes/depth'
-                        desc='By focal depth (km)'
-                        params='depth* (req), limit, page'
-                      />
-                      <Row
-                        method='GET'
-                        endpoint='/v1/earthquakes/magnitude'
-                        desc='Min magnitude'
-                        params='mag* (req), limit, page'
-                      />
-                      <Row
-                        method='GET'
-                        endpoint='/v1/earthquakes/eventId'
-                        desc='Event details by id'
-                        params='eventId* (req)'
+                        endpoint='/v1/stations/statistics'
+                        desc='Seismic network summary'
+                        params='no parameter'
                       />
                     </tbody>
                   </table>
@@ -522,149 +524,61 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 </div>
               </section>
 
-              {/* Magnitude Legend */}
+              {/* Stations */}
               <section
-                id='magnitude-legend'
-                className='scroll-mt-[120px] py-12'
+                id='stations'
+                className='scroll-mt-[120px] py-16'
               >
-                <h2 className='text-xl font-bold text-white'>
-                  Magnitude Legend
-                </h2>
-                <MagnitudeLegend />
-              </section>
-
-              {/* Time-Based Queries */}
-              <section
-                id='time-queries'
-                className='scroll-mt-[120px] py-12'
-              >
-                <h2 className='text-xl font-bold text-white'>
-                  Time-Based Queries
-                </h2>
+                <h2 className='text-xl font-bold text-white'>Stations</h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/recent
+                    GET /v1/earthquakes/stations
                   </h4>
                   <p className='text-white/80'>
-                    Earthquakes from Jan 1st of the current year up to today.
-                  </p>
-                </article>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/today
-                  </h4>
-                  <p className='text-white/80'>Events occurred today (UTC).</p>
-                </article>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/last-week
-                  </h4>
-                  <p className='text-white/80'>
-                    Last 7 days (including today).
-                  </p>
-                </article>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/month
-                  </h4>
-                  <p className='text-white/80'>
-                    Requires <code>year</code> and <code>month</code>. Returns
-                    400 for invalid input.
-                  </p>
-                </article>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/range-time
-                  </h4>
-                  <p className='text-white/80'>
-                    Requires <code>startdate</code> and <code>enddate</code>{' '}
-                    (YYYY-MM-DD). Max range 365 days.
+                    Returns all available seismic stations.
                   </p>
                 </article>
               </section>
 
-              {/* Location-Based Queries */}
+              {/* Stations-geoJSON */}
               <section
-                id='location-queries'
-                className='scroll-mt-[120px] py-12'
+                id='stations-geojson'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Location-Based Queries
+                  Stations-GeoJSON
                 </h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/location
+                    GET /v1/earthquakes/stations/geojson
                   </h4>
                   <p className='text-white/80'>
-                    Requires <code>latitude</code> and <code>longitude</code>.
-                    Optional <code>radius</code> (km). Uses Haversine; ordered
-                    by distance.
-                  </p>
-                </article>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/region
-                  </h4>
-                  <p className='text-white/80'>
-                    Italian region name (case-insensitive). Supported regions:
-                    Abruzzo, Basilicata, Calabria, ... Veneto.
+                    Returns all seismic stations in GeoJSON format. Supports
+                    bounding-box filters for geospatial mapping and
+                    visualization.
                   </p>
                 </article>
               </section>
 
-              {/* Property-Based Queries */}
+              {/* Stations-events code */}
               <section
-                id='property-queries'
-                className='scroll-mt-[120px] py-12'
+                id='stations-events'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Property-Based Queries
+                  Station by Code
                 </h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/depth
+                    GET /v1/stations/code?code=ACATE
                   </h4>
                   <p className='text-white/80'>
-                    Filter by maximum depth (km). Depth classes: shallow 0–70,
-                    intermediate 70–300, deep 300+.
-                  </p>
-                </article>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/magnitude
-                  </h4>
-                  <p className='text-white/80'>
-                    Filter by magnitude &ge; value. Reference scales provided
-                    (ML, Mw, etc.).
-                  </p>
-                </article>
-              </section>
-
-              {/* Event-Based Queries */}
-              <section
-                id='event-queries'
-                className='scroll-mt-[120px] py-12'
-              >
-                <h2 className='text-xl font-bold text-white'>
-                  Event-Based Queries
-                </h2>
-
-                <article className='mt-4'>
-                  <h4 className='font-semibold text-white'>
-                    GET /v1/earthquakes/eventId
-                  </h4>
-                  <p className='text-white/80'>
-                    Retrieve single event details by <code>eventId</code>.
-                    Returns 404 if not found.
+                    Retrieve detailed metadata for a single seismic station by
+                    its <code>code</code>. Returns 404 if the station does not
+                    exist.
                   </p>
 
                   <SyntaxHighlighter
@@ -683,10 +597,40 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 </article>
               </section>
 
+              {/* Stations-property */}
+              <section
+                id='stations-property'
+                className='scroll-mt-[120px] py-16'
+              >
+                <h2 className='text-xl font-bold text-white'>
+                  Stations by Property
+                </h2>
+
+                <article className='mt-4'>
+                  <h4 className='font-semibold text-white'>
+                    GET /v1/stations/open
+                  </h4>
+                  <p className='text-white/80'>
+                    Returns all stations currently operational (open). Ideal for
+                    filtering active monitoring infrastructure.
+                  </p>
+                </article>
+
+                <article className='mt-4'>
+                  <h4 className='font-semibold text-white'>
+                    GET /v1/stations/closed
+                  </h4>
+                  <p className='text-white/80'>
+                    Returns all stations marked as inactive or closed. Useful
+                    for network management and maintenance analysis.
+                  </p>
+                </article>
+              </section>
+
               {/* Error Handling */}
               <section
                 id='error-handling'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
                   Error Handling
@@ -706,14 +650,14 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     marginTop: 8,
                   }}
                 >
-                  {`{
-  "success": false,
-  "code": 400,
-  "status": "Bad Request",
-  "message": "Invalid date format. Expected YYYY-MM-DD",
-  "errors": [
-    { "field": "startdate", "message": "Date must be in YYYY-MM-DD format" }
-  ]
+                  {`
+{
+    "success": false,
+    "status": 400,
+    "message": "Parameter 'code' is required",
+    "meta": {
+        "timestamp": "2025-11-19T17:42:37.414Z"
+    }
 }`}
                 </SyntaxHighlighter>
 
@@ -736,7 +680,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* Code Examples */}
               <section
                 id='code-examples'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>Code Examples</h2>
                 <p className='text-white/80 mt-2'>
@@ -845,13 +789,13 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* Data fields */}
               <section
                 id='data-fields'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               />
               {/* placeholder if needed */}
 
               <section
                 id='data-fields'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
                   Data Field Reference
@@ -896,7 +840,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* Support */}
               <section
                 id='support'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
                   Support & Feedback
@@ -935,7 +879,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
               {/* API Information */}
               <section
                 id='api-information'
-                className='scroll-mt-[120px] py-12'
+                className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
                   API Information
