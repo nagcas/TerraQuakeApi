@@ -18,14 +18,55 @@ import useMessages from '@/hooks/useMessages';
 import useFaqs from '@/hooks/useFaqs';
 
 export default function AdminDashboard() {
-  const { userLogin } = useContext(Context);
+  const { userLogin, isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
-  
+
+  if (!isLoggedIn) {
+    navigate('/signin', { replace: true });
+    return null;
+  }
+
   // Hooks
-  const { users, totalPagesUsers, totalUsers, currentPageUser, setCurrentPageUser, usersPerPage, loadingUser, errorUser } = useUsers();
-  const { posts, totalPagesPosts, totalPosts, currentPagePost, setCurrentPagePost, postsPerPage, loadingPost, errorPost } = usePosts();
-  const { messages, totalPagesMessages, totalMessages, currentPageMessage, setCurrentPageMessage, messagesPerPage, loadingMessage, errorMessage } = useMessages();
-  const { faqs, totalPagesFaqs, totalFaqs, currentPageFaq, setCurrentPageFaq, faqsPerPage, loadingFaq, errorFaq } = useFaqs();
+  const {
+    users,
+    totalPagesUsers,
+    totalUsers,
+    currentPageUser,
+    setCurrentPageUser,
+    usersPerPage,
+    loadingUser,
+    errorUser,
+  } = useUsers();
+  const {
+    posts,
+    totalPagesPosts,
+    totalPosts,
+    currentPagePost,
+    setCurrentPagePost,
+    postsPerPage,
+    loadingPost,
+    errorPost,
+  } = usePosts();
+  const {
+    messages,
+    totalPagesMessages,
+    totalMessages,
+    currentPageMessage,
+    setCurrentPageMessage,
+    messagesPerPage,
+    loadingMessage,
+    errorMessage,
+  } = useMessages();
+  const {
+    faqs,
+    totalPagesFaqs,
+    totalFaqs,
+    currentPageFaq,
+    setCurrentPageFaq,
+    faqsPerPage,
+    loadingFaq,
+    errorFaq,
+  } = useFaqs();
 
   const handleProfile = () => {
     navigate('/profile', { replace: true });
@@ -99,7 +140,7 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Posts</h3>
-            <ListPosts 
+            <ListPosts
               posts={posts}
               totalPosts={totalPosts}
               totalPagesPosts={totalPagesPosts}
@@ -118,7 +159,7 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Messages</h3>
-            <ListMessages 
+            <ListMessages
               messages={messages}
               totalMessages={totalMessages}
               totalPagesMessages={totalPagesMessages}
@@ -161,7 +202,7 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>Faqs</h3>
-            <ListFaqs 
+            <ListFaqs
               faqs={faqs}
               totalFaqs={totalFaqs}
               totalPagesFaqs={totalPagesFaqs}
