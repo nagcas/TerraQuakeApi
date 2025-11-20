@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import axios from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { Context } from '@/components/modules/Context';
 
 export default function useUsers(initialPage = 1, initialLimit = 20) {
+  const { isLoggedIn } = useContext(Context);
+
   const navigate = useNavigate();
 
   const [loadingUser, setLoadingUser] = useState(false);
@@ -17,6 +20,13 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
   const token = localStorage.getItem('token');
 
   const listAllUsers = useCallback(async () => {
+    if (!isLoggedIn || !token) {
+      setUsers([]);
+      setLoadingUser(false);
+      setErrorUser(null);
+      return;
+    }
+
     setLoadingUser(true);
     setErrorUser(null);
     try {
