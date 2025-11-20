@@ -9,11 +9,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
+import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
 
-export default function UpdateReview({ reviewId, review, setUpdateReview, setReview, refetchTestimonials }) {
+export default function UpdateReview({
+  reviewId,
+  review,
+  setUpdateReview,
+  setReview,
+  refetchTestimonials,
+}) {
   // Get user context and login state
-  const { userLogin, isLoggedIn } =
-    useContext(Context);
+  const { userLogin, isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -85,8 +91,8 @@ export default function UpdateReview({ reviewId, review, setUpdateReview, setRev
       // Re-sync the form with new data
       reset(updateReview);
       setUpdateReview(false);
-      setReview((prev) => ({ ...prev, ...updateReview }))
-      await refetchTestimonials()
+      setReview((prev) => ({ ...prev, ...updateReview }));
+      await refetchTestimonials();
     } catch (error) {
       // Extract and display error message from backend or network
       const errorMessage =
@@ -106,6 +112,10 @@ export default function UpdateReview({ reviewId, review, setUpdateReview, setRev
       setLoading(false);
     }
   };
+
+  if (!isLoggedIn) {
+    return <AccessRestricted />;
+  }
 
   return (
     <>
@@ -128,133 +138,108 @@ export default function UpdateReview({ reviewId, review, setUpdateReview, setRev
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {isLoggedIn ? (
-          <>
-            {/* User is logged in → Show profile form */} 
-            <div className='w-full max-w-5xl mx-auto'>
-              {/* Title */}
-              <motion.div
-                className='mb-12 text-center'
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-              >
-                <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-                  Update a Review
-                </h2>
-                <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
-                <p className='text-xl text-left text-white/70 max-w-7xl'>
-                  Share your experience with TerraQuake API. Your feedback helps
-                  developers, researchers, and professionals understand the real
-                  value of the platform.
-                </p>
-              </motion.div>
-
-              {/* Form container */}
-              <motion.div
-                className='p-6 sm:p-10 lg:p-14 border border-white/10 bg-white/[0.03] rounded-3xl shadow-2xl backdrop-blur-sm'
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <form
-                  className='space-y-8'
-                  onSubmit={handleSubmit(handleUpdateReview)}
-                >
-                  {/* Name field */}
-                  <div>
-                    <label className='block text-white text-sm font-semibold mb-2'>
-                      Your full name
-                    </label>
-                    <input
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      placeholder='Your full name'
-                      autoComplete='off'
-                      {...register('name')}
-                    />
-                    <p className='text-red-400 text-xs pt-1'>
-                      {errors.name?.message}
-                    </p>
-                  </div>
-
-                  {/* Email field */}
-                  <div>
-                    <label className='block text-white text-sm font-semibold mb-2'>
-                      Email
-                    </label>
-                    <input
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      placeholder='name@company.com'
-                      autoComplete='off'
-                      {...register('email')}
-                    />
-                    <p className='text-red-400 text-xs pt-1'>
-                      {errors.email?.message}
-                    </p>
-                  </div>
-
-                  {/* Role field */}
-                  <div>
-                    <label className='block text-white text-sm font-semibold mb-2'>
-                      Your professional role
-                    </label>
-                    <input
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      placeholder='Your professional role (e.g. Researcher, Developer, Geologist)'
-                      autoComplete='off'
-                      {...register('role')}
-                    />
-                  </div>
-
-                  {/* Review field */}
-                  <div>
-                    <label className='block text-white text-sm font-semibold mb-2'>
-                      Review
-                    </label>
-                    <textarea
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      placeholder='Write your review here...'
-                      autoComplete='off'
-                      rows={4}
-                      {...register('message')}
-                    />
-                  </div>
-
-                  {/* Submit button */}
-                  <button
-                    type='submit'
-                    disabled={loading}
-                    aria-label='Save Changes'
-                    className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
-                  >
-                    {loading ? <Spinner /> : 'Update Review'}
-                  </button>
-                </form>
-              </motion.div>
-            </div>
-          </>
-        ) : (
-          // If user is not logged in → show sign-in/sign-up options
-          <div className='flex flex-col items-center gap-6 max-w-2xl text-center'>
-            <p className='text-lg md:text-xl text-gray-300'>
-              To edit your profile page, you need to be registered.
+        {/* User is logged in → Show profile form */}
+        <div className='w-full max-w-5xl mx-auto'>
+          {/* Title */}
+          <motion.div
+            className='mb-12 text-center'
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
+              Update a Review
+            </h2>
+            <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
+            <p className='text-xl text-left text-white/70 max-w-7xl'>
+              Share your experience with TerraQuake API. Your feedback helps
+              developers, researchers, and professionals understand the real
+              value of the platform.
             </p>
-            <div className='flex flex-col sm:flex-row gap-4 mt-4'>
+          </motion.div>
+
+          {/* Form container */}
+          <motion.div
+            className='p-6 sm:p-10 lg:p-14 border border-white/10 bg-white/[0.03] rounded-3xl shadow-2xl backdrop-blur-sm'
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <form
+              className='space-y-8'
+              onSubmit={handleSubmit(handleUpdateReview)}
+            >
+              {/* Name field */}
+              <div>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  Your full name
+                </label>
+                <input
+                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                  placeholder='Your full name'
+                  autoComplete='off'
+                  {...register('name')}
+                />
+                <p className='text-red-400 text-xs pt-1'>
+                  {errors.name?.message}
+                </p>
+              </div>
+
+              {/* Email field */}
+              <div>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  Email
+                </label>
+                <input
+                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                  placeholder='name@company.com'
+                  autoComplete='off'
+                  {...register('email')}
+                />
+                <p className='text-red-400 text-xs pt-1'>
+                  {errors.email?.message}
+                </p>
+              </div>
+
+              {/* Role field */}
+              <div>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  Your professional role
+                </label>
+                <input
+                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                  placeholder='Your professional role (e.g. Researcher, Developer, Geologist)'
+                  autoComplete='off'
+                  {...register('role')}
+                />
+              </div>
+
+              {/* Review field */}
+              <div>
+                <label className='block text-white text-sm font-semibold mb-2'>
+                  Review
+                </label>
+                <textarea
+                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                  placeholder='Write your review here...'
+                  autoComplete='off'
+                  rows={4}
+                  {...register('message')}
+                />
+              </div>
+
+              {/* Submit button */}
               <button
-                onClick={() => navigate('/signin')}
-                className='py-3 px-8 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
+                type='submit'
+                disabled={loading}
+                aria-label='Save Changes'
+                className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
               >
-                Sign In
+                {loading ? <Spinner /> : 'Update Review'}
               </button>
-              <button
-                onClick={() => navigate('/signup')}
-                className='py-3 px-8 rounded-full bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
-              >
-                Sign Up
-              </button>
-            </div>
-          </div>
-        )}
+            </form>
+          </motion.div>
+        </div>
       </motion.section>
     </>
   );

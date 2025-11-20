@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Context } from '@/components/modules/Context';
 
 export default function DetailProfile() {
-  const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin, updateUser } =
+  const { userLogin } =
     useContext(Context);
 
   return (

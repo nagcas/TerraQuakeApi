@@ -1,15 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '@/components/modules/Context';
 import MetaData from '../noPage/MetaData';
-import Spinner from '@/components/spinner/Spinner';
 import axios from '@/config/Axios.js';
 
 export default function DeleteReview({ reviewId, refetchTestimonials }) {
-  const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
-    useContext(Context);
-
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
