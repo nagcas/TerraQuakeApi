@@ -80,7 +80,7 @@ export default function DeleteProfile() {
         error?.response?.data?.error ||
         error?.message ||
         'An error occurred. Please try again.';
-      console.log(errorMessage);
+      
       Swal.fire({
         title: 'Error!',
         text: errorMessage,
