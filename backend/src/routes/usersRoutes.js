@@ -5,11 +5,14 @@ import {
   updateRoleById,
   getCurrentUserData,
   updateCurrentUserData,
-  deleteCurrentUser
+  deleteCurrentUser,
+  updateUserData,
+  deleteUser
 } from '../controllers/userControllers.js'
 
 import {
   validatorUpdateCurrentUserData,
+  validatorUpdateDeleted,
   validatorUpdateRoleById
 } from '../validators/userValidators.js'
 
@@ -37,15 +40,23 @@ router.post('/:id/role', validatorUpdateRoleById, updateRoleById({ User, buildRe
 router.get('/me', authenticateUser, getCurrentUserData({ User, buildResponse, handleHttpError }))
 
 // NOTE: Update current logged-in user's data
-// PUT /me/update — updates personal data for the logged-in user
+// PATCH /me/update — updates personal data for the logged-in user
 router.patch('/me/update', authenticateUser, validatorUpdateCurrentUserData, updateCurrentUserData({ User, buildResponse, handleHttpError, matchedData }))
+
+// NOTE; Update user by admin
+// PATCH /update/:id — updates personal data user
+router.patch('/update/:id', adminMiddleware, validatorUpdateCurrentUserData, validatorUpdateDeleted, updateUserData({ User, buildResponse, handleHttpError, matchedData }))
 
 // NOTE: Update user preferences (e.g., notifications, geographic area)
 // DELETE /preferences/:id — removes specified user preferences
 router.delete('/preferences/:id')
 
 // NOTE: Delete the current logged-in user's account
-// DELETE /me/delete — permanently deletes the logged-in user's account
+// DELETE /me/delete — soft deletes the logged-in user's account
 router.delete('/me/delete', authenticateUser, deleteCurrentUser({ User, buildResponse, handleHttpError, invalidateToken }))
+
+// NOTE: Delete the user's account
+// DELETE /delete — soft deletes the logged-in user's account
+router.delete('/delete/:id', adminMiddleware, deleteUser({ User, buildResponse, handleHttpError, invalidateToken }))
 
 export default router

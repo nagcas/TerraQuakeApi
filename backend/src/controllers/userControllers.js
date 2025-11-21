@@ -158,6 +158,56 @@ export const updateCurrentUserData = ({
 }
 
 /**
+ * NOTE: Controller: Update user.
+ * This controller updates user data including the soft-delete state.
+ */
+export const updateUserData = ({ User, buildResponse, handleHttpError, matchedData }) => {
+  return async (req, res) => {
+    try {
+      const { id } = req.params
+
+      // Check if request comes from a logged-in user with a role
+      if (!req.user || !req.user.role?.length) {
+        return handleHttpError(res, 'Unauthorized', 401)
+      }
+
+      // Extract only validated fields
+      const updates = matchedData(req)
+
+      console.log(updates)
+
+      // Find user including soft-deleted ones
+      const user = await User.findOneWithDeleted({ _id: id }).select('+password')
+      if (!user) return handleHttpError(res, 'User not found', 400)
+
+      // Update user fields
+      user.set(updates)
+
+      // If deleted changed, perform mongoose-delete actions
+      if ('deleted' in updates) {
+        if (updates.deleted === true) {
+          await user.delete() // Soft-delete
+        } else {
+          await user.restore() // Restore
+        }
+      }
+
+      const savedUser = await user.save()
+
+      const userResponse = savedUser.toObject()
+      delete userResponse.password
+
+      return res.status(200).json(
+        buildResponse(req, 'User updated successfully', userResponse, null, {})
+      )
+    } catch (error) {
+      console.error('Error in updateUserData:', error.message)
+      return handleHttpError(res, 'Internal server error', 500)
+    }
+  }
+}
+
+/**
 * NOTE: Controller: Soft delete the currently authenticated user's account.
  */
 export const deleteCurrentUser = ({ User, buildResponse, handleHttpError, invalidateToken }) => {
@@ -200,6 +250,39 @@ export const deleteCurrentUser = ({ User, buildResponse, handleHttpError, invali
         res,
         error.message.includes('HTTP error') ? error.message : undefined
       )
+    }
+  }
+}
+
+/**
+* NOTE: Controller: Soft delete the user's account.
+ */
+export const deleteUser = ({ User, buildResponse, handleHttpError }) => {
+  return async (req, res) => {
+    try {
+      const { id } = req.params
+
+      // Verify that the user exists
+      const user = await User.findOneWithDeleted({ _id: id })
+      if (!user) {
+        return handleHttpError(res, 'User not found', 404)
+      }
+
+      // Soft delete via mongoose-delete
+      await User.delete({ _id: id })
+
+      return res.status(200).json(
+        buildResponse(
+          req,
+          'User soft-deleted successfully',
+          { _id: user._id, email: user.email, name: user.name, deleted: true },
+          null,
+          {}
+        )
+      )
+    } catch (error) {
+      console.error('Error in deleteUser:', error)
+      return handleHttpError(res, 'Unexpected server error', 500)
     }
   }
 }

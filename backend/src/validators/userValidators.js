@@ -259,3 +259,13 @@ export const validatorUpdateRoleById = [
 
   (req, res, next) => validateResults(req, res, next)
 ]
+
+// NOTE: Validator for updating a user's role by ID
+export const validatorUpdateDeleted = [
+  check('deleted')
+    .exists()
+    .withMessage('Deleted field is required.')
+    .isIn(['true', 'false']),
+
+  (req, res, next) => validateResults(req, res, next)
+]

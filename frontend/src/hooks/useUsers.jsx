@@ -68,6 +68,7 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
 
   return {
     users,
+    setUsers,
     totalUsers,
     totalPagesUsers,
     currentPageUser,

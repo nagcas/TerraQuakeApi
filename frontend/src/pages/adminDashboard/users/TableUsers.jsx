@@ -15,6 +15,7 @@ export default function TableUsers() {
 
    const {
     users,
+    setUsers,
     totalPagesUsers,
     totalUsers,
     currentPageUser,
@@ -31,7 +32,7 @@ export default function TableUsers() {
   return (
     <>
       <motion.section
-        className='relative z-30 w-full min-h-screen pt-24 pb-12 overflow-hidden'
+        className='relative z-30 w-full min-h-screen pt-24 pb-12 overflow-hidden-y'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -130,15 +131,15 @@ export default function TableUsers() {
                           {item.role.toString()}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.deleted === true ? 'Yes' : 'No'}
+                          {item.deleted === true ? <span className='text-red-400'>Yes</span> : 'No'}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.terms === true ? 'Yes' : 'No'}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewUser users={item} />
-                          <UpdateUser />
-                          <DeleteUser />
+                          <UpdateUser users={item} setUsers={setUsers} />
+                          <DeleteUser users={item} setUsers={setUsers} />
                         </td>
                       </tr>
                     ))}
