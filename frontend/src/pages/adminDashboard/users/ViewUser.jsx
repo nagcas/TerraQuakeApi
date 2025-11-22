@@ -47,10 +47,37 @@ export default function ViewUser({ users }) {
               </header>
 
               {/* Body */}
-              <div className='p-8 max-h-auto overflow-y-auto'>
+              <div className='p-8 max-h-[70vh] overflow-y-auto'>
                 <pre className='p-6 text-sm mb-6'>
+                  <p className='p-4 font-semibold text-white text-2xl'>
+                    JSON Data:
+                  </p>
                   {JSON.stringify(users, null, 2)}
                 </pre>
+                <p className='p-4 font-semibold text-white text-2xl'>
+                  Classic Data:
+                </p>
+                {[
+                  { label: 'Id', value: users?._id },
+                  { label: 'Name', value: users?.name },
+                  { label: 'Email', value: users?.email },
+                  { label: 'Experience', value: users?.experience },
+                  { label: 'Student', value: users?.student },
+                  { label: 'Bio', value: users?.bio },
+                  { label: 'Location', value: users?.location },
+                  { label: 'Website', value: users?.website },
+                  { label: 'Portfolio', value: users?.portfolio },
+                  { label: 'GitHub', value: users?.github },
+                  { label: 'LinkedIn', value: users?.linkedin },
+                ].map(({ label, value }) => (
+                  <p
+                    key={label}
+                    className='text-white text-md font-normal mb-4 block'
+                  >
+                    <span>{label}: </span>
+                    <span className='text-pink-400'>{value}</span>
+                  </p>
+                ))}
               </div>
 
               {/* Footer */}
