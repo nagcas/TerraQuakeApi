@@ -15,27 +15,27 @@ import Spinner from '@/components/spinner/Spinner';
 import LoginSocial from '@/components/utils/LoginSocial';
 
 export default function SignIn() {
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const { setUserLogin, isLoggedIn, setIsLoggedIn } = useContext(Context)
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { setUserLogin, isLoggedIn, setIsLoggedIn } = useContext(Context);
 
   // Validation schema
   const loginSchema = yup.object({
     email: yup.string().email('Invalid email!').required('Email is required!'),
     password: yup.string().required('Password is required!'),
-  })
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(loginSchema) })
+  } = useForm({ resolver: yupResolver(loginSchema) });
 
   // Traditional login
   const handleLoginSubmit = async (data) => {
     try {
-      setLoading(true)
+      setLoading(true);
 
       const response = await axios.post('/auth/signin', data, {
         headers: { 'Content-Type': 'application/json' },
@@ -43,11 +43,10 @@ export default function SignIn() {
 
       const { payload } = response.data;
 
-
-      setUserLogin(payload)
-      setIsLoggedIn(true)
-      localStorage.setItem('user', JSON.stringify(payload))
-      localStorage.setItem('token', response.data.token)
+      setUserLogin(payload);
+      setIsLoggedIn(true);
+      localStorage.setItem('user', JSON.stringify(payload));
+      localStorage.setItem('token', response.data.token);
 
       Swal.fire({
         title: 'Success!',
@@ -55,14 +54,14 @@ export default function SignIn() {
         icon: 'success',
         confirmButtonText: 'Profile',
       }).then(() => {
-        setLoading(false)
-        navigate('/profile', { replace: true })
-      })
+        setLoading(false);
+        navigate('/profile', { replace: true });
+      });
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        'Login failed. Please try again.'
+        'Login failed. Please try again.';
 
       Swal.fire({
         title: 'Error!',
@@ -70,12 +69,12 @@ export default function SignIn() {
         icon: 'error',
         confirmButtonText: 'Ok',
       }).then(() => {
-        setLoading(false)
-      })
+        setLoading(false);
+      });
     }
-  }
+  };
 
-  const togglePassword = () => setShowPassword((prev) => !prev)
+  const togglePassword = () => setShowPassword((prev) => !prev);
 
   // If the user is already logged in, redirect them to their profile page
   // This prevents authenticated users from accessing the Sign In or Sign Up pages
@@ -143,51 +142,57 @@ export default function SignIn() {
               </h2>
 
               <form onSubmit={handleSubmit(handleLoginSubmit)}>
-                <div className='mb-8'>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Email
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    placeholder='name@company.com'
-                    autoComplete='off'
-                    {...register('email')}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.email?.message}
-                  </p>
-                </div>
-
-                <div className='relative mb-8'>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Password
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    placeholder='Your password'
-                    {...register('password')}
-                    type={showPassword ? 'text' : 'password'}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.password?.message}
-                  </p>
-                  <button
-                    type='button'
-                    onClick={togglePassword}
-                    className='absolute top-11 right-5 text-gray-800 hover:text-purple-600 cursor-pointer'
-                    aria-label='Toggle password view'
+                {[
+                  { label: 'Email', field: 'email' },
+                  { label: 'Password', field: 'password' },
+                ].map(({ label, field }) => (
+                  <div
+                    key={field}
+                    className='mb-8 relative'
                   >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
-                  <div className='mt-2 text-right'>
-                    <Link
-                      to='/forgot-password'
-                      className='text-sm text-purple-400 hover:text-purple-600 transition duration-300'
-                    >
-                      Forgot Password?
-                    </Link>
+                    <label className='block text-white text-sm font-semibold mb-2'>
+                      {label}
+                    </label>
+                    <input
+                      type={
+                        field === 'password'
+                          ? showPassword
+                            ? 'text'
+                            : 'password'
+                          : 'text'
+                      }
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      placeholder={
+                        field === 'email' ? 'name@company.com' : '••••••••'
+                      }
+                      autoComplete='off'
+                      {...register(field)}
+                    />
+                    <p className='text-red-400 text-xs pt-1'>
+                      {errors[field]?.message}
+                    </p>
+                    {field === 'password' && (
+                      <>
+                        <button
+                          type='button'
+                          onClick={togglePassword}
+                          className='absolute top-11 right-5 text-gray-800 hover:text-purple-600 cursor-pointer'
+                          aria-label='Toggle password view'
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                        <div className='mt-2 text-right'>
+                          <Link
+                            to='/forgot-password'
+                            className='text-sm text-purple-400 hover:text-purple-600 transition duration-300'
+                          >
+                            Forgot Password?
+                          </Link>
+                        </div>
+                      </>
+                    )}
                   </div>
-                </div>
+                ))}
 
                 <button
                   className='mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] transform transition-all duration-300 ease-in-out flex items-center justify-center gap-2 cursor-pointer'
@@ -195,15 +200,14 @@ export default function SignIn() {
                   aria-label='Click to loading'
                   disabled={loading}
                 >
-                  {loading ? (
-                    <Spinner />
-                  ) : (
-                    <span>Login</span>
-                  )}
+                  {loading ? <Spinner /> : <span>Login</span>}
                 </button>
 
                 {/* Social Buttons */}
-                <LoginSocial setLoading={setLoading} text='Login with' />
+                <LoginSocial
+                  setLoading={setLoading}
+                  text='Login with'
+                />
 
                 {/* Sign Up Link */}
                 <div className='mt-6 flex flex-col items-center'>
@@ -228,5 +232,5 @@ export default function SignIn() {
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
-  )
+  );
 }

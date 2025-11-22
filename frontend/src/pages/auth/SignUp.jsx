@@ -82,12 +82,16 @@ export default function SignUp() {
       .then(async (res) => {
         // After successful sign-up, automatically sign the user in
         try {
-          const response = await axios.post('/auth/signin', {
-            email: data.email,
-            password: data.password,
-          }, {
-            headers: { 'Content-Type': 'application/json' },
-          });
+          const response = await axios.post(
+            '/auth/signin',
+            {
+              email: data.email,
+              password: data.password,
+            },
+            {
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
 
           const { payload } = response.data;
 
@@ -212,85 +216,58 @@ export default function SignUp() {
               </h2>
 
               <form onSubmit={handleSubmit(handleSignUp)}>
-                <div className='mb-8'>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Name
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    name='name'
-                    placeholder='Your name'
-                    autoComplete='off'
-                    {...register('name')}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.name?.message}
-                  </p>
-                </div>
-                <div className='mb-6'>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Email
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    name='email'
-                    placeholder='name@company.com'
-                    autoComplete='off'
-                    {...register('email')}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.email?.message}
-                  </p>
-                </div>
-                <div className='relative mb-6'>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Password
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    name='password'
-                    placeholder='Your password'
-                    autoComplete='off'
-                    {...register('password')}
-                    type={showPassword ? 'text' : 'password'}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.password?.message}
-                  </p>
-                  <button
-                    type='button'
-                    onClick={togglePassword}
-                    className='absolute top-12 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
-                    aria-label='Toggle password view'
+                {[
+                  { label: 'Name', field: 'name', text: 'Your name' },
+                  { label: 'Email', field: 'email', text: 'name@company.com' },
+                  {
+                    label: 'Password',
+                    field: 'password',
+                    text: 'Your password',
+                  },
+                  {
+                    label: 'Confirm Password',
+                    field: 'confirmPassword',
+                    text: 'Confirm your password',
+                  },
+                ].map(({ label, field, text }) => (
+                  <div
+                    key={field}
+                    className='mb-8 relative'
                   >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
-
-                  <div className='relative my-6'>
                     <label className='block text-white text-sm font-semibold mb-2'>
-                      Confirm Password
+                      {label}
                     </label>
                     <input
+                      type={
+                        field === 'password'
+                          ? showPassword
+                            ? 'text'
+                            : 'password'
+                          : 'text'
+                      }
                       className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      name='password'
-                      placeholder='Confirm your password'
+                      name={field}
+                      placeholder={text}
                       autoComplete='off'
-                      {...register('confirmPassword')}
-                      type={showPassword ? 'text' : 'password'}
+                      {...register(field)}
                     />
                     <p className='text-red-400 text-xs pt-1'>
-                      {errors.confirmPassword?.message}
+                      {errors[field]?.message}
                     </p>
-                    <button
-                      type='button'
-                      onClick={togglePassword}
-                      className='absolute top-12 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
-                      aria-label='Toggle password view'
-                    >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
+                    {(field === 'password' || field === 'confirmPassword') && (
+                      <button
+                        type='button'
+                        onClick={togglePassword}
+                        className='absolute top-12 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                        aria-label='Toggle password view'
+                      >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </button>
+                    )}
                   </div>
+                ))}
 
+                <div className='relative mb-6'>
                   <div className='relative my-6'>
                     <label className='block text-white text-sm font-semibold mb-2'>
                       Experience
@@ -413,10 +390,13 @@ export default function SignUp() {
                     <span>Create your account</span>
                   )}
                 </button>
-            
+
                 {/* Social Buttons */}
-                <LoginSocial setLoading={setLoading} text='Sign Up with' />
-            
+                <LoginSocial
+                  setLoading={setLoading}
+                  text='Sign Up with'
+                />
+
                 <div className='mt-6 flex flex-col items-center'>
                   <p className='text-gray-200 text-sm cursor-default'>
                     Already have an account?
@@ -431,8 +411,6 @@ export default function SignUp() {
                 </div>
               </form>
             </motion.div>
-
-            
 
             {/* Right Column: Other channels */}
             <Channels />
