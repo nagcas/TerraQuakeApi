@@ -17,7 +17,6 @@ import About from '@pages/about/About'
 import Contact from '@pages/contact/Contact'
 import Blog from '@pages/blog/Blog'
 import BlogDetail from '@pages/blog/BlogDetail'
-import BlogPost from '@pages/blog/BlogPost'
 import SignUp from '@pages/auth/SignUp'
 import SignIn from '@pages/auth/SignIn'
 import Profile from '@pages/profile/Profile'
@@ -73,7 +72,6 @@ export default function App() {
               <Route path='/contact' element={<Contact />} />
               <Route path='/blog' element={<Blog />} />
               <Route path='/blog/:slug' element={<BlogDetail />} />
-              <Route path='/post/:slug' element={<BlogPost />} />
               <Route path='/signup' element={<SignUp />} />
               <Route path='/signin' element={<SignIn />} />
               <Route path='/profile' element={<Profile />} />

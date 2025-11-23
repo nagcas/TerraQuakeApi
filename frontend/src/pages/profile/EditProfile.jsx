@@ -132,7 +132,6 @@ export default function EditProfile({ setEditProfile }) {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        // User is logged in → Show profile form
         <div className='w-full max-w-5xl mx-auto'>
           {/* Title */}
           <motion.div
@@ -163,38 +162,40 @@ export default function EditProfile({ setEditProfile }) {
               className='space-y-8'
               onSubmit={handleSubmit(handleUpdateUser)}
             >
-              {/* Name field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update Name
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='Your name'
-                  autoComplete='off'
-                  {...register('name')}
-                />
-                <p className='text-red-400 text-xs pt-1'>
-                  {errors.name?.message}
-                </p>
-              </div>
-
-              {/* Email field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update Email
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='name@company.com'
-                  autoComplete='off'
-                  {...register('email')}
-                />
-                <p className='text-red-400 text-xs pt-1'>
-                  {errors.email?.message}
-                </p>
-              </div>
-
+              {[
+                { label: "Update Name", field: "name", text:"Your name" },
+                { label: "Update Email", field: "email", text:"name@company.com" },
+                { label: "Update location (optional)", field: "location", text:"Location" },
+                { label: "Update Website url (optional)", field: "website", text:"Website" },
+                { label: "Update Portfolio url (optional)", field: "portfolio", text:"portfolio" },
+                { label: "Update GitHub url (optional)", field: "github", text:"github" },
+                { label: "Update LinkedIn url (optional)", field: "linkedin", text:"linkedin" }, 
+              ].map(({ label, field, text }) => (
+                <>
+                  <div>
+                    <label className='block text-white text-sm font-semibold mb-2'>
+                      {label}
+                    </label>
+                    <input
+                      type={
+                        field === 'password'
+                          ? showPassword
+                            ? 'text'
+                            : 'password'
+                          : 'text'
+                      }
+                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                      placeholder={text}
+                      autoComplete='off'
+                      {...register(field)}
+                    />
+                    <p className='text-red-400 text-xs pt-1'>
+                      {errors[field]?.message}
+                    </p>
+                  </div>
+                </>
+              ))}
+              
               {/* Experience field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
@@ -267,71 +268,6 @@ export default function EditProfile({ setEditProfile }) {
                 <p className='text-red-400 text-xs pt-1'>
                   {errors.student?.message}
                 </p>
-              </div>
-
-              {/* Location field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update Location (optional)
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='Location'
-                  autoComplete='off'
-                  {...register('location')}
-                />
-              </div>
-
-              {/* Website field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update Website url (optional)
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='Website'
-                  autoComplete='off'
-                  {...register('website')}
-                />
-              </div>
-
-              {/* Portfolio field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update Portfolio url (optional)
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='portfolio'
-                  autoComplete='off'
-                  {...register('portfolio')}
-                />
-              </div>
-
-              {/* GitHub field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update GitHub url (optional)
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='github'
-                  autoComplete='off'
-                  {...register('github')}
-                />
-              </div>
-
-              {/* Linkedin field */}
-              <div>
-                <label className='block text-white text-sm font-semibold mb-2'>
-                  Update LinkedIn url (optional)
-                </label>
-                <input
-                  className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                  placeholder='linkedin'
-                  autoComplete='off'
-                  {...register('linkedin')}
-                />
               </div>
 
               {/* Bio field */}
