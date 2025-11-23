@@ -105,7 +105,7 @@ export default function CreateReview({ setCreateReview }) {
 
   if (!isLoggedIn) {
     return <AccessRestricted />;
-  };
+  }
 
   return (
     <>
@@ -160,50 +160,28 @@ export default function CreateReview({ setCreateReview }) {
                 className='space-y-8'
                 onSubmit={handleSubmit(handleCreateReview)}
               >
-                {/* Name field */}
-                <div>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Your full name
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    placeholder='Your full name'
-                    autoComplete='off'
-                    {...register('name')}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.name?.message}
-                  </p>
-                </div>
-
-                {/* Email field */}
-                <div>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Email
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    placeholder='name@company.com'
-                    autoComplete='off'
-                    {...register('email')}
-                  />
-                  <p className='text-red-400 text-xs pt-1'>
-                    {errors.email?.message}
-                  </p>
-                </div>
-
-                {/* Role field */}
-                <div>
-                  <label className='block text-white text-sm font-semibold mb-2'>
-                    Your professional role
-                  </label>
-                  <input
-                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    placeholder='Your professional role (e.g. Researcher, Developer, Geologist)'
-                    autoComplete='off'
-                    {...register('role')}
-                  />
-                </div>
+                {[
+                  { label: 'Your full name', field: 'name', text: 'Your full name' },
+                  { label: 'Email', field: 'email', text: 'name@company.com' },
+                  { label: 'Your professional role', field: 'role', text: 'Your professional role (e.g. Researcher, Developer, Geologist)' },
+                ].map(({ label, field, text }) => (
+                  <>
+                    <div>
+                      <label className='block text-white text-sm font-semibold mb-2'>
+                        {label}
+                      </label>
+                      <input
+                        className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                        placeholder={text}
+                        autoComplete='off'
+                        {...register(field)}
+                      />
+                      <p className='text-red-400 text-xs pt-1'>
+                        {errors[field]?.message}
+                      </p>
+                    </div>
+                  </>
+                ))}
 
                 {/* Review field */}
                 <div>
