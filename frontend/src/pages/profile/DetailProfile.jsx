@@ -2,8 +2,7 @@ import { useContext } from 'react';
 import { Context } from '@/components/modules/Context';
 
 export default function DetailProfile() {
-  const { userLogin } =
-    useContext(Context);
+  const { userLogin } = useContext(Context);
 
   return (
     <section>
@@ -11,81 +10,59 @@ export default function DetailProfile() {
         Account Details
       </h2>
       <div className='grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base'>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Name:</span> 
-          <span>{userLogin?.name}</span>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Email:</span>
-          <span>{userLogin?.email}</span>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Role:</span> 
-          <span>{userLogin?.role}</span>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Experience:</span>
-          <span>{userLogin?.experience || 'N/A'}</span>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Student:</span>
-          <span>{userLogin?.student || 'No'}</span>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Location (optional):</span>
-          <span>{userLogin?.location || ''}</span>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Website (optional):</span>
-          <a 
-            href={userLogin?.website || ''}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='hover:text-pink-400'
-          >
-            {userLogin?.website || ''}
-          </a>
-          
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Portfolio (optional):</span>
-          <a 
-            href={userLogin?.portfolio || ''} 
-            target='_blank'
-            rel='noopener noreferrer'
-            className='hover:text-pink-400'
-          >
-            {userLogin?.portfolio || ''}
-          </a>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>GitHub (optional):</span>
-          <a 
-            href={userLogin?.github || ''} 
-            target='_blank'
-            rel='noopener noreferrer'
-            className='hover:text-pink-400'
-          >
-            {userLogin?.github || ''}
-          </a>
-        </p>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>LinkedIn (optional):</span>
-          <a 
-            href={userLogin?.linkedin || ''} 
-            target='_blank'
-            rel='noopener noreferrer'
-            className='hover:text-pink-400'
-          >
-            {userLogin?.linkedin || ''}
-          </a>
-        </p>
-      </div>
-      <div className='mt-6'>
-        <p className='flex flex-col'>
-          <span className='font-bold text-purple-400'>Bio (optional):</span>
-          <span>{userLogin?.bio || ''}</span>
-        </p>
+        {[
+          { label: 'Name:', value: userLogin?.name, type: 'text' },
+          { label: 'Email:', value: userLogin?.email, type: 'email' },
+          { label: 'Role:', value: userLogin?.role, type: 'text' },
+          { label: 'Experience:', value: userLogin?.experience, type: 'text' },
+          { label: 'Student:', value: userLogin?.student, type: 'text' },
+          {
+            label: 'Location (optional):',
+            value: userLogin?.location,
+            type: 'text',
+          },
+          {
+            label: 'Website (optional):',
+            value: userLogin?.website,
+            type: 'url',
+          },
+          {
+            label: 'Portfolio (optional):',
+            value: userLogin?.portfolio,
+            type: 'url',
+          },
+          { label: 'GitHub (optional):', value: userLogin?.github, type: 'url' },
+          {
+            label: 'LinkedIn (optional):',
+            value: userLogin?.linkedin,
+            type: 'url',
+          },
+          { label: 'Bio (optional):', value: userLogin?.bio, type: 'text' },
+        ].map(({ label, value, type }) =>
+          type !== 'url' ? (
+            <p
+              key={label}
+              className='flex flex-col'
+            >
+              <span className='font-bold text-purple-400'>{label}</span>
+              <span>{value}</span>
+            </p>
+          ) : (
+            <p key={label} className='flex flex-col'>
+              <span className='font-bold text-purple-400'>
+                {label}
+              </span>
+              <a
+                href={value || ''}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='hover:text-pink-400'
+              >
+                {value || ''}
+              </a>
+            </p>
+          )
+        )}
       </div>
     </section>
   );
