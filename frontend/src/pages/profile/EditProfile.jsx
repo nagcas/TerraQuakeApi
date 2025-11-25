@@ -163,39 +163,61 @@ export default function EditProfile({ setEditProfile }) {
               onSubmit={handleSubmit(handleUpdateUser)}
             >
               {[
-                { label: "Update Name", field: "name", text:"Your name" },
-                { label: "Update Email", field: "email", text:"name@company.com" },
-                { label: "Update location (optional)", field: "location", text:"Location" },
-                { label: "Update Website url (optional)", field: "website", text:"Website" },
-                { label: "Update Portfolio url (optional)", field: "portfolio", text:"portfolio" },
-                { label: "Update GitHub url (optional)", field: "github", text:"github" },
-                { label: "Update LinkedIn url (optional)", field: "linkedin", text:"linkedin" }, 
+                { label: 'Update Name', field: 'name', text: 'Your name' },
+                {
+                  label: 'Update Email',
+                  field: 'email',
+                  text: 'name@company.com',
+                },
+                {
+                  label: 'Update location (optional)',
+                  field: 'location',
+                  text: 'Location',
+                },
+                {
+                  label: 'Update Website url (optional)',
+                  field: 'website',
+                  text: 'Website',
+                },
+                {
+                  label: 'Update Portfolio url (optional)',
+                  field: 'portfolio',
+                  text: 'portfolio',
+                },
+                {
+                  label: 'Update GitHub url (optional)',
+                  field: 'github',
+                  text: 'github',
+                },
+                {
+                  label: 'Update LinkedIn url (optional)',
+                  field: 'linkedin',
+                  text: 'linkedin',
+                },
               ].map(({ label, field, text }) => (
-                <>
-                  <div>
-                    <label className='block text-white text-sm font-semibold mb-2'>
-                      {label}
-                    </label>
-                    <input
-                      type={
-                        field === 'password'
-                          ? showPassword
-                            ? 'text'
-                            : 'password'
-                          : 'text'
-                      }
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      placeholder={text}
-                      autoComplete='off'
-                      {...register(field)}
-                    />
-                    <p className='text-red-400 text-xs pt-1'>
-                      {errors[field]?.message}
-                    </p>
-                  </div>
-                </>
+                <div key={label}>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    {label}
+                  </label>
+                  <input
+                    type={
+                      field === 'password'
+                        ? showPassword
+                          ? 'text'
+                          : 'password'
+                        : 'text'
+                    }
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder={text}
+                    autoComplete='off'
+                    {...register(field)}
+                  />
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors[field]?.message}
+                  </p>
+                </div>
               ))}
-              
+
               {/* Experience field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
