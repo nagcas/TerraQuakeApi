@@ -1,7 +1,8 @@
 import React from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa6';
+import Spinner from '../spinner/Spinner';
 
-export default function LoginSocial({ setLoading, text }) {
+export default function LoginSocial({ loading, setLoading, text }) {
   // Social login (Google & GitHub unified)
   const handleSocialLogin = (provider) => {
     setLoading(true);
@@ -36,7 +37,10 @@ export default function LoginSocial({ setLoading, text }) {
         >
           <span className='flex gap-2'>
             <p className='mx-auto'>{text}</p>
-            <FaGoogle className='w-5 h-5' />
+            {loading 
+              ? <Spinner /> 
+              : <FaGoogle className='w-5 h-5' />
+            }
           </span>
         </button>
         <span>OR</span>
@@ -47,6 +51,10 @@ export default function LoginSocial({ setLoading, text }) {
         >
           <span className='flex gap-2'>
           <p className='mx-auto'>{text}</p>
+          {loading 
+            ? <Spinner /> 
+            : <FaGithub className='w-5 h-5' />
+          }
           <FaGithub className='w-5 h-5' />
           </span>
         </button>
