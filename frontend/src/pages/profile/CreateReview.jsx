@@ -165,8 +165,7 @@ export default function CreateReview({ setCreateReview }) {
                   { label: 'Email', field: 'email', text: 'name@company.com' },
                   { label: 'Your professional role', field: 'role', text: 'Your professional role (e.g. Researcher, Developer, Geologist)' },
                 ].map(({ label, field, text }) => (
-                  <>
-                    <div>
+                    <div key={label}>
                       <label className='block text-white text-sm font-semibold mb-2'>
                         {label}
                       </label>
@@ -180,7 +179,6 @@ export default function CreateReview({ setCreateReview }) {
                         {errors[field]?.message}
                       </p>
                     </div>
-                  </>
                 ))}
 
                 {/* Review field */}

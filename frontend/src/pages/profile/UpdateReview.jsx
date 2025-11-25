@@ -181,25 +181,23 @@ export default function UpdateReview({
                   field: 'role',
                   text: 'Your professional role (e.g. Researcher, Developer, Geologist)',
                 },
-              ].msap(({ label, field, text }) => (
-                <>
-                  <div>
-                    <label className='block text-white text-sm font-semibold mb-2'>
-                      {label}
-                    </label>
-                    <input
-                      className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                      placeholder={text}
-                      autoComplete='off'
-                      {...register(field)}
-                    />
-                    <p className='text-red-400 text-xs pt-1'>
-                      {errors[field]?.message}
-                    </p>
-                  </div>
-                </>
+              ].map(({ label, field, text }) => (
+                <div key={label}>
+                  <label className='block text-white text-sm font-semibold mb-2'>
+                    {label}
+                  </label>
+                  <input
+                    className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
+                    placeholder={text}
+                    autoComplete='off'
+                    {...register(field)}
+                  />
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors[field]?.message}
+                  </p>
+                </div>
               ))}
-            
+
               {/* Review field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
@@ -212,6 +210,9 @@ export default function UpdateReview({
                   rows={4}
                   {...register('message')}
                 />
+                <p className='text-red-400 text-xs pt-1'>
+                    {errors.message?.message}
+                  </p>
               </div>
 
               {/* Submit button */}
