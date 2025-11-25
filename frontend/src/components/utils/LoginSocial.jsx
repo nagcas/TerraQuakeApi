@@ -55,7 +55,6 @@ export default function LoginSocial({ loading, setLoading, text }) {
             ? <Spinner /> 
             : <FaGithub className='w-5 h-5' />
           }
-          <FaGithub className='w-5 h-5' />
           </span>
         </button>
       </div>
