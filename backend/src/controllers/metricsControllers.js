@@ -52,13 +52,13 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
       // Handle counter reset (process restart)
       const increment = diff >= 0 ? diff : eventsProcessedItems
 
-      // Persist metrics
+      // Persist metrics (NO RESET)
       const updatedMetrics = await Metrics.findOneAndUpdate(
         {},
         {
           $inc: { totalEventsProcessed: increment },
           $set: {
-            eventsProcessed: eventsProcessedItems, // snapshot (do NOT reset)
+            eventsProcessed: eventsProcessedItems, // snapshot only
             apiLatencyAvgMs,
             uptime,
             memoryUsage
@@ -66,9 +66,6 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         },
         { new: true, upsert: true }
       )
-
-      // Reset eventsProcessed to 0 for next interval
-      await Metrics.updateOne({}, { $set: { eventsProcessed: 0 } })
 
       res.status(200).json(
         buildResponse(req, 'Metrics JSON TerraQuake API', {
