@@ -117,8 +117,10 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
 
       // Step 7: Redirect to frontend with token
       return res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}`)
-    } catch (err) {
-      console.error('GitHub auth error:', err.message)
+    } catch (error) {
+      // Log error to the server console
+      console.error('GitHub auth error:', error.message)
+      // Handle unexpected errors gracefully
       return res.redirect(
         `${FRONTEND_URL}/auth/error?message=GitHub authentication failed. Please try again.`
       )

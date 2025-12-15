@@ -47,7 +47,9 @@ export const subscribe = ({ Newsletter, buildResponse, handleHttpError }) => {
         buildResponse(req, 'Successfully subscribed to newsletter', subscriber, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Subscription error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -87,7 +89,9 @@ export const unsubscribe = ({ Newsletter, buildResponse, handleHttpError }) => {
         buildResponse(req, 'Successfully unsubscribed from newsletter', subscriber, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Subscription error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -121,7 +125,9 @@ export const sendNewsletter = ({ Newsletter, buildResponse, handleHttpError }) =
         buildResponse(req, `Newsletter sent to ${subscribers.length} subscribes`, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Send newsletter error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -140,7 +146,9 @@ export const getSubscriberCount = ({ Newsletter, buildResponse, handleHttpError 
         buildResponse(req, 'Newsletter count', totalEmails, null, {})
       )
     } catch (error) {
-      console.error('Get subscriber count error:', error)
+      // Log error to the server console
+      console.error('Get subscriber count error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined

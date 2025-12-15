@@ -3,6 +3,9 @@ import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
 import { processFeatures } from '../utils/processFeatures.js'
 import haversine from 'haversine-distance'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 /**
  * NOTE: Fetch JSON data from the INGV API with error handling.
@@ -76,8 +79,10 @@ export const getEarthquakesByRecent = ({ buildResponse, handleHttpError }) => {
       // Paginate data manually
       const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      // Increment metrics for monitoring (optional)
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process and sort paginated data
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -107,8 +112,9 @@ export const getEarthquakesByRecent = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving recent earthquakes controller:', error.message)
-
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -165,8 +171,10 @@ export const getEarthquakesByToday = ({ buildResponse, handleHttpError }) => {
       // Paginate data manually
       const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      // Increment metrics for monitoring (optional)
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process only paginated data
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -196,8 +204,9 @@ export const getEarthquakesByToday = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving earthquakes today controller:', error.message)
-
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -257,8 +266,10 @@ export const getEarthquakesByLastWeek = ({ buildResponse, handleHttpError }) => 
       const endIndex = startIndex + limit
       const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      // Metrics (optional)
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process and sort
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -287,7 +298,9 @@ export const getEarthquakesByLastWeek = ({ buildResponse, handleHttpError }) => 
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving earthquakes last week controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -380,8 +393,10 @@ export const getEarthquakesByMonth = ({ buildResponse, handleHttpError }) => {
       const endIndex = startIndex + limit
       const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      // Increment monitoring metrics (optional)
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process results
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -409,7 +424,9 @@ export const getEarthquakesByMonth = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving earthquakes by month:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -492,8 +509,10 @@ export const getEarthquakesByRegion = ({ buildResponse, handleHttpError }) => {
       const endIndex = startIndex + limit
       const paginatedFeatures = allFeatures.slice(startIndex, endIndex)
 
-      // Increment Prometheus metric (optional)
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process data
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -521,7 +540,9 @@ export const getEarthquakesByRegion = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving earthquakes by region:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -600,8 +621,10 @@ export const getEarthquakesByDepth = ({ buildResponse, handleHttpError }) => {
       const endIndex = startIndex + limit
       const paginatedFeatures = filteredFeatures.slice(startIndex, endIndex)
 
-      // Increment metrics for monitoring (optional)
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process only paginated data
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -630,7 +653,6 @@ export const getEarthquakesByDepth = ({ buildResponse, handleHttpError }) => {
     } catch (error) {
       // Log error to the server console
       console.error('Error retrieving earthquakes depth controller', error.message)
-
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
@@ -678,7 +700,7 @@ export const getEarthquakesByDateRange = ({ buildResponse, handleHttpError }) =>
         )
       }
 
-      // 🔹 Validation: dates
+      // Validation: dates
       if (!startdate || !enddate) {
         return handleHttpError(
           res,
@@ -738,7 +760,10 @@ export const getEarthquakesByDateRange = ({ buildResponse, handleHttpError }) =>
 
       const paginatedFeatures = features.slice(startIndex, endIndex)
 
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process paginated results
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -767,7 +792,9 @@ export const getEarthquakesByDateRange = ({ buildResponse, handleHttpError }) =>
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving earthquakes by date range:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -852,8 +879,10 @@ export const getEarthquakesByMagnitude = ({ buildResponse, handleHttpError }) =>
       const endIndex = startIndex + limit
       const paginatedFeatures = filteredFeatures.slice(startIndex, endIndex)
 
-      // Increment monitoring metric
-      eventsProcessed.inc(paginatedFeatures.length || 0)
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedFeatures.length || 0)
+      }
 
       // Process paginated results
       const result = processFeatures(paginatedFeatures, req.query, {
@@ -880,7 +909,9 @@ export const getEarthquakesByMagnitude = ({ buildResponse, handleHttpError }) =>
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving earthquakes by magnitude:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -912,8 +943,10 @@ export const getEarthquakesById = ({ buildResponse, handleHttpError }) => {
       const url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&format=geojson`
       const data = await fetchINGV(url)
 
-      // Increment monitoring metric
-      eventsProcessed.inc()
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(1)
+      }
 
       const { features } = data
 
@@ -943,7 +976,6 @@ export const getEarthquakesById = ({ buildResponse, handleHttpError }) => {
     } catch (error) {
       // Log error to the server console
       console.error('Error retrieving earthquakes eventId controller', error.message)
-
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
@@ -1032,8 +1064,12 @@ export const getEarthquakesLocation = ({ buildResponse, handleHttpError }) => {
       }
 
       const data = await response.json()
-      eventsProcessed.inc(data.features.length || 0)
       let { features } = data
+
+      // Increment metrics for monitoring
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(features.length || 0)
+      }
 
       // Precise local filtering using haversine
       const userPoint = { latitude: lat, longitude: lon }
@@ -1070,7 +1106,6 @@ export const getEarthquakesLocation = ({ buildResponse, handleHttpError }) => {
     } catch (error) {
       // Log error to the server console
       console.error('Error retrieving earthquakes location controller', error.message)
-
       // Handle unexpected errors gracefully
       handleHttpError(
         res,

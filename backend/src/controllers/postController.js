@@ -59,11 +59,12 @@ export const createPost = ({
         readTime: data.readTime
       })
 
-      console.log(post)
-
       // Respond with created post
       res.json(buildResponse(req, 'Post created successfully', post, null, {}))
     } catch (error) {
+      // Log error to the server console
+      console.error('Error in createPost controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -120,6 +121,9 @@ export const updatePost = ({
         buildResponse(req, 'Post updated successfully', updated, null, {})
       )
     } catch (error) {
+      // Log error to the server console
+      console.error('Error in updatePost controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -153,6 +157,9 @@ export const deletePost = ({ Post, handleHttpError }) => {
         postId: deleted._id
       })
     } catch (error) {
+      // Log error to the server console
+      console.error('Error in deletePost controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(res, error.message)
     }
   }
@@ -208,7 +215,9 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         })
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in listAllPosts:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -237,6 +246,9 @@ export const listOnePost = ({ Post, buildResponse, handleHttpError }) => {
       }
       res.json(buildResponse(req, 'Get one post', post, null, {}))
     } catch (error) {
+      // Log error to the server console
+      console.error('Error in listOnePost controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -265,6 +277,9 @@ export const listOnePostSlug = ({ Post, buildResponse, handleHttpError }) => {
 
       res.json(buildResponse(req, 'Get one post', post, null, {}))
     } catch (error) {
+      // Log error to the server console
+      console.error('Error in listOnePostSlug controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined

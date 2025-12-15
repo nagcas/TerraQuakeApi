@@ -34,7 +34,8 @@ router.get('/stats', authMiddleware, requireAdmin, (req, res) => {
 
     res.status(200).json(response)
   } catch (error) {
-    console.error('Admin stats error:', error)
+    // Log error to the server console
+    console.error('Admin stats error:', error.message)
     res.status(500).json({
       success: false,
       message: 'Failed to retrieve admin statistics'
@@ -62,7 +63,8 @@ router.get('/dashboard', authMiddleware, requireAdmin, (req, res) => {
 
     res.status(200).json(response)
   } catch (error) {
-    console.error('Admin dashboard error:', error)
+    // Log error to the server console
+    console.error('Admin dashboard error:', error.message)
     res.status(500).json({
       success: false,
       message: 'Failed to access admin dashboard'
@@ -88,7 +90,8 @@ router.get('/system', authMiddleware, requireAdmin, (req, res) => {
 
     res.status(200).json(response)
   } catch (error) {
-    console.error('Admin system info error:', error)
+    // Log error to the server console
+    console.error('Admin system info error:', error.message)
     res.status(500).json({
       success: false,
       message: 'Failed to retrieve system information'

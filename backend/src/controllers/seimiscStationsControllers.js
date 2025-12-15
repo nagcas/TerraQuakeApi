@@ -48,7 +48,9 @@ export const getAllStations = ({ buildResponse, handleHttpError }) => {
       const paginatedStations = stations.slice(startIndex, endIndex)
 
       // Increment metrics for monitoring
-      eventsProcessed.inc(paginatedStations.length || 0)
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedStations.length || 0)
+      }
 
       const message = 'List of seismic monitoring stations (INGV Network)'
 
@@ -64,7 +66,9 @@ export const getAllStations = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving stations:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -115,7 +119,9 @@ export const getCodeStation = ({ buildResponse, handleHttpError }) => {
       )
 
       // Increment metrics for monitoring
-      eventsProcessed.inc(filteredStation.length || 0)
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(filteredStation.length || 0)
+      }
 
       // If no station found, return 404
       if (filteredStation.length === 0) {
@@ -130,7 +136,9 @@ export const getCodeStation = ({ buildResponse, handleHttpError }) => {
         codeStation: code.toUpperCase() // useful reference for the client
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving stations:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -214,7 +222,9 @@ export const getStationsGeoJson = ({ buildResponse, handleHttpError }) => {
       const paginatedStations = geoJson.features.slice(startIndex, endIndex)
 
       // Increment metrics for monitoring
-      eventsProcessed.inc(paginatedStations.length || 0)
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedStations.length || 0)
+      }
 
       const message = 'Stations format geojson'
 
@@ -229,7 +239,9 @@ export const getStationsGeoJson = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving stations:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -302,7 +314,9 @@ export const getStationsStatusOpen = ({ buildResponse, handleHttpError }) => {
       const paginatedStations = filteredStationOpen.slice(startIndex, endIndex)
 
       // Increment metrics for monitoring
-      eventsProcessed.inc(paginatedStations.length || 0)
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedStations.length || 0)
+      }
 
       // If no station found, return 404
       if (filteredStationOpen.length === 0) {
@@ -322,7 +336,9 @@ export const getStationsStatusOpen = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving stations:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -395,7 +411,9 @@ export const getStationsStatusClosed = ({ buildResponse, handleHttpError }) => {
       const paginatedStations = filteredStationClosed.slice(startIndex, endIndex)
 
       // Increment metrics for monitoring
-      eventsProcessed.inc(paginatedStations.length || 0)
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(paginatedStations.length || 0)
+      }
 
       // If no station found, return 404
       if (filteredStationClosed.length === 0) {
@@ -415,7 +433,9 @@ export const getStationsStatusClosed = ({ buildResponse, handleHttpError }) => {
         }
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving stations:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -484,7 +504,9 @@ export const getStationsStatistics = ({ buildResponse, handleHttpError }) => {
       }
 
       // Increment metrics for monitoring
-      eventsProcessed.inc()
+      if (process.env.DEV_ENV !== 'development') {
+        eventsProcessed.inc(1)
+      }
 
       const message = 'Statistics stations'
 
@@ -492,7 +514,9 @@ export const getStationsStatistics = ({ buildResponse, handleHttpError }) => {
         ...buildResponse(req, message, statisticsStations)
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error retrieving stations:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined

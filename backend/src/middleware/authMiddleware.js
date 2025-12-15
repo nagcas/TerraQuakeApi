@@ -36,6 +36,7 @@ export const authMiddleware = async (req, res, next) => {
 
     next()
   } catch (error) {
+    // Log error to the server console
     console.error('Authentication error:', error)
 
     if (error.name === 'JsonWebTokenError') {
@@ -109,6 +110,8 @@ export const validateAdminToken = async (req, res, next) => {
     req.token = token
     next()
   } catch (error) {
+    // Log error to the server console
+    console.error('Admin token validation error:', error.message)
     return res.status(401).json({
       success: false,
       message: 'Invalid or expired token.'

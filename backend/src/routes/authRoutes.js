@@ -145,7 +145,8 @@ router.get('/me', async (req, res) => {
       message: 'User info retrieved successfully'
     })
   } catch (error) {
-    console.error('Auth me error:', error)
+    // Log error to the server console
+    console.error('Auth me error:', error.message)
     res.status(200).json({
       success: true,
       data: { user: null },

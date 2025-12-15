@@ -51,7 +51,8 @@ export const adminMiddleware = async (req, res, next) => {
 
     next()
   } catch (error) {
-    console.error('Admin authentication error:', error)
+    // Log error to the server console
+    console.error('Admin authentication error:', error.message)
 
     if (error.name === 'JsonWebTokenError') {
       return handleHttpError(res, 'Malformed or invalid token', 401)

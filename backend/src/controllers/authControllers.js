@@ -82,8 +82,9 @@ export const signUp = ({
         .status(201)
         .json(buildResponse(req, 'Registration successful', user, null, {}))
     } catch (error) {
-      console.error('Signup error:', error)
-
+      // Log error to the server console
+      console.error('Signup error:', error.message)
+      // Handle unexpected errors gracefully
       if (error.code === 11000) {
         return handleHttpError(
           res,
@@ -151,7 +152,9 @@ export const signIn = ({
         })
       )
     } catch (error) {
-      console.error(error.message)
+      // Log error to the server console
+      console.error('Signin error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(res, 'An internal server error occurred.', 500)
     }
   }
@@ -194,7 +197,9 @@ export const forgotPassword = ({
           )
         )
     } catch (error) {
-      console.error(error.message)
+      // Log error to the server console
+      console.error('Forgot password error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(res, 'Error processing request.', 400)
     }
   }
@@ -256,7 +261,9 @@ export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
           )
         )
     } catch (error) {
-      console.error(error.message)
+      // Log error to the server console
+      console.error('Reset password error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(res, 'Error resetting password', 500)
     }
   }
@@ -317,7 +324,9 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
           )
         )
     } catch (error) {
-      console.error(error)
+      // Log error to the server console
+      console.error('Change password error:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         'Error changing password, please try again later',
@@ -362,7 +371,9 @@ export const logout = ({ buildResponse, handleHttpError, invalidateToken }) => {
         )
       )
     } catch (error) {
-      console.error('Logout error:', error)
+      // Log error to the server console
+      console.error('Logout error:', error.message)
+      // Handle unexpected errors gracefully
       return handleHttpError(res, 'Error during logout', 500)
     }
   }
@@ -420,7 +431,7 @@ export const googleAuthCallback = ({ buildResponse, handleHttpError }) => (req, 
     return res.redirect(successUrl.toString())
   } catch (error) {
     // Handle unexpected errors gracefully
-    console.error('Error in Google callback:', error)
+    console.error('Error in Google callback:', error.message)
     const failureUrl = process.env.FRONTEND_DEVELOPMENT || 'http://localhost:5173'
     res.redirect(`${failureUrl}/signin?error=google_auth_failed`)
   }
