@@ -1,23 +1,27 @@
 import { Schema, model } from 'mongoose'
 
-// NOTE: Schema matrics
+// NOTE: Metrics schema
 const metricsSchema = new Schema(
   {
-    totalEventsProcessed:
-    {
+    totalEventsProcessed: {
       type: Number,
       default: 0
     }, // cumulative counter
-    apiLatencyAvgMs:
-    {
+    lastCounterSnapshot: {
+      type: Number,
+      default: 0
+    }, // last Prometheus counter value
+    intervalEventsProcessed: {
+      type: Number,
+      default: 0
+    }, // events processed in current interval (resets after read)
+    apiLatencyAvgMs: {
       type: Number
     },
-    uptime:
-    {
+    uptime: {
       type: Number
     },
-    memoryUsage:
-    {
+    memoryUsage: {
       type: Number
     }
   },
