@@ -6,11 +6,10 @@ export default function LoginSocial({ text }) {
   // Social login (Google & GitHub unified)
   const [loading, setLoading] = useState(false);
   
+  
   const handleSocialLogin = (provider) => {
-    
-    const backendBaseUrl =
     setLoading(true);
-    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
+    const backendBaseUrl = import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';  
     
     if (provider === 'google') {
       // Google OAuth
