@@ -20,51 +20,63 @@ export const getMetrics = async (req, res) => {
 export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      // Get latency metric from Prometheus
       const latencyMetric =
         promClient.register.getSingleMetric('terraquake_api_latency_seconds')
 
+      // Extract sum and count to calculate average latency
       const sum = latencyMetric?.hashMap?.['']?.sum || 0
       const count = latencyMetric?.hashMap?.['']?.count || 0
+
+      // Average latency in milliseconds
       const apiLatencyAvgMs = count > 0 ? (sum / count) * 1000 : 0
 
-      // Get events processed from Prometheus counter (monotonic)
       const eventsProcessedItems =
         promClient.register
           .getSingleMetric('terraquake_events_processed_total')
           ?.hashMap?.['']?.value || 0
 
+      // Runtime metrics
       const uptime = Number(process.uptime().toFixed(2))
       const memoryUsage = process.memoryUsage().rss
 
-      // Ensure a single metrics document exists
-      let metricsItem = await Metrics.findOne()
-      if (!metricsItem) {
-        metricsItem = await Metrics.create({
-          eventsProcessed: 0,
-          totalEventsProcessed: 0
-        })
-      }
-
-      // Calculate delta since last snapshot
-      const diff = eventsProcessedItems - metricsItem.eventsProcessed
-
-      // Handle counter reset (process restart)
-      const increment = diff >= 0 ? diff : eventsProcessedItems
-
-      // Persist metrics (NO RESET)
       const updatedMetrics = await Metrics.findOneAndUpdate(
         {},
-        {
-          $inc: { totalEventsProcessed: increment },
-          $set: {
-            eventsProcessed: eventsProcessedItems, // snapshot only
-            apiLatencyAvgMs,
-            uptime,
-            memoryUsage
+        [
+          {
+            // Compute the increment (delta) since last snapshot
+            // If the counter restarted (value < stored snapshot),
+            // we treat the current value as the full increment
+            $set: {
+              _increment: {
+                $cond: [
+                  { $gte: [eventsProcessedItems, '$eventsProcessed'] },
+                  { $subtract: [eventsProcessedItems, '$eventsProcessed'] },
+                  eventsProcessedItems
+                ]
+              }
+            }
+          },
+          {
+            // Apply the increment atomically and update the snapshot
+            $set: {
+              totalEventsProcessed: {
+                $add: ['$totalEventsProcessed', '$_increment']
+              },
+              eventsProcessed: eventsProcessedItems, // snapshot (do NOT reset)
+              apiLatencyAvgMs,
+              uptime,
+              memoryUsage
+            }
+          },
+          {
+            // Remove temporary field used for calculation
+            $unset: '_increment'
           }
-        },
-        { new: true, upsert: true }
+        ],
+        {
+          new: true,
+          upsert: true // Ensure a single metrics document always exists
+        }
       )
 
       res.status(200).json(
@@ -77,6 +89,7 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         })
       )
     } catch (error) {
+      // Error handling
       console.error('Error in getMetricsJSON', {
         message: error.message,
         stack: error.stack
