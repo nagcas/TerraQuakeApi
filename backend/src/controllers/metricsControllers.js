@@ -20,24 +20,30 @@ export const getMetrics = async (req, res) => {
 export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      // Read Prometheus monotonic counter
+      // -------------------------------
+      // 1. Read Prometheus monotonic counter
+      // -------------------------------
       const counterValue =
         promClient.register
           .getSingleMetric('terraquake_events_processed_total')
           ?.hashMap?.['']?.value || 0
 
-      // Atomic DB update to calculate delta and update totals
+      // -------------------------------
+      // 2. Atomic DB update to calculate delta
+      //    - totalEventsProcessed: cumulative, never resets
+      //    - intervalEventsProcessed: events since last read, resets every call
+      // -------------------------------
       const updatedMetrics = await Metrics.findOneAndUpdate(
         {},
         [
           {
-            // Calculate delta since last snapshot
+            // Calculate delta from last snapshot
             $set: {
               _delta: {
                 $cond: [
                   { $gte: [counterValue, { $ifNull: ['$lastCounterSnapshot', 0] }] },
                   { $subtract: [counterValue, { $ifNull: ['$lastCounterSnapshot', 0] }] },
-                  counterValue
+                  counterValue // handles counter reset
                 ]
               }
             }
@@ -57,24 +63,32 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         { new: true, upsert: true }
       )
 
-      // Read Prometheus latency metrics
+      // -------------------------------
+      // 3. Read Prometheus latency metrics
+      // -------------------------------
       const latencyMetric =
         promClient.register.getSingleMetric('terraquake_api_latency_seconds')
       const sum = latencyMetric?.hashMap?.['']?.sum || 0
       const count = latencyMetric?.hashMap?.['']?.count || 0
       const apiLatencyAvgMs = count > 0 ? (sum / count) * 1000 : 0
 
-      // Runtime metrics
+      // -------------------------------
+      // 4. Runtime metrics
+      // -------------------------------
       const uptime = Number(process.uptime().toFixed(2))
       const memoryUsage = process.memoryUsage().rss
 
-      // Update metrics fields in DB
+      // -------------------------------
+      // 5. Update runtime metrics in DB
+      // -------------------------------
       updatedMetrics.apiLatencyAvgMs = apiLatencyAvgMs
       updatedMetrics.uptime = uptime
       updatedMetrics.memoryUsage = memoryUsage
       await updatedMetrics.save()
 
-      // Send JSON response
+      // -------------------------------
+      // 6. Send JSON response
+      // -------------------------------
       res.status(200).json(
         buildResponse(req, 'Metrics JSON TerraQuake API', {
           intervalEventsProcessed: updatedMetrics.intervalEventsProcessed, // resets every call
@@ -85,8 +99,8 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         })
       )
     } catch (error) {
-      console.error('Error in getMetricsJSON', error) // log error
-      handleHttpError(res) // send generic HTTP error
+      console.error('Error in getMetricsJSON', error) // log detailed error
+      handleHttpError(res) // send generic HTTP error response
     }
   }
 }
