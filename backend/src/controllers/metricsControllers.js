@@ -63,6 +63,9 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         { new: true, upsert: true }
       )
 
+      // Reset eventsProcessed in DB to 0 for next calculation
+      await Metrics.updateOne({}, { $set: { eventsProcessed: 0 } })
+
       res.status(200).json({
         ...buildResponse(req, 'Metrics JSON TerraQuake API', {
           eventsProcessed: updatedMetrics.eventsProcessed,
