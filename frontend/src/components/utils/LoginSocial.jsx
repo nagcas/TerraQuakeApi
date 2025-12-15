@@ -4,22 +4,27 @@ import Spinner from '../spinner/Spinner';
 
 export default function LoginSocial({ text }) {
   // Social login (Google & GitHub unified)
-  const [loading, setLoading] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
+  const [loadingGit, setLoadingGit] = useState(false);
   
   
   const handleSocialLogin = (provider) => {
-    setLoading(true);
     const backendBaseUrl = import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';  
     
     if (provider === 'google') {
       // Google OAuth
-      window.location.href = `${backendBaseUrl}/auth/google`;
-      setLoading(false);
+      setLoadingGoogle(true);
+      setTimeout(() => {
+        window.location.href = `${backendBaseUrl}/auth/google`;
+        setLoadingGoogle(false);
+      }, 1000);
     } else if (provider === 'github') {
       // GitHub OAuth
-      setLoading(true);
-      window.location.href = `${backendBaseUrl}/auth/github`;
-      setLoading(false);
+      setLoadingGit(true);
+      setTimeout(() => {
+        window.location.href = `${backendBaseUrl}/auth/github`;
+        setLoadingGit(false);
+      }, 1000);
     }
   };
 
@@ -37,10 +42,11 @@ export default function LoginSocial({ text }) {
           type='button'
           className='px-6 text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
           onClick={() => handleSocialLogin('google')}
+          disabled={loadingGoogle || loadingGit}
         >
           <span className='flex gap-2'>
             <p className='mx-auto'>{text}</p>
-            {loading 
+            {loadingGoogle 
               ? <Spinner /> 
               : <FaGoogle className='w-5 h-5' />
             }
@@ -51,10 +57,11 @@ export default function LoginSocial({ text }) {
           type='button'
           className='px-6 text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
           onClick={() => handleSocialLogin('github')}
+          disabled={loadingGit || loadingGoogle}
         >
           <span className='flex gap-2'>
           <p className='mx-auto'>{text}</p>
-          {loading 
+          {loadingGit 
             ? <Spinner /> 
             : <FaGithub className='w-5 h-5' />
           }
