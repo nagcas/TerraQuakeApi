@@ -44,6 +44,7 @@ export const authMiddleware = async (req, res, next) => {
 
     next()
   } catch (error) {
+    // Log error to the server console
     console.error('Authentication error:', error)
 
     if (error.name === 'JsonWebTokenError') {
@@ -86,6 +87,7 @@ export const requireAdmin = async (req, res, next) => {
 
     next()
   } catch (error) {
+    // Log error to the server console
     console.error('Admin role check error:', error)
     handleHttpError(res, 'Internal server error during role verification', 500)
   }

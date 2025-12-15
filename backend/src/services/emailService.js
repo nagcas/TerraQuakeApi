@@ -43,8 +43,9 @@ export const sendConfirmationEmail = async (email, unsubscribeLink) => {
 
     console.log('✅ Confirmation email sent:', result)
     return true
-  } catch (err) {
-    console.error('❌ Email sending failed:', err)
+  } catch (error) {
+    // Log error to the server console
+    console.error('Email sending failed:', error.message)
     return false
   }
 }
@@ -85,8 +86,9 @@ export const sendBulkNewsletter = async (
 
     console.log('✅ Bulk newsletter sent')
     return true
-  } catch (err) {
-    console.error('❌ Bulk email sending failed:', err)
+  } catch (error) {
+    // Log error to the server console
+    console.error('Bulk email sending failed:', error.message)
     return false
   }
 }

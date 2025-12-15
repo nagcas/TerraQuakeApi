@@ -17,7 +17,9 @@ export const viewDocsEarthquakes = ({
 
       )
     } catch (error) {
+      // Log error to the server console
       console.error(error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(res, 'An internal server error occurred.', 500)
     }
   }

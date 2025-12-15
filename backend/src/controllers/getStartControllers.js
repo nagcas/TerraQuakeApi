@@ -26,7 +26,8 @@ export const getStart = ({ buildResponse, handleHttpError }) => {
 
       return res.status(200).json(response)
     } catch (error) {
-      console.error('Error in getStart controller:', error)
+      // Log error to the server console
+      console.error('Error in getStart controller:', error.message)
 
       // Safely extract message
       const message =
@@ -34,7 +35,7 @@ export const getStart = ({ buildResponse, handleHttpError }) => {
           ? error.message
           : 'Unexpected error while starting the server'
 
-      // Send structured error response
+      // Handle unexpected errors gracefully
       return handleHttpError(res, message, 500)
     }
   }

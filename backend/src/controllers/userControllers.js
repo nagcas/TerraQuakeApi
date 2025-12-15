@@ -44,7 +44,9 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
         })
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in listAllUsers:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -74,7 +76,9 @@ export const updateRoleById = ({ User, buildResponse, handleHttpError }) => {
         .status(200)
         .json(buildResponse(req, 'Role updated successfully', user, null, {}))
     } catch (error) {
+      // Log error to the server console
       console.error('Error in updateRoleById:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -102,7 +106,9 @@ export const getCurrentUserData = ({
 
       return res.status(200).json(buildResponse(req, '', user, null, {}))
     } catch (error) {
+      // Log error to the server console
       console.error('Error in getCurrentUserData:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -148,7 +154,9 @@ export const updateCurrentUserData = ({
           )
         )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in updateCurrentUserData:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -201,7 +209,9 @@ export const updateUserData = ({ User, buildResponse, handleHttpError, matchedDa
         buildResponse(req, 'User updated successfully', userResponse, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in updateUserData:', error.message)
+      // Handle unexpected errors gracefully
       return handleHttpError(res, 'Internal server error', 500)
     }
   }
@@ -245,7 +255,9 @@ export const deleteCurrentUser = ({ User, buildResponse, handleHttpError, invali
         buildResponse(req, 'Account deleted successfully', { _id: user._id, email: user.email, name: user.name }, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in deleteCurrentUser:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -281,7 +293,9 @@ export const deleteUser = ({ User, buildResponse, handleHttpError }) => {
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in deleteUser:', error)
+      // Handle unexpected errors gracefully
       return handleHttpError(res, 'Unexpected server error', 500)
     }
   }

@@ -16,7 +16,9 @@ export const createTestimonial = ({ Testimonial, buildResponse, handleHttpError 
         buildResponse(req, 'Testimonials retrieved successfully', newTestimonial, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in create testimonial:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -74,7 +76,9 @@ export const listAllTestimonials = ({ Testimonial, buildResponse, handleHttpErro
         })
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in list all testimonials:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -109,7 +113,9 @@ export const listOneTestimonial = ({ Testimonial, buildResponse, handleHttpError
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in list one testimonial:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -144,7 +150,9 @@ export const updateTestimonial = ({ buildResponse, handleHttpError }) => {
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in updated testimonial:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -182,7 +190,9 @@ export const deleteTestimonial = ({ buildResponse, handleHttpError }) => {
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in delete one testimonial:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined

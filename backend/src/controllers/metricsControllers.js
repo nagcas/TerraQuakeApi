@@ -9,9 +9,11 @@ export const getMetrics = async (req, res) => {
 
     // Send all collected metrics (default + custom)
     res.end(await promClient.register.metrics())
-  } catch (err) {
+  } catch (error) {
+    // Log error to the server console
+    console.error('Error in getMetrics controller:', error.message)
     // Handle and log any potential error
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ error: error.message })
   }
 }
 
@@ -71,7 +73,9 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         })
       })
     } catch (error) {
+      // Log error to the server console
       console.error('Error in getMetricsJSON:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(res)
     }
   }

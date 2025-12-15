@@ -21,7 +21,9 @@ export const createFaq = ({ Faq, buildResponse, handleHttpError }) => {
         buildResponse(req, 'Faq created successfully', newFaq, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('error in the faq controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -74,7 +76,9 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
         })
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the faq controller.', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res, error.message.includes('HTTP error') ? error.message : undefined
       )
@@ -114,7 +118,9 @@ export const listOneFaq = ({ Faq, buildResponse, handleHttpError }) => {
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the faq controller', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -165,7 +171,9 @@ export const updateFaq = ({ Faq, buildResponse, handleHttpError }) => {
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the faq controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -201,7 +209,9 @@ export const deleteFaq = ({ Faq, buildResponse, handleHttpError }) => {
         buildResponse(req, 'Faq deleted successfully', faqId, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the faq controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined

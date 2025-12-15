@@ -23,7 +23,9 @@ export const createContact = ({ Contact, sendEmailConfirmContact, buildResponse,
         buildResponse(req, 'Message sent successfully', newContact, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the contact controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -90,7 +92,9 @@ export const listAllContacts = ({ Contact, buildResponse, handleHttpError }) => 
         })
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the contact controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -131,7 +135,9 @@ export const listOneContact = ({ Contact, buildResponse, handleHttpError }) => {
         )
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the contact controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -180,7 +186,9 @@ export const answerContact = ({ Contact, sendEmailConfirmAnswer, buildResponse, 
         buildResponse(req, 'Contact answered successfully', updatedContact, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the contact controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
@@ -217,7 +225,9 @@ export const deleteContact = ({ Contact, buildResponse, handleHttpError }) => {
         buildResponse(req, 'Contact deleted successfully', contactId, null, {})
       )
     } catch (error) {
+      // Log error to the server console
       console.error('Error in the contact controller:', error.message)
+      // Handle unexpected errors gracefully
       handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined

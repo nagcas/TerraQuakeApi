@@ -10,6 +10,17 @@ export const eventsProcessed = new promClient.Counter({
   help: 'Total number of earthquake events processed by TerraQuake API'
 })
 
+/**
+ * DEBUG ONLY
+ * Traccia ogni chiamata a eventsProcessed.inc()
+ * DA RIMUOVERE dopo l’analisi
+ */
+const originalInc = eventsProcessed.inc.bind(eventsProcessed)
+eventsProcessed.inc = (...args) => {
+  console.trace('[eventsProcessed.inc called]', args)
+  originalInc(...args)
+}
+
 // NOTE: Custom metric: API latency measurement (in seconds)
 // Buckets define the latency intervals used for histogram aggregation
 export const apiLatencyHistogram = new promClient.Histogram({
