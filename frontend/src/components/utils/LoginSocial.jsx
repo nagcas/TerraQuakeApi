@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa6';
 import Spinner from '../spinner/Spinner';
 
-export default function LoginSocial({ loading, setLoading, text }) {
+export default function LoginSocial({ text }) {
   // Social login (Google & GitHub unified)
+  const [loading, setLoading] = useState(false);
+  
   const handleSocialLogin = (provider) => {
-    setLoading(true);
-
+    
     const backendBaseUrl =
-      import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
-
+    setLoading(true);
+    import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
+    
     if (provider === 'google') {
+      // Google OAuth
       window.location.href = `${backendBaseUrl}/auth/google`;
       setLoading(false);
     } else if (provider === 'github') {
       // GitHub OAuth
+      setLoading(true);
       window.location.href = `${backendBaseUrl}/auth/github`;
       setLoading(false);
     }

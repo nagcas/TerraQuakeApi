@@ -205,8 +205,6 @@ export default function SignIn() {
 
                 {/* Social Buttons */}
                 <LoginSocial
-                  loading={loading}
-                  setLoading={setLoading}
                   text='Login with'
                 />
 

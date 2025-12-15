@@ -8,7 +8,7 @@ import Spinner from '@/components/spinner/Spinner';
 export default function Logout() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUserLogin, setIsLoggedIn } = useContext(Context);
+  const { setUserLogin, setIsLoggedIn, isLoggedIn } = useContext(Context);
   const token = localStorage.getItem('token');
   
   const handleLogoutSubmit = async () => {
@@ -30,12 +30,6 @@ export default function Logout() {
         }
       );
 
-      // Rimuove i dati utente e token dal client
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      setUserLogin({});
-      setIsLoggedIn(false);
-
       Swal.fire({
         title: 'Logged Out!',
         text: res.data.message || 'You have been logged out successfully.',
@@ -43,6 +37,13 @@ export default function Logout() {
         confirmButtonColor: '#9333ea',
       }).then(() => {
         navigate('/', { replace: true });
+        setTimeout(() => {
+          // Rimuove i dati utente e token dal client
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          setUserLogin({});
+          setIsLoggedIn(false);
+        }, 2000);
       });
     } catch (error) {
       const errorMessage =
