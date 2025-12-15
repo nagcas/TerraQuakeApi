@@ -3,11 +3,6 @@ import { Schema, model } from 'mongoose'
 // NOTE: Schema matrics
 const metricsSchema = new Schema(
   {
-    eventsProcessed:
-    {
-      type: Number,
-      default: 0
-    },
     totalEventsProcessed:
     {
       type: Number,

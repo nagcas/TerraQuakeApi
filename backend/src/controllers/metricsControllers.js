@@ -20,80 +20,47 @@ export const getMetrics = async (req, res) => {
 export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const latencyMetric =
-        promClient.register.getSingleMetric('terraquake_api_latency_seconds')
-
-      // Extract sum and count to calculate average latency
-      const sum = latencyMetric?.hashMap?.['']?.sum || 0
-      const count = latencyMetric?.hashMap?.['']?.count || 0
-
-      // Average latency in milliseconds
-      const apiLatencyAvgMs = count > 0 ? (sum / count) * 1000 : 0
-
-      const eventsProcessedItems =
+      const counterValue =
         promClient.register
           .getSingleMetric('terraquake_events_processed_total')
           ?.hashMap?.['']?.value || 0
-
-      // Runtime metrics
-      const uptime = Number(process.uptime().toFixed(2))
-      const memoryUsage = process.memoryUsage().rss
 
       const updatedMetrics = await Metrics.findOneAndUpdate(
         {},
         [
           {
-            // Compute the increment (delta) since last snapshot
-            // If the counter restarted (value < stored snapshot),
-            // we treat the current value as the full increment
             $set: {
-              _increment: {
+              _delta: {
                 $cond: [
-                  { $gte: [eventsProcessedItems, '$eventsProcessed'] },
-                  { $subtract: [eventsProcessedItems, '$eventsProcessed'] },
-                  eventsProcessedItems
+                  { $gte: [counterValue, '$lastCounterSnapshot'] },
+                  { $subtract: [counterValue, '$lastCounterSnapshot'] },
+                  counterValue
                 ]
               }
             }
           },
           {
-            // Apply the increment atomically and update the snapshot
             $set: {
               totalEventsProcessed: {
-                $add: ['$totalEventsProcessed', '$_increment']
+                $add: ['$totalEventsProcessed', '$_delta']
               },
-              eventsProcessed: eventsProcessedItems, // snapshot (do NOT reset)
-              apiLatencyAvgMs,
-              uptime,
-              memoryUsage
+              intervalEventsProcessed: '$_delta',
+              lastCounterSnapshot: counterValue
             }
           },
-          {
-            // Remove temporary field used for calculation
-            $unset: '_increment'
-          }
+          { $unset: '_delta' }
         ],
-        {
-          new: true,
-          upsert: true // Ensure a single metrics document always exists
-        }
+        { new: true, upsert: true }
       )
 
       res.status(200).json(
         buildResponse(req, 'Metrics JSON TerraQuake API', {
-          eventsProcessed: updatedMetrics.eventsProcessed,
-          totalEventsProcessed: updatedMetrics.totalEventsProcessed,
-          apiLatencyAvgMs: Number(apiLatencyAvgMs.toFixed(2)),
-          uptime,
-          memoryUsage
+          intervalEventsProcessed: updatedMetrics.intervalEventsProcessed,
+          totalEventsProcessed: updatedMetrics.totalEventsProcessed
         })
       )
     } catch (error) {
-      // Error handling
-      console.error('Error in getMetricsJSON', {
-        message: error.message,
-        stack: error.stack
-      })
+      console.error('Error in getMetricsJSON', error)
       handleHttpError(res)
     }
   }
