@@ -21,14 +21,18 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
       // Get latency metric from Prometheus
-      const latencyMetric = promClient.register.getSingleMetric('terraquake_api_latency_seconds')
+      const latencyMetric =
+        promClient.register.getSingleMetric('terraquake_api_latency_seconds')
+
       const sum = latencyMetric?.hashMap?.['']?.sum || 0
       const count = latencyMetric?.hashMap?.['']?.count || 0
       const apiLatencyAvgMs = count > 0 ? (sum / count) * 1000 : 0
 
-      // Get events processed from Prometheus counter
+      // Get events processed from Prometheus counter (monotonic)
       const eventsProcessedItems =
-        promClient.register.getSingleMetric('terraquake_events_processed_total')?.hashMap?.['']?.value || 0
+        promClient.register
+          .getSingleMetric('terraquake_events_processed_total')
+          ?.hashMap?.['']?.value || 0
 
       const uptime = Number(process.uptime().toFixed(2))
       const memoryUsage = process.memoryUsage().rss
@@ -42,19 +46,19 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         })
       }
 
-      // Calculate increment difference since the last update
+      // Calculate delta since last snapshot
       const diff = eventsProcessedItems - metricsItem.eventsProcessed
 
-      // If Prometheus counter restarted, diff may be negative → reset diff to new current value
+      // Handle counter reset (process restart)
       const increment = diff >= 0 ? diff : eventsProcessedItems
 
-      // Update database with new accumulated total and current stats
+      // Persist metrics
       const updatedMetrics = await Metrics.findOneAndUpdate(
         {},
         {
-          $inc: { totalEventsProcessed: increment }, // persistent cumulative count
+          $inc: { totalEventsProcessed: increment },
           $set: {
-            eventsProcessed: eventsProcessedItems, // current counter snapshot
+            eventsProcessed: eventsProcessedItems, // snapshot (do NOT reset)
             apiLatencyAvgMs,
             uptime,
             memoryUsage
@@ -63,22 +67,20 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
         { new: true, upsert: true }
       )
 
-      // Reset eventsProcessed in DB to 0 for next calculation
-      await Metrics.updateOne({}, { $set: { eventsProcessed: 0 } })
-
-      res.status(200).json({
-        ...buildResponse(req, 'Metrics JSON TerraQuake API', {
+      res.status(200).json(
+        buildResponse(req, 'Metrics JSON TerraQuake API', {
           eventsProcessed: updatedMetrics.eventsProcessed,
           totalEventsProcessed: updatedMetrics.totalEventsProcessed,
           apiLatencyAvgMs: Number(apiLatencyAvgMs.toFixed(2)),
           uptime,
           memoryUsage
         })
-      })
+      )
     } catch (error) {
-      // Log error to the server console
-      console.error('Error in getMetricsJSON:', error.message)
-      // Handle unexpected errors gracefully
+      console.error('Error in getMetricsJSON', {
+        message: error.message,
+        stack: error.stack
+      })
       handleHttpError(res)
     }
   }
