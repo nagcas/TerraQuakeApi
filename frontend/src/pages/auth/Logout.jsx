@@ -36,14 +36,14 @@ export default function Logout() {
         icon: 'success',
         confirmButtonColor: '#9333ea',
       }).then(() => {
-        navigate('/', { replace: true });
+        // Rimuove i dati utente e token dal client
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         setTimeout(() => {
-          // Rimuove i dati utente e token dal client
-          localStorage.removeItem('user');
-          localStorage.removeItem('token');
+          navigate('/', { replace: true });
           setUserLogin({});
           setIsLoggedIn(false);
-        }, 2000);
+        }, 500);
       });
     } catch (error) {
       const errorMessage =
