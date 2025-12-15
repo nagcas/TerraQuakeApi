@@ -35,7 +35,7 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
       if (!metricsItem) {
         metricsItem = await Metrics.create({
           totalEventsProcessed: 0,
-          lastCounterSnapshot: 0,
+          lastCounterSnapshot: counterValue, // inizializza con il valore corrente
           apiLatencyAvgMs: 0,
           uptime: 0,
           memoryUsage: 0
@@ -46,7 +46,10 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
       // 3. Calculate delta since last snapshot
       // -------------------------------
       const lastSnapshot = metricsItem.lastCounterSnapshot || 0
-      const delta = counterValue - lastSnapshot >= 0 ? counterValue - lastSnapshot : counterValue
+      let delta = counterValue - lastSnapshot
+
+      // Handle counter reset (process restart)
+      if (delta < 0) delta = counterValue
 
       // -------------------------------
       // 4. Accumulate delta in totalEventsProcessed
@@ -54,9 +57,9 @@ export const getMetricsJSON = ({ Metrics, buildResponse, handleHttpError }) => {
       metricsItem.totalEventsProcessed += delta
 
       // -------------------------------
-      // 5. Reset lastCounterSnapshot to 0 for next interval
+      // 5. Update lastCounterSnapshot for next call
       // -------------------------------
-      metricsItem.lastCounterSnapshot = 0
+      metricsItem.lastCounterSnapshot = counterValue
 
       // -------------------------------
       // 6. Update runtime metrics
