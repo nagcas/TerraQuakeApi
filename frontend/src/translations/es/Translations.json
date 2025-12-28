@@ -107,5 +107,25 @@
     "last_update": "Última actualización",
     "author": "Autor",
     "project": "Proyecto"
+  },
+  "about": {
+    "title_card_introduction": "Introducción al Proyecto",
+    "description_card_introduction": "TerraQuake API es un proyecto de código abierto diseñado para hacer que los datos sísmicos sean más accesibles, claros y utilizables para desarrolladores, investigadores, instituciones y comunidades. El objetivo es proporcionar una interfaz moderna y sencilla para consultar información sísmica en tiempo real, promoviendo aplicaciones centradas en la seguridad y la prevención de desastres.",
+    "title_card_motivation": "Motivación",
+    "description_card_motivation": "El proyecto surgió de la necesidad de herramientas gratuitas y abiertas que permitan un acceso rápido y confiable a los datos sísmicos. Al traducir información técnica en API accesibles, cualquier persona—desde estudiantes hasta desarrolladores de aplicaciones de emergencia—puede crear soluciones innovadoras para proteger a las personas y las comunidades.",
+    "title_card_features": "Características Principales",
+    "description_card_features": "TerraQuake API proporciona acceso a datos sísmicos actualizados de fuentes oficiales como el INGV, ofreciendo opciones avanzadas de filtrado por ubicación geográfica, magnitud y tiempo. La API devuelve respuestas JSON listas para integrarse en aplicaciones web y móviles, complementadas con documentación clara y soporte orientado a desarrolladores.",
+    "title_section_technologies": "Tecnologías Utilizadas",
+    "description_section_technologies": "El backend de TerraQuake API está construido con Node.js y Express.js, mientras que MongoDB sirve como base de datos. Bibliotecas clave como Axios, Mongoose, dotenv y bcryptjs manejan los datos y la seguridad de manera eficiente. La gestión del entorno está soportada por CORS y dotenv, y el proyecto se hospeda en plataformas como Vercel o Render, según la solución de hosting preferida.",
+    "title_section_licence": "Licencia de Código Abierto",
+    "description_section_licence": "TerraQuake API se distribuye bajo la licencia AGPL-3.0. Esto significa que cualquiera puede usar, modificar y compartir el proyecto libremente, pero cualquier trabajo derivado también debe publicarse bajo la misma licencia. El objetivo es promover la colaboración y asegurar que las mejoras permanezcan abiertas y accesibles para la comunidad.",
+    "title_section_donations": "Donaciones y Apoyo",
+    "description_section_donations": "Si deseas apoyar el proyecto, puedes contribuir a través de GitHub Sponsors o hacer donaciones voluntarias. Cada contribución ayuda a mantener los servidores, mejorar la API y garantizar un servicio confiable.",
+    "title_section_developer": "Sobre el Desarrollador",
+    "description_section_developer": "TerraQuake API está desarrollada por Gianluca Chiaravalloti, geólogo y desarrollador web full-stack. El proyecto combina experiencia científica y tecnológica para crear aplicaciones prácticas de seguridad sísmica.",
+    "title_section_collaboration": "Colaboración Internacional",
+    "description_section_collaboration": "TerraQuake API se enorgullece de contar con un equipo internacional y diverso de 5 colaboradores de todo el mundo. Sus contribuciones—desde desarrollo backend hasta mejoras de frontend y pruebas—ayudan a garantizar un proyecto robusto, confiable y en constante mejora. Trabajar con desarrolladores de diferentes países aporta perspectivas únicas, acelera la innovación y fortalece el impacto global del proyecto.",
+    "title": "Acerca de TerraQuake API",
+    "description": "Una plataforma enfocada en traducir feeds sísmicos en bruto en endpoints accesibles para desarrolladores y en información útil para seguridad, investigación y educación."
   }
 }
