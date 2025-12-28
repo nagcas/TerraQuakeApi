@@ -61,5 +61,25 @@
     "title": "Empieza en minutos",
     "description": "Sigue estos sencillos pasos para empezar a utilizar TerraQuake API",
     "button_started": "Comienza tu recorrido"
+  },
+  "testimonial": {
+    "title": "Con la confianza de investigadores, innovadores y profesionales tecnológicos",
+    "description": "Descubre cómo TerraQuake API ayuda a profesionales y creadores a trabajar con confianza gracias a datos sísmicos precisos y en tiempo real."
+  },
+  "newsletter": {
+    "title": "TerraQuake API",
+    "description": "Mantente a la vanguardia con actualizaciones en tiempo real, información exclusiva y funciones innovadoras del ecosistema TerraQuake.",
+    "button_get": "Recibir actualizaciones",
+    "button_placeholder": "Introduce tu dirección de correo electrónico",
+    "info": "Respetamos tu privacidad. Sin spam, solo contenido de valor. Puedes darte de baja en cualquier momento con un solo clic.",
+    "info_newsletter": "¿Por qué unirte?",
+    "title_info_one": "Alertas en tiempo real",
+    "description_info_one": "Notificaciones instantáneas sobre actividad sísmica y actualizaciones de la API",
+    "title_info_two": "Acceso exclusivo",
+    "description_info_two": "Funciones beta anticipadas y contenido premium antes del lanzamiento público",
+    "title_info_three": "Perspectivas de expertos",
+    "description_info_three": "Análisis semanales y consejos de profesionales en geociencias",
+    "title_info_four": "Beneficios de la comunidad",
+    "description_info_four": "Descuentos especiales y soporte prioritario para suscriptores"
   }
 }

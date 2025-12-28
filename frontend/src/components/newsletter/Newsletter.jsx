@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function Newsletter() {
+  const { t } = useTranslation('translation');
+
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -56,12 +59,11 @@ export default function Newsletter() {
                 </svg>
               </div>
               <h2 className='text-4xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent'>
-                TerraQuake API
+                {t('newsletter.title')}
               </h2>
             </div>
             <p className='text-purple-200 text-xl leading-relaxed'>
-              Stay ahead with real-time updates, exclusive insights, and
-              cutting-edge features from the TerraQuake ecosystem.
+              {t('newsletter.description')}
             </p>
           </div>
 
@@ -74,7 +76,7 @@ export default function Newsletter() {
                 type='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder='Enter your email address'
+                placeholder={t('newsletter.button_placeholder')}
                 required
                 className='w-full px-6 py-4 rounded-2xl border-2 border-purple-600/50 bg-[#2a0d5b]/80 backdrop-blur-sm text-white placeholder-purple-300 focus:outline-none focus:ring-4 focus:ring-purple-500/30 focus:border-purple-500 transition-all duration-300 text-lg'
                 disabled={isLoading}
@@ -94,7 +96,7 @@ export default function Newsletter() {
                 <Spinner />
               ) : (
                 <div className='flex items-center justify-center space-x-2'>
-                  <span className='text-lg'>Get Updates</span>
+                  <span className='text-lg'>{t('newsletter.button_get')}</span>
                 </div>
               )}
             </button>
@@ -140,8 +142,7 @@ export default function Newsletter() {
           )}
 
           <p className='mt-8 text-sm text-purple-300/80 text-center md:text-left leading-relaxed'>
-            We respect your privacy. No spam, just value. Unsubscribe at any
-            time with one click.
+            {t('newsletter.info')}
           </p>
         </div>
 
@@ -168,31 +169,28 @@ export default function Newsletter() {
                 </svg>
               </div>
               <h3 className='text-3xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent'>
-                Why Join Us?
+                {t('newsletter.info_newsletter')}
               </h3>
             </div>
 
             <ul className='space-y-6'>
               {[
                 {
-                  title: 'Real-time Alerts',
+                  title: t('newsletter.title_info_one'),
                   description:
-                    'Instant notifications about seismic activities and API updates',
+                    t('newsletter.description_info_one'),
                 },
                 {
-                  title: 'Exclusive Access',
-                  description:
-                    'Early beta features and premium content before public release',
+                  title: t('newsletter.title_info_two'),
+                  description: t('newsletter.description_info_two'),
                 },
                 {
-                  title: 'Expert Insights',
-                  description:
-                    'Weekly analysis and tips from geoscience professionals',
+                  title: t('newsletter.title_info_three'),
+                  description: t('newsletter.description_info_three'),
                 },
                 {
-                  title: 'Community Perks',
-                  description:
-                    'Special discounts and priority support for subscribers',
+                  title: t('newsletter.title_info_four'),
+                  description: t('newsletter.description_info_four'),
                 },
               ].map((item, index) => (
                 <li

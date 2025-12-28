@@ -3,8 +3,11 @@ import { TimelineContent } from '@/components/testimonials/TimelineAnimation';
 import AvatarUser from '../utils/AvatarUser';
 import useTestimonials from '@/hooks/useTestimonials';
 import { formatDate } from '../utils/FormatDate';
+import { useTranslation } from 'react-i18next';
 
 export default function ClientFeedback() {
+  const { t } = useTranslation('translation');
+
   const { testimonials } = useTestimonials();
   const testimonialRef = useRef(testimonials);
   const [review, setReview] = useState([]);
@@ -55,7 +58,7 @@ export default function ClientFeedback() {
           customVariants={revealVariants}
           timelineRef={testimonialRef}
         >
-          Trusted by Researchers, Innovators, and Tech Builders
+          {t('testimonial.title')} 
         </TimelineContent>
         <TimelineContent
           as='p'
@@ -64,8 +67,7 @@ export default function ClientFeedback() {
           customVariants={revealVariants}
           timelineRef={testimonialRef}
         >
-          See how TerraQuake API helps professionals and creators work
-          confidently with precise, real-time seismic data.
+          {t('testimonial.description')}
         </TimelineContent>
       </article>
       <div className='flex flex-wrap justify-center gap-6 w-full py-10 px-4 mx-auto'>
