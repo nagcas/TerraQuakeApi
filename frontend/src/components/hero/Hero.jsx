@@ -3,8 +3,11 @@ import JsonApi2 from '@images/json-api-2.png';
 import { useContext, useState } from 'react';
 import { Context } from '../modules/Context';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
+  const { t } = useTranslation('translation');
+
   const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
@@ -55,13 +58,11 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className='text-5xl md:text-7xl font-extrabold leading-tight bg-clip-text text-white/80'
           >
-            Practice with Real Seismic Data
+            {t('hero.h1')}
           </motion.h1>
 
           <p className='text-lg md:text-lg text-gray-300'>
-            A training and experimentation environment powered by real seismic
-            events from official sources. Perfect for students, developers, and
-            technicians looking to learn by working with real-world data.
+            {t('hero.p')}
           </p>
 
           <motion.div
@@ -75,14 +76,14 @@ export default function Hero() {
                 className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer'
                 onClick={() => navigate('/signup')}
               >
-                Sign Up
+                {t('hero.sign_up')}
               </button>
             )}
             <button
               className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
               onClick={() => navigate('/explore-data/earthquakes')}
             >
-              Explore Seismic Events
+              {t('hero.explore_seismic_events')}
             </button>
           </motion.div>
         </motion.div>

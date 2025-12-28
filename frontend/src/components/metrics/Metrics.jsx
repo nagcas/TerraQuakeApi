@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@config/Axios.js';
+import { useTranslation } from 'react-i18next';
 
 export default function Metrics() {
+  const { t } = useTranslation('translation');
+
   const [highlightMetrics, setHighlightMetrics] = useState([]);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [metricsError, setMetricsError] = useState(null);
@@ -62,9 +65,9 @@ export default function Metrics() {
     return (
       <section className='p-6 md:p-0 text-center text-gray-300'>
         <h2 className='text-3xl md:text-4xl font-bold text-white my-16'>
-          Loading System Metrics...
+          {t('metrics.loading')}
         </h2>
-        <p>Please wait while we retrieve real-time performance data.</p>
+        <p>{t('metrics.wait')}</p>
       </section>
     );
   }
@@ -73,7 +76,7 @@ export default function Metrics() {
     return (
       <section className='p-6 md:p-0 text-center text-gray-300'>
         <h2 className='text-3xl md:text-4xl font-bold text-red-400 my-6'>
-          Failed to Load Metrics
+          {t('metrics.failed')}
         </h2>
         <p className='mb-16'>{metricsError}</p>
       </section>
@@ -83,7 +86,7 @@ export default function Metrics() {
   return (
     <section className='p-6 md:p-0'>
       <h2 className='text-3xl md:text-4xl text-center font-bold text-white my-16'>
-        System Performance and Reliability Metrics
+        {t('metrics.title')}
       </h2>
 
       <div className='max-w-7xl mx-auto grid gap-4 grid-cols-1 p-6 xl:grid-cols-3 mb-6 md:mb-[160px]'>

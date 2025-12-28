@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "h1": "Practica con datos sísmicos reales",
+    "p": "Un entorno de formación y experimentación basado en eventos sísmicos reales procedentes de fuentes oficiales. Ideal para estudiantes, desarrolladores y técnicos que desean aprender trabajando con datos del mundo real.",
+    "sign_up": "Regístrate",
+    "explore_seismic_events": "Explorar eventos sísmicos"
+  },
+  "info": {
+    "title_event": "Detalles del evento",
+    "content_event": "Accede a información completa sobre los eventos sísmicos, incluyendo magnitud, profundidad, coordenadas, hora y localización.",
+    "button_event": "Ver documentación",
+    "title_advanced": "Filtrado avanzado",
+    "content_advanced": "Consulta terremotos por rango temporal, ubicación geográfica, intervalo de magnitud y radio de distancia para obtener exactamente los datos que necesitas.",
+    "button_advanced": "Más información",
+    "title_statistical": "Análisis estadísticos",
+    "content_statistical": "Genera estadísticas y resúmenes personalizados para analizar la actividad sísmica a lo largo del tiempo o en regiones específicas.",
+    "button_statistical": "Guía de estadísticas",
+    "title_easy": "Integración sencilla",
+    "content_easy": "Integra fácilmente los datos sísmicos en paneles de control, herramientas de monitoreo, plataformas GIS, aplicaciones móviles o proyectos educativos.",
+    "button_easy": "Guía de integración",
+    "title_h2": "Introducción a TerraQuake API",
+    "description_p": "Los terremotos son fenómenos naturales causados por la liberación repentina de energía en la corteza terrestre, lo que genera ondas sísmicas. Comprenderlos y monitorearlos es fundamental para la gestión del riesgo y la investigación científica. TerraQuake API está diseñada para proporcionar datos sísmicos fiables y accesibles a través de una interfaz moderna y orientada a desarrolladores.",
+    "subdescription_p": "Esto es lo que puedes hacer con la API:"
+  },
+  "metrics": {
+    "loading": "Cargando métricas del sistema...",
+    "wait": "Por favor, espera mientras recuperamos los datos de rendimiento en tiempo real.",
+    "failed": "No se pudieron cargar las métricas",
+    "title": "Métricas de rendimiento y fiabilidad del sistema"
+  },
+  "navbar": {
+    "primary_access": "Acceso a la API",
+    "primary_blog": "Blog",
+    "primary_about": "Acerca de",
+    "primary_contact": "Contacto",
+    "resources_cases": "Casos de uso",
+    "resources_earthquakes": "Documentación de terremotos",
+    "resources_stations": "Documentación de estaciones",
+    "resources_faq": "FAQ",
+    "explore_earthquakes": "API de terremotos",
+    "explore_stations": "API de estaciones",
+    "profile": "Perfil",
+    "profile_admin": "Panel de administración",
+    "profile_change": "Cambiar contraseña",
+    "profile_messages": "Mensajes",
+    "profile_earthquakes": "Documentación de terremotos",
+    "profile_stations": "Documentación de estaciones",
+    "profile_information": "Información",
+    "button_explore_data": "Explorar datos",
+    "button_resources": "Recursos",
+    "button_sign_in": "Iniciar sesión",
+    "button_sign_up": "Registrarse"
+  }
+}

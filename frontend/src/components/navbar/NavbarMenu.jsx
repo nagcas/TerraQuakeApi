@@ -7,49 +7,65 @@ import AvatarUser from '../utils/AvatarUser';
 import Logout from '@/pages/auth/Logout';
 import StarsGitHub from '../utils/StarsGitHub';
 
+import { useTranslation } from 'react-i18next';
+
 export default function NavbarMenu() {
+  const { t, i18n } = useTranslation();
+
   const navigate = useNavigate();
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
+
+  const lenguage = localStorage.getItem('i18nextLng');
 
   const [isActive, setIsActive] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isTranslationOpen, setIsTranslationOpen] = useState(false);
+  const [isLenguage, setIsLenguage] = useState(
+    (lenguage === 'en') && 'English' ||
+    (lenguage === 'it') && 'Italiano' ||
+    (lenguage === 'es') && 'Español'
+  );
 
   const exploreRef = useRef(null);
   const resourcesRef = useRef(null);
   const profileRef = useRef(null);
   const mobileRef = useRef(null);
+  const translationRef = useRef(null);
 
   const primaryNavItems = [
-    { name: 'API Access', path: '/api-access' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('navbar.primary_access'), path: '/api-access' },
+    { name: t('navbar.primary_blog'), path: '/blog' },
+    { name: t('navbar.primary_about'), path: '/about' },
+    { name: t('navbar.primary_contact'), path: '/contact' },
   ];
 
   const resourcesNavItems = [
-    { name: 'Use Cases', path: '/use-cases' },
-    { name: 'Docs Earthquakes', path: '/docs-earthquakes' },
-    { name: 'Docs Stations', path: '/docs-stations' },
-    { name: 'Faq', path: '/faq' },
+    { name: t('navbar.resources_cases'), path: '/use-cases' },
+    { name: t('navbar.resources_earthquakes'), path: '/docs-earthquakes' },
+    { name: t('navbar.resources_stations'), path: '/docs-stations' },
+    { name: t('navbar.resources_faq'), path: '/faq' },
   ];
 
   const exploreDataNavItems = [
-    { name: 'Earthquakes API', path: '/explore-data/earthquakes' },
-    { name: 'Stations API', path: '/explore-data/stations' },
+    {
+      name: t('navbar.explore_earthquakes'),
+      path: '/explore-data/earthquakes',
+    },
+    { name: t('navbar.explore_stations'), path: '/explore-data/stations' },
   ];
 
   const profileItems = [
-    { name: 'Profile', path: '/profile' },
-    { name: 'Admin Dashboard', path: '/admin' },
-    { name: 'Change Password', path: '/change-password' },
-    { name: 'Messages', path: '/contact' },
-    { name: 'Docs Earthquakes', path: '/docs-earthquakes' },
-    { name: 'Docs Stations', path: '/docs-stations' },
-    { name: 'Information', path: '/info' },
+    { name: t('navbar.profile'), path: '/profile' },
+    { name: t('navbar.profile_admin'), path: '/admin' },
+    { name: t('navbar.profile_change'), path: '/change-password' },
+    { name: t('navbar.profile_messages'), path: '/contact' },
+    { name: t('navbar.profile_earthquakes'), path: '/docs-earthquakes' },
+    { name: t('navbar.profile_stations'), path: '/docs-stations' },
+    { name: t('navbar.profile_information'), path: '/info' },
   ];
 
   // Automatically close the profile menu when the login status changes
@@ -67,6 +83,8 @@ export default function NavbarMenu() {
         setIsProfileOpen(false);
       if (mobileRef.current && !mobileRef.current.contains(e.target))
         setIsMobileOpen(false);
+      if (translationRef.current && !translationRef.current.contains(e.target))
+        setIsTranslationOpen(false);
     }
     document.addEventListener('mousedown', onDocClick);
     return () => document.removeEventListener('mousedown', onDocClick);
@@ -107,7 +125,7 @@ export default function NavbarMenu() {
             }`}
             aria-expanded={isExploreOpen}
           >
-            Explore Data{' '}
+            {t('navbar.button_explore_data')}{' '}
             <FaChevronDown
               className={`text-xs transition-transform ${
                 isExploreOpen ? 'rotate-180' : 'rotate-0'
@@ -156,7 +174,7 @@ export default function NavbarMenu() {
             }`}
             aria-expanded={isResourcesOpen}
           >
-            Resources{' '}
+            {t('navbar.button_resources')}{' '}
             <FaChevronDown
               className={`text-xs transition-transform ${
                 isResourcesOpen ? 'rotate-180' : 'rotate-0'
@@ -295,13 +313,81 @@ export default function NavbarMenu() {
               className='border border-gray-400 hover:border-white hover:bg-white hover:text-black transition-all duration-300 text-gray-300 font-medium py-1.5 px-4 rounded-full cursor-pointer text-sm'
               onClick={() => navigate('/signin')}
             >
-              Sign In
+              {t('navbar.button_sign_in')}
             </button>
             <button
               className='bg-gradient-to-r from-pink-500 to-purple-600 py-1.5 px-4 rounded-full hover:scale-105 transform transition-all duration-300 cursor-pointer text-sm font-medium'
               onClick={() => navigate('/signup')}
             >
-              Sign Up
+              {t('navbar.button_sign_up')}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Translation select */}
+      <div
+        ref={translationRef}
+        className='relative'
+      >
+        <button
+          type='button'
+          onClick={() => setIsTranslationOpen((s) => !s)}
+          className='flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer'
+          aria-haspopup='menu'
+          aria-expanded={isTranslationOpen}
+          
+        >
+          {isLenguage}
+          <FaChevronDown
+            className={`text-xs transition-transform ${
+              isTranslationOpen ? 'rotate-180' : 'rotate-0'
+            }`}
+          />
+        </button>
+
+        {isTranslationOpen && (
+          <div
+            id='language-menu'
+            role='menu'
+            className='flex flex-col gap-4 absolute top-full left-0 mt-2 w-30 bg-black/95 backdrop-blur-xl border border-purple-500/50 rounded-2xl shadow-lg z-50
+            py-2 animate-fade-in'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              role='menuitem'
+              onClick={() => {
+                i18n.changeLanguage('en');
+                setIsTranslationOpen(false);
+                setIsLenguage('English');
+              }}
+              className=' hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg cursor-pointer'
+            >
+              English
+            </button>
+
+            <button
+              role='menuitem'
+              onClick={() => {
+                i18n.changeLanguage('it');
+                setIsTranslationOpen(false);
+                setIsLenguage('Italiano');
+              }}
+              className=' hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg cursor-pointer'
+            >
+              Italiano
+            </button>
+
+            <button
+              role='menuitem'
+              onClick={() => {
+                i18n.changeLanguage('es');
+                setIsTranslationOpen(false);
+                setIsLenguage('Español');
+              }}
+              className=' hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg cursor-pointer'
+            >
+              Español
             </button>
           </div>
         )}
@@ -343,9 +429,7 @@ export default function NavbarMenu() {
               onClick={() => setIsMobileOpen(false)}
               className={({ isActive }) =>
                 `hover:text-purple-400 ${
-                  isActive
-                    ? 'text-purple-400 font-semibold'
-                    : 'text-gray-300'
+                  isActive ? 'text-purple-400 font-semibold' : 'text-gray-300'
                 }`
               }
             >
@@ -364,7 +448,7 @@ export default function NavbarMenu() {
                   setIsMobileOpen(false);
                 }}
               >
-                Sign In
+                {t('navbar.button_sign_in')}
               </button>
               <button
                 className='bg-gradient-to-r from-pink-500 to-purple-600 py-2 px-6 rounded-full w-full max-w-[260px]'
@@ -373,7 +457,7 @@ export default function NavbarMenu() {
                   setIsMobileOpen(false);
                 }}
               >
-                Sign Up
+                {t('navbar.button_sign_up')}
               </button>
             </div>
           )}

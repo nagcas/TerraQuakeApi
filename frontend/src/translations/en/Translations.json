@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "h1": "Practice with Real Seismic Data",
+    "p": "A training and experimentation environment powered by real seismic events from official sources Perfect for students, developers, and technicians looking to learn by working with real-world data.",
+    "sign_up": "Sign Up",
+    "explore_seismic_events": "Explore Seismic Events"
+  },
+  "info": {
+    "title_event": "Event Details",
+    "content_event": "Access comprehensive information about seismic events, including magnitude, depth, coordinates, time, and location.",
+    "button_event": "View Docs",
+    "title_advanced": "Advanced Filtering",
+    "content_advanced": "Query earthquakes by time range, location, magnitude interval, and distance radius to get exactly the data you need.",
+    "button_advanced": "Learn More",
+    "title_statistical": "Statistical Insights",
+    "content_statistical": "Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.",
+    "button_statistical": "See Stats Guide",
+    "title_easy": "Easy Integration",
+    "content_easy": "Seamlessly integrate earthquake data into dashboards, monitoring tools, GIS platforms, mobile apps, or educational projects.",
+    "button_easy": "Integration Guide",
+    "title_h2": "Introduction to TerraQuake API",
+    "description_p": "Earthquakes are natural phenomena caused by a sudden release of energy in the Earth's crust, generating seismic waves. Understanding and monitoring them is crucial for risk management and scientific research. TerraQuake API is designed to provide reliable and accessible earthquake data through a modern and developer-friendly interface.",
+    "subdescription_p": "Here's what you can do with it:"
+  },
+  "metrics": {
+    "loading": "Loading System Metrics...",
+    "wait": "Please wait while we retrieve real-time performance data.",
+    "failed": "Failed to Load Metrics",
+    "title": "System Performance and Reliability Metrics"
+  },
+  "navbar": {
+    "primary_access": "API Access",
+    "primary_blog": "Blog",
+    "primary_about": "About",
+    "primary_contact": "Contact",
+    "resources_cases": "Use Cases",
+    "resources_earthquakes": "Docs Earthquakes",
+    "resources_stations": "Docs Stations",
+    "resources_faq": "Faq",
+    "explore_earthquakes": "Earthquakes API",
+    "explore_stations": "Stations API",
+    "profile": "Profile",
+    "profile_admin": "Admin Dashboard",
+    "profile_change": "Change Password",
+    "profile_messages": "Messages",
+    "profile_earthquakes": "Docs Earthquakes",
+    "profile_stations": "Docs Stations",
+    "profile_information": "Information",
+    "button_explore_data": "Explore Data",
+    "button_resources": "Resources",
+    "button_sign_in": "Sign In",
+    "button_sign_up": "Sign Up"
+  }
+}

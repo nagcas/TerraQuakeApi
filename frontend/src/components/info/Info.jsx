@@ -1,46 +1,44 @@
 import { useState } from 'react';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { FaChartLine, FaCode, FaFilter } from 'react-icons/fa6';
-import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Info() {
+  const { t } = useTranslation('translation');
+
   const [hoveredCard, setHoveredCard] = useState(null);
   const introCard = [
     {
-      title: 'Event Details',
+      title: t('info.title_event'),
       icon: (
         <FaRegCalendarAlt className='text-6xl my-6 text-violet-300 mx-auto' />
       ),
-      content:
-        'Access comprehensive information about seismic events, including magnitude, depth, coordinates, time, and location.',
-      button: 'View Docs',
+      content: t('info.content_event'),
+      button: t('info.button_event'),
       link: '/explore-data/earthquakes',
       gradient: 'from-purple-500/10 via-violet-500/5 to-transparent',
     },
     {
-      title: 'Advanced Filtering',
+      title: t('info.title_advanced'),
       icon: <FaFilter className='text-6xl my-6 text-violet-300 mx-auto' />,
-      content:
-        'Query earthquakes by time range, location, magnitude interval, and distance radius to get exactly the data you need.',
-      button: 'Learn More',
+      content: t('info.content_advanced'),
+      button: t('info.button_advanced'),
       link: '/explore-data/earthquakes',
       gradient: 'from-purple-500/10 via-violet-500/5 to-transparent',
     },
     {
-      title: 'Statistical Insights',
+      title: t('info.title_statistical'),
       icon: <FaChartLine className='text-6xl my-6 text-violet-200 mx-auto' />,
-      content:
-        'Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.',
-      button: 'See Stats Guide',
+      content: t('info.content_statistical'),
+      button: t('info.button_statistical'),
       link: '/docs-earthquakes',
       gradient: 'from-purple-500/10 via-violet-500/5 to-transparent',
     },
     {
-      title: 'Easy Integration',
+      title: t('info.title_easy'),
       icon: <FaCode className='text-6xl my-6 text-violet-300 mx-auto' />,
-      content:
-        'Seamlessly integrate earthquake data into dashboards, monitoring tools, GIS platforms, mobile apps, or educational projects.',
-      button: 'Integration Guide',
+      content: t('info.content_easy'),
+      button: t('info.button_easy'),
       link: '/api-access',
       gradient: 'from-purple-500/10 via-violet-500/5 to-transparent',
     },
@@ -51,21 +49,16 @@ export default function Info() {
       <div className='flex flex-col justify-center items-center mb-16'>
         {/* Page Title */}
         <h2 className='text-2xl md:text-4xl text-white font-extrabold text-center mb-5 tracking-tight'>
-          Introduction to TerraQuake API
+          {t('info.title_h2')}
         </h2>
 
         {/* Description */}
         <p className='text-white text-lg w-[95%] xl:w-6xl mx-auto'>
-          Earthquakes are natural phenomena caused by a sudden release of energy
-          in the Earth's crust, generating seismic waves. Understanding and
-          monitoring them is crucial for risk management and scientific
-          research. TerraQuake API is designed to provide reliable and
-          accessible earthquake data through a modern and developer-friendly
-          interface.
+          {t('info.description_p')}
         </p>
 
         <p className='sm:text-sm md:text-lg mt-6 mx-auto max-w-3xl text-center'>
-          Here's what you can do with it:
+          {t('info.subdescription_p')}
         </p>
       </div>
 

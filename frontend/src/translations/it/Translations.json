@@ -1,0 +1,55 @@
+{
+  "hero": {
+    "h1": "Esercitati con dati sismici reali",
+    "p": "Un ambiente di formazione e sperimentazione basato su eventi sismici reali provenienti da fonti ufficiali. Ideale per studenti, sviluppatori e tecnici che vogliono apprendere lavorando con dati del mondo reale.",
+    "sign_up": "Registrati",
+    "explore_seismic_events": "Esplora eventi sismici"
+  },
+  "info": {
+    "title_event": "Dettagli dell’evento",
+    "content_event": "Accedi a informazioni complete sugli eventi sismici, incluse magnitudo, profondità, coordinate, orario e localizzazione.",
+    "button_event": "Consulta la documentazione",
+    "title_advanced": "Filtri avanzati",
+    "content_advanced": "Interroga i terremoti per intervallo temporale, area geografica, range di magnitudo e raggio di distanza per ottenere esattamente i dati di cui hai bisogno.",
+    "button_advanced": "Scopri di più",
+    "title_statistical": "Analisi statistiche",
+    "content_statistical": "Genera statistiche e riepiloghi personalizzati per analizzare l’attività sismica nel tempo o in aree specifiche.",
+    "button_statistical": "Guida alle statistiche",
+    "title_easy": "Integrazione semplice",
+    "content_easy": "Integra facilmente i dati sismici in dashboard, strumenti di monitoraggio, piattaforme GIS, applicazioni mobili o progetti educativi.",
+    "button_easy": "Guida all’integrazione",
+    "title_h2": "Introduzione a TerraQuake API",
+    "description_p": "I terremoti sono fenomeni naturali causati dal rilascio improvviso di energia nella crosta terrestre, che genera onde sismiche. Comprenderli e monitorarli è fondamentale per la gestione del rischio e la ricerca scientifica. TerraQuake API è progettata per fornire dati sismici affidabili e accessibili attraverso un’interfaccia moderna e orientata agli sviluppatori.",
+    "subdescription_p": "Ecco cosa puoi fare con l’API:"
+  },
+  "metrics": {
+    "loading": "Caricamento delle metriche di sistema...",
+    "wait": "Attendi mentre recuperiamo i dati sulle prestazioni in tempo reale.",
+    "failed": "Impossibile caricare le metriche",
+    "title": "Metriche di prestazioni e affidabilità del sistema"
+  },
+   "navbar": {
+    "primary_access": "Accesso API",
+    "primary_blog": "Blog",
+    "primary_about": "Chi siamo",
+    "primary_contact": "Contatti",
+
+    "resources_cases": "Casi d’uso",
+    "resources_earthquakes": "Documentazione terremoti",
+    "resources_stations": "Documentazione stazioni",
+    "resources_faq": "FAQ",
+    "explore_earthquakes": "API Terremoti",
+    "explore_stations": "API Stazioni",
+    "profile": "Profilo",
+    "profile_admin": "Dashboard amministratore",
+    "profile_change": "Cambia password",
+    "profile_messages": "Messaggi",
+    "profile_earthquakes": "Documentazione terremoti",
+    "profile_stations": "Documentazione stazioni",
+    "profile_information": "Informazioni",
+    "button_explore_data": "Esplora dati",
+    "button_resources": "Risorse",
+    "button_sign_in": "Accedi",
+    "button_sign_up": "Registrati"
+  }
+}
