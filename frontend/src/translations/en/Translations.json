@@ -100,5 +100,12 @@
     "reserved_terms": "TerraQuake API is free software: you can redistribute it and/or modify it under the terms of the",
     "licenced_gnu": "GNU Affero General Public License",
     "licenced": "as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+  },
+  "version": {
+    "information": "API information",
+    "version": "Version",
+    "last_update": "Last updated",
+    "author": "Author",
+    "project": "Project"
   }
 }
