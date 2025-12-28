@@ -14,33 +14,33 @@ import {
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Metrics from '@/components/metrics/Metrics';
+import { useTranslation } from 'react-i18next';
 
 export default function About() {
+  const { t } = useTranslation('translation');
+
   const [hoveredCard, setHoveredCard] = useState(null);
  
   const cardSections = [
     {
-      title: 'Project Introduction',
-      content:
-        'TerraQuake API is an open-source project designed to make seismic data more accessible, clear, and usable for developers, researchers, institutions, and communities. The goal is to provide a modern and simple interface to consult real-time earthquake information, promoting applications focused on safety and disaster prevention.',
+      title: t('about.title_card_introduction'),
+      content: t('about.description_card_introduction'),
       icon: (
         <FaGlobeAmericas className='text-purple-400 text-4xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6' />
       ),
       gradient: 'from-purple-500/10 via-violet-500/5 to-transparent',
     },
     {
-      title: 'Motivation',
-      content:
-        'The project was born from the need for free and open tools that allow fast and reliable access to seismic data. By translating technical information into accessible APIs, anyone—from students to emergency app developers—can build innovative solutions to protect people and communities.',
+      title: t('about.title_card_motivation'),
+      content: t('about.description_card_motivation'),
       icon: (
         <FaLightbulb className='text-purple-400 text-4xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6' />
       ),
       gradient: 'from-pink-500/10 via-purple-500/5 to-transparent',
     },
     {
-      title: 'Key Features',
-      content:
-        'TerraQuake API provides access to up-to-date seismic data from official sources such as INGV, offering advanced filtering options by geographic location, magnitude, and time. The API returns JSON responses that are ready to be integrated into both web and mobile applications, complemented by clear documentation and developer-friendly support.',
+      title: t('about.title_card_features'),
+      content: t('about.description_card_features'),
       icon: (
         <FaChartLine className='text-purple-400 text-4xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6' />
       ),
@@ -50,41 +50,36 @@ export default function About() {
 
   const textSections = [
     {
-      title: 'Technologies Used',
-      content:
-        'The backend of TerraQuake API is built with Node.js and Express.js, while MongoDB serves as the database. Key libraries such as Axios, Mongoose, dotenv, and bcryptjs are used to handle data and security efficiently. Environment management is supported with CORS and dotenv, and the project is hosted on platforms like Vercel or Render, depending on your preferred hosting solution.',
+      title: t('about.title_section_technologies'),
+      content: t('about.description_section_technologies'),
       icon: (
         <FaCode className='text-purple-400 text-2xl transition-transform duration-300 group-hover:scale-105' />
       ),
     },
     {
-      title: 'Open Source License',
-      content:
-        'TerraQuake API is distributed under the AGPL-3.0 license. This means anyone can use, modify, and share the project freely, but any derivative works must also be released under the same license. The goal is to promote collaboration and ensure that improvements remain open and accessible to the community.',
+      title: t('about.title_section_licence'),
+      content: t('about.description_section_licence'),
       icon: (
         <FaBalanceScale className='text-purple-400 text-2xl transition-transform duration-300 group-hover:scale-105' />
       ),
     },
     {
-      title: 'Donations & Support',
-      content:
-        'If you would like to support the project, you can contribute via GitHub Sponsors or make voluntary donations. Every contribution helps maintain servers, improve the API, and ensure reliable service.',
+      title: t('about.title_section_donations'),
+      content: t('about.description_section_donations'),
       icon: (
         <FaHandsHelping className='text-purple-400 text-2xl transition-transform duration-300 group-hover:scale-105' />
       ),
     },
     {
-      title: 'About the Developer',
-      content:
-        'TerraQuake API is developed by Gianluca Chiaravalloti, a geologist and full-stack web developer. The project combines scientific expertise with technology to create practical applications for seismic safety.',
+      title: t('about.title_section_developer'),
+      content: t('about.description_section_developer'),
       icon: (
         <FaUserAstronaut className='text-purple-400 text-2xl transition-transform duration-300 group-hover:scale-105' />
       ),
     },
     {
-      title: 'International Collaboration',
-      content:
-        'TerraQuake API is proud to have a diverse, international team of 5 collaborators from around the world. Their contributions—from backend development to frontend enhancements and testing—help ensure the project is robust, reliable, and continuously improving. Working with developers across different countries brings unique perspectives, accelerates innovation, and strengthens the global impact of the project.',
+      title: t('about.title_section_collaboration'),
+      content: t('about.description_section_collaboration'),
       icon: (
         <FaUsers className='text-purple-400 text-2xl transition-transform duration-300 group-hover:scale-105' />
       ),
@@ -127,13 +122,11 @@ export default function About() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              About TerraQuake API.
+              {t('about.title')}
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              A focused platform built to translate raw seismic feeds into
-              developer-friendly endpoints and actionable insights for safety,
-              research, and education.
+              {t('about.description')}
             </p>
           </motion.div>
 
