@@ -50,5 +50,16 @@
     "button_resources": "Resources",
     "button_sign_in": "Sign In",
     "button_sign_up": "Sign Up"
+  },
+  "started": {
+    "title_sign": "Sign Up",
+    "description_sign": "Create your free account to get API access",
+    "title_key": "Get API Key",
+    "description_key": "Access your dashboard to retrieve your API key",
+    "title_building": "Start Building",
+    "description_building": "Make your first API call and start building",
+    "title": "Get Started in Minutes",
+    "description": "Follow these simple steps to start using TerraQuake API",
+    "button_started": "Start Your Journey"
   }
 }

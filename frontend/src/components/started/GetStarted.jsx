@@ -1,23 +1,26 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function GetStarted() {
+  const { t } = useTranslation('translation');
+
   const navigate = useNavigate();
 
   const quickStartSteps = [
     {
       step: '1',
-      title: 'Sign Up',
-      description: 'Create your free account to get API access',
+      title: t('started.title_sign'),
+      description: t('started.description_sign'),
     },
     {
       step: '2',
-      title: 'Get API Key',
-      description: 'Access your dashboard to retrieve your API key',
+      title: t('started.title_key'),
+      description: t('started.description_key'),
     },
     {
       step: '3',
-      title: 'Start Building',
-      description: 'Make your first API call and start building',
+      title: t('started.title_building'),
+      description: t('started.description_building'),
     },
   ];
 
@@ -28,10 +31,10 @@ export default function GetStarted() {
         <div className='max-w-7xl mx-auto'>
           <div className='text-center mb-16'>
             <h2 className='text-3xl md:text-4xl font-extrabold mb-6 text-white'>
-              Get Started in Minutes
+              {t('started.title')}
             </h2>
             <p className='text-xl text-gray-300 max-w-2xl mx-auto'>
-              Follow these simple steps to start using TerraQuake API
+              {t('started.description')}
             </p>
           </div>
 
@@ -59,7 +62,7 @@ export default function GetStarted() {
               onClick={() => navigate('/api-access')}
               className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-4 px-8 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer shadow-lg text-lg'
             >
-              Start Your Journey
+              {t('started.button_started')}
             </button>
           </div>
         </div>
