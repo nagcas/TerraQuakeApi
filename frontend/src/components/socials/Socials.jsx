@@ -6,8 +6,11 @@ import {
   FaYoutube,
 } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Socials() {
+  const { t } = useTranslation('translation');
+
   const socials = [
     {
       title: 'X / Twitter',
@@ -39,7 +42,7 @@ export default function Socials() {
   return (
     <section>
       <h3 className='text-white font-semibold mb-6 text-lg after:content-[""] after:block after:max-w-1/3 after:h-[2px] after:bg-violet-500 after:mt-1 after:mx-auto'>
-        Community & Socials
+        {t('footer.community')}
       </h3>
       <div className='flex flex-wrap justify-center gap-4'>
         {socials.map((item) => (

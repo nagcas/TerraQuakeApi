@@ -82,5 +82,24 @@
     "description_info_three": "Analisi settimanali e suggerimenti da professionisti delle geoscienze",
     "title_info_four": "Vantaggi per la community",
     "description_info_four": "Sconti speciali e supporto prioritario per gli iscritti"
+  },
+   "footer": {
+    "title_navlinks_home": "Home",
+    "title_navlinks_about": "Chi siamo",
+    "title_navlinks_earthquakes": "Documentazione Terremoti",
+    "title_navlinks_stations": "Documentazione Stazioni",
+    "title_navlinks_contribute": "Contribuisci",
+    "title_morelinks_faq": "FAQ",
+    "title_morelinks_contact": "Contatti",
+    "title_morelinks_terms": "Termini e condizioni",
+    "title_morelinks_privacy": "Informativa sulla privacy",
+    "description": "Progetto open source che fornisce dati sismici affidabili per sviluppatori, ricercatori e comunità.",
+    "navigation": "Navigazione",
+    "resources": "Risorse",
+    "community": "Community e social",
+    "reserved": "TerraQuake API · Tutti i diritti riservati",
+    "reserved_terms": "TerraQuake API è software libero: puoi ridistribuirlo e/o modificarlo secondo i termini della",
+    "licenced_gnu": "GNU Affero General Public License",
+    "licenced": "così come pubblicata dalla Free Software Foundation, versione 3 della Licenza o (a tua scelta) qualsiasi versione successiva."
   }
 }

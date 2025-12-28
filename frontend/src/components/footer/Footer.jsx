@@ -3,14 +3,17 @@ import { NavLink } from 'react-router-dom';
 import Socials from '../socials/Socials';
 import Copyright from '../copyright/Copyright';
 import VersionAPI from '../utils/VersionAPI';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+  const { t } = useTranslation('translation');
+
   const navLinks = [
-    { title: 'Home', path: '/' },
-    { title: 'About', path: '/about' },
-    { title: 'Docs Earthquakes', path: '/docs-earthquakes' },
-    { title: 'Docs Stations', path: '/docs-stations' },
-    { title: 'Contribute', path: '/contribute' },
+    { title: t('footer.title_navlinks_home'), path: '/' },
+    { title: t('footer.title_navlinks_about'), path: '/about' },
+    { title: t('footer.title_navlinks_earthquakes'), path: '/docs-earthquakes' },
+    { title: t('footer.title_navlinks_stations'), path: '/docs-stations' },
+    { title: t('footer.title_navlinks_contribute'), path: '/contribute' },
   ];
 
   const resourceLinks = [
@@ -18,10 +21,10 @@ export default function Footer() {
   ];
 
   const moreLinks = [
-    { title: 'FAQ', path: '/faq' },
-    { title: 'Contact', path: '/contact' },
-    { title: 'Terms & Conditions', path: '/terms-and-conditions' },
-    { title: 'Privacy Policy', path: '/privacy-policy' },
+    { title: t('footer.title_morelinks_faq'), path: '/faq' },
+    { title: t('footer.title_morelinks_contact'), path: '/contact' },
+    { title: t('footer.title_morelinks_terms'), path: '/terms-and-conditions' },
+    { title: t('footer.title_morelinks_privacy'), path: '/privacy-policy' },
   ];
 
   return (
@@ -41,15 +44,14 @@ export default function Footer() {
             TerraQuake <span className='text-violet-400'>API</span>
           </motion.h2>
           <p className='text-sm leading-relaxed text-slate-400'>
-            Open-source project providing reliable earthquake data for
-            developers, researchers, and communities.
+            {t('footer.description')}
           </p>
         </div>
 
         {/* Navigation Links */}
         <nav aria-label='Footer navigation'>
           <h3 className='text-white font-semibold mb-3 text-center'>
-            Navigation
+            {t('footer.navigation')}
           </h3>
           <ul className='flex flex-col gap-2 text-sm text-center'>
             {navLinks.map((link) => (
@@ -69,7 +71,7 @@ export default function Footer() {
         {/* Resources */}
         <div>
           <h3 className='text-white font-semibold mb-3 text-center'>
-            Resources
+            {t('footer.resources')}
           </h3>
           <ul className='space-y-2 text-sm text-center'>
             {resourceLinks.map((link) => (

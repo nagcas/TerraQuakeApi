@@ -1,12 +1,13 @@
+import { t } from "i18next";
+
 export default function Copyright() {
   return (
     <section className='relative border-t border-white/10 mt-10 pt-6 px-6 text-center text-sm text-slate-400 space-y-4'>
       <p>
-        &copy; {new Date().getFullYear()} TerraQuake API · All rights reserved
+        &copy; {new Date().getFullYear()}{t('footer.reserved')}
       </p>
       <p className='max-w-3xl mx-auto leading-relaxed px-4'>
-        TerraQuake API is free software: you can redistribute it and/or modify
-        it under the terms of the{' '}
+        {t('footer.reserved_terms')}{' '}
         <a
           href='https://www.gnu.org/licenses/agpl-3.0.html'
           target='_blank'
@@ -14,10 +15,9 @@ export default function Copyright() {
           className='hover:text-violet-400 transition duration-200'
           aria-label='Visit the TerraQuake API licence'
         >
-          GNU Affero General Public License
+          {t('footer.licenced_gnu')}
         </a>{' '}
-        as published by the Free Software Foundation, either version 3 of the
-        License, or (at your option) any later version.
+        {t('footer.licenced')}
       </p>
     </section>
   );
