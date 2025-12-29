@@ -3,8 +3,11 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
 import { motion } from 'framer-motion';
 import { formatDate } from '@/components/utils/FormatDate.js';
+import { useTranslation } from 'react-i18next';
 
 export default function PrivacyPolicy() {
+  const { t } = useTranslation('translation');
+
   const data = import.meta.env.VITE_DATE_UPDATE;
   const [dateUpdate, setDateUpdate] = useState(data);
 
@@ -44,152 +47,141 @@ export default function PrivacyPolicy() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Privacy Policy.
+              {t('privacy_policy.title')}
               <div className='h-0.5 w-1/4 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-md text-center md:text-left text-white/70 max-w-7xl'>
-              Last updated: {formatDate(dateUpdate)}.
+               {t('privacy_policy.updated')} {formatDate(dateUpdate)}.
             </p>
           </motion.div>
 
           <section className='space-y-6'>
             <p className='text-gray-300 leading-relaxed'>
-              TerraQuake ("we", "our", "us") respects your privacy. This Privacy
-              Policy explains how we collect, use, and protect your data in
-              compliance with GDPR, CCPA, and other applicable regulations.
+              {t('privacy_policy.description')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              1. Data We Collect
+              {t('privacy_policy.title_collect')}
             </h2>
             <ul className='list-disc list-inside space-y-2 text-gray-300'>
-              <li>Personal data: name, email, account information.</li>
               <li>
-                Usage data: IP address, browser type, pages visited, API usage.
+                {t('privacy_policy.description_collect_1')}
               </li>
               <li>
-                Cookies and similar technologies for analytics and preferences.
+                {t('privacy_policy.description_collect_2')}
+              </li>
+              <li>
+                {t('privacy_policy.description_collect_3')}
               </li>
             </ul>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              2. How We Use Your Data
+              {t('privacy_policy.title_data')}
             </h2>
             <ul className='list-disc list-inside space-y-2 text-gray-300'>
-              <li>Provide and maintain our services.</li>
-              <li>Improve website and API functionality.</li>
-              <li>Send updates or communications if consented.</li>
-              <li>Comply with legal obligations.</li>
+              <li>{t('privacy_policy.description_data_1')}</li>
+              <li>{t('privacy_policy.description_data_2')}</li>
+              <li>{t('privacy_policy.description_data_3')}</li>
+              <li>{t('privacy_policy.description_data_4')}</li>
             </ul>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              3. Legal Basis (GDPR)
+              {t('privacy_policy.title_legal')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              We process your data based on your consent, contractual necessity,
-              or legal obligations.
+              {t('privacy_policy.description_legal')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              4. Sharing Your Data
+              {t('privacy_policy.title_sharing')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              Data may be shared with service providers, hosting platforms, and
-              API partners, strictly for purposes outlined in this Policy. We do
-              not sell your personal information.
+              {t('privacy_policy.description_sharing')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              5. User Rights (GDPR & CCPA)
+              {t('privacy_policy.title_user')}
             </h2>
             <ul className='list-disc list-inside space-y-2 text-gray-300'>
-              <li>Access, rectify, or delete your data.</li>
-              <li>Withdraw consent at any time.</li>
-              <li>Request data portability.</li>
-              <li>Opt-out of sale of personal information (CCPA only).</li>
-              <li>Object or restrict processing where applicable.</li>
+              <li>{t('privacy_policy.description_user_1')}</li>
+              <li>{t('privacy_policy.description_user_2')}</li>
+              <li>{t('privacy_policy.description_user_3')}</li>
+              <li>{t('privacy_policy.description_user_4')}</li>
+              <li>{t('privacy_policy.description_user_5')}</li>
+              
             </ul>
             <p className='text-gray-300 leading-relaxed'>
-              To exercise these rights, contact us at{' '}
+              {t('privacy_policy.title_contact')}{' '}
               <span className='text-pink-400 font-semibold'>
                 terraquakeapi@gmail.com
               </span>
-              .
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              6. Data Retention
+              {t('privacy_policy.title_retention')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              We retain personal data only as long as necessary to provide
-              services or comply with legal obligations.
+              {t('privacy_policy.description_retention')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              7. Cookies & Tracking
+              {t('privacy_policy.title_cookies')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              TerraQuake uses cookies and similar technologies for analytics and
-              user experience. You may manage cookie preferences through your
-              browser settings.
+              {t('privacy_policy.description_cookies')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              8. International Transfers
+              {t('privacy_policy.title_transfers')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              Your data may be processed or stored outside your country. We take
-              measures to ensure adequate protection in line with GDPR
-              requirements.
+              {t('privacy_policy.description_transfers')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              9. Security
+              {t('privacy_policy.title_security')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              We implement reasonable technical and organizational measures to
-              protect your data against unauthorized access or disclosure.
+              {t('privacy_policy.description_security')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              10. Changes to this Policy
+              {t('privacy_policy.title_changes')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              We may update this Privacy Policy periodically. Continued use of
-              our services constitutes acceptance of the updated policy.
+              {t('privacy_policy.description_changes')}
             </p>
           </section>
 
           <section className='space-y-6 border-t border-white/10 pt-6'>
             <h2 className='text-xl font-semibold text-purple-500'>
-              11. Contact Information
+              {t('privacy_policy.title_information')}
             </h2>
             <p className='text-gray-300 leading-relaxed'>
-              Questions or requests regarding privacy? Contact us at{' '}
+              {t('privacy_policy.description_information')}{' '}
               <span className='text-pink-400 font-semibold'>
                 terraquakeapi@gmail.com
               </span>
-              .
             </p>
           </section>
         </div>
