@@ -22,7 +22,7 @@
     "description_p": "Los terremotos son fenómenos naturales causados por la liberación repentina de energía en la corteza terrestre, lo que genera ondas sísmicas. Comprenderlos y monitorearlos es fundamental para la gestión del riesgo y la investigación científica. TerraQuake API está diseñada para proporcionar datos sísmicos fiables y accesibles a través de una interfaz moderna y orientada a desarrolladores.",
     "subdescription_p": "Esto es lo que puedes hacer con la API:"
   },
-    "metrics": {
+  "metrics": {
     "loading": "Cargando métricas del sistema...",
     "wait": "Por favor espera mientras recuperamos los datos de rendimiento en tiempo real.",
     "failed": "Error al cargar las métricas",
@@ -57,7 +57,7 @@
     "button_sign_in": "Iniciar sesión",
     "button_sign_up": "Registrarse"
   },
-   "started": {
+  "started": {
     "title_sign": "Regístrate",
     "description_sign": "Crea tu cuenta gratuita para obtener acceso a la API",
     "title_key": "Obtén la clave API",
@@ -88,7 +88,7 @@
     "title_info_four": "Beneficios de la comunidad",
     "description_info_four": "Descuentos especiales y soporte prioritario para suscriptores"
   },
-   "footer": {
+  "footer": {
     "title_navlinks_home": "Inicio",
     "title_navlinks_about": "Acerca de",
     "title_navlinks_earthquakes": "Documentación de Terremotos",
@@ -107,7 +107,7 @@
     "licenced_gnu": "Licencia Pública General Affero de GNU",
     "licenced": "tal como la publica la Free Software Foundation, ya sea la versión 3 de la Licencia o (a tu elección) cualquier versión posterior."
   },
-   "version": {
+  "version": {
     "information": "Información de la API",
     "version": "Versión",
     "last_update": "Última actualización",
@@ -134,7 +134,7 @@
     "title": "Acerca de TerraQuake API",
     "description": "Una plataforma enfocada en traducir feeds sísmicos en bruto en endpoints accesibles para desarrolladores y en información útil para seguridad, investigación y educación."
   },
-   "contact": {
+  "contact": {
     "title": "Conectemos.",
     "description": "En TerraQuake API, nos comprometemos a hacer que los datos sísmicos sean accesibles y útiles. Ya seas investigador, desarrollador o entusiasta, tus ideas y comentarios nos ayudan a mejorar la plataforma cada día.",
     "title_form": "Enviar un Mensaje Directo",
@@ -149,7 +149,7 @@
     "placeholder_message": "Mensaje detallado...",
     "button_send_message": "Enviar Mensaje"
   },
-   "channels": {
+  "channels": {
     "title_github": "Abrir un Issue",
     "title_x": "X / Twitter",
     "title_linkedin": "LinkedIn",
