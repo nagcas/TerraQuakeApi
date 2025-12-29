@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa6';
 import Spinner from '../spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginSocial({ text }) {
+  const { t } = useTranslation('translation');
+
   // Social login (Google & GitHub unified)
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingGit, setLoadingGit] = useState(false);
@@ -33,7 +36,9 @@ export default function LoginSocial({ text }) {
       {/* Divider */}
       <div className='flex items-center my-8'>
         <div className='flex-grow border-t border-gray-400'></div>
-        <span className='mx-4 text-white text-sm'>Or sign in through</span>
+        <span className='mx-4 text-white text-sm'>
+          {t('login_socials.sign_through')}
+        </span>
         <div className='flex-grow border-t border-gray-400'></div>
       </div>
 
@@ -52,7 +57,7 @@ export default function LoginSocial({ text }) {
             }
           </span>
         </button>
-        <span>OR</span>
+        <span>{t('login_socials.or')}</span>
         <button
           type='button'
           className='px-6 text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'

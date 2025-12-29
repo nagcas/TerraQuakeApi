@@ -12,8 +12,11 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/spinner/Spinner';
 import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
+import { useTranslation } from 'react-i18next';
 
 export default function ChangePassword() {
+  const { t } = useTranslation('translation');
+
   const { isLoggedIn } = useContext(Context);
   const token = localStorage.getItem('token'); // JWT token from localStorage
   const navigate = useNavigate();
@@ -153,13 +156,11 @@ export default function ChangePassword() {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-                Change password.
+                {t('change_password.title')}
                 <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
               </h1>
               <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-                Enter your email address below to receive a secure link to reset
-                your password. Make sure to use the same email associated with
-                your account.
+                {t('change_password.description')}
               </p>
             </motion.div>
 
@@ -173,14 +174,14 @@ export default function ChangePassword() {
                 {/* Old Password */}
                 <div className='relative mb-6'>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Old Password
+                    {t('change_password.old_password')}
                   </label>
                   <input
                     className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                     {...register('passwordOld')}
                     type={showPassword ? 'text' : 'password'}
                     autoComplete='off'
-                    placeholder='Old password'
+                    placeholder={t('change_password.old_placeholder')}
                   />
                   <button
                     type='button'
@@ -198,14 +199,14 @@ export default function ChangePassword() {
                 {/* New Password */}
                 <div className='relative mb-6'>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    New Password
+                    {t('change_password.new_password')}
                   </label>
                   <input
                     className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                     {...register('passwordNew')}
                     type={showPassword ? 'text' : 'password'}
                     autoComplete='off'
-                    placeholder='New password'
+                    placeholder={t('change_password.new_placeholder')}
                   />
                   <button
                     type='button'
@@ -223,14 +224,14 @@ export default function ChangePassword() {
                 {/* Confirm New Password */}
                 <div className='relative mb-6'>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Confirm New Password
+                    {t('change_password.confirm_password')}
                   </label>
                   <input
                     className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                     {...register('confirmPassword')}
                     type={showPassword ? 'text' : 'password'}
                     autoComplete='off'
-                    placeholder='Confirm new password'
+                    placeholder={t('change_password.confirm_placeholder')}
                   />
                   <button
                     type='button'
@@ -252,7 +253,10 @@ export default function ChangePassword() {
                   aria-label='Confirm new password'
                   disabled={loading}
                 >
-                  {loading ? <Spinner /> : <span>Confirm</span>}
+                  {loading ? <Spinner /> : 
+                    <span>
+                      {t('change_password.button_confirm')}
+                    </span>}
                 </button>
               </form>
 
@@ -260,7 +264,7 @@ export default function ChangePassword() {
               <div className='flex items-center my-6'>
                 <div className='flex-grow border-t border-gray-600 opacity-50'></div>
                 <span className='mx-3 text-gray-300 text-sm font-medium'>
-                  Or go back to your account
+                  {t('change_password.back_account')}
                 </span>
                 <div className='flex-grow border-t border-gray-600 opacity-50'></div>
               </div>
@@ -270,7 +274,7 @@ export default function ChangePassword() {
                 to='/profile'
                 aria-label='Navigate back to profile page'
               >
-                Back to Profile
+                {t('change_password.back_profile')}
               </Link>
             </motion.div>
           </div>

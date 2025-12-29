@@ -11,8 +11,11 @@ import MetaData from '../noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function ResetPassword() {
+  const { t } = useTranslation('translation');
+
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
@@ -113,12 +116,11 @@ export default function ResetPassword() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Reset Password.
+              {t('reset_password.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Enter your new password below to securely reset your account
-              access.
+              {t('reset_password.description')}
             </p>
           </motion.div>
 
@@ -132,14 +134,14 @@ export default function ResetPassword() {
               {/* New Password */}
               <div className='relative mb-6'>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  New Password
+                  {t('reset_password.form_new-password')}
                 </label>
                 <input
                   className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete='off'
-                  placeholder='New password'
+                  placeholder={t('reset_password.new_password-placeholder')}
                 />
                 <button
                   type='button'
@@ -155,14 +157,14 @@ export default function ResetPassword() {
               {/* Confirm Password */}
               <div className='relative mb-6'>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  Confirm Password
+                  {t('reset_password.form_confirm_password')}
                 </label>
                 <input
                   className='w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none'
                   {...register('confirmPassword')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete='off'
-                  placeholder='Confirm password'
+                  placeholder={t('reset_password.confirm_password_placeholder')}
                 />
                 <button
                   type='button'
@@ -188,7 +190,7 @@ export default function ResetPassword() {
                     <Spinner />
                   </p>
                 ) : (
-                  <span>Reset</span>
+                  <span>{t('reset_password.button_reset')}</span>
                 )}
               </button>
             </form>
@@ -196,7 +198,7 @@ export default function ResetPassword() {
             <div className='flex items-center my-6'>
               <div className='flex-grow border-t border-gray-600 opacity-50'></div>
               <span className='mx-3 text-gray-300 text-sm font-medium'>
-                Or go back to your account
+                {t('reset_password.back_account')}
               </span>
               <div className='flex-grow border-t border-gray-600 opacity-50'></div>
             </div>
@@ -206,7 +208,7 @@ export default function ResetPassword() {
               to='/signin'
               aria-label='Navigate back to sign in page'
             >
-              Back to Sign In
+              {t('reset_password.back_sign_in')}
             </Link>
           </motion.div>
         </div>

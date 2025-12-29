@@ -9,8 +9,11 @@ import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function forgotPassword() {
+  const { t } = useTranslation('translation');
+
   const [loading, setLoading] = useState(false);
   const forgotPasswordSchema = yup
     .object({
@@ -109,12 +112,11 @@ export default function forgotPassword() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Forgot Password?
+              {t('forgot_password.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Enter your email and we’ll send you a password reset link if it
-              matches an existing account.
+              {t('forgot_password.description')}
             </p>
           </motion.div>
 
@@ -127,7 +129,7 @@ export default function forgotPassword() {
             <form onSubmit={handleSubmit(handleForgotPassword)}>
               <div className='mb-8'>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  Enter your email
+                  {t('forgot_password.form_email')}
                 </label>
                 <input
                   className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -147,7 +149,7 @@ export default function forgotPassword() {
                 {loading ? (
                   <Spinner />
                 ) : (
-                  <span>Send reset link</span>
+                  <span>{t('forgot_password.button_send')}</span>
                 )}
               </button>
             </form>
@@ -155,7 +157,7 @@ export default function forgotPassword() {
             <div className='flex items-center my-8'>
               <div className='flex-grow border-t border-gray-500'></div>
               <span className='mx-4 text-gray-200 text-sm font-medium'>
-                Or return to your account
+                {t('forgot_password.back_account')}
               </span>
               <div className='flex-grow border-t border-gray-500'></div>
             </div>
@@ -165,7 +167,7 @@ export default function forgotPassword() {
               className='block text-center mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
               aria-label='Navigate to sign in page'
             >
-              Back to Sign In
+              {t('forgot_password.back_sign_in')}
             </Link>
           </motion.div>
         </div>

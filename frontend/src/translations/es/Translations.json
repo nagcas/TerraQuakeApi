@@ -184,5 +184,87 @@
     "to": "a",
     "of": "de",
     "items": "elementos"
+  },
+  "change_password": {
+    "title": "Cambiar contraseña.",
+    "description": "Introduce tu correo electrónico para recibir un enlace seguro para restablecer tu contraseña. Asegúrate de usar el mismo correo asociado a tu cuenta.",
+    "old_password": "Contraseña actual",
+    "old_placeholder": "Contraseña actual",
+    "new_password": "Nueva contraseña",
+    "new_placeholder": "Nueva contraseña",
+    "confirm_password": "Confirmar nueva contraseña",
+    "confirm_placeholder": "Confirmar nueva contraseña",
+    "button_confirm": "Confirmar",
+    "back_account": "O vuelve a tu cuenta",
+    "back_profile": "Volver al perfil"
+  },
+  "forgot_password": {
+    "title": "¿Olvidaste tu contraseña?",
+    "description": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer la contraseña si coincide con una cuenta existente.",
+    "form_email": "Introduce tu correo electrónico",
+    "button_send": "Enviar enlace de restablecimiento",
+    "back_account": "O vuelve a tu cuenta",
+    "back_sign_in": "Volver a iniciar sesión"
+  },
+  "github_auth": {
+    "logging": "Iniciando sesión con GitHub...",
+    "login_github": "¡Inicio de sesión con GitHub exitoso!"
+  },
+  "google_auth": {
+    "logging": "Iniciando sesión con Google...",
+    "login_google": "¡Inicio de sesión con Google exitoso!"
+  },
+  "logout": {
+    "button_logout": "Cerrar sesión"
+  },
+  "reset_password": {
+    "title": "Restablecer contraseña.",
+    "description": "Introduce tu nueva contraseña para restablecer de forma segura el acceso a tu cuenta.",
+    "form_new_password": "Nueva contraseña",
+    "new_password_placeholder": "Nueva contraseña",
+    "form_confirm_password": "Confirmar contraseña",
+    "confirm_password_placeholder": "Confirmar contraseña",
+    "button_reset": "Restablecer",
+    "back_account": "O vuelve a tu cuenta",
+    "back_sign_in": "Volver a iniciar sesión"
+  },
+   "sign_in": {
+    "title": "Iniciar sesión.",
+    "description": "Accede a tu cuenta TerraQuake para explorar datos sísmicos reales, gestionar tus preferencias y participar en nuestro entorno de formación.",
+    "title_form_login": "Iniciar sesión",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "button_login": "Acceder",
+    "not_account": "¿Aún no tienes una cuenta?",
+    "create_account": "Crear cuenta"
+  },
+   "sign_up": {
+    "title": "Crear cuenta.",
+    "description": "Crea tu cuenta TerraQuake para explorar eventos sísmicos reales, personalizar tu experiencia y unirte a nuestra plataforma de formación interactiva.",
+    "title_form_register": "Registro",
+    "form_label_name": "Nombre",
+    "form_text_name": "Tu nombre",
+    "form_label_email": "Correo electrónico",
+    "form_label_password": "Contraseña",
+    "form_text_password": "Tu contraseña",
+    "form_label_confirm": "Confirmar contraseña",
+    "form_text_confirm": "Confirma tu contraseña",
+    "form_experience": "Experiencia",
+    "form_select": "Selecciona una opción",
+    "select_beginner": "Principiante",
+    "select_intermediate": "Intermedio",
+    "select_expert": "Experto",
+    "form_student": "Estudiante",
+    "select_option_student": "Selecciona una opción",
+    "yes_student": "Sí",
+    "no_student": "No",
+    "accept_terms": "Acepto los",
+    "accept_terms_conditions": "Términos y Condiciones",
+    "button_create_account": "Crear tu cuenta",
+    "have_account": "¿Ya tienes una cuenta?",
+    "sign_in": "Iniciar sesión"
+  },
+  "login_socials": {
+    "sign_through": "O inicia sesión mediante",
+    "or": "O"
   }
 }

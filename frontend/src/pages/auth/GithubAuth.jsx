@@ -4,8 +4,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from '@config/Axios.js';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function GithubAuth() {
+  const { t } = useTranslation('translation');
+
   const navigate = useNavigate();
   const { search } = useLocation();
   const { setIsLoggedIn, setUserLogin } = useContext(Context);
@@ -86,7 +89,7 @@ export default function GithubAuth() {
       <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
         <Spinner />
         <p className='mt-6 mx-auto md:text-xl text-gray-300'>
-          Logging in with GitHub...
+          {t('github_auth.logging')}
         </p>
       </section>
     );
@@ -95,7 +98,7 @@ export default function GithubAuth() {
   return (
     <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
       <h1 className='text-2xl md:text-4xl mx-auto font-extrabold leading-tight mt-[50px] select-none'>
-        Login with GitHub successful!
+        {t('github_auth.login_github')}
       </h1>
     </section>
   );

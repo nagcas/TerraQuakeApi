@@ -2,10 +2,12 @@ import { useEffect, useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
 import Swal from 'sweetalert2';
-import { motion } from 'framer-motion';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function HandleOAuth() {
+  const { t } = useTranslation('translation');
+
   const navigate = useNavigate();
   const location = useLocation();
   const { setUserLogin, setIsLoggedIn } = useContext(Context);
@@ -87,7 +89,7 @@ export default function HandleOAuth() {
       <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
         <Spinner />
         <p className='mt-6 mx-auto md:text-xl text-gray-300'>
-          Logging in with Google...
+          {t('google_auth.logging')}
         </p>
       </section>
     );
@@ -96,7 +98,7 @@ export default function HandleOAuth() {
   return (
      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
       <h1 className='text-2xl md:text-4xl mx-auto font-extrabold leading-tight mt-[50px] select-none'>
-        Login with Google successful!
+        {t('google_auth.login_google')}
       </h1>
     </section>
   );

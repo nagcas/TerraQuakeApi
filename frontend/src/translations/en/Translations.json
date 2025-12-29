@@ -184,5 +184,87 @@
     "to": "to",
     "of": "of",
     "items": "items"
+  },
+  "change_password": {
+    "title": "Change Password.",
+    "description": "Enter your email address below to receive a secure link to reset your password. Make sure to use the same email associated with your account.",
+    "old_password": "Old Password",
+    "old_placeholder": "Old password",
+    "new_password": "New Password",
+    "new_placeholder": "New Password",
+    "confirm_password": "Confirm New Password",
+    "confirm_placeholder": "Confirm new password",
+    "button_confirm": "Confirm",
+    "back_account": "Or go back to your account",
+    "back_profile": "Back to profile"
+  },
+  "forgot_password": {
+    "title": "Forgot Password?",
+    "description": "Enter your email and we’ll send you a password reset link if it matches an existing account.",
+    "form_email": "Enter your email",
+    "button_send": "Send reset link",
+    "back_account": "Or return to your account",
+    "back_sign_in": "Back to Sign In"
+  },
+  "github_auth": {
+    "logging": "Logging in with GitHub...",
+    "login_github": "Login with GitHub successful!"
+  },
+  "google_auth": {
+    "logging": "Logging in with Google...",
+    "login_google": "Login with Google successful!"
+  },
+  "logout": {
+    "button_logout": "Logout"
+  },
+  "reset_password": {
+    "title": "Reset Password.",
+    "description": "Enter your new password below to securely reset your account access.",
+    "form_new_password": "New password",
+    "new_password_placeholder": "New password",
+    "form_confirm_password": "Confirm Password",
+    "confirm_password_placeholder": "Confirm password",
+    "button_reset": "Reset",
+    "back_account": "Or go back to your account",
+    "back_sign_in": "Back to Sign In"
+  },
+  "sign_in": {
+    "title": "Sign In.",
+    "description": "Access your TerraQuake account to explore real seismic data, manage your preferences, and engage with our training environment.",
+    "title_form_login": "Login",
+    "forgot_password": "Forgot Password?",
+    "button_login": "Login",
+    "not_account": "Don’t have an account yet?",
+    "create_account": "Create Account"
+  },
+  "sign_up": {
+    "title": "Create account.",
+    "description": "Create your TerraQuake account to start exploring real seismic events, customize your experience, and join our interactive training platform.",
+    "title_form_register": "Register",
+    "form_label_name": "Name",
+    "form_text_name": "Your name",
+    "form_label_email": "Email",
+    "form_label_password": "Password",
+    "form_text_password": "Your password",
+    "form_label_confirm": "Confirm Password",
+    "form_text_confirm": "Confirm your password",
+    "form_experience": "Experience",
+    "form_select": "Select an option",
+    "select_beginner": "Beginner",
+    "select_intermediate": "Intermediate",
+    "select_expert": "Expert",
+    "form_student": "Student",
+    "select_option_student": "Select an option",
+    "yes_student": "yes",
+    "no_student": "No",
+    "accept_terms": "I accept the",
+    "accept_terms_conditions": "Terms and Conditions",
+    "button_create_account": "Create your account",
+    "have_account": "Already have an account?",
+    "sign_in": "Sign In"
+  },
+  "login_socials": {
+    "sign_through": "Or sign in through",
+    "or": "OR"
   }
 }

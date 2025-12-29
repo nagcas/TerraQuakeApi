@@ -13,8 +13,11 @@ import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
 import { Context } from '@components/modules/Context';
 import LoginSocial from '@/components/utils/LoginSocial';
+import { useTranslation } from 'react-i18next';
 
 export default function SignUp() {
+  const { t } = useTranslation('translation');
+
   const [loading, setLoading] = useState(false);
   const { setUserLogin, isLoggedIn, setIsLoggedIn } = useContext(Context);
 
@@ -192,13 +195,11 @@ export default function SignUp() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Create account.
+              {t('sign_up.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Create your TerraQuake account to start exploring real seismic
-              events, customize your experience, and join our interactive
-              training platform.
+              {t('sign_up.description')}
             </p>
           </motion.div>
 
@@ -212,22 +213,30 @@ export default function SignUp() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className='text-3xl font-bold text-white mb-8 border-b border-purple-500/50 pb-3'>
-                Register
+                {t('sign_up.title_form_register')}
               </h2>
 
               <form onSubmit={handleSubmit(handleSignUp)}>
                 {[
-                  { label: 'Name', field: 'name', text: 'Your name' },
-                  { label: 'Email', field: 'email', text: 'name@company.com' },
-                  {
-                    label: 'Password',
-                    field: 'password',
-                    text: 'Your password',
+                  { 
+                    label: t('sign_up.form_label_name'), 
+                    field: 'name', 
+                    text: t('sign_up.form_text_name') 
+                  },
+                  { 
+                    label: t('sign_up.form_label_email'), 
+                    field: 'email', 
+                    text: 'name@company.com' 
                   },
                   {
-                    label: 'Confirm Password',
+                    label: t('sign_up.form_label_password'),
+                    field: 'password',
+                    text: t('sign_up.form_text_password'),
+                  },
+                  {
+                    label: t('sign_up.form_label_confirm'),
                     field: 'confirmPassword',
-                    text: 'Confirm your password',
+                    text: t('sign_up.form_text_confirm'),
                   },
                 ].map(({ label, field, text }) => (
                   <div
@@ -270,7 +279,7 @@ export default function SignUp() {
                 <div className='relative mb-6'>
                   <div className='relative my-6'>
                     <label className='block text-white text-sm font-semibold mb-2'>
-                      Experience
+                      {t('sign_up.form_experience')}
                     </label>
                     <select
                       defaultValue=''
@@ -282,32 +291,32 @@ export default function SignUp() {
                         disabled
                         className='bg-gray-900 text-gray-400'
                       >
-                        Select an option
+                        {t('sign_up.form_select')}
                       </option>
                       <option
                         value='Beginner'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Beginner
+                        {t('sign_up.select_beginner')}
                       </option>
                       <option
                         value='Intermediate'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Intermediate
+                        {t('sign_up.select_intermediate')}
                       </option>
                       <option
                         value='Expert'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Expert
+                        {t('sign_up.select_expert')}
                       </option>
                     </select>
                   </div>
 
                   <div className='relative my-6'>
                     <label className='block text-white text-sm font-semibold mb-2'>
-                      Student
+                      {t('sign_up.form_student')}
                     </label>
                     <select
                       defaultValue=''
@@ -319,19 +328,19 @@ export default function SignUp() {
                         disabled
                         className='bg-gray-900 text-gray-400'
                       >
-                        Select an option
+                        {t('sign_up.select_option_student')}
                       </option>
                       <option
                         value='Yes'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Yes
+                        {t('sign_up.yes_student')}
                       </option>
                       <option
                         value='No'
                         className='bg-gray-900 text-gray-400'
                       >
-                        No
+                        {t('sign_up.no_student')}
                       </option>
                     </select>
                   </div>
@@ -349,13 +358,13 @@ export default function SignUp() {
                       htmlFor='terms'
                       className='mt-1.5 ml-4 text-sm text-white cursor-pointer select-none'
                     >
-                      I accept the{' '}
+                      {t('sign_up.accept_terms')}{' '}
                       <Link
                         to='/terms-and-conditions'
                         className='text-purple-400 hover:underline'
                         aria-label='Navigate to terms and conditions page'
                       >
-                        Terms and Conditions
+                        {t('sign_up.accept_terms_conditions')}
                       </Link>
                     </label>
                   </div>
@@ -387,7 +396,7 @@ export default function SignUp() {
                       <Spinner />
                     </p>
                   ) : (
-                    <span>Create your account</span>
+                    <span>{t('sign_up.button_create_account')}</span>
                   )}
                 </button>
 
@@ -399,14 +408,14 @@ export default function SignUp() {
 
                 <div className='mt-6 flex flex-col items-center'>
                   <p className='text-gray-200 text-sm cursor-default'>
-                    Already have an account?
+                    {t('sign_up.have_account')}
                   </p>
                   <Link
                     to='/signin'
                     className='mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
                     aria-label='Navigate to sign in page'
                   >
-                    Sign In
+                    {t('sign_up.sign_in')}
                   </Link>
                 </div>
               </form>

@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Context } from '@components/modules/Context';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function Logout() {
+  const { t } = useTranslation('translation');
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setUserLogin, setIsLoggedIn, isLoggedIn } = useContext(Context);
@@ -72,7 +75,9 @@ export default function Logout() {
       {loading ? (
         <Spinner />
       ) : (
-        <span className='text-white'>Logout</span>
+        <span className='text-white'>
+          {t('logout.button_logout')}
+        </span>
       )}
     </button>
   );

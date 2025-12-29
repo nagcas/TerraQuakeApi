@@ -185,5 +185,87 @@
     "to": "a",
     "of": "di",
     "items": "elementi"
+  },
+  "change_password": {
+    "title": "Cambia password.",
+    "description": "Inserisci il tuo indirizzo email per ricevere un link sicuro per reimpostare la password. Assicurati di utilizzare la stessa email associata al tuo account.",
+    "old_password": "Password attuale",
+    "old_placeholder": "Password attuale",
+    "new_password": "Nuova password",
+    "new_placeholder": "Nuova password",
+    "confirm_password": "Conferma nuova password",
+    "confirm_placeholder": "Conferma nuova password",
+    "button_confirm": "Conferma",
+    "back_account": "Oppure torna al tuo account",
+    "back_profile": "Torna al profilo"
+  },
+  "forgot_password": {
+    "title": "Password dimenticata?",
+    "description": "Inserisci la tua email e ti invieremo un link per reimpostare la password se associata a un account esistente.",
+    "form_email": "Inserisci la tua email",
+    "button_send": "Invia link di reset",
+    "back_account": "Oppure torna al tuo account",
+    "back_sign_in": "Torna al login"
+  },
+  "github_auth": {
+    "logging": "Accesso con GitHub in corso...",
+    "login_github": "Accesso con GitHub avvenuto con successo!"
+  },
+  "google_auth": {
+    "logging": "Accesso con Google in corso...",
+    "login_google": "Accesso con Google avvenuto con successo!"
+  },
+  "logout": {
+    "button_logout": "Disconnetti"
+  },
+  "reset_password": {
+    "title": "Reimposta password.",
+    "description": "Inserisci la nuova password per ripristinare in modo sicuro l’accesso al tuo account.",
+    "form_new_password": "Nuova password",
+    "new_password_placeholder": "Nuova password",
+    "form_confirm_password": "Conferma password",
+    "confirm_password_placeholder": "Conferma password",
+    "button_reset": "Reimposta",
+    "back_account": "Oppure torna al tuo account",
+    "back_sign_in": "Torna al login"
+  },
+  "sign_in": {
+    "title": "Accedi.",
+    "description": "Accedi al tuo account TerraQuake per esplorare dati sismici reali, gestire le preferenze e partecipare all’ambiente di formazione.",
+    "title_form_login": "Login",
+    "forgot_password": "Password dimenticata?",
+    "button_login": "Accedi",
+    "not_account": "Non hai ancora un account?",
+    "create_account": "Crea un account"
+  },
+  "sign_up": {
+    "title": "Crea account.",
+    "description": "Crea il tuo account TerraQuake per esplorare eventi sismici reali, personalizzare l’esperienza e unirti alla piattaforma di formazione interattiva.",
+    "title_form_register": "Registrazione",
+    "form_label_name": "Nome",
+    "form_text_name": "Il tuo nome",
+    "form_label_email": "Email",
+    "form_label_password": "Password",
+    "form_text_password": "La tua password",
+    "form_label_confirm": "Conferma password",
+    "form_text_confirm": "Conferma la tua password",
+    "form_experience": "Esperienza",
+    "form_select": "Seleziona un’opzione",
+    "select_beginner": "Principiante",
+    "select_intermediate": "Intermedio",
+    "select_expert": "Esperto",
+    "form_student": "Studente",
+    "select_option_student": "Seleziona un’opzione",
+    "yes_student": "Sì",
+    "no_student": "No",
+    "accept_terms": "Accetto i",
+    "accept_terms_conditions": "Termini e Condizioni",
+    "button_create_account": "Crea il tuo account",
+    "have_account": "Hai già un account?",
+    "sign_in": "Accedi"
+  },
+  "login_socials": {
+    "sign_through": "Oppure accedi tramite",
+    "or": "OPPURE"
   }
 }

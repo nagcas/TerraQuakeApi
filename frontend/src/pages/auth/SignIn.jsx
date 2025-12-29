@@ -13,8 +13,11 @@ import { motion } from 'framer-motion';
 import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
 import LoginSocial from '@/components/utils/LoginSocial';
+import { useTranslation } from 'react-i18next';
 
 export default function SignIn() {
+  const { t } = useTranslation('translation');
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -119,12 +122,11 @@ export default function SignIn() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Sign In.
+              {t('sign_in.title')}
               <div className='h-0.5 w-1/3 md:w-1/10 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Access your TerraQuake account to explore real seismic data,
-              manage your preferences, and engage with our training environment.
+              {t('sign_in.description')}
             </p>
           </motion.div>
 
@@ -138,7 +140,7 @@ export default function SignIn() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className='text-3xl font-bold text-white mb-8 border-b border-purple-500/50 pb-3'>
-                Login
+                {t('sign_in.title_form_login')}
               </h2>
 
               <form onSubmit={handleSubmit(handleLoginSubmit)}>
@@ -186,7 +188,7 @@ export default function SignIn() {
                             to='/forgot-password'
                             className='text-sm text-purple-400 hover:text-purple-600 transition duration-300'
                           >
-                            Forgot Password?
+                            {t('sign_in.forgot_password')}
                           </Link>
                         </div>
                       </>
@@ -200,7 +202,7 @@ export default function SignIn() {
                   aria-label='Click to loading'
                   disabled={loading}
                 >
-                  {loading ? <Spinner /> : <span>Login</span>}
+                  {loading ? <Spinner /> : <span>{t('sign_in.button_login')}</span>}
                 </button>
 
                 {/* Social Buttons */}
@@ -211,13 +213,13 @@ export default function SignIn() {
                 {/* Sign Up Link */}
                 <div className='mt-6 flex flex-col items-center'>
                   <p className='text-gray-200 text-sm cursor-default'>
-                    Don’t have an account yet?
+                    {t('sign_in.not_account')}
                   </p>
                   <Link
                     to='/signup'
                     className='mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
                   >
-                    Create Account
+                    {t('sign_in.create_account')}
                   </Link>
                 </div>
               </form>
