@@ -150,5 +150,25 @@
     "title": "Otros Canales",
     "description": "Para soporte inmediato o consultas específicas, estos canales directos pueden ser más adecuados.",
     "powered": "Desarrollado por TerraQuake API"
+  },
+  "blog": {
+    "loading": "Cargando artículos del blog...",
+    "oops": "¡Vaya! Algo salió mal.",
+    "retry": "Reintentar",
+    "no_posts": "Aún no hay artículos.",
+    "check": "Estamos trabajando para añadir nuevos artículos. ¡Vuelve pronto!",
+    "back": "Volver al Inicio",
+    "title": "Blog de Perspectivas Sísmicas",
+    "description": "Explora las últimas investigaciones, análisis y desarrollos en la ciencia de los terremotos y la sismología.",
+    "articles": "artículos • Página",
+    "of": "de",
+    "read": "Leer más",
+    "min_read": "min de lectura"
+  },
+  "pagination": {
+    "showing": "Mostrando",
+    "to": "a",
+    "of": "de",
+    "items": "elementos"
   }
 }

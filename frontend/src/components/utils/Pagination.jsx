@@ -1,7 +1,10 @@
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 
 export default function Pagination({ currentPage, totalPages, totalItems, itemsPerPage, setCurrentPage }) {
+  const { t } = useTranslation('translation');
+
   // Generate visible page numbers
   const generatePageNumbers = () => {
     const maxVisible = 5;
@@ -75,9 +78,9 @@ export default function Pagination({ currentPage, totalPages, totalItems, itemsP
           </div>
 
           <div className='text-sm text-gray-400'>
-            Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-            {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{' '}
-            items
+            {t('pagination.showing')} {(currentPage - 1) * itemsPerPage + 1} {t('pagination.to')}{' '}
+            {Math.min(currentPage * itemsPerPage, totalItems)} {t('pagination.of')} {totalItems}{' '}
+            {t('pagination.items')}
           </div>
         </div>
       )}

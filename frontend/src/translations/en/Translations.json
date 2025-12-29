@@ -150,5 +150,25 @@
     "title": "Other Channels",
     "description": "For immediate support or specific inquiries, you might find these direct channels more suitable.",
     "powered": "Powered by TerraQuake API"
+  },
+  "blog": {
+    "loading": "Loading blog posts...",
+    "oops": "Oops! Something went wrong.",
+    "retry": "Retry",
+    "no_posts": "No posts yet.",
+    "check": "We are working on adding new articles. Please check back soon!",
+    "back": "Back To Home",
+    "title": "Seismic Insights Blog",
+    "description": "Explore the latest research, insights, and developments in earthquake science and seismology.",
+    "articles": "articles • Page",
+    "of": "of",
+    "read": "Read More",
+    "min_read": "min read"
+  },
+  "pagination": {
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "items": "items"
   }
 }

@@ -10,8 +10,11 @@ import Spinner from '@/components/spinner/Spinner';
 import Pagination from '@/components/utils/Pagination';
 import Swal from 'sweetalert2';
 import { formatDate } from '@/components/utils/FormatDate.js';
+import { useTranslation } from 'react-i18next';
 
 export default function Blog() {
+  const { t } = useTranslation('translation');
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -72,7 +75,9 @@ export default function Blog() {
       <section className="z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white">
         <MetaData title="Blog - Loading" description="Loading blog posts" />
         <Spinner size="5xl" />
-        <p className="text-gray-400 text-sm mt-4">Loading blog posts...</p>
+        <p className="text-gray-400 text-sm mt-4">
+          {t('blog.loading')}
+        </p>
       </section>
     );
   }
@@ -83,7 +88,7 @@ export default function Blog() {
       <section className="z-30 w-full min-h-screen flex flex-col items-center justify-center gap-6 text-center px-6 py-20 bg-gradient-to-b text-white">
         <MetaData title="Blog - Error" description="Error loading blog posts" />
         <h1 className="text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none">
-          Oops! Something went wrong.
+          {t('blog.oops')}
         </h1>
         <p className="text-gray-300 mb-4">{error}</p>
 
@@ -91,7 +96,7 @@ export default function Blog() {
           onClick={listAllPosts}
           className="py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer"
         >
-          Retry
+          {t('blog.retry')}
         </button>
       </section>
     );
@@ -106,17 +111,17 @@ export default function Blog() {
           description="Currently there are no posts available in the blog"
         />
         <h1 className="text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none">
-          No posts yet.
+          {t('blog.no_posts')}
         </h1>
         <p className="text-gray-300 mb-4">
-          We are working on adding new articles. Please check back soon!
+          {t('blog.check')}
         </p>
         <NavLink
           to="/"
           className="py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer"
           aria-label="Navigate to home page"
         >
-          Back To Home
+          {t('blog.back')}
         </NavLink>
       </section>
     );
@@ -157,15 +162,14 @@ export default function Blog() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className="text-3xl md:text-5xl text-white font-extrabold tracking-tighter mb-4 text-center">
-              Seismic Insights Blog
+              {t('blog.title')}
               <div className="h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full" />
             </h1>
             <p className="text-xl text-center text-white/70 max-w-7xl">
-              Explore the latest research, insights, and developments in
-              earthquake science and seismology.
+              {t('blog.description')}
             </p>
             <div className="mt-4 text-sm text-gray-500 text-center">
-              {totalPosts} articles • Page {currentPage} of {totalPages}
+              {totalPosts} {t('blog.articles')} {currentPage} {t('blog.of')} {totalPages}
             </div>
           </motion.div>
 
@@ -217,7 +221,7 @@ export default function Blog() {
                     to={`/blog/${post.slug}`}
                     className="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200"
                   >
-                    Read More
+                    {t('blog.read')}
                     <svg
                       className="ml-2 w-4 h-4"
                       fill="none"
@@ -233,7 +237,7 @@ export default function Blog() {
                     </svg>
                   </Link>
                   <span className="text-xs text-gray-500 ml-2">
-                    {post.readTime || 2} min read
+                    {post.readTime || 2} {t('blog.min_read')}
                   </span>
                 </div>
               </article>
