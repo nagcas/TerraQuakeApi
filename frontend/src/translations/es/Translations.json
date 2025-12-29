@@ -156,14 +156,22 @@
     "oops": "¡Vaya! Algo salió mal.",
     "retry": "Reintentar",
     "no_posts": "Aún no hay artículos.",
+    "not_found": "Artículo no encontrado",
+    "not_exist": "El artículo del blog que estás buscando no existe.",
     "check": "Estamos trabajando para añadir nuevos artículos. ¡Vuelve pronto!",
     "back": "Volver al Inicio",
+    "back_blog": "Volver al Blog",
     "title": "Blog de Perspectivas Sísmicas",
     "description": "Explora las últimas investigaciones, análisis y desarrollos en la ciencia de los terremotos y la sismología.",
     "articles": "artículos • Página",
     "of": "de",
     "read": "Leer más",
-    "min_read": "min de lectura"
+    "min_read": "min de lectura",
+    "share": "Compartir",
+    "topics": "Temas relacionados",
+    "click_tags": "Haz clic en las etiquetas para explorar artículos relacionados",
+    "articles_related": "Artículos relacionados",
+    "min": "min"
   },
   "pagination": {
     "showing": "Mostrando",

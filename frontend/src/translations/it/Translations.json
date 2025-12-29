@@ -152,19 +152,27 @@
     "description": "Per supporto immediato o richieste specifiche, questi canali diretti potrebbero essere più adatti.",
     "powered": "Sviluppato da TerraQuake API"
   },
-   "blog": {
+    "blog": {
     "loading": "Caricamento degli articoli del blog...",
     "oops": "Ops! Qualcosa è andato storto.",
     "retry": "Riprova",
     "no_posts": "Nessun articolo disponibile.",
+    "not_found": "Articolo non trovato",
+    "not_exist": "L’articolo del blog che stai cercando non esiste.",
     "check": "Stiamo lavorando per aggiungere nuovi articoli. Torna a trovarci presto!",
     "back": "Torna alla Home",
+    "back_blog": "Torna al Blog",
     "title": "Blog di Approfondimenti Sismici",
-    "description": "Scopri le ultime ricerche, analisi e sviluppi nel campo della sismologia e della scienza dei terremoti.",
+    "description": "Esplora le ultime ricerche, analisi e sviluppi nella scienza dei terremoti e nella sismologia.",
     "articles": "articoli • Pagina",
     "of": "di",
     "read": "Leggi di più",
-    "min_read": "min di lettura"
+    "min_read": "min di lettura",
+    "share": "Condividi",
+    "topics": "Argomenti correlati",
+    "click_tags": "Clicca sui tag per esplorare articoli correlati",
+    "articles_related": "Articoli correlati",
+    "min": "min"
   },
   "pagination": {
     "showing": "Visualizzazione",
