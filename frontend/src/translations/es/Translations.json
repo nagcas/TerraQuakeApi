@@ -22,11 +22,17 @@
     "description_p": "Los terremotos son fenómenos naturales causados por la liberación repentina de energía en la corteza terrestre, lo que genera ondas sísmicas. Comprenderlos y monitorearlos es fundamental para la gestión del riesgo y la investigación científica. TerraQuake API está diseñada para proporcionar datos sísmicos fiables y accesibles a través de una interfaz moderna y orientada a desarrolladores.",
     "subdescription_p": "Esto es lo que puedes hacer con la API:"
   },
-  "metrics": {
+    "metrics": {
     "loading": "Cargando métricas del sistema...",
-    "wait": "Por favor, espera mientras recuperamos los datos de rendimiento en tiempo real.",
-    "failed": "No se pudieron cargar las métricas",
-    "title": "Métricas de rendimiento y fiabilidad del sistema"
+    "wait": "Por favor espera mientras recuperamos los datos de rendimiento en tiempo real.",
+    "failed": "Error al cargar las métricas",
+    "title": "Métricas de Rendimiento y Confiabilidad del Sistema",
+    "label_event": "Eventos Procesados",
+    "description_event": "Terremotos en tiempo real normalizados y accesibles",
+    "label_latency": "Latencia de la API",
+    "description_latency": "Tiempo medio de respuesta de la API",
+    "label_monitoring": "Monitoreo de Datos",
+    "description_monitoring": "Ingesta continua desde observatorios confiables"
   },
   "navbar": {
     "primary_access": "Acceso a la API",

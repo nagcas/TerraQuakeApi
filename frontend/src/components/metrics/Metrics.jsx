@@ -29,18 +29,18 @@ export default function Metrics() {
         setHighlightMetrics([
           {
             value: payload.totalEventsProcessed?.toLocaleString('it-IT') || 'N/A',
-            label: 'Events Processed',
-            description: 'Real-time earthquakes normalized and accessible',
+            label: t('metrics.label_event'),
+            description: t('metrics.description_event'),
           },
           {
             value: `${payload.apiLatencyAvgMs} ms`,
-            label: 'API Latency',
-            description: 'Average API response time',
+            label: t('metrics.latency'),
+            description: t('metrics.description_latency'),
           },
           {
             value: '24/7',
-            label: 'Data Monitoring',
-            description: 'Continuous ingestion from trusted observatories',
+            label: t('metrics.label_monitoring'),
+            description: t('metrics.description_monitoring'),
           },
         ]);
       } catch (error) {

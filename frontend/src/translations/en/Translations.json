@@ -26,7 +26,13 @@
     "loading": "Loading System Metrics...",
     "wait": "Please wait while we retrieve real-time performance data.",
     "failed": "Failed to Load Metrics",
-    "title": "System Performance and Reliability Metrics"
+    "title": "System Performance and Reliability Metrics",
+    "label_event": "Events Processed",
+    "description_event": "Real-time earthquakes normalized and accessible",
+    "label_latency": "API Latency",
+    "description_latency": "Average API response time",
+    "label_monitoring": "Data Monitoring",
+    "description_monitoring": "Continuous ingestion from trusted observatories"
   },
   "navbar": {
     "primary_access": "API Access",
