@@ -127,5 +127,28 @@
     "description_section_collaboration": "TerraQuake API se enorgullece de contar con un equipo internacional y diverso de 5 colaboradores de todo el mundo. Sus contribuciones—desde desarrollo backend hasta mejoras de frontend y pruebas—ayudan a garantizar un proyecto robusto, confiable y en constante mejora. Trabajar con desarrolladores de diferentes países aporta perspectivas únicas, acelera la innovación y fortalece el impacto global del proyecto.",
     "title": "Acerca de TerraQuake API",
     "description": "Una plataforma enfocada en traducir feeds sísmicos en bruto en endpoints accesibles para desarrolladores y en información útil para seguridad, investigación y educación."
+  },
+   "contact": {
+    "title": "Conectemos.",
+    "description": "En TerraQuake API, nos comprometemos a hacer que los datos sísmicos sean accesibles y útiles. Ya seas investigador, desarrollador o entusiasta, tus ideas y comentarios nos ayudan a mejorar la plataforma cada día.",
+    "title_form": "Enviar un Mensaje Directo",
+    "label_name": "Nombre",
+    "placeholder_name": "Tu nombre",
+    "label_last_name": "Apellido",
+    "placeholder_last_name": "Tu apellido",
+    "label_email": "Correo de trabajo",
+    "label_subject": "Asunto",
+    "placeholder_subject": "Breve motivo de tu mensaje",
+    "label_message": "Mensaje",
+    "placeholder_message": "Mensaje detallado...",
+    "button_send_message": "Enviar Mensaje"
+  },
+   "channels": {
+    "title_github": "Abrir un Issue",
+    "title_x": "X / Twitter",
+    "title_linkedin": "LinkedIn",
+    "title": "Otros Canales",
+    "description": "Para soporte inmediato o consultas específicas, estos canales directos pueden ser más adecuados.",
+    "powered": "Desarrollado por TerraQuake API"
   }
 }

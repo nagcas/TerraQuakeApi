@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 const contactSchema = yup.object({
   name: yup.string().required('Name is required!'),
@@ -67,6 +68,8 @@ const InputField = ({
 };
 
 export default function Contact() {
+  const { t } = useTranslation('translation');
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -154,14 +157,11 @@ export default function Contact() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Let's Connect.
+              {t('contact.title')}              
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              At TerraQuake API, we’re committed to making seismic data
-              accessible and insightful. Whether you’re a researcher, developer,
-              or enthusiast, your ideas and feedback help us improve the
-              platform every day.
+              {t('contact.description')}
             </p>
           </motion.div>
 
@@ -175,7 +175,7 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className='text-3xl font-bold text-white mb-8 border-b border-purple-500/50 pb-3'>
-                Send a Direct Message
+                {t('contact.title_form')}
               </h2>
 
               <form
@@ -186,16 +186,16 @@ export default function Contact() {
                 {/* Name + Lastname */}
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
                   <InputField
-                    label='First Name'
+                    label={t('contact.label_name')}
                     name='name'
-                    placeholder='Your first name'
+                    placeholder={t('contact.placeholder_name')}
                     register={register}
                     errors={errors}
                   />
                   <InputField
-                    label='Last Name'
+                    label={t('contact.label_last_name')}
                     name='lastname'
-                    placeholder='Your last name'
+                    placeholder={t('contact.placeholder_last_name')}
                     register={register}
                     errors={errors}
                   />
@@ -204,7 +204,7 @@ export default function Contact() {
                 {/* Email + Subject */}
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
                   <InputField
-                    label='Work Email'
+                    label={t('contact.label_email')}
                     name='email'
                     type='email'
                     placeholder='name@company.com'
@@ -212,9 +212,9 @@ export default function Contact() {
                     errors={errors}
                   />
                   <InputField
-                    label='Subject'
+                    label={t('contact.label_subject')}
                     name='subject'
-                    placeholder='Brief purpose of your message'
+                    placeholder={t('contact.placeholder_subject')}
                     register={register}
                     errors={errors}
                   />
@@ -222,9 +222,9 @@ export default function Contact() {
 
                 {/* Message */}
                 <InputField
-                  label='Message'
+                  label={t('contact.label_message')}
                   name='message'
-                  placeholder='Detailed message...'
+                  placeholder={t('contact.placeholder_message')}
                   register={register}
                   errors={errors}
                   rows={6}
@@ -253,7 +253,7 @@ export default function Contact() {
                       <Spinner />
                     </>
                   ) : (
-                    'Send Message'
+                    t('contact.button_send_message')
                   )}
                 </motion.button>
               </form>

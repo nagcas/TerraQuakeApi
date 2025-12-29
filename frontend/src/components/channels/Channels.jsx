@@ -2,12 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub } from 'react-icons/fi';
 import { FaLinkedin, FaXTwitter } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 
 export default function Channels() {
+  const { t } = useTranslation('translation');
+
   const contactInfo = [
     {
       icon: <FiGithub className='w-6 h-6' />,
-      title: 'Open an Issue',
+      title: t('channels.title_github'),
       detail: 'github.com/terraquake-api',
       href: 'https://github.com/nagcas/TerraQuakeApi',
       target: '_blank',
@@ -15,7 +18,7 @@ export default function Channels() {
     },
     {
       icon: <FaXTwitter className='text-2xl' />, 
-      title: 'X / Twitter',
+      title: t('channels.title_x'),
       detail: 'x.com/nagcas',
       href: 'https://x.com/nagcas',
       target: '_blank',
@@ -23,7 +26,7 @@ export default function Channels() {
     },
     {
       icon: <FaLinkedin className='text-2xl' />,
-      title: 'LinkedIn',
+      title: t('channels.title_linkedin'),
       detail: 'in/gianluca-chiaravalloti-5694081a2',
       href: 'https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/',
       target: '_blank',
@@ -40,11 +43,10 @@ export default function Channels() {
     >
       <div>
         <h2 className='text-3xl font-bold text-purple-400 mb-6'>
-          Other Channels
+          {t('channels.title')}
         </h2>
         <p className='text-white/80 mb-8'>
-          For immediate support or specific inquiries, you might find these
-          direct channels more suitable.
+          {t('channels.description')}
         </p>
 
         <div className='space-y-6'>
@@ -75,7 +77,7 @@ export default function Channels() {
       {/* Optional: Add a subtle logo or API tagline here */}
       <div className='mt-10 pt-6 border-t border-purple-500/50'>
         <p className='text-sm text-white/50 italic'>
-          Powered by TerraQuake API
+          {t('channels.powered')}
         </p>
       </div>
     </motion.div>
