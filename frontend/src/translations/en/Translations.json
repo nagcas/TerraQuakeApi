@@ -266,5 +266,22 @@
   "login_socials": {
     "sign_through": "Or sign in through",
     "or": "OR"
+  },
+  "contribute": {
+    "title": "Build the Future of Seismic Tech.",
+    "description": "TerraQuake is built by a global community. Whether you're a developer, a seismologist, or a data enthusiast, your contribution is vital. Let's make seismic data more accessible together.",
+    "title_join": "Join the Conversation",
+    "description_join": "Our Discord server is the central hub for collaboration. Introduce yourself, ask questions, and chat directly with the core team.",
+    "button_join_discord": "Join our Discord",
+    "button_code_conduct": "Read Code of Conduct",
+    "card_title_contribute": "Contribute Code",
+    "card_description_contribute": "Help us develop the Node.js API and the React frontend. Check the issues list for ways to jump in.",
+    "card_link_contribute": "Submit a Pull Request",
+    "card_title_bugs": "Report Bugs",
+    "card_description_bugs": "Found a broken endpoint or a data glitch? Filing a detailed report is one of the most valuable contributions you can make.",
+    "card_link_bugs": "View Open Issues",
+    "card_title_documentation": "Improve Documentation",
+    "card_description_documentation": "Clear guides are essential for a great developer experience. If you spot a typo or can explain something better, we welcome your input.",
+    "card_link_documentation": "Update the Docs"
   }
 }

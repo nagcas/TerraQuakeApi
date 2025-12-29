@@ -10,8 +10,11 @@ import {
   PULL_REQUESTS,
 } from '@/data/Contribute';
 import { ContributionCard } from './ContributeCard';
+import { useTranslation } from 'react-i18next';
 
 export default function Contribute() {
+  const { t } = useTranslation('translation');
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,13 +58,11 @@ export default function Contribute() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Build the Future of Seismic Tech.
+              {t('contribute.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              TerraQuake is built by a global community. Whether you're a
-              developer, a seismologist, or a data enthusiast, your contribution
-              is vital. Let's make seismic data more accessible together.
+              {t('contribute.description')}
             </p>
           </motion.div>
 
@@ -76,24 +77,24 @@ export default function Contribute() {
             >
               <ContributionCard
                 icon={<FaCode />}
-                title='Contribute Code'
-                description='Help us develop the Node.js API and the React frontend. Check the issues list for ways to jump in.'
+                title={t('contribute.card_title_contribute')}
+                description={t('contribute.card_description_contribute')}
                 link={PULL_REQUESTS}
-                linkText='Submit a Pull Request'
+                linkText={t('contribute.card_link_contribute')}
               />
               <ContributionCard
                 icon={<FaBug />}
-                title='Report Bugs'
-                description='Found a broken endpoint or a data glitch? Filing a detailed report is one of the most valuable contributions you can make.'
+                title={t('contribute.card_title_bugs')}
+                description={t('contribute.card_description_bugs')}
                 link={ISSUE_TRACKER}
-                linkText='View Open Issues'
+                linkText={t('contribute.card_link_bugs')}
               />
               <ContributionCard
                 icon={<FaBook />}
-                title='Improve Documentation'
-                description='Clear guides are essential for a great developer experience. If you spot a typo or can explain something better, we welcome your input.'
+                title={t('contribute.card_title_documentation')}
+                description={t('contribute.card_description_documentation')}
                 link={`${API_DOCS}`}
-                linkText='Update the Docs'
+                linkText={t('contribute.card_link_documentation')}
               />
             </motion.div>
 
@@ -106,11 +107,9 @@ export default function Contribute() {
               id='community'
               className='mt-16 text-center backdrop-blur-sm border border-white/10 p-10 rounded-xl max-w-4xl mx-auto'
             >
-              <h2 className='text-3xl font-bold mb-4'>Join the Conversation</h2>
+              <h2 className='text-3xl font-bold mb-4'>{t('contribute.title_join')}</h2>
               <p className='max-w-2xl mx-auto mb-8 text-gray-400'>
-                Our Discord server is the central hub for collaboration.
-                Introduce yourself, ask questions, and chat directly with the
-                core team.
+                {t('contribute.description_join')}
               </p>
               <div className='flex flex-col sm:flex-row justify-center items-center gap-4'>
                 <a
@@ -120,7 +119,7 @@ export default function Contribute() {
                   className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg flex justify-center items-center gap-3 group'
                 >
                   <FaDiscord className='text-2xl icon-bounces' />
-                  Join our Discord
+                  {t('contribute.button_join_discord')}
                 </a>
                 <a
                   href={CODE_OF_CONDUCT}
@@ -128,7 +127,7 @@ export default function Contribute() {
                   rel='noopener noreferrer'
                   className='border border-gray-400 hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
                 >
-                  Read Code of Conduct
+                  {t('contribute.button_code_conduct')}
                 </a>
               </div>
             </motion.section>
