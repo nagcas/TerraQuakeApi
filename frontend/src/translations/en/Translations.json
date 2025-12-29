@@ -156,14 +156,22 @@
     "oops": "Oops! Something went wrong.",
     "retry": "Retry",
     "no_posts": "No posts yet.",
+    "not_found": "Post Not Found",
+    "not_exist": "The blog post you're looking for doesn't exist.",
     "check": "We are working on adding new articles. Please check back soon!",
     "back": "Back To Home",
+    "back_blog": "Back To Blog",
     "title": "Seismic Insights Blog",
     "description": "Explore the latest research, insights, and developments in earthquake science and seismology.",
     "articles": "articles • Page",
     "of": "of",
     "read": "Read More",
-    "min_read": "min read"
+    "min_read": "min read",
+    "share": "Share",
+    "topics": "Related Topics",
+    "click_tags": "Click on tags to explore related articles",
+    "articles_related": "Related Articles",
+    "min": "min"
   },
   "pagination": {
     "showing": "Showing",

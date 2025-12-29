@@ -19,8 +19,11 @@ import Spinner from '@/components/spinner/Spinner';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { formatDate } from '@/components/utils/FormatDate.js';
+import { useTranslation } from 'react-i18next';
 
 export default function BlogDetail() {
+  const { t } = useTranslation('translation');
+
   const { slug } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -102,7 +105,7 @@ export default function BlogDetail() {
           description='Loading blog posts'
         />
         <Spinner size='5xl' />
-        <p className='text-gray-400 text-sm mt-4'>Loading post...</p>
+        <p className='text-gray-400 text-sm mt-4'>{t('blog.loading')}</p>
       </section>
     );
   }
@@ -118,7 +121,7 @@ export default function BlogDetail() {
           description='Error loading blog posts'
         />
         <h1 className='text-3xl md:text-4xl mx-auto text-purple-600 font-extrabold leading-tight mt-[50px] select-none'>
-          Oops! Something went wrong.
+          {t('blog.oops')}
         </h1>
         <p className='text-gray-300 mb-4'>{error}</p>
 
@@ -126,7 +129,7 @@ export default function BlogDetail() {
           onClick={() => navigate('/blog')}
           className='py-2 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
         >
-          Back to Blog
+          {t('blog.back_blog')}
         </button>
       </section>
     );
@@ -142,16 +145,16 @@ export default function BlogDetail() {
         <div className='container mx-auto px-4'>
           <div className='text-center'>
             <h2 className='text-2xl font-bold text-gray-300 mb-4'>
-              Post Not Found
+              {t('blog.not_found')}
             </h2>
             <p className='text-gray-400 mb-4'>
-              The blog post you're looking for doesn't exist.
+              {t('blog.not_exist')}
             </p>
             <button
               onClick={() => navigate('/blog')}
               className='bg-purple-600 hover:bg-purple-700 text-white/70 font-bold py-2 px-4 rounded transition-colors duration-200 cursor-pointer'
             >
-              Back to Blog
+              {t('blog.back_blog')}
             </button>
           </div>
         </div>
@@ -202,7 +205,7 @@ export default function BlogDetail() {
             className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
           >
             <FaArrowLeft className='mr-2' />
-            Back to Blog
+            {t('blog.back_blog')}
           </NavLink>
 
           {/* Article Header */}
@@ -226,7 +229,7 @@ export default function BlogDetail() {
                     className='flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors duration-200 cursor-pointer'
                   >
                     <FaShare className='w-4 h-4' />
-                    <span className='text-sm cursor-pointer'>Share</span>
+                    <span className='text-sm cursor-pointer'>{t('blog.share')}</span>
                   </button>
                 </div>
               </div>
@@ -248,7 +251,7 @@ export default function BlogDetail() {
                 </div>
                 <div className='flex items-center space-x-2'>
                   <FaClock className='text-purple-400' />
-                  <span>{post.readTime} min read</span>
+                  <span>{post.readTime} {t('blog.min_read')}</span>
                 </div>
               </div>
 
@@ -395,7 +398,7 @@ export default function BlogDetail() {
                   <div className='flex items-center mb-4'>
                     <FaTag className='text-purple-400 mr-2' />
                     <h4 className='text-white/70 font-semibold'>
-                      Related Topics
+                      {t('blog.topics')}
                     </h4>
                   </div>
                   <div className='flex flex-wrap gap-3'>
@@ -423,7 +426,7 @@ export default function BlogDetail() {
                     ))}
                   </div>
                   <p className='text-gray-500 text-xs mt-3'>
-                    Click on tags to explore related articles
+                    {t('blog.click_tags')}
                   </p>
                 </div>
               )}
@@ -434,7 +437,7 @@ export default function BlogDetail() {
           {relatedPosts.length > 0 && (
             <div className='mt-12'>
               <h3 className='text-2xl font-bold text-white/70 mb-6'>
-                Related Articles
+                {t('blog.articles_related')}
               </h3>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                 {relatedPosts.map((relatedPost) => (
@@ -447,7 +450,7 @@ export default function BlogDetail() {
                         {relatedPost.category}
                       </span>
                       <span className='text-xs text-gray-500'>
-                        {relatedPost.readTime} min
+                        {relatedPost.readTime} {t('blog.min')}
                       </span>
                     </div>
 
