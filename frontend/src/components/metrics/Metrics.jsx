@@ -34,7 +34,7 @@ export default function Metrics() {
           },
           {
             value: `${payload.apiLatencyAvgMs} ms`,
-            label: t('metrics.latency'),
+            label: t('metrics.label_latency'),
             description: t('metrics.description_latency'),
           },
           {
