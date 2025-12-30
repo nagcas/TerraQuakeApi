@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import MetaData from '@pages/noPage/MetaData'
-import BackToTopButton from '@/components/utils/BackToTopButton'
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import MetaData from '@pages/noPage/MetaData';
+import BackToTopButton from '@/components/utils/BackToTopButton';
+import { useTranslation } from 'react-i18next';
 
 export default function NoAccess() {
+  const { t } = useTranslation('translation');
+
   return (
     <>
       {/* SEO */}
@@ -45,8 +48,7 @@ export default function NoAccess() {
               Access Denied
             </h2>
             <p className='text-xl text-white/70 max-w-2xl mx-auto'>
-              You do not have permission to access this area. This section is
-              restricted to administrators only.
+              {t('no_access.description')}
             </p>
           </motion.div>
 
@@ -59,12 +61,10 @@ export default function NoAccess() {
           >
             <div className='p-8 md:p-12 border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl mb-8'>
               <h3 className='text-2xl font-bold text-white mb-4'>
-                Insufficient Permissions
+                {t('no_access.insufficient')}
               </h3>
               <p className='text-white/70 mb-6'>
-                Your account does not have the required administrator privileges
-                to access this dashboard. If you believe this is an error,
-                please contact your system administrator.
+                {t('no_access.description_insufficient')}
               </p>
 
               <div className='space-y-4'>
@@ -72,16 +72,18 @@ export default function NoAccess() {
                   to='/'
                   className='inline-block bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-3 px-8 rounded-full hover:scale-[1.02] hover:shadow-xl active:scale-[0.98] transform transition-all duration-300 ease-in-out'
                 >
-                  Return to Home
+                  {t('no_access.back_to_home')}
                 </Link>
 
-                <div className='text-white/50 text-sm'>or</div>
+                <div className='text-white/50 text-sm'>
+                  {t('no_access.or')}
+                </div>
 
                 <Link
                   to='/profile'
                   className='inline-block border-2 border-white/20 text-white font-semibold py-3 px-8 rounded-full hover:border-purple-500 hover:text-purple-400 transition-all duration-300 ease-in-out'
                 >
-                  View Profile
+                  {t('no_access.view_profile')}
                 </Link>
               </div>
             </div>
@@ -89,7 +91,7 @@ export default function NoAccess() {
             {/* Additional Info */}
             <div className='text-center text-white/50 text-sm'>
               <p>
-                Need help? Contact us at{' '}
+                {t('no_access.help')}{' '}
                 <a
                   href='mailto:support@terraquake.com'
                   className='text-purple-400 hover:text-purple-300 transition-colors'
@@ -105,5 +107,5 @@ export default function NoAccess() {
       {/* Floating Back-to-Top Button Component */}
       <BackToTopButton />
     </>
-  )
+  );
 }

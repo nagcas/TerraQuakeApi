@@ -2,8 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/Context';
 import Spinner from '../spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function RequireAuth({ children, requiredRole = null }) {
+  const { t } = useTranslation('translation');
+
   const { userLogin, isLoggedIn, isLoadingUser } = useContext(Context);
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
@@ -32,7 +35,7 @@ export default function RequireAuth({ children, requiredRole = null }) {
     return (
       <div className="flex items-center justify-center h-screen text-white">
         <Spinner size='4xl'/>
-        Loading...
+        {t('require_auth.loading')}
       </div>
     );
   }

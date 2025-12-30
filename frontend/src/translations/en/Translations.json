@@ -527,5 +527,30 @@
     "next": "Next",
     "search": "Search by location...",
     "export_csv": "Export as CSV"
+  },
+  "no_page": {
+    "description": "The page you are looking for does not exist",
+    "back_to_home": "Back To Home"
+  },
+  "no_access": {
+    "description": "You do not have permission to access this area. This section is restricted to administrators only.",
+    "insufficient": "Insufficient Permissions",
+    "description_insufficient": "Your account does not have the required administrator privileges to access this dashboard. If you believe this is an error, please contact your system administrator.",
+    "back_to_home": "Back To Home",
+    "or": "or",
+    "view_profile": "View Profile",
+    "help": "Need help? Contact us at"
+  },
+  "access_restricted": {
+    "description": "You need to be signed in to access this section. Please log in or create a new account to continue.",
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up"
+  },
+  "unsubscribe": {
+    "title": "Unsubscribe Newsletter",
+    "back_to_home": "Back To Home"
+  },
+  "require_auth": {
+    "loading": "Loading..."
   }
 }

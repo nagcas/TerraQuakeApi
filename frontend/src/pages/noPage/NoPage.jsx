@@ -1,8 +1,11 @@
 import MetaData from '@pages/noPage/MetaData';
 import { TbError404 } from 'react-icons/tb';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function NoPage() {
+  const { t } = useTranslation('translation');
+
   return (
     <>
       {/* SEO Stuff */}
@@ -23,14 +26,14 @@ export default function NoPage() {
           Page Not Found
         </h1>
         <p className='mt-6 mx-auto md:text-xl text-gray-300'>
-          The page you are looking for does not exist
+          {t('no_page.description')}
         </p>
         <NavLink
           to='/'
           className='text-white hover:text-purple-600 transition-colors duration-200 mt-30'
           aria-label='Navigate to home page'
         >
-          Back To Home
+          {t('no_page.back_to_home')}
         </NavLink>
       </section>
     </>

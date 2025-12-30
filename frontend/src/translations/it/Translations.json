@@ -528,5 +528,30 @@
     "next": "Successiva",
     "search": "Cerca per località...",
     "export_csv": "Esporta in CSV"
+  },
+  "no_page": {
+    "description": "La pagina che stai cercando non esiste",
+    "back_to_home": "Torna alla Home"
+  },
+  "no_access": {
+    "description": "Non hai il permesso di accedere a quest’area. Questa sezione è riservata solo agli amministratori.",
+    "insufficient": "Permessi insufficienti",
+    "description_insufficient": "Il tuo account non dispone dei privilegi di amministratore necessari per accedere a questa dashboard. Se ritieni che si tratti di un errore, contatta l’amministratore del sistema.",
+    "back_to_home": "Torna alla Home",
+    "or": "o",
+    "view_profile": "Visualizza profilo",
+    "help": "Hai bisogno di aiuto? Contattaci a"
+  },
+    "access_restricted": {
+    "description": "Devi effettuare l’accesso per accedere a questa sezione. Effettua il login o crea un nuovo account per continuare.",
+    "sign_in": "Accedi",
+    "sign_up": "Registrati"
+  },
+  "unsubscribe": {
+    "title": "Annulla iscrizione alla Newsletter",
+    "back_to_home": "Torna alla Home"
+  },
+  "require_auth": {
+    "loading": "Caricamento in corso..."
   }
 }

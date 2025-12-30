@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function AccessRestricted() {
+  const { t } = useTranslation('translation');
+
   const navigate = useNavigate();
 
   return (
@@ -24,8 +27,7 @@ export default function AccessRestricted() {
         </h1>
 
         <p className='text-gray-300 mb-8 text-sm sm:text-base'>
-          You need to be signed in to access this section. Please log in or
-          create a new account to continue.
+          {t('access_restricted.description')}
         </p>
 
         <div className='flex justify-center gap-4 flex-wrap'>
@@ -40,7 +42,7 @@ export default function AccessRestricted() {
               text-sm sm:text-base cursor-pointer
             '
           >
-            Log In
+            {t('access_restricted.sign_in')}
           </button>
 
           <button
@@ -54,7 +56,7 @@ export default function AccessRestricted() {
               text-sm sm:text-base cursor-pointer
             '
           >
-            Sign Up
+            {t('access_restricted.sign_up')}
           </button>
         </div>
       </motion.section>

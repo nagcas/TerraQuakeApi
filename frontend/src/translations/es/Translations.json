@@ -527,5 +527,30 @@
     "next": "Siguiente",
     "search": "Buscar por ubicación...",
     "export_csv": "Exportar como CSV"
+  },
+  "no_page": {
+    "description": "La página que buscas no existe",
+    "back_to_home": "Volver al Inicio"
+  },
+  "no_access": {
+    "description": "No tienes permiso para acceder a esta área. Esta sección está restringida solo a administradores.",
+    "insufficient": "Permisos insuficientes",
+    "description_insufficient": "Tu cuenta no tiene los privilegios de administrador necesarios para acceder a este panel. Si crees que esto es un error, contacta con el administrador del sistema.",
+    "back_to_home": "Volver al Inicio",
+    "or": "o",
+    "view_profile": "Ver perfil",
+    "help": "¿Necesitas ayuda? Contáctanos en"
+  },
+  "access_restricted": {
+    "description": "Necesitas iniciar sesión para acceder a esta sección. Por favor, inicia sesión o crea una nueva cuenta para continuar.",
+    "sign_in": "Iniciar sesión",
+    "sign_up": "Registrarse"
+  },
+  "unsubscribe": {
+    "title": "Darse de baja de la Newsletter",
+    "back_to_home": "Volver al Inicio"
+  },
+  "require_auth": {
+    "loading": "Cargando..."
   }
 }

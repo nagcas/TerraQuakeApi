@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import axios from 'axios'
-import MetaData from '@/pages/noPage/MetaData'
-import BackToTopButton from '../utils/BackToTopButton'
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import axios from 'axios';
+import MetaData from '@/pages/noPage/MetaData';
+import BackToTopButton from '../utils/BackToTopButton';
+import { useTranslation } from 'react-i18next';
 
 export default function Unsubscribe() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  const token = queryParams.get('token')
-  const email = queryParams.get('email')
+  const { t } = useTranslation('translation');
 
-  const [status, setStatus] = useState('loading')
-  const [message, setMessage] = useState('Processing your request...')
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get('token');
+  const email = queryParams.get('email');
+
+  const [status, setStatus] = useState('loading');
+  const [message, setMessage] = useState('Processing your request...');
 
   useEffect(() => {
     const fetchUnsubscribe = async () => {
@@ -21,22 +24,24 @@ export default function Unsubscribe() {
         const res = await axios.get(
           `${import.meta.env.VITE_URL_BACKEND}/newsletter/unsubscribe`,
           { params: { token, email } }
-        )
+        );
         // Mostra solo il messaggio stringa
-        setMessage(res.data?.message || 'Successfully unsubscribed from newsletter.')
-        setStatus('success')
+        setMessage(
+          res.data?.message || 'Successfully unsubscribed from newsletter.'
+        );
+        setStatus('success');
       } catch (error) {
         const backendMessage =
           error.response?.data?.error ||
           error.response?.data?.message ||
-          'An unexpected error occurred while unsubscribing.'
-        setMessage(backendMessage)
-        setStatus('error')
+          'An unexpected error occurred while unsubscribing.';
+        setMessage(backendMessage);
+        setStatus('error');
       }
-    }
+    };
 
-    fetchUnsubscribe()
-  }, [token, email])
+    fetchUnsubscribe();
+  }, [token, email]);
 
   return (
     <>
@@ -66,7 +71,7 @@ export default function Unsubscribe() {
           transition={{ duration: 0.7, delay: 0.1 }}
         >
           <h1 className='text-3xl md:text-6xl text-purple-600 mx-auto font-extrabold leading-tight mt-[50px] select-none'>
-            Unsubscribe Newsletter
+            {t('unsubscribe.title')}
           </h1>
 
           {status === 'loading' && (
@@ -76,15 +81,11 @@ export default function Unsubscribe() {
           )}
 
           {status === 'success' && (
-            <p className='mt-6 mx-auto md:text-xl text-green-400'>
-              {message}
-            </p>
+            <p className='mt-6 mx-auto md:text-xl text-green-400'>{message}</p>
           )}
 
           {status === 'error' && (
-            <p className='mt-6 mx-auto md:text-xl text-red-400'>
-              {message}
-            </p>
+            <p className='mt-6 mx-auto md:text-xl text-red-400'>{message}</p>
           )}
         </motion.div>
 
@@ -94,12 +95,12 @@ export default function Unsubscribe() {
             className='z-30 mt-6 py-4 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
             aria-label='Navigate to home page'
           >
-            Back To Home
+            {t('unsubscribe.back_to_home')}
           </button>
         )}
       </section>
       {/* Floating Back-to-Top Button */}
       <BackToTopButton />
     </>
-  )
+  );
 }
