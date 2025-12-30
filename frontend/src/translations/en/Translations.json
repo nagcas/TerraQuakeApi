@@ -573,7 +573,7 @@
     "export_csv": "Export as CSV",
     "code": "Code",
     "station_name": "Station Name",
-    "latidute": "Latitude",
+    "latitude": "Latitude",
     "longitude": "Longitude",
     "elevation": "Elevation (m)",
     "start_date": "Start Date",

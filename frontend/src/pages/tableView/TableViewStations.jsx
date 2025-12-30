@@ -255,7 +255,7 @@ export default function TableViewStations() {
                         onClick={() => requestSort('code')}
                         className='cursor-pointer px-6 py-3 text-left hover:text-purple-400'
                       >
-                        {t('table_view_stations.export_csv')} {getSortIndicator('code')}
+                        {t('table_view_stations.code')} {getSortIndicator('code')}
                       </th>
                       <th
                         onClick={() => requestSort('name')}
@@ -336,10 +336,10 @@ export default function TableViewStations() {
                   disabled={currentPage === 1}
                   className='py-2 px-4 border border-gray-500 hover:bg-white hover:text-black rounded-full transition cursor-pointer'
                 >
-                  Previous
+                   {t('table_view_stations.previus')}
                 </button>
                 <span>
-                  Page {currentPage} of {totalPages}
+                   {t('table_view_stations.page')} {currentPage}  {t('table_view_stations.of')} {totalPages}
                 </span>
                 <button
                   onClick={() =>
@@ -348,7 +348,7 @@ export default function TableViewStations() {
                   disabled={currentPage === totalPages}
                   className='py-2 px-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 rounded-full cursor-pointer'
                 >
-                  Next
+                   {t('table_view_stations.next')}
                 </button>
               </div>
             </>
