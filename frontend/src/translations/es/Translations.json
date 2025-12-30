@@ -473,7 +473,8 @@
     "description": "Explora e interactúa con datos de terremotos en tiempo real. Visualiza los eventos sísmicos directamente en el mapa interactivo y descarga el mapa para tu propio análisis. Al hacer clic en “Cambiar a vista tabular”, puedes acceder a la sección tabulada de los eventos sísmicos recientes, donde cada registro incluye la fecha y hora del evento (UTC), magnitud, profundidad (km), latitud, longitud y ubicación. También puedes buscar eventos por ubicación, ordenar la tabla por fecha y exportar los datos en formato CSV para análisis o investigaciones adicionales. Mantente informado y supervisa fácilmente la actividad sísmica global.",
     "button_tabular": "Cambiar a vista tabular",
     "title_legend": "Leyenda de magnitud sísmica",
-    "description_legend": "Las magnitudes miden la energía liberada por un terremoto. Se utilizan diferentes escalas según el tipo de ondas registradas y la distancia al epicentro."
+    "description_legend": "Las magnitudes miden la energía liberada por un terremoto. Se utilizan diferentes escalas según el tipo de ondas registradas y la distancia al epicentro.",
+    "title_earthquakes": "Terremotos"
   },
   "api_playground": {
     "title": "Terremotos",
@@ -556,7 +557,8 @@
   "stations_data": {
     "title": "Datos de estaciones para la API TerraQuake",
     "description": "Explora y analiza los datos de las estaciones de monitoreo sísmico a nivel global. Visualiza la ubicación de las estaciones en el mapa interactivo y consulta parámetros clave como el código de estación, la red, el país, la latitud, la longitud y el estado operativo. Al hacer clic en “Cambiar a vista tabular”, puedes acceder a una tabla estructurada con información detallada de las estaciones. También es posible buscar estaciones por ubicación o código, ordenar la tabla por red o país y exportar los datos en formato CSV para análisis o investigación. Obtén una visión clara de la red sismográfica mundial y supervisa fácilmente las capacidades de monitoreo en tiempo real.",
-    "button_stations_tabular": "Cambiar a vista tabular"
+    "button_stations_tabular": "Cambiar a vista tabular",
+    "title_stations": "Estaciones"
   },
   "table_view_stations": {
     "list_code": "Código",

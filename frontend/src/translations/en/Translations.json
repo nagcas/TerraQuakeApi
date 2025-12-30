@@ -473,7 +473,8 @@
     "description": "Explore and interact with real-time earthquake data. Visualize seismic events directly on the interactive map, and download the map for your own analysis. By clicking on “Switch to Tabular View”, you can access the tabulated section of recent seismic events, where each record includes the event date and time (UTC), magnitude, depth (km), latitude, longitude, and location. You can also search events by location, sort the table by date, and export the data in CSV format for further analysis or research. Stay informed and monitor global seismic activity with ease.",
     "button_tabular": "Switch to Tabular View",
     "title_legend": "Seismic Magnitude Legend",
-    "description_legend": "Magnitudes measure the energy released by an earthquake. Different scales are used depending on the type of waves recorded and the distance from the epicenter."
+    "description_legend": "Magnitudes measure the energy released by an earthquake. Different scales are used depending on the type of waves recorded and the distance from the epicenter.",
+    "title_earthquakes": "Earthquakes"
   },
   "api_playground": {
     "title": "Earthquakes",
@@ -556,7 +557,8 @@
   "stations_data": {
     "title": "Stations Data for TerraQuake API",
     "description": "Explore and analyze data from global seismic monitoring stations. Visualize station locations on the interactive map, view key parameters such as station code, network, country, latitude, longitude, and operational status. By clicking on “Switch to Tabular View”, you can access a structured table containing detailed station information. You can also search stations by location or code, sort the table by network or country, and export the data in CSV format for research or analysis. Gain insights into the worldwide seismograph network and track real-time monitoring capabilities with ease.",
-    "button_stations_tabular": "Switch to Tabular View"
+    "button_stations_tabular": "Switch to Tabular View",
+    "title_stations": "Stations"
   },
   "table_view_stations": {
     "list_code": "Code",

@@ -64,21 +64,21 @@ export default function StationsData() {
             <div className='grid grid-cols-1 lg:grid-cols-1 gap-10'>
               {i18n.language === 'en' && (
                 <ApiPlayground
-                  title='Stations'
+                  title={t('stations_data.title_stations')}
                   endpoints={StationsEndpointsData_en}
                   setData={setStationData}
                 />
               )}
               {i18n.language === 'it' && (
                 <ApiPlayground
-                  title='Stations'
+                  title={t('stations_data.title_stations')}
                   endpoints={StationsEndpointsData_it}
                   setData={setStationData}
                 />
               )}
               {i18n.language === 'es' && (
                 <ApiPlayground
-                  title='Stations'
+                  title={t('stations_data.title_stations')}
                   endpoints={StationsEndpointsData_es}
                   setData={setStationData}
                 />

@@ -68,21 +68,21 @@ export default function ExploreData() {
           <div className='grid grid-cols-1 lg:grid-cols-1 gap-10'>
             {i18n.language === 'en' && (
               <ApiPlayground
-                title='Earthquakes'
+                title={t('explore_data.title_earthquakes')}
                 endpoints={EarthquakesEndpointsData_en}
                 setData={setEarthquakeData}
               />
             )}
             {i18n.language === 'it' && (
               <ApiPlayground
-                title='Earthquakes'
+                title={t('explore_data.title_earthquakes')}
                 endpoints={EarthquakesEndpointsData_it}
                 setData={setEarthquakeData}
               />
             )}
             {i18n.language === 'es' && (
               <ApiPlayground
-                title='Earthquakes'
+                title={t('explore_data.title_earthquakes')}
                 endpoints={EarthquakesEndpointsData_es}
                 setData={setEarthquakeData}
               />
