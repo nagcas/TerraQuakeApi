@@ -467,5 +467,42 @@
     "list_description": "Description",
     "list_typical_range": "Typical Range",
     "list_notes": "Notes"
+  },
+  "explore_data": {
+    "title": "Explore Data for TerraQuake API",
+    "description": "Explore and interact with real-time earthquake data. Visualize seismic events directly on the interactive map, and download the map for your own analysis. By clicking on “Switch to Tabular View”, you can access the tabulated section of recent seismic events, where each record includes the event date and time (UTC), magnitude, depth (km), latitude, longitude, and location. You can also search events by location, sort the table by date, and export the data in CSV format for further analysis or research. Stay informed and monitor global seismic activity with ease.",
+    "button_tabular": "Switch to Tabular View",
+    "title_legend": "Seismic Magnitude Legend",
+    "description_legend": "Magnitudes measure the energy released by an earthquake. Different scales are used depending on the type of waves recorded and the distance from the epicenter."
+  },
+  "api_playground": {
+    "title": "Earthquakes",
+    "parameters": "Parameters",
+    "button_send_request": "Send Request",
+    "code_sample": "Code Sample",
+    "copied": "Copied",
+    "copy": "Copy"
+  },
+  "map": {
+    "title": "TerraQuake Map",
+    "description": "Explore real-time earthquake epicenters plotted on the map. Zoom in and pan to analyze seismic global",
+    "clear_map": "Clear Map",
+    "download_map": "Download Map"
+  },
+  "show_info": {
+    "info": "Info",
+    "features": "Features:",
+    "view_path": "View path:",
+    "no_path": "No path available",
+    "list_info_one": "Real-time earthquake data",
+    "list_info_two": "Shows realtime user location",
+    "list_info_three": "Interactive map with zoom and pan",
+    "list_info_four": "Markers indicating earthquake epicenters",
+    "list_info_five": "Click markers for detailed info",
+    "list_info_six": "Download map data and image",
+    "list_info_seven": "Clear all markers with a button"
+  },
+  "legend_map": {
+    "title": "Magnitude Legend"
   }
 }

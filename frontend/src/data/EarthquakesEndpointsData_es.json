@@ -1,0 +1,131 @@
+[
+  {
+    "key": "recent",
+    "label": "Recent",
+    "method": "GET",
+    "path": "/v1/earthquakes/recent",
+    "subtitle": "Últimos eventos sísmicos",
+    "description": "Este endpoint recupera todos los eventos sísmicos recientes desde el inicio del año hasta hoy a través de la TerraQuake API, ordenados del más reciente al menos reciente.\nProporciona a los usuarios una visión general de la actividad sísmica en curso durante el año actual.\nLa respuesta incluye detalles como magnitud, localización, profundidad, fecha y hora, e ID único del evento.\n\nParámetros de consulta:\n\n- limit: (Opcional) Número de eventos sísmicos a devolver. Valor predeterminado: 50 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "today",
+    "label": "Today",
+    "method": "GET",
+    "path": "/v1/earthquakes/today",
+    "subtitle": "Eventos sísmicos de hoy",
+    "description": "Este endpoint recupera todos los eventos sísmicos ocurridos hoy (desde las 00:00 UTC hasta la hora actual) a través de la TerraQuake API.\nPermite a los usuarios monitorear la actividad sísmica en tiempo real y ofrece una visión diaria de los terremotos en curso.\nLa respuesta incluye información detallada como magnitud, localización, profundidad, hora del evento y coordenadas.\n\nParámetros de consulta:\n\n- limit: (Opcional) Número de eventos sísmicos a devolver. Valor predeterminado: 50 si no se proporciona.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "last-week",
+    "label": "Last-Week",
+    "method": "GET",
+    "path": "/v1/earthquakes/last-week",
+    "subtitle": "Últimos 7 días",
+    "description": "Este endpoint recupera todos los eventos sísmicos ocurridos en los últimos 7 días a través de la TerraQuake API.\nPermite a los usuarios monitorear y analizar la actividad sísmica reciente de la última semana, proporcionando información sobre tendencias a corto plazo y patrones regionales.\n\nParámetros de consulta:\n\n- limit: (Opcional) Número de eventos sísmicos a devolver. Valor predeterminado: 50 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "month",
+    "label": "Month",
+    "method": "GET",
+    "path": "/v1/earthquakes/month",
+    "subtitle": "Por mes/año",
+    "description": "Este endpoint recupera todos los eventos sísmicos ocurridos durante un mes y año específicos a través de la TerraQuake API.\nPermite a los usuarios explorar datos sísmicos históricos para un período determinado. La respuesta incluye información detallada del evento, como magnitud, localización, profundidad y marca temporal.\n\nParámetros de consulta:\n\n- year: (Obligatorio) Año objetivo (por ejemplo, 2025).\n- month: (Obligatorio) Mes objetivo en formato numérico (01 a 12).\n- limit: (Opcional) Número de eventos a devolver. Valor predeterminado: 50 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "year", "label": "year", "placeholder": "2025", "defaultValue": "2025", "required": true },
+      { "name": "month", "label": "month", "placeholder": "03", "defaultValue": "03", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "location",
+    "label": "Location",
+    "method": "GET",
+    "path": "/v1/earthquakes/location",
+    "subtitle": "Cerca de latitud/longitud",
+    "description": "Este endpoint obtiene eventos sísmicos cercanos a una ubicación geográfica determinada, definida por latitud y longitud, con un radio de búsqueda opcional.\nRecupera los terremotos ocurridos desde el inicio del año hasta la fecha actual.\n\nParámetros de consulta:\n\n- latitude: (Obligatorio) Latitud de la ubicación (por ejemplo, 40.835459).\n- longitude: (Obligatorio) Longitud de la ubicación (por ejemplo, 14.117358).\n- radius: (Opcional) Radio de búsqueda en kilómetros. Valor predeterminado: 50 km si no se especifica.\n- limit: (Opcional) Número de eventos a devolver. Valor predeterminado: 50.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "latitude", "label": "latitude", "placeholder": "41.7142", "required": true },
+      { "name": "longitude", "label": "longitude", "placeholder": "15.9577", "required": true },
+      { "name": "radius", "label": "radius (km)", "placeholder": "10" },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "region",
+    "label": "Region",
+    "method": "GET",
+    "path": "/v1/earthquakes/region",
+    "subtitle": "Por región italiana",
+    "description": "Este endpoint recupera todos los eventos sísmicos ocurridos dentro de una región italiana específica a través de la TerraQuake API, desde el inicio del año actual hasta hoy.\nPermite a los usuarios filtrar terremotos por límites regionales para un análisis sísmico localizado.\n\nParámetros de consulta:\n\n- region: (Obligatorio) Nombre de la región italiana para filtrar (por ejemplo, Campania, Sicilia, Lazio). No distingue entre mayúsculas y minúsculas.\n- limit: (Opcional) Número de eventos a devolver. Valor predeterminado: 50 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "region", "label": "region", "placeholder": "Campania", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "depth",
+    "label": "Depth",
+    "method": "GET",
+    "path": "/v1/earthquakes/depth",
+    "subtitle": "Por profundidad focal (km)",
+    "description": "Este endpoint recupera todos los eventos sísmicos ocurridos a una profundidad focal específica, medida en kilómetros, a través de la TerraQuake API, desde el inicio del año actual hasta hoy.\nPermite a los usuarios analizar los terremotos según su profundidad, lo que ayuda a evaluar su posible impacto en superficie.\n\nParámetros de consulta:\n\n- depth: (Obligatorio) Profundidad focal de los terremotos en kilómetros (por ejemplo, 10).\n- limit: (Opcional) Número de eventos a devolver. Valor predeterminado: 10 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "depth", "label": "depth (km)", "placeholder": "10", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "range-time",
+    "label": "Range-Time",
+    "method": "GET",
+    "path": "/v1/earthquakes/range-time",
+    "subtitle": "Por intervalo de tiempo",
+    "description": "Este endpoint recupera todos los eventos sísmicos ocurridos dentro de un intervalo de tiempo específico, utilizando una fecha de inicio y una fecha de fin personalizadas.\nPermite a los usuarios consultar datos sísmicos históricos para cualquier período deseado, siendo ideal para investigaciones, informes o visualizaciones basadas en el tiempo.\n\nParámetros de consulta:\n\n- startdate: (Obligatorio) Fecha de inicio del intervalo (formato: YYYY-MM-DD).\n- enddate: (Obligatorio) Fecha de fin del intervalo (formato: YYYY-MM-DD).\n- limit: (Opcional) Número de eventos sísmicos a devolver. Valor predeterminado: 50 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "startdate", "label": "startdate", "placeholder": "YYYY-MM-DD", "required": true },
+      { "name": "enddate", "label": "enddate", "placeholder": "YYYY-MM-DD", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "magnitude",
+    "label": "Magnitude",
+    "method": "GET",
+    "path": "/v1/earthquakes/magnitude",
+    "subtitle": "Magnitud mínima",
+    "description": "Este endpoint recupera todos los eventos sísmicos que tienen una magnitud igual o superior a la especificada a través de la TerraQuake API, desde el inicio del año actual hasta hoy.\nEs útil para filtrar terremotos según su intensidad y analizar patrones de energía sísmica a lo largo del tiempo o entre diferentes regiones.\n\nParámetros de consulta:\n\n- mag: (Obligatorio) Magnitud mínima para el filtro (por ejemplo, 2 devolverá todos los eventos con magnitud > 2.0).\n- limit: (Opcional) Número de eventos sísmicos a devolver. Valor predeterminado: 50 si no se especifica.\n- page: (Opcional) Número de página de los resultados a recuperar. Valor predeterminado: 1 si no se especifica.",
+    "params": [
+      { "name": "mag", "label": "mag", "placeholder": "1", "required": true },
+      { "name": "limit", "label": "limit", "placeholder": "50", "defaultValue": "50" },
+      { "name": "page", "label": "page", "placeholder": "1", "defaultValue": "1" }
+    ]
+  },
+  {
+    "key": "eventId",
+    "label": "Event Id",
+    "method": "GET",
+    "path": "/v1/earthquakes/eventId",
+    "subtitle": "Por ID del evento",
+    "description": "Este endpoint recupera un evento sísmico específico mediante su ID único desde la TerraQuake API.\nPermite a los usuarios acceder a información detallada sobre un único terremoto, incluyendo magnitud, localización, profundidad y marca temporal precisa.\n\nParámetros de consulta:\n\n- eventId: (Obligatorio) Identificador único del evento sísmico a recuperar.",
+    "params": [
+      { "name": "eventId", "label": "eventId", "placeholder": "44061482", "required": true }
+    ]
+  }
+]

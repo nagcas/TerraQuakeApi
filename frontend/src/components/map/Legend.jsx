@@ -1,4 +1,8 @@
+import { useTranslation } from "react-i18next";
+
 export default function Legend() {
+  const { t } = useTranslation('translation');
+
   const rows = [
     { label: 'M < 2.0', color: '#34d399', size: 5 },
     { label: '2.0 – 3.9', color: '#fbbf24', size: 6 },
@@ -24,7 +28,7 @@ export default function Legend() {
       }}
     >
       <div style={{ fontWeight: 700, marginBottom: 8, fontSize: 18 }}>
-        Magnitude Legend
+        {t('legend_map.title')}
       </div>
       <div style={{ display: 'grid', gap: 10 }}>
         {rows.map((r) => (

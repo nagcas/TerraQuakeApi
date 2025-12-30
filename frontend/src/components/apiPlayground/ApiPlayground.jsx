@@ -1,11 +1,14 @@
 import { useMemo, useState } from 'react';
 import Spinner from '../spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function ApiPlayground({
   title = 'API Playground',
   endpoints = [],
   setData,
 }) {
+  const { t } = useTranslation('translation');
+
   const BACKEND_URL =
     import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
 
@@ -151,7 +154,9 @@ export default function ApiPlayground({
   return (
     <section className='relative z-0 w-full min-h-screen pb-12 overflow-hidden text-white/70'>
       <div className='text-center py-4'>
-        <h2 className='text-left text-3xl md:text-4xl font-bold'>{title}</h2>
+        <h2 className='text-left text-3xl md:text-4xl font-bold'>
+          {t('api_playground.title')}
+        </h2>
       </div>
 
       <div className='w-full flex text-left flex-col space-y-6'>
@@ -190,7 +195,9 @@ export default function ApiPlayground({
 
           {active?.params?.length > 0 && (
             <div className='mb-6'>
-              <p className='text-white text-xl font-medium mb-3'>Parameters</p>
+              <p className='text-white text-xl font-medium mb-3'> 
+                {t('api_playground.parameters')}
+              </p>
               <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
                 {active.params.map((p) => (
                   <div
@@ -223,7 +230,7 @@ export default function ApiPlayground({
               className='bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 transform transition duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer'
               disabled={loading}
             >
-              Send request
+              {t('api_playground.button_send_request')}
             </button>
           </div>
 
@@ -307,12 +314,17 @@ export default function ApiPlayground({
               )}
 
               <div className='flex items-center justify-between mt-2'>
-                <p className='text-white font-medium text-sm'>Code Sample</p>
+                <p className='text-white font-medium text-sm'>
+                  {t('api_playground.code_sample')}
+                </p>
                 <button
                   onClick={() => copyToClipboard('code', currentSnippet())}
                   className='text-sm lg:text-md bg-white/10 hover:bg-white/20 px-4 py-1 rounded-full cursor-pointer'
                 >
-                  {copiedKey === 'code' ? 'Copied' : 'Copy'}
+                  {copiedKey === 'code' ? 
+                    t('api_playground.copied') : 
+                    t('api_playground.copy')
+                  }
                 </button>
               </div>
 

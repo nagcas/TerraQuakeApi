@@ -7,9 +7,16 @@ import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import EarthquakesEndpointsData from '../../data/EarthquakesEndpointsData.json';
+import EarthquakesEndpointsData_en from '../../data/EarthquakesEndpointsData_en.json';
+import EarthquakesEndpointsData_it from '../../data/EarthquakesEndpointsData_it.json';
+import EarthquakesEndpointsData_es from '../../data/EarthquakesEndpointsData_es.json';
 import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
+import { useTranslation } from 'react-i18next';
 
 export default function ExploreData() {
+  const { t, i18n } = useTranslation('translation');
+  console.log(i18n.language);
+
   const [earthquakeData, setEarthquakeData] = useState(null);
 
   return (
@@ -43,48 +50,54 @@ export default function ExploreData() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl md:text-5xl text-white text-center font-extrabold tracking-tighter mb-4'>
-              Explore Data for TerraQuake API
+              {t('explore_data.title')}
             </h1>
             <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl mx-auto'>
-              Explore and interact with real-time earthquake data. Visualize
-              seismic events directly on the interactive map, and download the
-              map for your own analysis. By clicking on “Switch to Tabular
-              View”, you can access the tabulated section of recent seismic
-              events, where each record includes the event date and time (UTC),
-              magnitude, depth (km), latitude, longitude, and location. You can
-              also search events by location, sort the table by date, and export
-              the data in CSV format for further analysis or research. Stay
-              informed and monitor global seismic activity with ease.
+              {t('explore_data.description')}
             </p>
             <div className='py-16'>
               <Link
                 to='/explore-data/table-earthquakes'
                 className='py-4 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
               >
-                Switch to Tabular View
+                {t('explore_data.button_tabular')}
               </Link>
             </div>
           </motion.div>
 
           <div className='grid grid-cols-1 lg:grid-cols-1 gap-10'>
-            <ApiPlayground
-              title='Earthquakes'
-              endpoints={EarthquakesEndpointsData}
-              setData={setEarthquakeData}
-            />
+            {i18n.language === 'en' && (
+              <ApiPlayground
+                title='Earthquakes'
+                endpoints={EarthquakesEndpointsData_en}
+                setData={setEarthquakeData}
+              />
+            )}
+            {i18n.language === 'it' && (
+              <ApiPlayground
+                title='Earthquakes'
+                endpoints={EarthquakesEndpointsData_it}
+                setData={setEarthquakeData}
+              />
+            )}
+            {i18n.language === 'es' && (
+              <ApiPlayground
+                title='Earthquakes'
+                endpoints={EarthquakesEndpointsData_es}
+                setData={setEarthquakeData}
+              />
+            )}
             <ViewMap earthquakeData={earthquakeData} />
           </div>
           {/* Magnitude Legend Component */}
           <div className='grid grid-cols-1 lg:grid-cols-1 gap-10'>
             <div className='text-center mb-4'>
               <h2 className='text-3xl md:text-5xl font-bold mb-2'>
-                Seismic Magnitude Legend
+                {t('explore_data.title_legend')}
               </h2>
               <p className='text-gray-400 max-w-2xl mx-auto text-lg'>
-                Magnitudes measure the energy released by an earthquake.
-                Different scales are used depending on the type of waves
-                recorded and the distance from the epicenter.
+                {t('explore_data.description_legend')}
               </p>
             </div>
             <MagnitudeLegend />

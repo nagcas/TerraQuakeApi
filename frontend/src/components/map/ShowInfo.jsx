@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { FaInfo } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 export default function ShowInfo({ earthquakeData }) {
+  const { t } = useTranslation('translation');
+
   const urlBackend = import.meta.env.VITE_URL_BACKEND;
   const [show, setShow] = useState(false);
 
   const features = [
-    'Real-time earthquake data',
-    'Shows realtime user location',
-    'Interactive map with zoom and pan',
-    'Markers indicating earthquake epicenters',
-    'Click markers for detailed info',
-    'Download map data and image',
-    'Clear all markers with a button',
+    t('show_info.list_info_one'),
+    t('show_info.list_info_two'),
+    t('show_info.list_info_three'),
+    t('show_info.list_info_four'),
+    t('show_info.list_info_five'),
+    t('show_info.list_info_six'),
+    t('show_info.list_info_seven'),
   ];
 
   return (
@@ -25,7 +28,9 @@ export default function ShowInfo({ earthquakeData }) {
           className='flex justify-center items-center gap-2 text-white bg-gradient-to-r from-pink-500 to-purple-600 rounded-full cursor-pointer m-2 py-2 px-6 shadow-md hover:scale-105 transition-all duration-300'
         >
           <FaInfo />
-          <span className='text-lg'>Info</span>
+          <span className='text-lg'>
+            {t('show_info.info')}
+          </span>
         </button>
 
         {/* Popup */}
@@ -48,7 +53,7 @@ export default function ShowInfo({ earthquakeData }) {
             '
           >
             <p className='text-pink-400 font-semibold mb-2 text-sm sm:text-base'>
-              Features:
+              {t('show_info.features')}
             </p>
             <ul className='list-disc list-inside space-y-1 text-gray-300'>
               {features.map((f, i) => (
@@ -61,11 +66,13 @@ export default function ShowInfo({ earthquakeData }) {
 
       {/* View Path */}
       <p className='relative text-left w-full max-w-[90vw] sm:max-w-none mx-auto text-sm sm:text-base break-words'>
-        <span className='font-semibold'>View path:</span>{' '}
+        <span className='font-semibold'>
+          {t('show_info.view_path')}
+        </span>{' '}
         <span className='text-gray-400 font-mono block sm:inline'>
           {urlBackend && earthquakeData?.meta?.path
             ? `${urlBackend}${earthquakeData.meta.path}`
-            : 'No path available'}
+            : t('show_info.no_path')}
         </span>
       </p>
     </section>

@@ -15,8 +15,11 @@ import ShowInfo from './ShowInfo';
 import { downloadMap, fetchLocation, addEarthquakeMarkers } from './MapUtil.js';
 import ShowProperties from './ShowProperties';
 import Legend from './Legend';
+import { useTranslation } from 'react-i18next';
 
 export default function ViewMap({ earthquakeData }) {
+  const { t } = useTranslation('translation');
+
   const [currentEarthquakeData, setCurrentEarthquakeData] =
     useState(earthquakeData);
 
@@ -63,10 +66,11 @@ export default function ViewMap({ earthquakeData }) {
   return (
     <section className='w-full text-white py-16 min-h-[70vh] flex flex-col items-center'>
       <div className='text-center mb-10'>
-        <h2 className='text-3xl md:text-5xl font-bold mb-2'>TerraQuake Map</h2>
+        <h2 className='text-3xl md:text-5xl font-bold mb-2'>
+          {t('map.title')}
+        </h2>
         <p className='text-gray-400 max-w-2xl mx-auto text-lg'>
-          Explore real-time earthquake epicenters plotted on the map. Zoom in
-          and pan to analyze seismic global
+          {t('map.description')}
         </p>
       </div>
 
@@ -89,14 +93,14 @@ export default function ViewMap({ earthquakeData }) {
             }}
             className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
           >
-            Clear Map
+            {t('map.clear_map')}
           </button>
 
           <button
             onClick={() => downloadMap(mapRef, data)}
             className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
           >
-            Download Map
+            {t('map.download_map')}
           </button>
         </div>
       </div>

@@ -468,5 +468,42 @@
     "list_description": "Descrizione",
     "list_typical_range": "Intervallo tipico",
     "list_notes": "Note"
+  },
+  "explore_data": {
+    "title": "Esplora i dati della TerraQuake API",
+    "description": "Esplora e interagisci con i dati sui terremoti in tempo reale. Visualizza gli eventi sismici direttamente sulla mappa interattiva e scarica la mappa per le tue analisi. Facendo clic su “Passa alla vista tabellare”, puoi accedere alla sezione tabulata degli eventi sismici recenti, dove ogni record include data e ora dell’evento (UTC), magnitudo, profondità (km), latitudine, longitudine e localizzazione. È inoltre possibile cercare gli eventi per località, ordinare la tabella per data ed esportare i dati in formato CSV per ulteriori analisi o ricerche. Rimani informato e monitora facilmente l’attività sismica globale.",
+    "button_tabular": "Passa alla vista tabellare",
+    "title_legend": "Legenda della magnitudo sismica",
+    "description_legend": "Le magnitudo misurano l’energia rilasciata da un terremoto. Vengono utilizzate scale diverse in base al tipo di onde registrate e alla distanza dall’epicentro."
+  },
+  "api_playground": {
+    "title": "Terremoti",
+    "parameters": "Parametri",
+    "button_send_request": "Invia richiesta",
+    "code_sample": "Esempio di codice",
+    "copied": "Copiato",
+    "copy": "Copia"
+  },
+  "map": {
+    "title": "Mappa TerraQuake",
+    "description": "Esplora gli epicentri dei terremoti in tempo reale visualizzati sulla mappa. Ingrandisci e sposta la visualizzazione per analizzare l’attività sismica globale",
+    "clear_map": "Cancella mappa",
+    "download_map": "Scarica mappa"
+  },
+  "show_info": {
+    "info": "Info",
+    "features": "Funzionalità:",
+    "view_path": "Percorso di visualizzazione:",
+    "no_path": "Nessun percorso disponibile",
+    "list_info_one": "Dati sui terremoti in tempo reale",
+    "list_info_two": "Mostra la posizione dell’utente in tempo reale",
+    "list_info_three": "Mappa interattiva con zoom e spostamento",
+    "list_info_four": "Indicatori che mostrano gli epicentri dei terremoti",
+    "list_info_five": "Clic sui marker per informazioni dettagliate",
+    "list_info_six": "Scarica dati e immagine della mappa",
+    "list_info_seven": "Cancella tutti i marker con un pulsante"
+  },
+  "legend_map": {
+    "title": "Legenda delle magnitudo"
   }
 }
