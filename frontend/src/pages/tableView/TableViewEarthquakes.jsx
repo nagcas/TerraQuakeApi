@@ -7,8 +7,11 @@ import MetaData from '../noPage/MetaData';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
 import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
+import { useTranslation } from 'react-i18next';
 
 export default function TableViewEarthquakes() {
+  const { t } = useTranslation('translation');
+
   const BACKEND_URL =
     import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const [earthquakes, setEarthquakes] = useState([]);
@@ -116,12 +119,12 @@ export default function TableViewEarthquakes() {
 
     const dataToExport = sortedAndFilteredEarthquakes;
     const headers = [
-      'Time (UTC)',
-      'Magnitude',
-      'Depth (km)',
-      'Latitude',
-      'Longitude',
-      'Location',
+      t('table_earthquakes.eaders_time'),
+      t('table_earthquakes.magnitude'),
+      t('table_earthquakes.depth'),
+      t('table_earthquakes.latitude'),
+      t('table_earthquakes.longitude'),
+      t('table_earthquakes.location'),
     ];
     const csvRows = [
       headers.join(','),
@@ -183,7 +186,7 @@ export default function TableViewEarthquakes() {
               to='/explore-data/earthquakes'
               className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
             >
-              ← Back to Map View
+              {t('table_earthquakes.back_to_map')}
             </Link>
           </div>
 
@@ -195,17 +198,11 @@ export default function TableViewEarthquakes() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              Earthquake Data - Tabular View.
+                {t('table_earthquakes.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-left text-white/70 max-w-7xl'>
-              Explore the most recent seismic events recorded worldwide. Each
-              entry includes the event date and time (UTC), magnitude, depth
-              (km), latitude, longitude, and location. You can search events by
-              location, sort the table by date, and export the data in CSV
-              format for further analysis or research. Stay up to date with
-              real-time earthquake information and monitor seismic activity with
-              ease.
+              {t('table_earthquakes.description')}
             </p>
           </motion.div>
 
@@ -244,31 +241,31 @@ export default function TableViewEarthquakes() {
                         onClick={() => requestSort('time')}
                         className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
-                        Date & Time (UTC){getSortIndicator('time')}
+                        {t('table_earthquakes.date_time')}{getSortIndicator('time')}
                       </th>
                       <th
                         onClick={() => requestSort('mag')}
                         className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
-                        Magnitude{getSortIndicator('mag')}
+                        {t('table_earthquakes.magnitude')}{getSortIndicator('mag')}
                       </th>
                       <th
                         onClick={() => requestSort('depth')}
                         className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
-                        Depth (km){getSortIndicator('depth')}
+                        {t('table_earthquakes.depth')}{getSortIndicator('depth')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Latitude
+                        {t('table_earthquakes.latitude')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Longitude
+                        {t('table_earthquakes.longitude')}
                       </th>
                       <th
                         onClick={() => requestSort('place')}
                         className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider  hover:text-purple-400'
                       >
-                        Location{getSortIndicator('place')}
+                        {t('table_earthquakes.location')}{getSortIndicator('place')}
                       </th>
                     </tr>
                   </thead>
@@ -310,10 +307,10 @@ export default function TableViewEarthquakes() {
                   disabled={currentPage === 1}
                   className='py-2 px-4 border border-gray-400 hover:border-white hover:bg-white hover:text-black transition-all duration-300 text-gray-300 font-medium rounded-full cursor-pointer'
                 >
-                  Previous
+                  {t('table_earthquakes.previus')}
                 </button>
                 <span>
-                  Page {currentPage} of {totalPages}
+                  {t('table_earthquakes.page')} {currentPage} {t('table_earthquakes.of')} {totalPages}
                 </span>
                 <button
                   onClick={() =>
@@ -322,7 +319,7 @@ export default function TableViewEarthquakes() {
                   disabled={currentPage === totalPages}
                   className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
                 >
-                  Next
+                  {t('table_earthquakes.next')}
                 </button>
               </div>
             </>
@@ -331,12 +328,10 @@ export default function TableViewEarthquakes() {
           <div className='grid grid-cols-1 lg:grid-cols-1 gap-10 mt-16'>
             <div className='text-center mb-4'>
               <h2 className='text-3xl md:text-5xl font-bold mb-2'>
-                Seismic Magnitude Legend
+                {t('explore_data.title_legend')}
               </h2>
               <p className='text-gray-400 max-w-2xl mx-auto text-lg'>
-                Magnitudes measure the energy released by an earthquake.
-                Different scales are used depending on the type of waves
-                recorded and the distance from the epicenter.
+                {t('explore_data.description_legend')}
               </p>
             </div>
             <MagnitudeLegend />

@@ -505,5 +505,26 @@
   },
   "legend_map": {
     "title": "Legenda delle magnitudo"
+  },
+  "table_earthquakes": {
+    "eaders_time": "Orario (UTC)",
+    "eaders_magnitude": "Magnitudo",
+    "eaders_depth": "Profondità (km)",
+    "eaders_latitude": "Latitudine",
+    "eaders_longitude": "Longitudine",
+    "eaders_location": "Località",
+    "back_to_map": "← Torna alla vista mappa",
+    "title": "Dati sui terremoti - Vista tabellare",
+    "description": "Esplora gli eventi sismici più recenti registrati in tutto il mondo. Ogni voce include data e ora dell’evento (UTC), magnitudo, profondità (km), latitudine, longitudine e località. Puoi cercare eventi per località, ordinare la tabella per data ed esportare i dati in formato CSV per ulteriori analisi o ricerche. Rimani aggiornato con informazioni sui terremoti in tempo reale e monitora facilmente l’attività sismica.",
+    "date_time": "Data & Ora (UTC)",
+    "magnitude": "Magnitudo",
+    "depth": "Profondità (km)",
+    "latitude": "Latitudine",
+    "longitude": "Longitudine",
+    "location": "Località",
+    "previus": "Precedente",
+    "page": "Pagina",
+    "of": "di",
+    "next": "Successiva"
   }
 }

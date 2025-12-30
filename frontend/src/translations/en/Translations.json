@@ -504,5 +504,26 @@
   },
   "legend_map": {
     "title": "Magnitude Legend"
+  },
+  "table_earthquakes": {
+    "eaders_time": "Time (UTC)",
+    "eaders_magnitude": "Magnitude",
+    "eaders_depth": "Depth (km)",
+    "eaders_latitude": "Latitude",
+    "eaders_longitude": "Longitude",
+    "eaders_location": "Location",
+    "back_to_map": "← Back to Map View",
+    "title": "Earthquake Data - Tabular View.",
+    "description": "Explore the most recent seismic events recorded worldwide. Each entry includes the event date and time (UTC), magnitude, depth (km), latitude, longitude, and location. You can search events by location, sort the table by date, and export the data in CSV format for further analysis or research. Stay up to date with real-time earthquake information and monitor seismic activity with ease.",
+    "date_time": "Date & Time (UTC)",
+    "magnitude": "Magnitude",
+    "depth": "Depth (km)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "location": "Location",
+    "previus": "Previus",
+    "page": "Page",
+    "of": "of",
+    "next": "Next"
   }
 }
