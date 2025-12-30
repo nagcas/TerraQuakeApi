@@ -524,6 +524,8 @@
     "previus": "Anterior",
     "page": "Página",
     "of": "de",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "search": "Buscar por ubicación...",
+    "export_csv": "Exportar como CSV"
   }
 }

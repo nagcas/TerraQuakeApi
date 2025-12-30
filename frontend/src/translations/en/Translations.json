@@ -524,6 +524,8 @@
     "previus": "Previus",
     "page": "Page",
     "of": "of",
-    "next": "Next"
+    "next": "Next",
+    "search": "Search by location...",
+    "export_csv": "Export as CSV"
   }
 }

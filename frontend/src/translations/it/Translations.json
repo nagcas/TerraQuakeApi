@@ -525,6 +525,8 @@
     "previus": "Precedente",
     "page": "Pagina",
     "of": "di",
-    "next": "Successiva"
+    "next": "Successiva",
+    "search": "Cerca per località...",
+    "export_csv": "Esporta in CSV"
   }
 }

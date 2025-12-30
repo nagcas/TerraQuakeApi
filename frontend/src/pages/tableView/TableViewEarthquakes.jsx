@@ -218,7 +218,7 @@ export default function TableViewEarthquakes() {
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
                   type='text'
-                  placeholder='Search by location...'
+                  placeholder={t('table_earthquakes.search')}
                   className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
@@ -230,7 +230,7 @@ export default function TableViewEarthquakes() {
                   className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
                   disabled={loading}
                 >
-                  {loading ? <Spinner /> : 'Export as CSV'}
+                  {loading ? <Spinner /> : t('table_earthquakes.export_csv')}
                 </button>
               </div>
               <div className='overflow-x-auto border border-white/5 bg-white/[0.03] bg-opacity-50 rounded-lg'>
