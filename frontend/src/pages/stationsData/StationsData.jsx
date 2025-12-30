@@ -4,9 +4,14 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
-import StationsEndpointsData from '../../data/StationsEndpointsData.json';
+import StationsEndpointsData_en from '../../data/StationsEndpointsData_en.json';
+import StationsEndpointsData_it from '../../data/StationsEndpointsData_it.json';
+import StationsEndpointsData_es from '../../data/StationsEndpointsData_es.json';
+import { useTranslation } from 'react-i18next';
 
 export default function StationsData() {
+  const { t, i18n } = useTranslation('translation');
+
   const [stationData, setStationData] = useState(null);
 
   return (
@@ -40,20 +45,11 @@ export default function StationsData() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl md:text-5xl text-white text-center font-extrabold tracking-tighter mb-4'>
-              Stations Data for TerraQuake API
+              {t('stations_data.title')}
             </h1>
             <div className='h-1 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl mx-auto'>
-              Explore and analyze data from global seismic monitoring stations.
-              Visualize station locations on the interactive map, view key
-              parameters such as station code, network, country, latitude,
-              longitude, and operational status. By clicking on “Switch to
-              Tabular View”, you can access a structured table containing
-              detailed station information. You can also search stations by
-              location or code, sort the table by network or country, and export
-              the data in CSV format for research or analysis. Gain insights
-              into the worldwide seismograph network and track real-time
-              monitoring capabilities with ease.
+              {t('stations_data.description')}
             </p>
 
             <div className='py-16'>
@@ -61,16 +57,32 @@ export default function StationsData() {
                 to='/explore-data/table-stations'
                 className='py-4 px-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
               >
-                Switch to Tabular View
+                {t('stations_data.button_stations_tabular')}
               </Link>
             </div>
 
             <div className='grid grid-cols-1 lg:grid-cols-1 gap-10'>
-              <ApiPlayground
-                title='Stations'
-                endpoints={StationsEndpointsData}
-                setData={setStationData}
-              />
+              {i18n.language === 'en' && (
+                <ApiPlayground
+                  title='Stations'
+                  endpoints={StationsEndpointsData_en}
+                  setData={setStationData}
+                />
+              )}
+              {i18n.language === 'it' && (
+                <ApiPlayground
+                  title='Stations'
+                  endpoints={StationsEndpointsData_it}
+                  setData={setStationData}
+                />
+              )}
+              {i18n.language === 'es' && (
+                <ApiPlayground
+                  title='Stations'
+                  endpoints={StationsEndpointsData_es}
+                  setData={setStationData}
+                />
+              )}
             </div>
           </motion.div>
         </div>

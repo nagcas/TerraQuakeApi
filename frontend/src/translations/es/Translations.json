@@ -552,5 +552,35 @@
   },
   "require_auth": {
     "loading": "Cargando..."
+  },
+  "stations_data": {
+    "title": "Datos de estaciones para la API TerraQuake",
+    "description": "Explora y analiza los datos de las estaciones de monitoreo sísmico a nivel global. Visualiza la ubicación de las estaciones en el mapa interactivo y consulta parámetros clave como el código de estación, la red, el país, la latitud, la longitud y el estado operativo. Al hacer clic en “Cambiar a vista tabular”, puedes acceder a una tabla estructurada con información detallada de las estaciones. También es posible buscar estaciones por ubicación o código, ordenar la tabla por red o país y exportar los datos en formato CSV para análisis o investigación. Obtén una visión clara de la red sismográfica mundial y supervisa fácilmente las capacidades de monitoreo en tiempo real.",
+    "button_stations_tabular": "Cambiar a vista tabular"
+  },
+  "table_view_stations": {
+    "list_code": "Código",
+    "list_station_name": "Nombre de la estación",
+    "list_latitude": "Latitud",
+    "list_longitude": "Longitud",
+    "list_elevation": "Elevación (m)",
+    "list_start_date": "Fecha de inicio",
+    "list_restricted_status": "Estado restringido",
+    "back_to_map": "← Volver a la vista del mapa",
+    "title": "Datos de estaciones - Vista tabular",
+    "description": "Explora las estaciones de monitoreo sísmico del INGV y de redes globales. Cada registro incluye el código de la estación, el nombre, las coordenadas de ubicación, la elevación, la fecha de inicio y el estado operativo. Busca, ordena o exporta los datos en formato CSV para análisis o investigación.",
+    "search": "Buscar por código o nombre...",
+    "export_csv": "Exportar como CSV",
+    "code": "Código",
+    "station_name": "Nombre de la estación",
+    "latidute": "Latitud",
+    "longitude": "Longitud",
+    "elevation": "Elevación (m)",
+    "start_date": "Fecha de inicio",
+    "status": "Estado",
+    "previus": "Anterior",
+    "page": "Página",
+    "of": "de",
+    "next": "Siguiente"
   }
 }

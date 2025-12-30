@@ -6,9 +6,11 @@ import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
-import { set } from 'ol/transform';
+import { useTranslation } from 'react-i18next';
 
 export default function TableViewStations() {
+  const { t } = useTranslation('translation');
+
   const BACKEND_URL =
     import.meta.env.VITE_URL_BACKEND || 'http://localhost:5001';
   const [stations, setStations] = useState([]);
@@ -126,13 +128,13 @@ export default function TableViewStations() {
     setLoading(true);
 
     const headers = [
-      'Code',
-      'Station Name',
-      'Latitude',
-      'Longitude',
-      'Elevation (m)',
-      'Start Date',
-      'Restricted Status',
+      t('table_view_stations.list_code'),
+      t('table_view_stations.list_station_name'),
+      t('table_view_stations.list_latitude'),
+      t('table_view_stations.list_longitude'),
+      t('table_view_stations.list_elevation'),
+      t('table_view_stations.list_start_date'),
+      t('table_view_stations.list_restricted_status'),
     ];
     const rows = sortedAndFilteredStations.map((s) => [
       s.$.code,
@@ -200,7 +202,7 @@ export default function TableViewStations() {
               to='/explore-data/stations'
               className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
             >
-              ← Back to Map View
+              {t('table_view_stations.back_to_map')}
             </Link>
           </div>
 
@@ -212,15 +214,11 @@ export default function TableViewStations() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              Stations Data - Tabular View
+              {t('table_view_stations.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center text-white/70 max-w-5xl mx-auto'>
-              Explore seismic monitoring stations from the INGV and global
-              networks. Each record includes the station code, name, location
-              coordinates, elevation, start date, and operational status.
-              Search, sort, or export data in CSV format for analysis or
-              research.
+              {t('table_view_stations.description')}
             </p>
           </motion.div>
 
@@ -233,7 +231,7 @@ export default function TableViewStations() {
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
                   type='text'
-                  placeholder='Search by code or name...'
+                  placeholder={t('table_view_stations.search')}
                   className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
@@ -244,7 +242,8 @@ export default function TableViewStations() {
                   onClick={handleExport}
                   className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
                 >
-                  {loading ? <Spinner /> : 'Export as CSV'}
+                  {loading ? <Spinner /> : 
+                  t('table_view_stations.export_csv')}
                 </button>
               </div>
 
@@ -256,39 +255,41 @@ export default function TableViewStations() {
                         onClick={() => requestSort('code')}
                         className='cursor-pointer px-6 py-3 text-left hover:text-purple-400'
                       >
-                        Code {getSortIndicator('code')}
+                        {t('table_view_stations.export_csv')} {getSortIndicator('code')}
                       </th>
                       <th
                         onClick={() => requestSort('name')}
                         className='cursor-pointer px-6 py-3 text-left hover:text-purple-400'
                       >
-                        Station Name {getSortIndicator('name')}
+                        {t('table_view_stations.station_name')}{getSortIndicator('name')}
                       </th>
                       <th
                         
                         className='px-6 py-3 text-left hover:text-purple-400'
                       >
-                        Latitude
+                        {t('table_view_stations.latitude')}
                       </th>
                       <th
                         
                         className='px-6 py-3 text-left hover:text-purple-400'
                       >
-                        Longitude
+                        {t('table_view_stations.longitude')}
                       </th>
                       <th
                         onClick={() => requestSort('elevation')}
                         className='cursor-pointer px-6 py-3 text-left hover:text-purple-400'
                       >
-                        Elevation (m) {getSortIndicator('elevation')}
+                        {t('table_view_stations.elevation')}{getSortIndicator('elevation')}
                       </th>
                       <th
                         onClick={() => requestSort('startDate')}
                         className='cursor-pointer px-6 py-3 text-left hover:text-purple-400'
                       >
-                        Start Date {getSortIndicator('startDate')}
+                        {t('table_view_stations.start_date')}{getSortIndicator('startDate')}
                       </th>
-                      <th className='px-6 py-3 text-left'>Status</th>
+                      <th className='px-6 py-3 text-left'>
+                        {t('table_view_stations.status')}
+                      </th>
                     </tr>
                   </thead>
                   <tbody className='divide-y divide-gray-800'>

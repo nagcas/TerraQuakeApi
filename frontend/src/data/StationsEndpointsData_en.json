@@ -1,0 +1,115 @@
+[
+  {
+    "key": "stations",
+    "label": "Stations",
+    "method": "GET",
+    "path": "/v1/stations",
+    "subtitle": "List stations seismic INGV",
+    "description": "This endpoint retrieves information about all seismic monitoring stations available in the TerraQuake API. It provides users with detailed metadata on each station, including its network code, site name, geographic coordinates (latitude and longitude), elevation, operational status, and start date.\n\nThese stations are part of the seismic monitoring network used to detect and record earthquake events in real time.\n\nQuery Parameters:\n\n- limit: (Optional) The number of stations to return per page. Defaults to 50 if not specified.\n- page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "code",
+    "label": "Code Station",
+    "method": "GET",
+    "path": "/v1/stations/code",
+    "subtitle": "By code station",
+    "description": "This endpoint retrieves detailed information for a specific seismic monitoring station, identified by its unique station code.\n\nIt returns station metadata such as network, site name, geographic coordinates, elevation, and operational period.\n\nQuery Parameters:\n\n- code: (Required) The station code to search for (case-insensitive).",
+    "params": [
+      {
+        "name": "code",
+        "label": "code",
+        "placeholder": "acate",
+        "required": true
+      }
+    ]
+  },
+  {
+    "key": "geojson",
+    "label": "GeoJSON",
+    "method": "GET",
+    "path": "/v1/stations/geojson",
+    "subtitle": "Full station dataset (GeoJSON format)",
+    "description": "This endpoint retrieves the complete list of seismic monitoring stations in GeoJSON format.\n\nIt is primarily intended for mapping, GIS visualization, and geospatial applications. Each feature includes coordinates (latitude, longitude, elevation) and station metadata such as network, site name, and operational status.\n\nSupports optional pagination using `limit` and `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "open",
+    "label": "Status: Open",
+    "method": "GET",
+    "path": "/v1/stations/status/open",
+    "subtitle": "List of active seismic stations",
+    "description": "This endpoint returns all seismic monitoring stations that are currently operational (active/open).\n\nIt provides station metadata including network code, station name, geographic coordinates, elevation, and operational status.\n\nUseful for monitoring the active seismic network, real-time data acquisition systems, and observatory dashboards.\n\nSupports optional pagination with `limit` and `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "closed",
+    "label": "Status: Closed",
+    "method": "GET",
+    "path": "/v1/stations/status/closed",
+    "subtitle": "List of inactive or decommissioned seismic stations",
+    "description": "This endpoint returns seismic monitoring stations that are currently not operational (closed/restricted).\n\nIt provides metadata such as network code, station name, location coordinates, elevation, and deactivation details.\n\nUseful for historical research, network maintenance planning, infrastructure audits, and understanding changes in seismic network coverage.\n\nSupports optional pagination with `limit` and `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "statistics",
+    "label": "Network Statistics",
+    "method": "GET",
+    "path": "/v1/stations/statistics",
+    "subtitle": "Seismic network summary",
+    "description": "This endpoint provides a summary of the seismic monitoring network, returning the total number of stations along with how many are currently operational (open) and how many are inactive or restricted (closed).\n\nUseful for dashboards, network health monitoring, performance analytics, transparency reporting, and historical comparisons of network size and operational status.",
+    "params": []
+  }
+]

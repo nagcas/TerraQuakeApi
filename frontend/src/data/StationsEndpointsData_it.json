@@ -1,0 +1,115 @@
+[
+  {
+    "key": "stations",
+    "label": "Stations",
+    "method": "GET",
+    "path": "/v1/stations",
+    "subtitle": "Elenco delle stazioni sismiche INGV",
+    "description": "Questo endpoint recupera le informazioni relative a tutte le stazioni di monitoraggio sismico disponibili nella TerraQuake API. Fornisce metadati dettagliati per ciascuna stazione, inclusi codice di rete, nome del sito, coordinate geografiche (latitudine e longitudine), quota, stato operativo e data di inizio attività.\n\nQueste stazioni fanno parte della rete di monitoraggio sismico utilizzata per rilevare e registrare eventi sismici in tempo reale.\n\nParametri di query:\n\n- limit: (Opzionale) Numero di stazioni da restituire per pagina. Predefinito 50.\n- page: (Opzionale) Numero di pagina dei risultati. Predefinito 1.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "code",
+    "label": "Code Station",
+    "method": "GET",
+    "path": "/v1/stations/code",
+    "subtitle": "Per codice stazione",
+    "description": "Questo endpoint recupera informazioni dettagliate per una specifica stazione di monitoraggio sismico, identificata dal suo codice univoco.\n\nRestituisce metadati della stazione come rete, nome del sito, coordinate geografiche, quota e periodo operativo.\n\nParametri di query:\n\n- code: (Obbligatorio) Codice della stazione da cercare (non sensibile alle maiuscole).",
+    "params": [
+      {
+        "name": "code",
+        "label": "code",
+        "placeholder": "acate",
+        "required": true
+      }
+    ]
+  },
+  {
+    "key": "geojson",
+    "label": "GeoJSON",
+    "method": "GET",
+    "path": "/v1/stations/geojson",
+    "subtitle": "Dataset completo delle stazioni (formato GeoJSON)",
+    "description": "Questo endpoint recupera l’elenco completo delle stazioni di monitoraggio sismico in formato GeoJSON.\n\nÈ destinato principalmente a mappe, visualizzazioni GIS e applicazioni geospaziali. Ogni feature include coordinate (latitudine, longitudine, quota) e metadati della stazione come rete, nome del sito e stato operativo.\n\nSupporta la paginazione opzionale tramite `limit` e `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "open",
+    "label": "Status: Open",
+    "method": "GET",
+    "path": "/v1/stations/status/open",
+    "subtitle": "Elenco delle stazioni sismiche attive",
+    "description": "Questo endpoint restituisce tutte le stazioni di monitoraggio sismico attualmente operative (attive/aperte).\n\nFornisce metadati della stazione inclusi codice di rete, nome della stazione, coordinate geografiche, quota e stato operativo.\n\nUtile per il monitoraggio della rete sismica attiva, sistemi di acquisizione dati in tempo reale e dashboard di osservatorio.\n\nSupporta la paginazione opzionale con `limit` e `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "closed",
+    "label": "Status: Closed",
+    "method": "GET",
+    "path": "/v1/stations/status/closed",
+    "subtitle": "Elenco delle stazioni sismiche inattive o dismesse",
+    "description": "Questo endpoint restituisce le stazioni di monitoraggio sismico attualmente non operative (chiuse/restritte).\n\nFornisce metadati come codice di rete, nome della stazione, coordinate di localizzazione, quota e dettagli di disattivazione.\n\nUtile per ricerche storiche, pianificazione della manutenzione della rete, audit infrastrutturali e per comprendere le variazioni nella copertura della rete sismica.\n\nSupporta la paginazione opzionale con `limit` e `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "statistics",
+    "label": "Network Statistics",
+    "method": "GET",
+    "path": "/v1/stations/statistics",
+    "subtitle": "Riepilogo della rete sismica",
+    "description": "Questo endpoint fornisce un riepilogo della rete di monitoraggio sismico, restituendo il numero totale di stazioni e quante sono attualmente operative (aperte) e quante inattive o con accesso limitato (chiuse).\n\nUtile per dashboard, monitoraggio dello stato della rete, analisi delle prestazioni, report di trasparenza e confronti storici sulla dimensione e operatività della rete.",
+    "params": []
+  }
+]

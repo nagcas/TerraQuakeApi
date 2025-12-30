@@ -1,0 +1,115 @@
+[
+  {
+    "key": "stations",
+    "label": "Stations",
+    "method": "GET",
+    "path": "/v1/stations",
+    "subtitle": "Lista de estaciones sísmicas INGV",
+    "description": "Este endpoint obtiene información sobre todas las estaciones de monitoreo sísmico disponibles en la TerraQuake API. Proporciona metadatos detallados de cada estación, incluyendo código de red, nombre del sitio, coordenadas geográficas (latitud y longitud), elevación, estado operativo y fecha de inicio.\n\nEstas estaciones forman parte de la red de monitoreo sísmico utilizada para detectar y registrar eventos sísmicos en tiempo real.\n\nParámetros de consulta:\n\n- limit: (Opcional) Número de estaciones a devolver por página. Valor por defecto 50.\n- page: (Opcional) Número de página de los resultados. Valor por defecto 1.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "code",
+    "label": "Code Station",
+    "method": "GET",
+    "path": "/v1/stations/code",
+    "subtitle": "Por código de estación",
+    "description": "Este endpoint obtiene información detallada de una estación de monitoreo sísmico específica, identificada por su código único.\n\nDevuelve metadatos de la estación como red, nombre del sitio, coordenadas geográficas, elevación y período operativo.\n\nParámetros de consulta:\n\n- code: (Obligatorio) Código de la estación a buscar (no distingue mayúsculas y minúsculas).",
+    "params": [
+      {
+        "name": "code",
+        "label": "code",
+        "placeholder": "acate",
+        "required": true
+      }
+    ]
+  },
+  {
+    "key": "geojson",
+    "label": "GeoJSON",
+    "method": "GET",
+    "path": "/v1/stations/geojson",
+    "subtitle": "Conjunto completo de estaciones (formato GeoJSON)",
+    "description": "Este endpoint obtiene la lista completa de estaciones de monitoreo sísmico en formato GeoJSON.\n\nEstá destinado principalmente a mapas, visualizaciones GIS y aplicaciones geoespaciales. Cada elemento incluye coordenadas (latitud, longitud, elevación) y metadatos de la estación como red, nombre del sitio y estado operativo.\n\nSoporta paginación opcional mediante `limit` y `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "open",
+    "label": "Status: Open",
+    "method": "GET",
+    "path": "/v1/stations/status/open",
+    "subtitle": "Lista de estaciones sísmicas activas",
+    "description": "Este endpoint devuelve todas las estaciones de monitoreo sísmico que están actualmente operativas (activas/abiertas).\n\nProporciona metadatos de la estación, incluyendo código de red, nombre de la estación, coordenadas geográficas, elevación y estado operativo.\n\nÚtil para el monitoreo de la red sísmica activa, sistemas de adquisición de datos en tiempo real y paneles de observatorio.\n\nSoporta paginación opcional con `limit` y `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "closed",
+    "label": "Status: Closed",
+    "method": "GET",
+    "path": "/v1/stations/status/closed",
+    "subtitle": "Lista de estaciones sísmicas inactivas o desmanteladas",
+    "description": "Este endpoint devuelve estaciones de monitoreo sísmico que actualmente no están operativas (cerradas/restringidas).\n\nProporciona metadatos como código de red, nombre de la estación, coordenadas de ubicación, elevación y detalles de desactivación.\n\nÚtil para investigación histórica, planificación de mantenimiento de la red, auditorías de infraestructura y para comprender cambios en la cobertura de la red sísmica.\n\nSoporta paginación opcional con `limit` y `page`.",
+    "params": [
+      {
+        "name": "limit",
+        "label": "limit",
+        "placeholder": "50",
+        "defaultValue": "50"
+      },
+      {
+        "name": "page",
+        "label": "page",
+        "placeholder": "1",
+        "defaultValue": "1"
+      }
+    ]
+  },
+  {
+    "key": "statistics",
+    "label": "Network Statistics",
+    "method": "GET",
+    "path": "/v1/stations/statistics",
+    "subtitle": "Resumen de la red sísmica",
+    "description": "Este endpoint proporciona un resumen de la red de monitoreo sísmico, devolviendo el número total de estaciones y cuántas están actualmente operativas (abiertas) y cuántas están inactivas o restringidas (cerradas).\n\nÚtil para paneles de control, monitoreo del estado de la red, análisis de rendimiento, informes de transparencia y comparaciones históricas del tamaño y estado operativo de la red.",
+    "params": []
+  }
+]

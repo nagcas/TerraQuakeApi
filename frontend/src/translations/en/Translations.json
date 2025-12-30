@@ -552,5 +552,35 @@
   },
   "require_auth": {
     "loading": "Loading..."
+  },
+  "stations_data": {
+    "title": "Stations Data for TerraQuake API",
+    "description": "Explore and analyze data from global seismic monitoring stations. Visualize station locations on the interactive map, view key parameters such as station code, network, country, latitude, longitude, and operational status. By clicking on “Switch to Tabular View”, you can access a structured table containing detailed station information. You can also search stations by location or code, sort the table by network or country, and export the data in CSV format for research or analysis. Gain insights into the worldwide seismograph network and track real-time monitoring capabilities with ease.",
+    "button_stations_tabular": "Switch to Tabular View"
+  },
+  "table_view_stations": {
+    "list_code": "Code",
+    "list_station_name": "Station Name",
+    "list_latitude": "Latitude",
+    "list_longitude": "Longitude",
+    "list_elevation": "Elevation (m)",
+    "list_start_date": "Start Date",
+    "list_restricted_status": "Restricted Status",
+    "back_to_map": "← Back to Map View",
+    "title": "Stations Data - Tabular View",
+    "description": "Explore seismic monitoring stations from the INGV and global networks. Each record includes the station code, name, location coordinates, elevation, start date, and operational status. Search, sort, or export data in CSV format for analysis or research.",
+    "search": "Search by code or name...",
+    "export_csv": "Export as CSV",
+    "code": "Code",
+    "station_name": "Station Name",
+    "latidute": "Latitude",
+    "longitude": "Longitude",
+    "elevation": "Elevation (m)",
+    "start_date": "Start Date",
+    "status": "status",
+    "previus": "Previus",
+    "page": "Page",
+    "of": "of",
+    "next": "Next"
   }
 }

@@ -553,5 +553,35 @@
   },
   "require_auth": {
     "loading": "Caricamento in corso..."
+  },
+  "stations_data": {
+  "title": "Dati delle stazioni per la TerraQuake API",
+  "description": "Esplora e analizza i dati delle stazioni di monitoraggio sismico globali. Visualizza la posizione delle stazioni sulla mappa interattiva e consulta parametri chiave come codice stazione, rete, paese, latitudine, longitudine e stato operativo. Facendo clic su “Passa alla vista tabellare”, puoi accedere a una tabella strutturata contenente informazioni dettagliate sulle stazioni. È inoltre possibile cercare le stazioni per posizione o codice, ordinare la tabella per rete o paese ed esportare i dati in formato CSV per analisi o ricerca. Ottieni una visione approfondita della rete sismografica mondiale e monitora con facilità le capacità di rilevamento in tempo reale.",
+  "button_stations_tabular": "Passa alla vista tabellare"
+  },
+  "table_view_stations": {
+    "list_code": "Codice",
+    "list_station_name": "Nome stazione",
+    "list_latitude": "Latitudine",
+    "list_longitude": "Longitudine",
+    "list_elevation": "Quota (m)",
+    "list_start_date": "Data di inizio",
+    "list_restricted_status": "Stato di restrizione",
+    "back_to_map": "← Torna alla vista mappa",
+    "title": "Dati delle stazioni - Vista tabellare",
+    "description": "Esplora le stazioni di monitoraggio sismico dell’INGV e delle reti globali. Ogni record include il codice stazione, il nome, le coordinate di localizzazione, la quota, la data di inizio e lo stato operativo. Cerca, ordina o esporta i dati in formato CSV per analisi o ricerca.",
+    "search": "Cerca per codice o nome...",
+    "export_csv": "Esporta come CSV",
+    "code": "Codice",
+    "station_name": "Nome stazione",
+    "latidute": "Latitudine",
+    "longitude": "Longitudine",
+    "elevation": "Quota (m)",
+    "start_date": "Data di inizio",
+    "status": "Stato",
+    "previus": "Precedente",
+    "page": "Pagina",
+    "of": "di",
+    "next": "Successiva"
   }
 }
