@@ -36,7 +36,7 @@ export default function AccordionItem({
     try {
       const url = new URL(exampleUrl);
       const path = url.pathname.replace('/v1/', '').replace(/\//g, '-');
-      navigate(`/docs`);
+      navigate(`/docs-earthquakes`);
     } catch {
       navigate('/404-page');
     }
@@ -105,7 +105,7 @@ export default function AccordionItem({
             onClick={() => goToDocs(item.exampleUrl)}
             className="text-purple-400 hover:text-purple-300 text-sm underline transition-all cursor-pointer"
           >
-            {t('accirdion_item.button_view')}
+            {t('accordion_item.button_view')}
           </button>
         </div>
       </div>
