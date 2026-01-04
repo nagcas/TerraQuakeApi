@@ -584,5 +584,9 @@
     "page": "Página",
     "of": "de",
     "next": "Siguiente"
+  },
+  "copy_button": {
+    "copied": "Copiado",
+    "copy": "Copiar"
   }
 }

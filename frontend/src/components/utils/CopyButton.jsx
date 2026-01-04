@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function CopyButton({ text }) {
+  const { t } = useTranslation('translation');
+
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     try {
@@ -18,7 +21,10 @@ export function CopyButton({ text }) {
       aria-label='Copy code'
       type='button'
     >
-      {copied ? 'Copied' : 'Copy'}
+      {copied ? 
+        t('copy_button.copied') : 
+        t('copy_button.copy')
+      }
     </button>
   );
 }
