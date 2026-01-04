@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 export default function CodeSnippet({ code, language }) {
+  const { t } = useTranslation('translation');
+  
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
