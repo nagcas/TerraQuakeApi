@@ -7,8 +7,11 @@ import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CopyButton } from '@components/utils/CopyButton';
 import VersionAPI from '@/components/utils/VersionAPI';
 import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
+import { useTranslation } from 'react-i18next';
 
 export default function DocsEarthquakes() {
+  const { t, i18n } = useTranslation('translation');
+
   const contentRef = useRef(null);
   const [activeId, setActiveId] = useState('getting-started');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,22 +19,22 @@ export default function DocsEarthquakes() {
 
   const sections = useMemo(
     () => [
-      { id: 'getting-started', label: 'Getting Started' },
-      { id: 'common-parameters', label: 'Common Parameters' },
-      { id: 'response-format', label: 'Response Format' },
-      { id: 'endpoints', label: 'API Endpoints' },
-      { id: 'magnitude-legend', label: 'Magnitude Legend' },
-      { id: 'time-queries', label: 'Time-Based Queries' },
-      { id: 'location-queries', label: 'Location-Based Queries' },
-      { id: 'property-queries', label: 'Property-Based Queries' },
-      { id: 'event-queries', label: 'Event-Based Queries' },
-      { id: 'error-handling', label: 'Error Handling' },
-      { id: 'code-examples', label: 'Code Examples' },
-      { id: 'data-fields', label: 'Data Field Reference' },
-      { id: 'support', label: 'Support & Feedback' },
-      { id: 'api-information', label: 'API Information' },
+      { id: 'getting-started', label: t('docs_earthquakes.label_getting') },
+      { id: 'common-parameters', label: t('docs_earthquakes.label_common') },
+      { id: 'response-format', label: t('docs_earthquakes.label_response') },
+      { id: 'endpoints', label: t('docs_earthquakes.label_endpoints') },
+      { id: 'magnitude-legend', label: t('docs_earthquakes.label_magnitude') },
+      { id: 'time-queries', label: t('docs_earthquakes.label_time') },
+      { id: 'location-queries', label: t('docs_earthquakes.label_location') },
+      { id: 'property-queries', label: t('docs_earthquakes.label_location') },
+      { id: 'event-queries', label: t('docs_earthquakes.label_event') },
+      { id: 'error-handling', label: t('docs_earthquakes.label_error') },
+      { id: 'code-examples', label: t('docs_earthquakes.label_code') },
+      { id: 'data-fields', label: t('docs_earthquakes.label_data') },
+      { id: 'support', label: t('docs_earthquakes.label_support') },
+      { id: 'api-information', label: t('docs_earthquakes.label_information') },
     ],
-    []
+    [t]
   );
 
   // Scrollspy using IntersectionObserver for accuracy
@@ -188,12 +191,11 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              TerraQuake API Documentation.
+              {t('docs_earthquakes.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Programmatic access to global seismic event data — endpoints,
-              parameters, examples, and best practices.
+              {t('docs_earthquakes.description')}
             </p>
           </motion.div>
 
@@ -204,7 +206,10 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 onClick={() => setSidebarOpen((s) => !s)}
                 className='px-3 py-2 rounded bg-slate-800/60 border border-white/10 text-white/80'
               >
-                {sidebarOpen ? 'Close' : 'Menu'}
+                {sidebarOpen ? 
+                  t('docs_earthquakes.close') : 
+                  t('docs_earthquakes.menu')
+                }
               </button>
             </div>
           </div>
@@ -218,20 +223,20 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
             >
               <nav className='sticky top-24 bg-slate-900/50 border border-white/5 rounded-lg p-4 backdrop-blur'>
                 <h4 className='text-sm font-semibold text-white mb-3'>
-                  Contents
+                  {t('docs_earthquakes.contents')}
                 </h4>
                 <ul className='space-y-2 text-sm'>
-                  {sections.map((s) => (
-                    <li key={s.id}>
+                  {sections.map((sec) => (
+                    <li key={sec.id}>
                       <button
-                        onClick={() => scrollToId(s.id)}
+                        onClick={() => scrollToId(sec.id)}
                         className={`w-full text-left px-2 py-1 rounded transition ${
-                          activeId === s.id
+                          activeId === sec.id
                             ? 'bg-pink-600/20 text-purple-300 cursor-pointer'
                             : 'text-white/70 hover:bg-white/5 hover:text-white cursor-pointer'
                         }`}
                       >
-                        {s.label}
+                        {sec.label}
                       </button>
                     </li>
                   ))}
@@ -250,7 +255,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Getting Started - Earthquakes
+                  {t('docs_earthquakes.label_getting')}
                 </h2>
                 <p className='text-white/80 mt-2'>
                   <strong>Base URL:</strong>{' '}
@@ -259,15 +264,16 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                   </code>
                 </p>
                 <p className='text-white/80 mt-2'>
-                  <strong>Authentication:</strong> Currently no authentication
-                  required — endpoints are public.
+                  <strong>{t('docs_earthquakes.authentication')} </strong>
+                  {t('docs_earthquakes.authentication_description')} 
                 </p>
 
                 <h3 className='mt-4 text-lg font-semibold text-white'>
-                  Rate Limits
+                  {t('docs_earthquakes.rate_limits')} 
                 </h3>
                 <p className='text-white/80'>
-                  Fixed-window: <strong>100 requests / second per IP</strong>.
+                  {t('docs_earthquakes.fixed')} 
+                  <strong>{t('docs_earthquakes.request')} </strong>.
                 </p>
                 <p className='text-white/70 text-sm mt-2'>
                   Headers:{' '}
@@ -313,9 +319,11 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Common Parameters
+                  {t('docs_earthquakes.label_common')}
                 </h2>
-                <p className='text-white/80 mt-2'>Most endpoints accept:</p>
+                <p className='text-white/80 mt-2'>
+                  {t('docs_earthquakes.subtitle_common')}
+                </p>
                 <ul className='list-disc list-inside text-white/80 mt-2'>
                   <li>
                     <code>page</code> — integer, default <strong>1</strong>
@@ -325,7 +333,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                   </li>
                 </ul>
                 <p className='text-white/70 text-sm mt-2'>
-                  Example:{' '}
+                  {t('docs_earthquakes.example')}{' '}
                   <code className='px-1 py-0.5 bg-slate-800 rounded'>
                     ?page=2&amp;limit=100
                   </code>
@@ -338,9 +346,11 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Response Format
+                  {t('docs_earthquakes.label_response')}
                 </h2>
-                <p className='text-white/80 mt-2'>All responses follow:</p>
+                <p className='text-white/80 mt-2'>
+                  {t('docs_earthquakes.subtitle_response')}
+                </p>
                 <SyntaxHighlighter
                   language='json'
                   style={atomOneDark}
@@ -405,21 +415,21 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  API Endpoints Earthquakes
+                  {t('docs_earthquakes.label_endpoints')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Time, location, property and event-based queries.
+                  {t('docs_earthquakes.subtitle_endpoints')}
                 </p>
 
                 <div className='mt-4 overflow-x-auto rounded border border-white/5 bg-slate-900/30'>
                   <table className='w-full text-sm'>
                     <thead className='bg-slate-800/60'>
                       <tr>
-                        <th className='p-3 text-left'>Method</th>
-                        <th className='p-3 text-left'>Endpoint</th>
-                        <th className='p-3 text-left'>Description</th>
+                        <th className='p-3 text-left'>{t('docs_earthquakes.method_table')}</th>
+                        <th className='p-3 text-left'>{t('docs_earthquakes.endpoint_table')}</th>
+                        <th className='p-3 text-left'>{t('docs_earthquakes.description_table')}</th>
                         <th className='p-3 text-left'>
-                          Query Params (* req = required)
+                          {t('docs_earthquakes.query_table')} (* req = {t('docs_earthquakes.required_table')})
                         </th>
                       </tr>
                     </thead>
@@ -489,7 +499,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 </div>
 
                 <div className='mt-6'>
-                  <h4 className='font-semibold text-white'>Example Request</h4>
+                  <h4 className='font-semibold text-white'>{t('docs_earthquakes.example_request')}</h4>
                   <SyntaxHighlighter
                     language='bash'
                     style={atomOneDark}
@@ -507,7 +517,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 </div>
 
                 <div className='mt-6'>
-                  <h4 className='font-semibold text-white'>Example Response</h4>
+                  <h4 className='font-semibold text-white'>{t('docs_earthquakes.example_response')}</h4>
                   <SyntaxHighlighter
                     language='json'
                     style={atomOneDark}
@@ -528,7 +538,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Magnitude Legend
+                  {t('docs_earthquakes.label_magnitude')}
                 </h2>
                 <MagnitudeLegend />
               </section>
@@ -539,7 +549,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Time-Based Queries
+                  {t('docs_earthquakes.time_based_queries')}
                 </h2>
 
                 <article className='mt-4'>
@@ -547,7 +557,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/recent
                   </h4>
                   <p className='text-white/80'>
-                    Earthquakes from Jan 1st of the current year up to today.
+                    {t('docs_earthquakes.description_time_based')}
                   </p>
                 </article>
 
@@ -555,7 +565,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                   <h4 className='font-semibold text-white'>
                     GET /v1/earthquakes/today
                   </h4>
-                  <p className='text-white/80'>Events occurred today (UTC).</p>
+                  <p className='text-white/80'>{t('docs_earthquakes.description_events_occurred')}</p>
                 </article>
 
                 <article className='mt-4'>
@@ -563,7 +573,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/last-week
                   </h4>
                   <p className='text-white/80'>
-                    Last 7 days (including today).
+                    {t('docs_earthquakes.description_last_7')}
                   </p>
                 </article>
 
@@ -572,8 +582,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/month
                   </h4>
                   <p className='text-white/80'>
-                    Requires <code>year</code> and <code>month</code>. Returns
-                    400 for invalid input.
+                    {t('docs_earthquakes.requires')} <code>year</code> {t('docs_earthquakes.and')} <code>month</code>. {t('docs_earthquakes.return_400')}
                   </p>
                 </article>
 
@@ -582,8 +591,8 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/range-time
                   </h4>
                   <p className='text-white/80'>
-                    Requires <code>startdate</code> and <code>enddate</code>{' '}
-                    (YYYY-MM-DD). Max range 365 days.
+                    {t('docs_earthquakes.requires')} <code>startdate</code> {t('docs_earthquakes.and')} <code>enddate</code>{' '}
+                    (YYYY-MM-DD). {t('docs_earthquakes.max_range')}
                   </p>
                 </article>
               </section>
@@ -594,7 +603,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Location-Based Queries
+                  {t('docs_earthquakes.label_location')}
                 </h2>
 
                 <article className='mt-4'>
@@ -602,9 +611,9 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/location
                   </h4>
                   <p className='text-white/80'>
-                    Requires <code>latitude</code> and <code>longitude</code>.
-                    Optional <code>radius</code> (km). Uses Haversine; ordered
-                    by distance.
+                    {t('docs_earthquakes.requires')} <code>latitude</code> {t('docs_earthquakes.and')} <code>longitude</code>.
+                    {t('docs_earthquakes.optional')} <code>radius</code> (km).
+                    {t('docs_earthquakes.haversine')}
                   </p>
                 </article>
 
@@ -613,8 +622,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/region
                   </h4>
                   <p className='text-white/80'>
-                    Italian region name (case-insensitive). Supported regions:
-                    Abruzzo, Basilicata, Calabria, ... Veneto.
+                    {t('docs_earthquakes.support_region')}
                   </p>
                 </article>
               </section>
@@ -625,7 +633,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Property-Based Queries
+                  {t('docs_earthquakes.label_property')}
                 </h2>
 
                 <article className='mt-4'>
@@ -633,8 +641,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/depth
                   </h4>
                   <p className='text-white/80'>
-                    Filter by maximum depth (km). Depth classes: shallow 0–70,
-                    intermediate 70–300, deep 300+.
+                    {t('docs_earthquakes.filter_depth')}
                   </p>
                 </article>
 
@@ -643,8 +650,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/magnitude
                   </h4>
                   <p className='text-white/80'>
-                    Filter by magnitude &ge; value. Reference scales provided
-                    (ML, Mw, etc.).
+                    {t('docs_earthquakes.filter_magnitude')}
                   </p>
                 </article>
               </section>
@@ -655,7 +661,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Event-Based Queries
+                  {t('docs_earthquakes.label_event')}
                 </h2>
 
                 <article className='mt-4'>
@@ -663,8 +669,8 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                     GET /v1/earthquakes/eventId
                   </h4>
                   <p className='text-white/80'>
-                    Retrieve single event details by <code>eventId</code>.
-                    Returns 404 if not found.
+                    {t('docs_earthquakes.retrive')} <code>eventId</code>.
+                    {t('docs_earthquakes.return_404')} 
                   </p>
 
                   <SyntaxHighlighter
@@ -689,11 +695,10 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Error Handling
+                  {t('docs_earthquakes.label_error')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Standard HTTP codes used. Error responses include `errors`
-                  array for validation details.
+                  {t('docs_earthquakes.errors_response')}
                 </p>
 
                 <SyntaxHighlighter
@@ -719,16 +724,16 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
 
                 <ul className='mt-4 list-disc list-inside text-white/80'>
                   <li>
-                    <strong>400</strong> Bad Request — invalid parameters
+                    <strong>400</strong> Bad Request — {t('docs_earthquakes.errorinvalid')}
                   </li>
                   <li>
-                    <strong>404</strong> Not Found — resource missing
+                    <strong>404</strong> Not Found — {t('docs_earthquakes.error_resource')}
                   </li>
                   <li>
-                    <strong>429</strong> Too Many Requests — rate limit exceeded
+                    <strong>429</strong> Too Many Requests — {t('docs_earthquakes.error_rate_limit')}
                   </li>
                   <li>
-                    <strong>500/503</strong> — server issues
+                    <strong>500/503</strong> — {t('docs_earthquakes.error_server')}
                   </li>
                 </ul>
               </section>
@@ -738,9 +743,11 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 id='code-examples'
                 className='scroll-mt-[120px] py-12'
               >
-                <h2 className='text-2xl font-bold text-white'>Code Examples</h2>
+                <h2 className='text-2xl font-bold text-white'>
+                  {t('docs_earthquakes.label_code')}
+                </h2>
                 <p className='text-white/80 mt-2'>
-                  Examples (each block has a Copy button):
+                  {t('docs_earthquakes.examples_codes')}
                 </p>
 
                 <div className='mt-4 space-y-6'>
@@ -854,32 +861,32 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Data Field Reference
+                  {t('docs_earthquakes.label_data')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Each earthquake entry is a GeoJSON Feature. Important fields:
+                  {t('docs_earthquakes.earthquakes_geojson')}
                 </p>
                 <ul className='list-disc list-inside mt-3 text-white/80'>
                   <li>
-                    <code>eventId</code> — unique event identifier (integer)
+                    <code>eventId</code> — {t('docs_earthquakes.unique_event')} (integer)
                   </li>
                   <li>
-                    <code>originId</code> — origin/source id
+                    <code>originId</code> — {t('docs_earthquakes.origin_source')} id
                   </li>
                   <li>
                     <code>time</code> — ISO 8601 timestamp in UTC
                   </li>
                   <li>
-                    <code>author</code> — reporting agency
+                    <code>author</code> — {t('docs_earthquakes.reporting')}
                   </li>
                   <li>
-                    <code>mag</code> — magnitude (float)
+                    <code>mag</code> — {t('docs_earthquakes.magnitude')} (float)
                   </li>
                   <li>
-                    <code>magType</code> — e.g., ML, Mw
+                    <code>magType</code> — ML, Mw ...
                   </li>
                   <li>
-                    <code>place</code> — human-readable location
+                    <code>place</code> — {t('docs_earthquakes.human-readable')}
                   </li>
                   <li>
                     <code>geometry.coordinates</code> — [longitude, latitude,
@@ -889,7 +896,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
 
                 <h4 className='mt-4 font-semibold text-white'>Geometry</h4>
                 <p className='text-white/80'>
-                  GeoJSON Point: <code>[lon, lat, depth]</code> (depth in km).
+                  GeoJSON Point: <code>[lon, lat, depth]</code> {t('docs_earthquakes.depth_km')}
                 </p>
               </section>
 
@@ -899,10 +906,10 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Support & Feedback
+                  {t('docs_earthquakes.label_support')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Report issues and request features on GitHub:
+                  {t('docs_earthquakes.report_issues')}
                 </p>
                 <ul className='list-disc list-inside mt-3 text-white/80'>
                   <li>
@@ -927,8 +934,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                   </li>
                 </ul>
                 <p className='mt-4 text-sm text-white/60'>
-                  Project lead: Dr. Gianluca Chiaravalloti — Web Developer &
-                  Geologist
+                  {t('docs_earthquakes.author')}
                 </p>
               </section>
 
@@ -938,7 +944,7 @@ axios.get('https://api.terraquakeapi.com/v1/earthquakes/range-time', {
                 className='scroll-mt-[120px] py-12'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  API Information
+                  {t('docs_earthquakes.label_information')}
                 </h2>
                 <VersionAPI />
               </section>
