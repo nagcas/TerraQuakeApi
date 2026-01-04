@@ -3,8 +3,11 @@ import { FiPlay, FiAlertTriangle, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import CodeSnippet from '@/utils/useCases/CodeSnippet';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function ApiPlayground({ url }) {
+  const { t } = useTranslation('translation');
+
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -42,7 +45,7 @@ export default function ApiPlayground({ url }) {
     <div className='mt-6 p-4 rounded-xl border border-dashed border-white/20 bg-black/20'>
       <div className='flex flex-col md:flex-row gap-6 items-center justify-between'>
         <p className='text-sm font-semibold text-purple-300'>
-          Live API Playground
+          {t('api_playground_accordion.live_api')}
         </p>
         <button
           onClick={fetchData}
@@ -58,7 +61,7 @@ export default function ApiPlayground({ url }) {
           ) : (
             <FiPlay />
           )}
-          <span>{isLoading ? <Spinner /> : 'Run Request'}</span>
+          <span>{isLoading ? <Spinner /> : t('api_playground_accordion.run_request')}</span>
         </button>
       </div>
 
@@ -95,7 +98,7 @@ export default function ApiPlayground({ url }) {
                 <span className='mt-2'>
                   <FiAlertTriangle />
                 </span>
-                <span className='mt-2'>Error: {error}</span>
+                <span className='mt-2'>{t('api_playground_accordion.error')} {error}</span>
               </div>
             )}
           </motion.div>

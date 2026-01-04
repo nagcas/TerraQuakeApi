@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LanguageTabs from './LanguageTabs';
 import ApiPlayground from './ApiPlayground';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function AccordionItem({
   item,
@@ -11,6 +12,8 @@ export default function AccordionItem({
   expandedIndex,
   toggleExpand,
 }) {
+  const { t } = useTranslation('translation');
+
   const isOpen = expandedIndex.includes(index);
 
   const navigate = useNavigate();
@@ -102,7 +105,7 @@ export default function AccordionItem({
             onClick={() => goToDocs(item.exampleUrl)}
             className="text-purple-400 hover:text-purple-300 text-sm underline transition-all cursor-pointer"
           >
-            View API Documentation →
+            {t('accirdion_item.button_view')}
           </button>
         </div>
       </div>

@@ -588,5 +588,18 @@
   "copy_button": {
     "copied": "Copied",
     "copy": "Copy"
+  },
+  "use_cases": {
+    "title": "Use cases illustrate real-world scenarios in which the TerraQuake API can be applied. With fast and reliable access to seismic data, the API enables developers, researchers, and students to create advanced applications for seismic monitoring and analysis, as well as to practice directly with the provided endpoints."
+  },
+  "accordion_item" : {
+    "button_view": "View API Documentation →"
+  },
+  "api_playground_accordion": {
+    "live_api": "Live API Playground",
+    "run_request": "Run Request",
+    "error": "Error:",
+    "copied": "Copied",
+    "copy": "Copy"
   }
 }

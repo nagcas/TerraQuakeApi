@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import MetaData from '@pages/noPage/MetaData';
 import { motion } from 'framer-motion';
-import { useCaseDocs } from '@/data/UseCaseDocs';
+import { useCaseDocs_en } from '@/data/UseCaseDocs_en';
+import { useCaseDocs_it } from '@/data/UseCaseDocs_it';
+import { useCaseDocs_es } from '@/data/UseCaseDocs_es';
 import AccordionItem from '@/utils/useCases/AccordionItem';
 import BackToTopButton from '@/components/utils/BackToTopButton';
+import { useTranslation } from 'react-i18next';
 
 export default function UseCases() {
+  const { t, i18n } = useTranslation('translation');
+
   const [expandedIndex, setExpandedIndex] = useState([]);
 
   const toggleExpand = (index) => {
@@ -50,15 +55,11 @@ export default function UseCases() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              Use Cases for TerraQuake API.
+              {t('use_cases.title')}
               <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Use Cases describe real-world scenarios where TerraQuake API can
-              be applied. By providing fast, reliable access to seismic data,
-              the API enables developers, researchers, institutions, and
-              organizations to create applications focused on safety,
-              monitoring, education, and disaster prevention.
+              {t('use_cases.description')}
             </p>
           </motion.div>
 
@@ -69,15 +70,39 @@ export default function UseCases() {
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
             className='w-full flex flex-col space-y-6'
           >
-            {useCaseDocs.map((item, index) => (
-              <AccordionItem
-                key={item.title}
-                item={item}
-                index={index}
-                expandedIndex={expandedIndex}
-                toggleExpand={toggleExpand}
-              />
-            ))}
+            {i18n.language === 'en' && (
+              useCaseDocs_en.map((item, index) => (
+                <AccordionItem
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  expandedIndex={expandedIndex}
+                  toggleExpand={toggleExpand}
+                />
+              ))
+            )}
+            {i18n.language === 'it' && (
+              useCaseDocs_it.map((item, index) => (
+                <AccordionItem
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  expandedIndex={expandedIndex}
+                  toggleExpand={toggleExpand}
+                />
+              ))
+            )}
+            {i18n.language === 'es' && (
+              useCaseDocs_es.map((item, index) => (
+                <AccordionItem
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  expandedIndex={expandedIndex}
+                  toggleExpand={toggleExpand}
+                />
+              ))
+            )}
           </motion.div>
         </div>
       </motion.section>
