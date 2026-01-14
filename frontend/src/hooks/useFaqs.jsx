@@ -20,7 +20,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
     setLoadingFaq(true);
     setErrorFaq(null);
     try {
-      const response = await axios.get(`/faq/list-all-faq`, {
+      const response = await axios.get(`/faqs`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

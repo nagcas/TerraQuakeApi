@@ -24,7 +24,7 @@ export default function Faq() {
   const fetchAllFaq = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/faq/list-all-faq', {
+      const response = await axios.get('/faqs', {
         headers: {
           'Content-Type': 'application/json',
         },

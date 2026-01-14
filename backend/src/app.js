@@ -79,12 +79,12 @@ app.use('/auth/github', authLimiter, routeGitHub)
 // app.use('/users', authLimiter, authenticateUser, routeUsers)
 app.use('/users', authenticateUser, routeUsers)
 app.use('/contact', contactLimiter, routeContact)
-app.use('/faq', routeFaq)
+app.use('/faqs', routeFaq)
 app.use('/testimonials', routeTestimonial)
 
 // Public routes
 app.use('/newsletter', newsletterRoutes)
-app.use('/', postRoutes)
+app.use('/posts', postRoutes)
 
 // Admin routes (protected)
 app.use('/admin', adminRoutes)
