@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
-import StationsEndpointsData_en from '../../data/StationsEndpointsData_en.json';
-import StationsEndpointsData_it from '../../data/StationsEndpointsData_it.json';
-import StationsEndpointsData_es from '../../data/StationsEndpointsData_es.json';
+import StationsEndpointsData_en from '../../data/StationsEndpointsData_en.json' with { type: 'json' };
+import StationsEndpointsData_it from '../../data/StationsEndpointsData_it.json' with { type: 'json' };
+import StationsEndpointsData_es from '../../data/StationsEndpointsData_es.json' with { type: 'json' };
 import { useTranslation } from 'react-i18next';
 
 export default function StationsData() {

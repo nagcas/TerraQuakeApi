@@ -6,9 +6,9 @@ import MetaData from '@pages/noPage/MetaData';
 import ApiPlayground from '@/components/apiPlayground/ApiPlayground';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
-import EarthquakesEndpointsData_en from '../../data/EarthquakesEndpointsData_en.json';
-import EarthquakesEndpointsData_it from '../../data/EarthquakesEndpointsData_it.json';
-import EarthquakesEndpointsData_es from '../../data/EarthquakesEndpointsData_es.json';
+import EarthquakesEndpointsData_en from '../../data/EarthquakesEndpointsData_en.json' with { type: 'json' };
+import EarthquakesEndpointsData_it from '../../data/EarthquakesEndpointsData_it.json' with { type: 'json' };
+import EarthquakesEndpointsData_es from '../../data/EarthquakesEndpointsData_es.json' with { type: 'json' };
 import MagnitudeLegend from '@/components/magnitudeLegend/MagnitudeLegend';
 import { useTranslation } from 'react-i18next';
 
