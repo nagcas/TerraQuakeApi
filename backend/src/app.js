@@ -84,7 +84,7 @@ app.use('/testimonials', routeTestimonial)
 
 // Public routes
 app.use('/newsletter', newsletterRoutes)
-app.use('/posts', postRoutes)
+app.use('/', postRoutes)
 
 // Admin routes (protected)
 app.use('/admin', adminRoutes)

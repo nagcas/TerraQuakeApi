@@ -32,7 +32,7 @@ export default function Blog() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('/posts/list-all-posts', {
+      const response = await axios.get('/posts', {
         headers: { 'Content-Type': 'application/json' },
         params: { page: currentPage, limit: postsPerPage },
       });

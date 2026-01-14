@@ -25,9 +25,9 @@ export default function NavbarMenu() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isTranslationOpen, setIsTranslationOpen] = useState(false);
   const [isLenguage, setIsLenguage] = useState(
-    (lenguage === 'en') && 'English' ||
-    (lenguage === 'it') && 'Italiano' ||
-    (lenguage === 'es') && 'Español'
+    (lenguage === 'en') && 'EN' ||
+    (lenguage === 'it') && 'IT' ||
+    (lenguage === 'es') && 'ES'
   );
 
   const exploreRef = useRef(null);
@@ -328,12 +328,12 @@ export default function NavbarMenu() {
       {/* Translation select */}
       <div
         ref={translationRef}
-        className='relative'
+        className='relative right-4'
       >
         <button
           type='button'
           onClick={() => setIsTranslationOpen((s) => !s)}
-          className='flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer'
+          className='flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer px-2'
           aria-haspopup='menu'
           aria-expanded={isTranslationOpen}
           
@@ -359,7 +359,7 @@ export default function NavbarMenu() {
               onClick={() => {
                 i18n.changeLanguage('en');
                 setIsTranslationOpen(false);
-                setIsLenguage('English');
+                setIsLenguage('EN');
               }}
               className=' hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg cursor-pointer'
             >
@@ -371,7 +371,7 @@ export default function NavbarMenu() {
               onClick={() => {
                 i18n.changeLanguage('it');
                 setIsTranslationOpen(false);
-                setIsLenguage('Italiano');
+                setIsLenguage('IT');
               }}
               className=' hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg cursor-pointer'
             >
@@ -383,7 +383,7 @@ export default function NavbarMenu() {
               onClick={() => {
                 i18n.changeLanguage('es');
                 setIsTranslationOpen(false);
-                setIsLenguage('Español');
+                setIsLenguage('ES');
               }}
               className=' hover:text-purple-400 hover:bg-purple-500/30 hover:scale-105 hover:shadow-lg cursor-pointer'
             >

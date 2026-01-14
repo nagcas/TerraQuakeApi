@@ -6,8 +6,11 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { CopyButton } from '@components/utils/CopyButton';
 import VersionAPI from '@/components/utils/VersionAPI';
+import { useTranslation } from 'react-i18next';
 
 export default function DocsStations() {
+  const { t } = useTranslation('translation');
+  
   const contentRef = useRef(null);
   const [activeId, setActiveId] = useState('getting-started');
   const [sidebarOpen, setSidebarOpen] = useState(false);

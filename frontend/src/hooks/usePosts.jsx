@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import axios from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -30,7 +30,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
     setLoadingPost(true);
     setErrorPost(null);
     try {
-      const response = await axios.get(`/posts/list-all-posts`, {
+      const response = await axios.get(`/posts`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

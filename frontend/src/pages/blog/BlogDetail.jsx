@@ -35,7 +35,7 @@ export default function BlogDetail() {
     const fetchPost = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`/posts/list-postSlug/${slug}`, {
+        const response = await axios.get(`/posts/${slug}`, {
           headers: { 'Content-Type': 'application/json' },
         });
 
