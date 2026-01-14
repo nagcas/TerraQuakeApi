@@ -19,6 +19,9 @@ export const signUp = ({
       // Extract validated data from request
       const data = matchedData(req)
 
+      // Force Role — Never trust client
+      data.role = 'user'
+
       // Check if a user already exists, including soft-deleted ones
       const existingUser = await User.findOneWithDeleted({ email: data.email })
 
@@ -29,7 +32,7 @@ export const signUp = ({
           existingUser.deletedAt = null
           existingUser.name = data.name
           existingUser.password = data.password // hashed in pre-save hook
-          existingUser.role = data.role || 'user'
+          existingUser.role = 'user'
           existingUser.experience = data.experience || ''
           existingUser.student = data.student || 'No'
           existingUser.bio = data.bio || ''
@@ -70,6 +73,7 @@ export const signUp = ({
       }
 
       // Create a new user
+      data.role = 'user'
       const newUser = new User(data)
       const savedUser = await newUser.save()
       const user = savedUser.toObject()
