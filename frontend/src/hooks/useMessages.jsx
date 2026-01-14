@@ -30,7 +30,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
     setLoadingMessage(true);
     setErrorMessage(null);
     try {
-      const response = await axios.get(`/contact/list-all-contacts`, {
+      const response = await axios.get(`/contact`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
