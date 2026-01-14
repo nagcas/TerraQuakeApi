@@ -19,7 +19,7 @@ export default function useTestimonials(initialPage = 1, initialLimit = 20) {
     setLoadingTestimonial(true);
     setErrorTestimonial(null);
     try {
-      const response = await axios.get(`/testimonials/list-all-reviews`, {
+      const response = await axios.get(`/testimonials`, {
         headers: {
           'Content-Type': 'application/json',
         },

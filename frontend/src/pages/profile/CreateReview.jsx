@@ -61,7 +61,7 @@ export default function CreateReview({ setCreateReview }) {
 
       // Send update request to backend
       const response = await axios.post(
-        `/testimonials/create-review`,
+        `/testimonials`,
         payloadReview,
         {
           headers: {

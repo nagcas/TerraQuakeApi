@@ -69,7 +69,7 @@ export default function UpdateReview({
 
       // Send update request to backend
       const response = await axios.patch(
-        `/testimonials/update-review/${reviewId}`,
+        `/testimonials/${reviewId}`,
         payloadReview,
         {
           headers: {

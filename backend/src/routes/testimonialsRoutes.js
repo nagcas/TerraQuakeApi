@@ -10,18 +10,18 @@ import { validatorTestimonial } from '../validators/testimonialValidators.js'
 const router = express.Router()
 
 // NOTE: Defining a [POST] route to send a new review
-router.post('/create-review', authMiddleware, validatorTestimonial, createTestimonial({ Testimonial, buildResponse, handleHttpError }))
+router.post('/', authMiddleware, validatorTestimonial, createTestimonial({ Testimonial, buildResponse, handleHttpError }))
 
 // NOTE: Defining a [GET] route to list all reviews
-router.get('/list-all-reviews', listAllTestimonials({ Testimonial, buildResponse, handleHttpError }))
+router.get('/', listAllTestimonials({ Testimonial, buildResponse, handleHttpError }))
 
 // NOTE: Route: Get a review by ID
-router.get('/list-one-review/:id', adminMiddleware, listOneTestimonial({ Testimonial, buildResponse, handleHttpError }))
+router.get('/:id', adminMiddleware, listOneTestimonial({ Testimonial, buildResponse, handleHttpError }))
 
 // NOTE: Defining a [PATCH] route to update a review
-router.patch('/update-review/:id', authMiddleware, updateTestimonial({ Testimonial, buildResponse, handleHttpError }))
+router.patch('/:id', authMiddleware, updateTestimonial({ Testimonial, buildResponse, handleHttpError }))
 
 // NOTE: Defining a [DELETE] route to delete a review
-router.delete('/delete-review/:id', authMiddleware, deleteTestimonial({ Testimonial, buildResponse, handleHttpError }))
+router.delete('/:id', authMiddleware, deleteTestimonial({ Testimonial, buildResponse, handleHttpError }))
 
 export default router

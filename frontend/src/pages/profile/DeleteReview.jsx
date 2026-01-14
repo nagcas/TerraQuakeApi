@@ -41,7 +41,7 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
       }
 
       const response = await axios.delete(
-        `/testimonials/delete-review/${reviewId}`,
+        `/testimonials/${reviewId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
