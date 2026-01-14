@@ -62,7 +62,7 @@ export default function EditProfile({ setEditProfile }) {
       const token = localStorage.getItem('token');
 
       // Send update request to backend
-      const response = await axios.patch(`/users/me/update`, data, {
+      const response = await axios.patch(`/users/me`, data, {
         headers: {
           Authorization: `Bearer ${token}`, // send token in header
         },

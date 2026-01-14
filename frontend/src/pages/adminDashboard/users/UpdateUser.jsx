@@ -64,7 +64,7 @@ export default function UpdateUser({ users, setUsers }) {
 
       const token = localStorage.getItem('token');
 
-      const response = await axios.patch(`/users/update/${users._id}`, data, {
+      const response = await axios.patch(`/users/${users._id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

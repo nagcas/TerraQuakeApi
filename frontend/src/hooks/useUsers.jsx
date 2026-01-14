@@ -30,7 +30,7 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
     setLoadingUser(true);
     setErrorUser(null);
     try {
-      const response = await axios.get(`/users/list-all-users`, {
+      const response = await axios.get(`/users`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

@@ -48,7 +48,7 @@ export default function DeleteUser({ users, setUsers }) {
       }
 
       // Perform account deletion request
-      const response = await axios.delete(`/users/delete/${users._id}`, {
+      const response = await axios.delete(`/users/${users._id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in authorization header
         },

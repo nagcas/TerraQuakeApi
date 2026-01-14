@@ -50,7 +50,7 @@ export default function DeleteProfile() {
       }
 
       // Perform account deletion request
-      const response = await axios.delete(`/users/me/delete`, {
+      const response = await axios.delete(`/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in authorization header
         },

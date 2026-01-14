@@ -29,7 +29,7 @@ const router = express.Router()
 
 // NOTE: List all users (admin only)
 // GET /all — returns a complete list of users, accessible only to admins
-router.get('/list-all-users', adminMiddleware, listAllUsers({ User, buildResponse, handleHttpError }))
+router.get('/', adminMiddleware, listAllUsers({ User, buildResponse, handleHttpError }))
 
 // NOTE: Change a user's role (admin only)
 // POST /:id/role — updates the role of a specified user by ID
@@ -41,11 +41,11 @@ router.get('/me', authenticateUser, getCurrentUserData({ User, buildResponse, ha
 
 // NOTE: Update current logged-in user's data
 // PATCH /me/update — updates personal data for the logged-in user
-router.patch('/me/update', authenticateUser, validatorUpdateCurrentUserData, updateCurrentUserData({ User, buildResponse, handleHttpError, matchedData }))
+router.patch('/me', authenticateUser, validatorUpdateCurrentUserData, updateCurrentUserData({ User, buildResponse, handleHttpError, matchedData }))
 
 // NOTE; Update user by admin
 // PATCH /update/:id — updates personal data user
-router.patch('/update/:id', adminMiddleware, validatorUpdateCurrentUserData, validatorUpdateDeleted, updateUserData({ User, buildResponse, handleHttpError, matchedData }))
+router.patch('/:id', adminMiddleware, validatorUpdateCurrentUserData, validatorUpdateDeleted, updateUserData({ User, buildResponse, handleHttpError, matchedData }))
 
 // NOTE: Update user preferences (e.g., notifications, geographic area)
 // DELETE /preferences/:id — removes specified user preferences
@@ -53,10 +53,10 @@ router.delete('/preferences/:id')
 
 // NOTE: Delete the current logged-in user's account
 // DELETE /me/delete — soft deletes the logged-in user's account
-router.delete('/me/delete', authenticateUser, deleteCurrentUser({ User, buildResponse, handleHttpError, invalidateToken }))
+router.delete('/me', authenticateUser, deleteCurrentUser({ User, buildResponse, handleHttpError, invalidateToken }))
 
 // NOTE: Delete the user's account
 // DELETE /delete — soft deletes the logged-in user's account
-router.delete('/delete/:id', adminMiddleware, deleteUser({ User, buildResponse, handleHttpError, invalidateToken }))
+router.delete('/:id', adminMiddleware, deleteUser({ User, buildResponse, handleHttpError, invalidateToken }))
 
 export default router
