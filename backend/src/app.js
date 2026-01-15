@@ -15,7 +15,7 @@ import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import routeStation from './routes/stationsRoutes.js'
-import routeDocsEarthquakes from './routes/docsEarthquakesRoutes.js'
+import routeDocsTerraQuakeApi from './routes/docsTerraQuakeApiRoutes.js'
 import routeGitHub from './routes/githubAuthRoutes.js'
 import routeMetrics from './routes/metricsRouters.js'
 import routeTestimonial from './routes/testimonialsRoutes.js'
@@ -68,8 +68,8 @@ app.use(
 
 // Public route: earthquakes data, accessible from any origin
 app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
-app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeDocsEarthquakes)
 app.use('/v1/stations', cors({ origin: '*' }), apiLimiter, routeStation)
+app.use('/v1/docs', cors({ origin: '*' }), apiLimiter, routeDocsTerraQuakeApi)
 
 // Protected routes
 app.use('/v1/test', apiLimiter, routeGetStart)
