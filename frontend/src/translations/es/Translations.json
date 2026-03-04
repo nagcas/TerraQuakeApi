@@ -42,6 +42,7 @@
     "resources_cases": "Casos de uso",
     "resources_earthquakes": "Documentación de terremotos",
     "resources_stations": "Documentación de estaciones",
+    "resources_docs": "Documentación",
     "resources_faq": "FAQ",
     "explore_earthquakes": "API de terremotos",
     "explore_stations": "API de estaciones",
@@ -228,7 +229,7 @@
     "back_account": "O vuelve a tu cuenta",
     "back_sign_in": "Volver a iniciar sesión"
   },
-   "sign_in": {
+  "sign_in": {
     "title": "Iniciar sesión.",
     "description": "Accede a tu cuenta TerraQuake para explorar datos sísmicos reales, gestionar tus preferencias y participar en nuestro entorno de formación.",
     "title_form_login": "Iniciar sesión",
@@ -237,7 +238,7 @@
     "not_account": "¿Aún no tienes una cuenta?",
     "create_account": "Crear cuenta"
   },
-   "sign_up": {
+  "sign_up": {
     "title": "Crear cuenta.",
     "description": "Crea tu cuenta TerraQuake para explorar eventos sísmicos reales, personalizar tu experiencia y unirte a nuestra plataforma de formación interactiva.",
     "title_form_register": "Registro",
@@ -267,7 +268,7 @@
     "sign_through": "O inicia sesión mediante",
     "or": "O"
   },
-   "contribute": {
+  "contribute": {
     "title": "Construye el futuro de la tecnología sísmica.",
     "description": "TerraQuake está construido por una comunidad global. Ya seas desarrollador, sismólogo o entusiasta de los datos, tu contribución es vital. Hagamos que los datos sísmicos sean más accesibles juntos.",
     "title_join": "Únete a la conversación",

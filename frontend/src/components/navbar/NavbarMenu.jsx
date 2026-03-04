@@ -25,9 +25,9 @@ export default function NavbarMenu() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isTranslationOpen, setIsTranslationOpen] = useState(false);
   const [isLenguage, setIsLenguage] = useState(
-    (lenguage === 'en') && 'EN' ||
-    (lenguage === 'it') && 'IT' ||
-    (lenguage === 'es') && 'ES'
+    (lenguage === 'en' && 'EN') ||
+      (lenguage === 'it' && 'IT') ||
+      (lenguage === 'es' && 'ES'),
   );
 
   const exploreRef = useRef(null);
@@ -47,6 +47,11 @@ export default function NavbarMenu() {
     { name: t('navbar.resources_cases'), path: '/use-cases' },
     { name: t('navbar.resources_earthquakes'), path: '/docs-earthquakes' },
     { name: t('navbar.resources_stations'), path: '/docs-stations' },
+    {
+      name: t('navbar.resources_docs'),
+      path: 'https://docs.terraquakeapi.com/introduction',
+      external: true,
+    },
     { name: t('navbar.resources_faq'), path: '/faq' },
   ];
 
@@ -118,7 +123,7 @@ export default function NavbarMenu() {
             onClick={() => setIsExploreOpen((s) => !s)}
             className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer ${
               exploreDataNavItems.some(
-                (item) => window.location.pathname === item.path
+                (item) => window.location.pathname === item.path,
               )
                 ? 'text-purple-400 font-semibold'
                 : 'text-gray-300'
@@ -167,7 +172,7 @@ export default function NavbarMenu() {
             onClick={() => setIsResourcesOpen((s) => !s)}
             className={`flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer ${
               resourcesNavItems.some(
-                (item) => window.location.pathname === item.path
+                (item) => window.location.pathname === item.path,
               )
                 ? 'text-purple-400 font-semibold'
                 : 'text-gray-300'
@@ -336,7 +341,6 @@ export default function NavbarMenu() {
           className='flex items-center gap-1 hover:text-purple-400 transition-colors duration-200 cursor-pointer px-2'
           aria-haspopup='menu'
           aria-expanded={isTranslationOpen}
-          
         >
           {isLenguage}
           <FaChevronDown

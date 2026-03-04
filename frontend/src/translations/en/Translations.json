@@ -42,6 +42,7 @@
     "resources_cases": "Use Cases",
     "resources_earthquakes": "Docs Earthquakes",
     "resources_stations": "Docs Stations",
+    "resources_docs": "Documentation",
     "resources_faq": "Faq",
     "explore_earthquakes": "Earthquakes API",
     "explore_stations": "Stations API",
@@ -593,7 +594,7 @@
     "title": "Use Cases for TerraQuake API",
     "description": "Use cases illustrate real-world scenarios in which the TerraQuake API can be applied. With fast and reliable access to seismic data, the API enables developers, researchers, and students to create advanced applications for seismic monitoring and analysis, as well as to practice directly with the provided endpoints."
   },
-  "accordion_item" : {
+  "accordion_item": {
     "button_view": "View API Documentation →"
   },
   "api_playground_accordion": {
