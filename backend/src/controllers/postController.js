@@ -183,7 +183,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       // Build filters only if provided
       const filter = {}
       if (title) filter.title = { $regex: title, $options: 'i' }
-      if (category) filter.category = { $regex: category, $options: 'i' }
+      if (category) { filter.categories = { $regex: new RegExp(`^${category}$`, 'i') }; }
       if (tags) filter.tags = { $regex: tags, $options: 'i' }
 
       // Count total documents
