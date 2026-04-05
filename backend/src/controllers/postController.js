@@ -173,34 +173,48 @@ export const deletePost = ({ Post, handleHttpError }) => {
 export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { title, category, tags } = req.query
-      const page = parseInt(req.query.page) || 1
-      const limit = parseInt(req.query.limit) || 9
-      const sort = req.query.sort || 'createdAt'
-      const sortDirection = req.query.sortDirection === 'asc' ? 1 : -1
-      const skip = (page - 1) * limit
+      const { title, category, tags } = req.query;
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 9;
+      const sort = req.query.sort || 'createdAt';
+      const sortDirection = req.query.sortDirection === 'asc' ? 1 : -1;
+      const skip = (page - 1) * limit;
 
-      // Build filters only if provided
-      const filter = {}
-      if (title) filter.title = { $regex: title, $options: 'i' }
-      if (category) { filter.categories = { $regex: new RegExp(`^${category}$`, 'i') }; }
-      if (tags) filter.tags = { $regex: tags, $options: 'i' }
+      // Base filters
+      const filter = { isDeleted: false, isPublished: true };
 
-      // Count total documents
-      const totalPosts = await Post.countDocuments(filter)
+      if (title) filter.title = { $regex: title, $options: 'i' };
+      if (tags) filter.tags = { $regex: tags, $options: 'i' };
 
-      // Fetch filtered or all posts
-      const posts = await Post.find(filter)
-        .populate('author', 'name')
-        .sort({ [sort]: sortDirection })
-        .skip(skip)
-        .limit(limit)
-        .lean()
+      /**
+       * ADVANCED FILTERING FOR #466:
+       * Supports single category or multiple categories (comma-separated)
+       * Example: ?category=Safety OR ?category=Safety,News
+       */
+      if (category) {
+        const categoryArray = category.split(',').map(cat => cat.trim());
+        
+        if (categoryArray.length > 1) {
+          // Matches any of the categories in the array
+          filter.categories = { $in: categoryArray.map(cat => new RegExp(`^${cat}$`, 'i')) };
+        } else {
+          // Single category match
+          filter.categories = { $regex: `^${category}$`, $options: 'i' };
+        }
+      }
 
-      const totalPages = Math.ceil(totalPosts / limit)
-      const hasMore = page < totalPages
+      const [totalPosts, posts] = await Promise.all([
+        Post.countDocuments(filter),
+        Post.find(filter)
+          .populate('author', 'name')
+          .sort({ [sort]: sortDirection })
+          .skip(skip)
+          .limit(limit)
+          .lean()
+      ]);
 
-      // Respond with paginated posts
+      const totalPages = Math.ceil(totalPosts / limit);
+
       res.json(
         buildResponse(req, 'Posts retrieved successfully', {
           totalPosts,
@@ -209,22 +223,17 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
             page,
             totalPages,
             limit,
-            hasMore,
+            hasMore: page < totalPages,
             totalResults: totalPosts
           }
         })
-      )
+      );
     } catch (error) {
-      // Log error to the server console
-      console.error('Error in listAllPosts:', error.message)
-      // Handle unexpected errors gracefully
-      handleHttpError(
-        res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+      console.error('Error in listAllPosts API:', error.message);
+      handleHttpError(res, 'Internal Server Error');
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller to retrieve a single post by its ID.
