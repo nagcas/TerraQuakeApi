@@ -65,7 +65,7 @@ export default function VersionAPI() {
             <p className="text-xs uppercase text-purple-300/70 tracking-wider">
               {t('version.project')}
             </p>
-            <p className="text-sm sm:text-base font-medium">{api.project.slice(16, 28)}</p>
+            <p className="text-sm sm:text-base font-medium">{api.project?.slice(16, 28) || 'N/A'}</p>
           </div>
         </div>
       </div>
