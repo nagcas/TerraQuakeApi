@@ -1,6 +1,7 @@
+import dotenv from 'dotenv'
+
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
 import passport from 'passport'
@@ -33,8 +34,13 @@ import {
 } from './middleware/rateLimiter.js'
 import { metricsMiddleware } from './middleware/metrics.js'
 
+import dns from 'dns'
+
+if (process.env.DEV_ENV === 'development') dns.setServers(['8.8.8.8', '1.1.1.1'])
+
 dotenv.config()
 const devEnv = process.env.DEV_ENV || 'development'
+console.log('DB_URI:', process.env.DB_URI)
 const app = express()
 
 // 🔹 Trust proxy
@@ -105,7 +111,11 @@ const urlBackend = process.env.BACKEND_URL || 'http://localhost:5001'
 const startServer = async () => {
   try {
     console.clear()
+
     await dbConnect()
+
+    console.log('DB connesso, avvio server...')
+
     app.listen(port, () => {
       console.log(`Server running in ${devEnv} environment`)
       console.log(`Started at: ${urlBackend}`)
@@ -113,7 +123,7 @@ const startServer = async () => {
       console.table(expressListEndpoints(app))
     })
   } catch (error) {
-    console.error('Server startup error:', error.message)
+    console.error('Server startup error:', error)
     process.exit(1)
   }
 }
