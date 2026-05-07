@@ -13,8 +13,10 @@ import GenerateTokenAPI from './GenerateTokenAPI';
 import FunctionsProfile from './FunctionsProfile';
 import CreateReview from './CreateReview';
 import ViewReview from './ViewReview';
+import { useTranslation } from 'react-i18next';
 
 export default function Profile() {
+  const { t } = useTranslation('translation');
   const { userLogin, isLoggedIn } = useContext(Context);
   const [activeSection, setActiveSection] = useState(null);
 

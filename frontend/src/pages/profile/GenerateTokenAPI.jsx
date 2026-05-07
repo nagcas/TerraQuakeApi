@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 
 export default function GenerateTokenAPI() {
+  const { t } = useTranslation('translation');
   const [loading, setLoading] = useState(false);
 
   const handleGenerateToken = () => {

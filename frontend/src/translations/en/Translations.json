@@ -731,5 +731,31 @@
     "deleting": "We’re truly sorry to see you go. Deleting your account is a permanent action and will remove all of your data.",
     "feedback": "If there’s anything we can do to improve your experience, we’d love to hear your feedback before you leave.",
     "delete_account": "Delete Account"
+  },
+  "delete_review": {
+    "title_required": "Authentication Required",
+    "text_required": "You need to be logged in to delete your review.",
+    "title_warning": "Delete Review?",
+    "text_warning": "This action is permanent and cannot be undone.",
+    "confirm_deleted": "Yes, delete review",
+    "title_succes": "Review Deleted",
+    "removes_successfully": "Your review ha been removed successfully",
+    "return_profile": "Return to Profile",
+    "review_wromg": "Something went wrong. Please try again",
+    "delete": "Delete"
+  },
+  "detail_profile": {
+    "title_detail": "Account Details",
+    "label_name": "Name:",
+    "label_email": "Email:",
+    "label_role": "Role:",
+    "label_experience": "Experience:",
+    "label_student": "Student",
+    "label_location": "Location (optional):",
+    "label_website": "Website (optional):",
+    "label_portfolio": "Portfolio (optional):",
+    "label_github": "GitHub (optional):",
+    "label_linkedin": "LinkedIn (optional):",
+    "label_bio": "Bio (optional):"
   }
 }

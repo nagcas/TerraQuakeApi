@@ -6,8 +6,10 @@ import { formatDate } from '@/components/utils/FormatDate';
 import DeleteReview from './DeleteReview';
 import UpdateReview from './UpdateReview';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function ViewReview({ userId }) {
+  const { t } = useTranslation('translation');
   const { testimonials, listAllTestimonials } = useTestimonials();
   const [review, setReview] = useState(null);
   const [updateReview, setUpdateReview] = useState(false);

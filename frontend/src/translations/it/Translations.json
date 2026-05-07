@@ -730,5 +730,31 @@
     "deleting": "Ci dispiace davvero vederti andare via. Eliminare il tuo account è un'azione permanente e rimuoverà tutti i tuoi dati.",
     "feedback": "Se c'è qualcosa che possiamo fare per migliorare la tua esperienza, ci piacerebbe ricevere il tuo feedback prima che tu vada via.",
     "delete_account": "Elimina account"
+  },
+  "delete_review": {
+    "title_required": "Autenticazione richiesta",
+    "text_required": "Devi effettuare l'accesso per eliminare la tua recensione.",
+    "title_warning": "Eliminare la recensione?",
+    "text_warning": "Questa azione è permanente e non può essere annullata.",
+    "confirm_deleted": "Sì, elimina recensione",
+    "title_succes": "Recensione eliminata",
+    "removes_successfully": "La tua recensione è stata rimossa con successo",
+    "return_profile": "Torna al profilo",
+    "review_wromg": "Qualcosa è andato storto. Riprova",
+    "delete": "Elimina"
+  },
+  "detail_profile": {
+    "title_detail": "Dettagli account",
+    "label_name": "Nome:",
+    "label_email": "Email:",
+    "label_role": "Ruolo:",
+    "label_experience": "Esperienza:",
+    "label_student": "Studente",
+    "label_location": "Posizione (opzionale):",
+    "label_website": "Sito web (opzionale):",
+    "label_portfolio": "Portfolio (opzionale):",
+    "label_github": "GitHub (opzionale):",
+    "label_linkedin": "LinkedIn (opzionale):",
+    "label_bio": "Bio (opzionale):"
   }
 }

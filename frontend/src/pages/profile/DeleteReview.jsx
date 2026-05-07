@@ -3,8 +3,10 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../noPage/MetaData';
 import axios from '@/config/Axios.js';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteReview({ reviewId, refetchTestimonials }) {
+  const { t } = useTranslation('translation');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -16,8 +18,8 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
 
       if (!token) {
         Swal.fire({
-          title: 'Authentication Required',
-          text: 'You need to be logged in to delete your review.',
+          title: t('delete_review.title_required'),
+          text: t('delete_review.text_required'),
           icon: 'error',
           confirmButtonText: 'Ok',
         });
@@ -26,13 +28,13 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
       }
 
       const result = await Swal.fire({
-        title: 'Delete Review?',
-        text: 'This action is permanent and cannot be undone.',
+        title: t('delete_review.title_warning'),
+        text: t('delete_review.text_warning'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#555',
-        confirmButtonText: 'Yes, delete review',
+        confirmButtonText: t('delete_review.confirm_deleted'),
       });
 
       if (!result.isConfirmed) {
@@ -50,11 +52,11 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
       );
 
       await Swal.fire({
-        title: 'Review Deleted',
+        title: t('delete_review.title_succes'),
         text:
-          response.data.message || 'Your review has been removed successfully.',
+          response.data.message || t('delete_review.removes_successfully'),
         icon: 'success',
-        confirmButtonText: 'Return to Profile',
+        confirmButtonText: t('delete_review.return_profile'),
       });
 
       navigate('/profile', { replace: true });
@@ -65,7 +67,7 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        'Something went wrong. Please try again.';
+        t('delete_review.review_wrong');
 
       Swal.fire({
         title: 'Error',
@@ -103,7 +105,7 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
         onClick={() => handleDeleteReview()}
         className='w-26 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
       >
-        Delete
+        {t('delete_review.delete')}
       </button>
     </>
   );

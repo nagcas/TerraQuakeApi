@@ -2,8 +2,10 @@ import { useContext } from 'react';
 import { Context } from '@/components/modules/Context';
 import useTestimonials from '@/hooks/useTestimonials';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function FunctionsProfile({ setActiveSection }) {
+  const { t } = useTranslation('translation');
   const { userLogin } = useContext(Context);
   const { testimonials } = useTestimonials();
 

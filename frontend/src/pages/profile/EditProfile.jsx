@@ -9,8 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function EditProfile({ setEditProfile }) {
+  const { t } = useTranslation('translation');
   // Get user context and login state
   const { userLogin, setUserLogin, isLoggedIn, setIsLoggedIn } =
     useContext(Context);
