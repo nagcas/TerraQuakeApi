@@ -179,7 +179,13 @@
     "topics": "Temas relacionados",
     "click_tags": "Haz clic en las etiquetas para explorar artículos relacionados",
     "articles_related": "Artículos relacionados",
-    "min": "min"
+    "min": "min",
+    "no_articles": "No se encontraron artículos en la respuesta de la base de datos.",
+    "all_articles": "Todos los artículos",
+    "check_later": "Intenta ajustar los filtros o vuelve a comprobar más tarde.",
+    "again_later": "No se pudo cargar la publicación. Verifica tu conexión o inténtalo de nuevo más tarde.",
+    "load_post": "Error al cargar la publicación",
+    "error_fetching": "Error al obtener la publicación:"
   },
   "pagination": {
     "showing": "Mostrando",

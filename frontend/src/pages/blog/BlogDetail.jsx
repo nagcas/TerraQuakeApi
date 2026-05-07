@@ -47,17 +47,17 @@ export default function BlogDetail() {
         const errorMessage =
           error?.response?.data?.message ||
           error?.response?.data?.error ||
-          'Unable to load post. Please check your connection or try again later.';
+          t('blog.again_later')
 
         Swal.fire({
-          title: 'Failed to Load Post',
+          title: t('blog.load_post'),
           text: errorMessage,
           icon: 'error',
           confirmButtonText: 'OK',
         });
 
         console.error(
-          'Error fetching post:',
+          t('blog.error_fetching'),
           error.response?.data || error.message
         );
         setError(errorMessage);

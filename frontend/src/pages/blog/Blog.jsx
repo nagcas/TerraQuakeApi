@@ -1,6 +1,6 @@
 import './Blog.css';
 import { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import axios from '@config/Axios.js';
 import MetaData from '@pages/noPage/MetaData';
 import { FaCalendarAlt, FaUser } from 'react-icons/fa';
@@ -69,7 +69,9 @@ export default function Blog() {
       const { payload } = response.data;
 
       if (!payload || !payload.posts) {
-        throw new Error('No articles found in the database response.');
+        throw new Error(
+          t('blog.no_articles')
+        );
       }
 
       setPosts(payload.posts);
@@ -90,7 +92,7 @@ export default function Blog() {
       const errorMessage =
         err?.response?.data?.message ||
         err?.message ||
-        'Unable to load posts. Please verify your connection.';
+        t('blog.verify_connection');
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -172,7 +174,7 @@ export default function Blog() {
                       : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:border-purple-500/50 cursor-pointer'
                   }`}
                 >
-                  {cat === '' ? 'All Articles' : cat}
+                  {cat === '' ? t('blog.all_articles') : cat}
                 </button>
               ))}
             </div>
@@ -275,7 +277,7 @@ export default function Blog() {
                 {t('blog.no_posts')}
               </h2>
               <p className='text-gray-400 mt-2'>
-                Try adjusting your filters or checking back later.
+                {t('blog.check_later')}
               </p>
             </div>
           )}

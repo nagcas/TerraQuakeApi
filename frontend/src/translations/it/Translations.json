@@ -179,7 +179,13 @@
     "topics": "Argomenti correlati",
     "click_tags": "Clicca sui tag per esplorare articoli correlati",
     "articles_related": "Articoli correlati",
-    "min": "min"
+    "min": "min",
+    "no_articles": "Nessun articolo trovato nella risposta del database.",
+    "all_articles": "Tutti gli articoli",
+    "check_later": "Prova a modificare i filtri o ricontrolla più tardi.",
+    "again_later": "Impossibile caricare il post. Controlla la connessione o riprova più tardi.",
+    "load_post": "Errore nel caricamento del post",
+    "error_fetching": "Errore durante il recupero del post:"
   },
   "pagination": {
     "showing": "Visualizzazione",

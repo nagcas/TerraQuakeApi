@@ -179,7 +179,14 @@
     "topics": "Related Topics",
     "click_tags": "Click on tags to explore related articles",
     "articles_related": "Related Articles",
-    "min": "min"
+    "min": "min",
+    "no_articles": "No articles found in the database response.",
+    "verify_connection": "Unable to load posts. Please verify your connection.",
+    "all_articles": "All Articles",
+    "check_later": "Try adjusting your filters or checking back later.",
+    "again_later": "Unable to load post. Please check your connection or try again later.",
+    "load_post": "Failed to Load Post",
+    "error_fetching": "Error fetching post:"
   },
   "pagination": {
     "showing": "Showing",
