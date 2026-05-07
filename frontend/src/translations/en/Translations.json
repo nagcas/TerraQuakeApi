@@ -536,7 +536,9 @@
     "of": "of",
     "next": "Next",
     "search": "Search by location...",
-    "export_csv": "Export as CSV"
+    "export_csv": "Export as CSV",
+    "error": "Error!",
+    "failed_fetch": "Failed to fetch stations data. Please ensure the backend server is running."
   },
   "no_page": {
     "description": "The page you are looking for does not exist",
@@ -592,7 +594,9 @@
     "previus": "Previus",
     "page": "Page",
     "of": "of",
-    "next": "Next"
+    "next": "Next",
+    "error": "Error!",
+    "failed_fetch": "Failed to fetch stations data. Please ensure the backend server is running."
   },
   "copy_button": {
     "copied": "Copied",
@@ -679,5 +683,22 @@
     "author": "Project lead: Dr. Gianluca Chiaravalloti — Web Developer & Geologist",
     "close": "Close",
     "menu": "Menu"
+  },
+  "update_review": {
+    "name": "Name is required!",
+    "email": "Invalid email!",
+    "email_required": "Email is required!",
+    "role_required": "Role is required!",
+    "message_required": "Message is required!",
+    "update_success": "Your review has been updated successfully! Thank you for your contribution!",
+    "error_occurred": "An error occurred. Please try again.",
+    "title_update_review": "Update a review",
+    "content_review": "Share your experience with erraQuake API. Your feedback helps developers, researchers, and professionals understand the real value of the platform.",
+    "label_full_name": "Your full name",
+    "text_name": "Your full name",
+    "label_email": "Email",
+    "label_role": "Your professional role",
+    "text_role": "Your professional role (e.g. Researcher, Developer, Geologist)",
+    "review": "Review"
   }
 }

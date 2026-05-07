@@ -535,7 +535,9 @@
     "of": "di",
     "next": "Successiva",
     "search": "Cerca per località...",
-    "export_csv": "Esporta in CSV"
+    "export_csv": "Esporta in CSV",
+    "error": "Errore!",
+    "failed_fetch": "Impossibile recuperare i dati delle stazioni. Assicurati che il server backend sia in esecuzione."
   },
   "no_page": {
     "description": "La pagina che stai cercando non esiste",
@@ -591,7 +593,9 @@
     "previus": "Precedente",
     "page": "Pagina",
     "of": "di",
-    "next": "Successiva"
+    "next": "Successiva",
+    "error": "Errore!",
+    "failed_fetch": "Impossibile recuperare i dati delle stazioni. Assicurati che il server backend sia in esecuzione."
   },
   "copy_button": {
     "copied": "Copiato",
@@ -678,5 +682,22 @@
     "author": "Responsabile progetto: Dr. Gianluca Chiaravalloti — Web Developer & Geologo",
     "close": "Chiudi",
     "menu": "Menu"
+  },
+  "update_review": {
+    "name": "Il nome è obbligatorio!",
+    "email": "Email non valida!",
+    "email_required": "L'email è obbligatoria!",
+    "role_required": "Il ruolo è obbligatorio!",
+    "message_required": "Il messaggio è obbligatorio!",
+    "update_success": "La tua recensione è stata aggiornata con successo! Grazie per il tuo contributo!",
+    "error_occurred": "Si è verificato un errore. Riprova.",
+    "title_update_review": "Aggiorna una recensione",
+    "content_review": "Condividi la tua esperienza con TerraQuake API. Il tuo feedback aiuta sviluppatori, ricercatori e professionisti a comprendere il reale valore della piattaforma.",
+    "label_full_name": "Il tuo nome completo",
+    "text_name": "Il tuo nome completo",
+    "label_email": "Email",
+    "label_role": "Il tuo ruolo professionale",
+    "text_role": "Il tuo ruolo professionale (es. Ricercatore, Sviluppatore, Geologo)",
+    "review": "Recensione"
   }
 }

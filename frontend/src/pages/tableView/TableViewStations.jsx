@@ -36,8 +36,8 @@ export default function TableViewStations() {
         setLoading(false);
       } catch (error) {
         Swal.fire({
-          title: 'Error!',
-          text: 'Failed to fetch stations data. Please ensure the backend server is running.',
+          title: t('table_view_stations.error'),
+          text: t('table_view_stations.failed_fetch'),
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {

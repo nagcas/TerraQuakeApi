@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
 import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
+import { useTranslation } from 'react-i18next';
 
 export default function UpdateReview({
   reviewId,
@@ -18,6 +19,8 @@ export default function UpdateReview({
   setReview,
   refetchTestimonials,
 }) {
+  const { t } = useTranslation('translation');
+
   // Get user context and login state
   const { userLogin, isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
@@ -25,10 +28,10 @@ export default function UpdateReview({
 
   // Validation schema using Yup
   const updateReviewSchema = yup.object({
-    name: yup.string().required('Name is required!'),
-    email: yup.string().email('Invalid email!').required('Email is required!'),
-    role: yup.string().required('Role is required!'),
-    message: yup.string().required('Message is required!'),
+    name: yup.string().required(t('update_review.name')),
+    email: yup.string().email('update_review.email').required(t('update_review.email_required')),
+    role: yup.string().required(t('update_review.role-required')),
+    message: yup.string().required(t('update_review.message_required')),
   });
 
   // React Hook Form setup
@@ -83,7 +86,7 @@ export default function UpdateReview({
 
       Swal.fire({
         title: 'Success!',
-        text: 'Your review has been updated successfully. Thank you for your contribution!',
+        text: t('update_review.update_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
       });
@@ -100,7 +103,7 @@ export default function UpdateReview({
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        'An error occurred. Please try again.';
+        t('update_review.error_occurred');
 
       Swal.fire({
         title: 'Error!',
@@ -148,13 +151,11 @@ export default function UpdateReview({
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              Update a Review
+              {t('update_review.title_update_review')}
             </h2>
             <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-left text-white/70 max-w-7xl'>
-              Share your experience with TerraQuake API. Your feedback helps
-              developers, researchers, and professionals understand the real
-              value of the platform.
+              {t('update_review.content_review')}
             </p>
           </motion.div>
 
@@ -171,15 +172,19 @@ export default function UpdateReview({
             >
               {[
                 {
-                  label: 'Your full name',
+                  label: t('update_review.label_full_name'),
                   field: 'name',
-                  text: 'Your full name',
+                  text: t('update_review.text_name'),
                 },
-                { label: 'Email', field: 'email', text: 'name@company.com' },
+                { 
+                  label: t('update_review.label_email'), 
+                  field: 'email', 
+                  text: 'name@company.com' 
+                },
                 {
-                  label: 'Your professional role',
+                  label: t('update_review.label_role'),
                   field: 'role',
-                  text: 'Your professional role (e.g. Researcher, Developer, Geologist)',
+                  text: t('update_review.text_role'),
                 },
               ].map(({ label, field, text }) => (
                 <div key={label}>
@@ -201,7 +206,7 @@ export default function UpdateReview({
               {/* Review field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  Review
+                  t('update_review.review')
                 </label>
                 <textarea
                   className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'

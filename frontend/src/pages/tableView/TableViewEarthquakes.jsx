@@ -38,8 +38,8 @@ export default function TableViewEarthquakes() {
         setLoading(false);
       } catch (error) {
         Swal.fire({
-          title: 'Error!',
-          text: 'Failed to fetch earthquake data. Please ensure the backend server is running.',
+          title: t('table_earthquakes.error'),
+          text: t('table_earthquakes.failed_fetch'),
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
