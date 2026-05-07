@@ -21,10 +21,10 @@ export default function EditProfile({ setEditProfile }) {
 
   // Validation schema using Yup
   const updateUserSchema = yup.object({
-    name: yup.string().required('Name is required!'),
-    email: yup.string().email('Invalid email!').required('Email is required!'),
-    experience: yup.string().required('Experience is required!'),
-    student: yup.string().required('Please select if you are a student!'),
+    name: yup.string().required(t('edit_profile.name_required')),
+    email: yup.string().email(t('edit_profile.email_invalid')).required(t('edit_profile.email_required')),
+    experience: yup.string().required(t('edit_profile.experience_required')),
+    student: yup.string().required(t('edit_profile.select_student')),
   });
 
   // React Hook Form setup
@@ -81,7 +81,7 @@ export default function EditProfile({ setEditProfile }) {
 
       Swal.fire({
         title: 'Success!',
-        text: 'Profile updated successfully.',
+        text: t('edit_profile.updated_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
       });
@@ -96,7 +96,7 @@ export default function EditProfile({ setEditProfile }) {
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        'An error occurred. Please try again.';
+        t('edit_profile.error_occurred');
 
       Swal.fire({
         title: 'Error!',
@@ -143,13 +143,11 @@ export default function EditProfile({ setEditProfile }) {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              Edit your Profile
+              {t('edit_profile.title_edit')}
             </h2>
             <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-left text-white/70 max-w-7xl'>
-              In the Edit Profile section, you can update your personal
-              information such as your name, email, experience, and whether
-              you’re a student.
+              {t('edit_profile.text_edit')}
             </p>
           </motion.div>
 
@@ -166,37 +164,37 @@ export default function EditProfile({ setEditProfile }) {
             >
               {[
                 { 
-                  label: 'Update Name', 
+                  label: t('edit_profile.label_name'), 
                   field: 'name', 
-                  text: 'Your name' 
+                  text: t('edit_profile.text_name') 
                 },
                 {
-                  label: 'Update Email',
+                  label: t('edit_profile.label_email'),
                   field: 'email',
                   text: 'name@company.com',
                 },
                 {
-                  label: 'Update location (optional)',
+                  label: t('edit_profile.label_location'),
                   field: 'location',
-                  text: 'Location',
+                  text: t('edit_profile.text_location'),
                 },
                 {
-                  label: 'Update Website url (optional)',
+                  label: t('edit_profile.label_website'),
                   field: 'website',
-                  text: 'Website',
+                  text: t('edit_profile.text_website'),
                 },
                 {
-                  label: 'Update Portfolio url (optional)',
+                  label: t('edit_profile.label_portfolio'),
                   field: 'portfolio',
                   text: 'portfolio',
                 },
                 {
-                  label: 'Update GitHub url (optional)',
+                  label: t('edit_profile.label_github'),
                   field: 'github',
                   text: 'github',
                 },
                 {
-                  label: 'Update LinkedIn url (optional)',
+                  label: t('edit_profile.label_linkedin'),
                   field: 'linkedin',
                   text: 'linkedin',
                 },
@@ -227,7 +225,7 @@ export default function EditProfile({ setEditProfile }) {
               {/* Experience field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  Experience
+                  {t('edit_profile.experience')}
                 </label>
                 <select
                   className='w-full px-5 py-3 border-2 rounded-xl bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -238,25 +236,25 @@ export default function EditProfile({ setEditProfile }) {
                     disabled
                     className='bg-gray-900 text-gray-400'
                   >
-                    Select an option
+                    {t('edit_profile.select_option')}
                   </option>
                   <option
                     value='Beginner'
                     className='bg-gray-900 text-gray-400'
                   >
-                    Beginner
+                    {t('edit_profile.beginner')}
                   </option>
                   <option
                     value='Intermediate'
                     className='bg-gray-900 text-gray-400'
                   >
-                    Intermediate
+                    {t('edit_profile.intermediate')}
                   </option>
                   <option
                     value='Expert'
                     className='bg-gray-900 text-gray-400'
                   >
-                    Expert
+                    {t('edit_profile.expert')}
                   </option>
                 </select>
                 <p className='text-red-400 text-xs pt-1'>
@@ -267,7 +265,7 @@ export default function EditProfile({ setEditProfile }) {
               {/* Student field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  Student
+                  {t('edit_profile.student')}
                 </label>
                 <select
                   className='w-full px-5 py-3 border-2 rounded-xl bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -278,19 +276,19 @@ export default function EditProfile({ setEditProfile }) {
                     disabled
                     className='bg-gray-900 text-gray-400'
                   >
-                    Select an option
+                    {t('edit_profile.select_option')}
                   </option>
                   <option
                     value='Yes'
                     className='bg-gray-900 text-gray-400'
                   >
-                    Yes
+                    {t('edit_profile.yes')}
                   </option>
                   <option
                     value='No'
                     className='bg-gray-900 text-gray-400'
                   >
-                    No
+                    {t('edit_profile.no')}
                   </option>
                 </select>
                 <p className='text-red-400 text-xs pt-1'>
@@ -301,13 +299,13 @@ export default function EditProfile({ setEditProfile }) {
               {/* Bio field */}
               <div>
                 <label className='block text-white text-sm font-semibold mb-2'>
-                  Update Bio (optional)
+                  {t('edit_profile.update_bio')}
                 </label>
                 <textarea
                   className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
                   placeholder='Bio'
                   autoComplete='off'
-                  rows={4} // puoi cambiare il numero di righe visibili
+                  rows={4}
                   {...register('bio')}
                 />
               </div>
@@ -319,7 +317,7 @@ export default function EditProfile({ setEditProfile }) {
                 aria-label='Save Changes'
                 className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
               >
-                {loading ? <Spinner /> : 'Save Changes'}
+                {loading ? <Spinner /> : t('edit_profile.save_changes')}
               </button>
             </form>
           </motion.div>
