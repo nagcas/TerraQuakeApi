@@ -102,7 +102,7 @@ export default function NavbarMenu() {
         to='/'
         aria-label='TerraQuake home'
       >
-        <div className='flex items-center text-2xl font-bold w-fit h-12 relative'>
+        <div className='flex items-center text-xl md:text-2xl font-bold w-fit h-12 relative'>
           <img
             src={Sismic}
             alt='Logo'
@@ -333,7 +333,7 @@ export default function NavbarMenu() {
       {/* Translation select */}
       <div
         ref={translationRef}
-        className='relative right-4'
+        className='relative text-sm'
       >
         <button
           type='button'
