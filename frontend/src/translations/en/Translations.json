@@ -699,6 +699,37 @@
     "label_email": "Email",
     "label_role": "Your professional role",
     "text_role": "Your professional role (e.g. Researcher, Developer, Geologist)",
-    "review": "Review"
+    "review": "Review",
+    "update_review": "Update Review"
+  },
+  "create_review": {
+    "name": "Name is required!",
+    "email": "Invalid email!",
+    "email_required": "Email is required!",
+    "role_required": "Role is required!",
+    "message_required": "Message is required!",
+    "text_review_success": "Your review has been submitted successfully. Thank you for your contribution!",
+    "error_review": "An error occurred. Please try again.",
+    "title_review": "Leave a Review",
+    "content_review": "Share your experience with erraQuake API. Your feedback helps developers, researchers, and professionals understand the real value of the platform.",
+    "label_full_name": "Your full name",
+    "text_name": "Your full name",
+    "label_email": "Email",
+    "label_role": "Your professional role",
+    "text_role": "Your professional role (e.g. Researcher, Developer, Geologist)",
+    "review": "Review",
+    "submit_review": "Submit review"
+  },
+  "delete_profile": {
+    "text_error": "You must be logged in to delete your account.",
+    "title_warning": "Are you sure?",
+    "text_warning": "You won't be able to revert this!",
+    "confirm_delete": "Yes, delete it!",
+    "deleted_success": "Your account has been deleted successfully.",
+    "confirm_text": "Home page",
+    "deleted_error": "An error occurred. Please try again.",
+    "deleting": "We’re truly sorry to see you go. Deleting your account is a permanent action and will remove all of your data.",
+    "feedback": "If there’s anything we can do to improve your experience, we’d love to hear your feedback before you leave.",
+    "delete_account": "Delete Account"
   }
 }

@@ -227,7 +227,7 @@ export default function UpdateReview({
                 aria-label='Save Changes'
                 className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
               >
-                {loading ? <Spinner /> : 'Update Review'}
+                {loading ? <Spinner /> : t('update_review.update_review')}
               </button>
             </form>
           </motion.div>

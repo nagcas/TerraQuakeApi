@@ -5,9 +5,12 @@ import { Context } from '@/components/modules/Context';
 import MetaData from '../noPage/MetaData';
 import Spinner from '@/components/spinner/Spinner';
 import axios from '@/config/Axios.js';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteProfile() {
-  const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
+  const { t } = useTranslation('translation');
+
+  const { isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
 
   const [loading, setLoading] = useState(false);
@@ -24,7 +27,7 @@ export default function DeleteProfile() {
       if (!token) {
         Swal.fire({
           title: 'Error!',
-          text: 'You must be logged in to delete your account.',
+          text: t('delete_profile.text_error'),
           icon: 'error',
           confirmButtonText: 'Ok',
         });
@@ -34,13 +37,13 @@ export default function DeleteProfile() {
 
       // Ask for confirmation before performing the delete request
       const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: t('delete_profile.title_warning'),
+        text: t('delete_profile.text_warning'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: t('delete_profile.confirm_delete'),
       });
 
       // If the user cancels, stop the process
@@ -61,9 +64,9 @@ export default function DeleteProfile() {
         title: 'Deleted!',
         text:
           response.data.message ||
-          'Your account has been deleted successfully.',
+          t('delete_profile.deleted_success'),
         icon: 'success',
-        confirmButtonText: 'Home page',
+        confirmButtonText: t('delete_profile.confirm_text'),
       });
 
       // Clear user session and redirect to home
@@ -79,7 +82,7 @@ export default function DeleteProfile() {
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        'An error occurred. Please try again.';
+        t('delete_profile.deleted_error');
       
       Swal.fire({
         title: 'Error!',
@@ -114,12 +117,10 @@ export default function DeleteProfile() {
       <section className='col-span-1 lg:col-span-2 bg-black/30 backdrop-blur-xl border border-pink-500/10 rounded-2xl shadow-lg p-6 sm:p-8 mt-6'>
         <div className='flex flex-col items-center gap-4 mt-20'>
           <p className='text-2xl text-center pt-5 text-gray-300'>
-            We’re truly sorry to see you go. Deleting your account is a
-            permanent action and will remove all of your data.
+            {t('delete_profile.deleting')}
           </p>
           <p className='text-xl text-center text-gray-300'>
-            If there’s anything we can do to improve your experience, we’d love
-            to hear your feedback before you leave.
+            {t('delete_profile.feedback')}
           </p>
           <button
             onClick={handleDelete}
@@ -127,7 +128,7 @@ export default function DeleteProfile() {
             className='mt-6 w-auto py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer disabled:opacity-50'
             aria-label='Delete your account'
           >
-            {loading ? <Spinner /> : 'Delete account'}
+            {loading ? <Spinner /> : t('delete_profile.delete_account')}
           </button>
         </div>
       </section>

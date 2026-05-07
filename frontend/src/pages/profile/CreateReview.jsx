@@ -10,8 +10,11 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
 import AccessRestricted from '@/components/accessRestricted/AccessRestricted';
+import { useTranslation } from 'react-i18next';
 
 export default function CreateReview({ setCreateReview }) {
+  const { t } = useTranslation('translation');
+
   // Get user context and login state
   const { userLogin, isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
@@ -19,10 +22,10 @@ export default function CreateReview({ setCreateReview }) {
 
   // Validation schema using Yup
   const createReviewSchema = yup.object({
-    name: yup.string().required('Name is required!'),
-    email: yup.string().email('Invalid email!').required('Email is required!'),
-    role: yup.string().required('Role is required!'),
-    message: yup.string().required('Message is required!'),
+    name: yup.string().required(t('create_review.name')),
+    email: yup.string().email(t('create_review.email')).required(t('create_review.email_required')),
+    role: yup.string().required(t('create_review.role_required')),
+    message: yup.string().required(t('create_review.message_required')),
   });
 
   // React Hook Form setup
@@ -75,7 +78,7 @@ export default function CreateReview({ setCreateReview }) {
 
       Swal.fire({
         title: 'Success!',
-        text: 'Your review has been submitted successfully. Thank you for your contribution!',
+        text: t('create_review.text_review_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
       });
@@ -90,7 +93,7 @@ export default function CreateReview({ setCreateReview }) {
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        'An error occurred. Please try again.';
+        t('create_review.error_review');
 
       Swal.fire({
         title: 'Error!',
@@ -139,13 +142,11 @@ export default function CreateReview({ setCreateReview }) {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-                Leave a Review
+                {t('create_review.title_review')}
               </h2>
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
               <p className='text-xl text-left text-white/70 max-w-7xl'>
-                Share your experience with TerraQuake API. Your feedback helps
-                developers, researchers, and professionals understand the real
-                value of the platform.
+                {t('create_review.content_review')}
               </p>
             </motion.div>
 
@@ -161,9 +162,20 @@ export default function CreateReview({ setCreateReview }) {
                 onSubmit={handleSubmit(handleCreateReview)}
               >
                 {[
-                  { label: 'Your full name', field: 'name', text: 'Your full name' },
-                  { label: 'Email', field: 'email', text: 'name@company.com' },
-                  { label: 'Your professional role', field: 'role', text: 'Your professional role (e.g. Researcher, Developer, Geologist)' },
+                  { 
+                    label: t('create_review.label_name'), 
+                    field: 'name', 
+                    text: t('create_review.text_name') 
+                  },
+                  { 
+                    label: t('create_review.label_email'), 
+                    field: 'email', 
+                    text: 'name@company.com' },
+                  { 
+                    label: t('create_review.label_role'), 
+                    field: 'role', 
+                    text: t('create_review.text_role') 
+                  },
                 ].map(({ label, field, text }) => (
                     <div key={label}>
                       <label className='block text-white text-sm font-semibold mb-2'>
@@ -184,7 +196,7 @@ export default function CreateReview({ setCreateReview }) {
                 {/* Review field */}
                 <div>
                   <label className='block text-white text-sm font-semibold mb-2'>
-                    Review
+                    {t('create_review.review')}
                   </label>
                   <textarea
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
@@ -202,7 +214,7 @@ export default function CreateReview({ setCreateReview }) {
                   aria-label='Save Changes'
                   className='w-full mt-10 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-4 px-6 rounded-full hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-transform duration-300 ease-in-out cursor-pointer disabled:opacity-60'
                 >
-                  {loading ? <Spinner /> : 'Submit Review'}
+                  {loading ? <Spinner /> : t('create_review.submit_review')}
                 </button>
               </form>
             </motion.div>

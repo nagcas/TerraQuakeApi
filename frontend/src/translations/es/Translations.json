@@ -698,6 +698,37 @@
     "label_email": "Correo electrónico",
     "label_role": "Tu rol profesional",
     "text_role": "Tu rol profesional (ej. Investigador, Desarrollador, Geólogo)",
-    "review": "Reseña"
+    "review": "Reseña",
+    "update_review": "Actualizar reseña"
+  },
+  "create_review": {
+    "name": "¡El nombre es obligatorio!",
+    "email": "¡Correo electrónico no válido!",
+    "email_required": "¡El correo electrónico es obligatorio!",
+    "role_required": "¡El rol es obligatorio!",
+    "message_required": "¡El mensaje es obligatorio!",
+    "text_review_success": "Tu reseña ha sido enviada con éxito. ¡Gracias por tu contribución!",
+    "error_review": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "title_review": "Dejar una reseña",
+    "content_review": "Comparte tu experiencia con TerraQuake API. Tus comentarios ayudan a desarrolladores, investigadores y profesionales a comprender el verdadero valor de la plataforma.",
+    "label_full_name": "Tu nombre completo",
+    "text_name": "Tu nombre completo",
+    "label_email": "Correo electrónico",
+    "label_role": "Tu rol profesional",
+    "text_role": "Tu rol profesional (ej. Investigador, Desarrollador, Geólogo)",
+    "review": "Reseña",
+    "submit_review": "Enviar reseña"
+  },
+  "delete_profile": {
+    "text_error": "Debes iniciar sesión para eliminar tu cuenta.",
+    "title_warning": "¿Estás seguro?",
+    "text_warning": "¡No podrás revertir esta acción!",
+    "confirm_delete": "¡Sí, eliminar!",
+    "deleted_success": "Tu cuenta ha sido eliminada con éxito.",
+    "confirm_text": "Página principal",
+    "deleted_error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "deleting": "Lamentamos mucho verte partir. Eliminar tu cuenta es una acción permanente y eliminará todos tus datos.",
+    "feedback": "Si hay algo que podamos hacer para mejorar tu experiencia, nos encantaría recibir tus comentarios antes de que te vayas.",
+    "delete_account": "Eliminar cuenta"
   }
 }
