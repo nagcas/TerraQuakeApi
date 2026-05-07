@@ -165,7 +165,11 @@ export default function EditProfile({ setEditProfile }) {
               onSubmit={handleSubmit(handleUpdateUser)}
             >
               {[
-                { label: 'Update Name', field: 'name', text: 'Your name' },
+                { 
+                  label: 'Update Name', 
+                  field: 'name', 
+                  text: 'Your name' 
+                },
                 {
                   label: 'Update Email',
                   field: 'email',

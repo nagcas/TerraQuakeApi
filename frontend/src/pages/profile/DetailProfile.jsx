@@ -14,7 +14,7 @@ export default function DetailProfile() {
       <div className='grid sm:grid-cols-2 gap-4 sm:gap-6 text-gray-300 text-sm sm:text-base'>
         {[
           { 
-            label: t('detail_profile.title_name'), 
+            label: t('detail_profile.label_name'), 
             value: userLogin?.name, 
             type: 'text' 
           },
