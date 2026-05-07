@@ -163,7 +163,7 @@ export default function CreateReview({ setCreateReview }) {
               >
                 {[
                   { 
-                    label: t('create_review.label_name'), 
+                    label: t('create_review.label_full_name'), 
                     field: 'name', 
                     text: t('create_review.text_name') 
                   },
