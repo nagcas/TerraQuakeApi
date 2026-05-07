@@ -3,7 +3,8 @@
     "h1": "Practice with Real Seismic Data",
     "p": "A training and experimentation environment powered by real seismic events from official sources Perfect for students, developers, and technicians looking to learn by working with real-world data.",
     "sign_up": "Sign Up",
-    "explore_seismic_events": "Explore Seismic Events"
+    "explore_seismic_events": "Explore Seismic Events",
+    "documentation_link": "Documentation"
   },
   "info": {
     "title_event": "Event Details",

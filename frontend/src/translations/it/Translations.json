@@ -3,7 +3,8 @@
     "h1": "Esercitati con dati sismici reali",
     "p": "Un ambiente di formazione e sperimentazione basato su eventi sismici reali provenienti da fonti ufficiali. Ideale per studenti, sviluppatori e tecnici che vogliono apprendere lavorando con dati del mondo reale.",
     "sign_up": "Registrati",
-    "explore_seismic_events": "Esplora eventi sismici"
+    "explore_seismic_events": "Esplora eventi sismici",
+    "documentation_link": "Documentazione"
   },
   "info": {
     "title_event": "Dettagli dell’evento",

@@ -3,7 +3,8 @@
     "h1": "Practica con datos sísmicos reales",
     "p": "Un entorno de formación y experimentación basado en eventos sísmicos reales procedentes de fuentes oficiales. Ideal para estudiantes, desarrolladores y técnicos que desean aprender trabajando con datos del mundo real.",
     "sign_up": "Regístrate",
-    "explore_seismic_events": "Explorar eventos sísmicos"
+    "explore_seismic_events": "Explorar eventos sísmicos",
+    "documentation_link": "Documentación"
   },
   "info": {
     "title_event": "Detalles del evento",

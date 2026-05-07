@@ -85,6 +85,15 @@ export default function Hero() {
             >
               {t('hero.explore_seismic_events')}
             </button>
+            <button
+              className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
+              onClick={() => window.open(
+                'https://docs.terraquakeapi.com/introduction',
+                '_blank'
+              )}
+            >
+              {t('hero.documentation_link')}
+            </button>
           </motion.div>
         </motion.div>
 
