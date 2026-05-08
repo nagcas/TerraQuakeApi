@@ -243,7 +243,15 @@
     "forgot_password": "Password dimenticata?",
     "button_login": "Accedi",
     "not_account": "Non hai ancora un account?",
-    "create_account": "Crea un account"
+    "create_account": "Crea un account",
+    "invalid_email": "Email non valida!",
+    "email_required": "L'email è obbligatoria!",
+    "password_required": "La password è obbligatoria!",
+    "login_failed": "Accesso fallito. Riprova.",
+    "label_email": "Email",
+    "label_password": "Password",
+    "success": "Successo!",
+    "error": "Errore!"
   },
   "sign_up": {
     "title": "Crea account.",

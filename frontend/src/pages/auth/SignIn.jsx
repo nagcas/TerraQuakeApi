@@ -25,8 +25,8 @@ export default function SignIn() {
 
   // Validation schema
   const loginSchema = yup.object({
-    email: yup.string().email('Invalid email!').required('Email is required!'),
-    password: yup.string().required('Password is required!'),
+    email: yup.string().email(t('sign_in.invalid_email')).required(t('sign_in.email_required')),
+    password: yup.string().required(t('sign_in.password_required')),
   });
 
   const {
@@ -52,7 +52,7 @@ export default function SignIn() {
       localStorage.setItem('token', response.data.token);
 
       Swal.fire({
-        title: 'Success!',
+        title: t('sign_in.success'),
         text: response.data.message,
         icon: 'success',
         confirmButtonText: 'Profile',
@@ -64,10 +64,10 @@ export default function SignIn() {
       const errorMessage =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        'Login failed. Please try again.';
+        t('sign_in.login_failed');
 
       Swal.fire({
-        title: 'Error!',
+        title: t('sign_in.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',
@@ -145,8 +145,14 @@ export default function SignIn() {
 
               <form onSubmit={handleSubmit(handleLoginSubmit)}>
                 {[
-                  { label: 'Email', field: 'email' },
-                  { label: 'Password', field: 'password' },
+                  { 
+                    label: t('sign_in.label_email'), 
+                    field: 'email' 
+                  },
+                  { 
+                    label: t('sign_in.label_password'), 
+                    field: 'password' 
+                  },
                 ].map(({ label, field }) => (
                   <div
                     key={field}

@@ -243,7 +243,15 @@
     "forgot_password": "¿Olvidaste tu contraseña?",
     "button_login": "Acceder",
     "not_account": "¿Aún no tienes una cuenta?",
-    "create_account": "Crear cuenta"
+    "create_account": "Crear cuenta",
+    "invalid_email": "¡Correo electrónico no válido!",
+    "email_required": "¡El correo electrónico es obligatorio!",
+    "password_required": "¡La contraseña es obligatoria!",
+    "login_failed": "Error de inicio de sesión. Por favor, inténtalo de nuevo.",
+    "label_email": "Correo electrónico",
+    "label_password": "Contraseña",
+    "success": "¡Éxito!",
+    "error": "¡Error!"
   },
   "sign_up": {
     "title": "Crear cuenta.",

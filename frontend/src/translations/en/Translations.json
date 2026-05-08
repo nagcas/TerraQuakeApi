@@ -244,7 +244,15 @@
     "forgot_password": "Forgot Password?",
     "button_login": "Login",
     "not_account": "Don’t have an account yet?",
-    "create_account": "Create Account"
+    "create_account": "Create Account",
+    "invalid_email": "Invalid email!",
+    "email_required": "Email is required!",
+    "password_required": "Password is required!",
+    "login_failed": "Login failed. Please try again.",
+    "label_email": "Email",
+    "label_password": "Password",
+    "success": "Success!",
+    "error": "Error!"
   },
   "sign_up": {
     "title": "Create account.",
