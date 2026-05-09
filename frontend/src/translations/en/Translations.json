@@ -308,7 +308,8 @@
     "label_email": "Email",
     "label_password": "Password",
     "success": "Success!",
-    "error": "Error!"
+    "error": "Error!",
+    "profile": "Profile"
   },
   "sign_up": {
     "title": "Create account.",

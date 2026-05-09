@@ -55,7 +55,7 @@ export default function SignIn() {
         title: t('sign_in.success'),
         text: response.data.message,
         icon: 'success',
-        confirmButtonText: 'Profile',
+        confirmButtonText: t('sign_in.profile'),
       }).then(() => {
         setLoading(false);
         navigate('/profile', { replace: true });

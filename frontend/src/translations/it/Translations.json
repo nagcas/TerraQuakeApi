@@ -295,7 +295,8 @@
     "label_email": "Email",
     "label_password": "Password",
     "success": "Successo!",
-    "error": "Errore!"
+    "error": "Errore!",
+    "profile": "Profilo"
   },
   "sign_up": {
     "title": "Crea account.",
