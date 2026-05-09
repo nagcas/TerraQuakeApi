@@ -18,18 +18,18 @@ export default function DocsStations() {
 
   const sections = useMemo(
     () => [
-      { id: 'getting-started', label: 'Getting Started' },
-      { id: 'common-parameters', label: 'Common Parameters' },
-      { id: 'response-format', label: 'Response Format' },
-      { id: 'endpoints', label: 'API Endpoints' },
-      { id: 'stations', label: 'Stations' },
-      { id: 'stations-geojson', label: 'GeoJSON-Based' },
-      { id: 'stations-events', label: 'Event-Based' },
-      { id: 'stations-property', label: 'Property-Based' },
-      { id: 'error-handling', label: 'Error Handling' },
-      { id: 'code-examples', label: 'Code Examples' },
-      { id: 'support', label: 'Support & Feedback' },
-      { id: 'api-information', label: 'API Information' },
+      { id: 'getting-started', label: t('docs_stations.label_started') },
+      { id: 'common-parameters', label: t('docs_stations.label_parameters') },
+      { id: 'response-format', label: t('docs_stations.label_format') },
+      { id: 'endpoints', label: t('docs_stations.label_endpoints') },
+      { id: 'stations', label: t('docs_stations.label_stations') },
+      { id: 'stations-geojson', label: t('docs_stations.label_geojson') },
+      { id: 'stations-events', label: t('docs_stations.label_event') },
+      { id: 'stations-property', label: t('docs_stations.label_property') },
+      { id: 'error-handling', label: t('docs_stations.label_error') },
+      { id: 'code-examples', label: t('docs_stations.label_code') },
+      { id: 'support', label: t('docs_stations.label_support') },
+      { id: 'api-information', label: t('docs_stations.label_information') },
     ],
     []
   );
@@ -225,13 +225,11 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-              TerraQuake API Documentation.
+              {t('docs_stations.title')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
             <p className='text-xl text-center md:text-left text-white/70 max-w-7xl'>
-              Comprehensive programmatic access to INGV seismic station data —
-              endpoints, query parameters, usage examples, and integration best
-              practices.
+              {t('docs_stations.text_docs')}
             </p>
           </motion.div>
 
@@ -256,7 +254,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
             >
               <nav className='sticky top-24 bg-slate-900/50 border border-white/5 rounded-lg p-4 backdrop-blur'>
                 <h4 className='text-sm font-semibold text-white mb-3'>
-                  Contents
+                  {t('docs_stations.contents')}
                 </h4>
                 <ul className='space-y-2 text-sm'>
                   {sections.map((s) => (
@@ -288,7 +286,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Getting Started - Stations
+                  {t('docs_stations.get_started')}
                 </h2>
                 <p className='text-white/80 mt-2'>
                   <strong>Base URL:</strong>{' '}
@@ -297,18 +295,17 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                   </code>
                 </p>
                 <p className='text-white/80 mt-2'>
-                  <strong>Authentication:</strong> Currently no authentication
-                  required — endpoints are public.
+                  <strong>{t('docs_stations.authentication')}</strong> {t('docs_stations.token_required')}
                 </p>
 
                 <h3 className='mt-4 text-lg font-semibold text-white'>
-                  Rate Limits
+                  {t('docs_stations.rate_limits')}
                 </h3>
                 <p className='text-white/80'>
-                  Fixed-window: <strong>100 requests / second per IP</strong>.
+                  {t('docs_stations.fixed')} <strong>{t('docs_stations.requests')}</strong>
                 </p>
                 <p className='text-white/70 text-sm mt-2'>
-                  Headers:{' '}
+                  {t('docs_stations.headers')}{' '}
                   <code className='px-1 py-0.5 bg-slate-800 rounded'>
                     X-RateLimit-Limit
                   </code>
@@ -351,19 +348,19 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-6'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Common Parameters
+                  {t('docs_stations.parameters')}
                 </h2>
-                <p className='text-white/80 mt-2'>Most endpoints accept:</p>
+                <p className='text-white/80 mt-2'>{t('docs_stations.endpoints')}</p>
                 <ul className='list-disc list-inside text-white/80 mt-2'>
                   <li>
-                    <code>page</code> — integer, default <strong>1</strong>
+                    <code>page</code> — {t('docs_stations.integer')} <strong>1</strong>
                   </li>
                   <li>
-                    <code>limit</code> — integer, default <strong>50</strong>
+                    <code>limit</code> — {t('docs_stations.integer')} <strong>50</strong>
                   </li>
                 </ul>
                 <p className='text-white/70 text-sm mt-2'>
-                  Example:{' '}
+                  {t('docs_stations.example')}{' '}
                   <code className='px-1 py-0.5 bg-slate-800 rounded'>
                     ?page=2&amp;limit=100
                   </code>
@@ -376,9 +373,9 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-6'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Response Format
+                  {t('docs_stations.response_format')}
                 </h2>
-                <p className='text-white/80 mt-2'>All responses follow:</p>
+                <p className='text-white/80 mt-2'>{t('docs_stations.all_response')}</p>
                 <SyntaxHighlighter
                   language='json'
                   style={atomOneDark}
@@ -432,22 +429,21 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  API Endpoints Stations
+                  {t('docs_stations.api_stations')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Code, geoJson, open, closed and statistics endpoints are
-                  available.
+                  {t('docs_stations.available')}
                 </p>
 
                 <div className='mt-4 overflow-x-auto rounded border border-white/5 bg-slate-900/30'>
                   <table className='w-full text-sm'>
                     <thead className='bg-slate-800/60'>
                       <tr>
-                        <th className='p-3 text-left'>Method</th>
-                        <th className='p-3 text-left'>Endpoint</th>
-                        <th className='p-3 text-left'>Description</th>
+                        <th className='p-3 text-left'>{t('docs_stations.method')}</th>
+                        <th className='p-3 text-left'>{t('docs_stations.endpoint')}</th>
+                        <th className='p-3 text-left'>{t('docs_stations.description')}</th>
                         <th className='p-3 text-left'>
-                          Query Params (* req = required)
+                          {t('docs_stations.query_params')} (* req = {t('docs_stations.required')})
                         </th>
                       </tr>
                     </thead>
@@ -493,7 +489,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 </div>
 
                 <div className='mt-6'>
-                  <h4 className='font-semibold text-white'>Example Request</h4>
+                  <h4 className='font-semibold text-white'>{t('docs_stations.example_request')}</h4>
                   <SyntaxHighlighter
                     language='bash'
                     style={atomOneDark}
@@ -511,7 +507,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 </div>
 
                 <div className='mt-6'>
-                  <h4 className='font-semibold text-white'>Example Response</h4>
+                  <h4 className='font-semibold text-white'>{t('docs_stations.example_response')}</h4>
                   <SyntaxHighlighter
                     language='json'
                     style={atomOneDark}
@@ -531,14 +527,14 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 id='stations'
                 className='scroll-mt-[120px] py-16'
               >
-                <h2 className='text-xl font-bold text-white'>Stations</h2>
+                <h2 className='text-xl font-bold text-white'>{t('docs_stations.stations')}</h2>
 
                 <article className='mt-4'>
                   <h4 className='font-semibold text-white'>
                     GET /v1/earthquakes/stations
                   </h4>
                   <p className='text-white/80'>
-                    Returns all available seismic stations.
+                    {t('docs_stations.return')}
                   </p>
                 </article>
               </section>
@@ -549,7 +545,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Stations-GeoJSON
+                  {t('docs_stations.station_geojson')}
                 </h2>
 
                 <article className='mt-4'>
@@ -557,9 +553,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                     GET /v1/earthquakes/stations/geojson
                   </h4>
                   <p className='text-white/80'>
-                    Returns all seismic stations in GeoJSON format. Supports
-                    bounding-box filters for geospatial mapping and
-                    visualization.
+                    {t('docs_stations.mapping')}
                   </p>
                 </article>
               </section>
@@ -570,7 +564,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Station by Code
+                  {t('docs_stations.station_code')}
                 </h2>
 
                 <article className='mt-4'>
@@ -578,9 +572,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                     GET /v1/stations/code?code=ACATE
                   </h4>
                   <p className='text-white/80'>
-                    Retrieve detailed metadata for a single seismic station by
-                    its <code>code</code>. Returns 404 if the station does not
-                    exist.
+                    {t('docs_stations.return_404')}
                   </p>
 
                   <SyntaxHighlighter
@@ -605,7 +597,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-xl font-bold text-white'>
-                  Stations by Property
+                  {t('docs_stations.station_property')}
                 </h2>
 
                 <article className='mt-4'>
@@ -613,8 +605,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                     GET /v1/stations/open
                   </h4>
                   <p className='text-white/80'>
-                    Returns all stations currently operational (open). Ideal for
-                    filtering active monitoring infrastructure.
+                    {t('docs_stations.return_filtering')}
                   </p>
                 </article>
 
@@ -623,8 +614,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                     GET /v1/stations/closed
                   </h4>
                   <p className='text-white/80'>
-                    Returns all stations marked as inactive or closed. Useful
-                    for network management and maintenance analysis.
+                    {t('docs_stations.return_analysis')}
                   </p>
                 </article>
               </section>
@@ -635,11 +625,10 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Error Handling
+                  {t('docs_stations.error_handling')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Standard HTTP codes used. Error responses include `errors`
-                  array for validation details.
+                  {t('docs_stations.return_error')}
                 </p>
 
                 <SyntaxHighlighter
@@ -665,16 +654,16 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
 
                 <ul className='mt-4 list-disc list-inside text-white/80'>
                   <li>
-                    <strong>400</strong> Bad Request — invalid parameters
+                    <strong>400</strong> Bad Request — {t('docs_stations.invalid_parameters')}
                   </li>
                   <li>
-                    <strong>404</strong> Not Found — resource missing
+                    <strong>404</strong> Not Found — {t('docs_stations.resource_missing')}
                   </li>
                   <li>
-                    <strong>429</strong> Too Many Requests — rate limit exceeded
+                    <strong>429</strong> Too Many Requests — {t('docs_stations.rate_limit')}
                   </li>
                   <li>
-                    <strong>500/503</strong> — server issues
+                    <strong>500/503</strong> — {t('docs_stations.server_issues')}
                   </li>
                 </ul>
               </section>
@@ -684,9 +673,9 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 id='code-examples'
                 className='scroll-mt-[120px] py-16'
               >
-                <h2 className='text-2xl font-bold text-white'>Code Examples</h2>
+                <h2 className='text-2xl font-bold text-white'>{t('docs_stations.code_examples')}</h2>
                 <p className='text-white/80 mt-2'>
-                  Examples (each block has a Copy button):
+                  {t('docs_stations.examples')}
                 </p>
 
                 <div className='mt-4 space-y-6'>
@@ -794,10 +783,10 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  Support & Feedback
+                  {t('docs_stations.support')}
                 </h2>
                 <p className='text-white/80 mt-2'>
-                  Report issues and request features on GitHub:
+                  {t('docs_stations.features_github')}
                 </p>
                 <ul className='list-disc list-inside mt-3 text-white/80'>
                   <li>
@@ -817,13 +806,12 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                       rel='noopener noreferrer'
                       className='text-pink-300 hover:underline'
                     >
-                      Discussions
+                      {t('docs_stations.discussions')}
                     </a>
                   </li>
                 </ul>
                 <p className='mt-4 text-sm text-white/60'>
-                  Project lead: Dr. Gianluca Chiaravalloti — Web Developer &
-                  Geologist
+                  {t('docs_stations.project')}
                 </p>
               </section>
 
@@ -833,7 +821,7 @@ axios.get('https://api.terraquakeapi.com/v1/stations/open', {
                 className='scroll-mt-[120px] py-16'
               >
                 <h2 className='text-2xl font-bold text-white'>
-                  API Information
+                  {t('docs_stations.api_information')}
                 </h2>
                 <VersionAPI />
               </section>
