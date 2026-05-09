@@ -80,7 +80,7 @@ export default function EditProfile({ setEditProfile }) {
       setIsLoggedIn(true);
 
       Swal.fire({
-        title: 'Success!',
+        title: t('edit_profile.success'),
         text: t('edit_profile.updated_success'),
         icon: 'success',
         confirmButtonText: 'Ok',

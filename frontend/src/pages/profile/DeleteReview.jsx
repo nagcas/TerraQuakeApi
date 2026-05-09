@@ -70,7 +70,7 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
         t('delete_review.review_wrong');
 
       Swal.fire({
-        title: 'Error',
+        title: t('delete_review.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',

@@ -85,7 +85,7 @@ export default function UpdateReview({
       const updateReview = payload?.testimonials || payload;
 
       Swal.fire({
-        title: 'Success!',
+        title: t('update_review.success'),
         text: t('update_review.update_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
@@ -106,7 +106,7 @@ export default function UpdateReview({
         t('update_review.error_occurred');
 
       Swal.fire({
-        title: 'Error!',
+        title: t('update_review.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',

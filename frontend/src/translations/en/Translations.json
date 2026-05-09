@@ -848,7 +848,9 @@
     "label_role": "Your professional role",
     "text_role": "Your professional role (e.g. Researcher, Developer, Geologist)",
     "review": "Review",
-    "update_review": "Update Review"
+    "update_review": "Update Review",
+    "success": "Success!",
+    "error": "Error!"
   },
   "create_review": {
     "name": "Name is required!",
@@ -866,7 +868,17 @@
     "label_role": "Your professional role",
     "text_role": "Your professional role (e.g. Researcher, Developer, Geologist)",
     "review": "Review",
-    "submit_review": "Submit review"
+    "submit_review": "Submit review",
+    "success": "Success!",
+    "error": "Error!",
+    "write_review": "Write your review here..."
+  },
+  "view_review": {
+    "loading...": "Loading...",
+    "title_review": "View a Review",
+    "text_review": "Share your experience with TerraQuake API. Your insights help others in the community evaluate its impact and usefulness.",
+    "update": "Update",
+    "no_review": "No review found for this user."
   },
   "delete_profile": {
     "text_error": "You must be logged in to delete your account.",
@@ -878,7 +890,9 @@
     "deleted_error": "An error occurred. Please try again.",
     "deleting": "We’re truly sorry to see you go. Deleting your account is a permanent action and will remove all of your data.",
     "feedback": "If there’s anything we can do to improve your experience, we’d love to hear your feedback before you leave.",
-    "delete_account": "Delete Account"
+    "delete_account": "Delete Account",
+    "delete": "Deleted!",
+    "error": "Error!"
   },
   "delete_review": {
     "title_required": "Authentication Required",
@@ -890,7 +904,8 @@
     "removes_successfully": "Your review ha been removed successfully",
     "return_profile": "Return to Profile",
     "review_wromg": "Something went wrong. Please try again",
-    "delete": "Delete"
+    "delete": "Delete",
+    "error": "Error!"
   },
   "detail_profile": {
     "title_detail": "Account Details",
@@ -935,7 +950,9 @@
     "yes": "Yes",
     "no": "No",
     "update_bio": "Update Bio (optional)",
-    "save_changes": "Save Changes"
+    "save_changes": "Save Changes",
+    "success": "Success!",
+    "error": "Error!"
   },
   "dashboard": {
     "admin_dashboard": "Admin Dashboard",
@@ -1108,5 +1125,24 @@
     "website": "Website",
     "portfolio": "Portfolio",
     "close": "Close"
+  },
+  "profile": {
+    "hello": "Hello,",
+    "profile_dashboard": "Profile Dashboard",
+    "text_profile": "Manage your TerraQuake account, update details, or generate API tokens.",
+    "back_profile": "Back to Profile"
+  },
+  "functions_profile": {
+    "edit_profile": "Edit Profile",
+    "review": "You’ve already left a review",
+    "leave_review": "leave as Review",
+    "view_review": "View Review",
+    "delete_profile": "Delete Profile"
+  },
+  "generate_token": {
+    "coming_soon": "Coming Soon!",
+    "text_token": "API Token generation feature will be available soon.",
+    "generate": "Generate API Token",
+    "generate_token": "Generate Token"
   }
 }

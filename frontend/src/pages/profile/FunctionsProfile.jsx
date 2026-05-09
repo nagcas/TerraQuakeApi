@@ -26,7 +26,7 @@ export default function FunctionsProfile({ setActiveSection }) {
           onClick={() => setActiveSection('edit')}
           className='w-48 sm:w-60 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
         >
-          Edit Profile
+          {t('functions_profile.edit_profile')}
         </button>
 
         <button
@@ -36,10 +36,10 @@ export default function FunctionsProfile({ setActiveSection }) {
         >
           {hasReview ? (
             <p className='text-sm text-gray-400 cursor-not-allowed'>
-              You’ve already left a review
+              {t('functions_profile.review')}
             </p>
           ) : (
-            <span>Leave as Review</span>
+            <span>{t('functions_profile.leave_review')}</span>
           )}
         </button>
 
@@ -47,14 +47,14 @@ export default function FunctionsProfile({ setActiveSection }) {
           onClick={() => setActiveSection('view')}
           className='w-48 sm:w-60 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
         >
-          View Review
+          {t('functions_profile.view_review')}
         </button>
 
         <button
           onClick={() => setActiveSection('delete')}
           className='w-48 sm:w-60 border border-purple-400 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-500 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
         >
-          Delete Profile
+          {t('functions_profile.delete_profile')}
         </button>
       </motion.div>
     </>

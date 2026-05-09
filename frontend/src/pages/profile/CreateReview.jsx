@@ -77,7 +77,7 @@ export default function CreateReview({ setCreateReview }) {
       const createReview = payload?.testimonials || payload;
 
       Swal.fire({
-        title: 'Success!',
+        title: t('create_review.success'),
         text: t('create_review.text_review_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
@@ -96,7 +96,7 @@ export default function CreateReview({ setCreateReview }) {
         t('create_review.error_review');
 
       Swal.fire({
-        title: 'Error!',
+        title: t('create_review.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',
@@ -200,11 +200,14 @@ export default function CreateReview({ setCreateReview }) {
                   </label>
                   <textarea
                     className='w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50'
-                    placeholder='Write your review here...'
+                    placeholder={t('create_review.write_review')}
                     autoComplete='off'
                     rows={4}
                     {...register('message')}
                   />
+                  <p className='text-red-400 text-xs pt-1'>
+                    {errors['message']?.message}
+                  </p>
                 </div>
 
                 {/* Submit button */}

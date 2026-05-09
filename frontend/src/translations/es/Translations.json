@@ -835,7 +835,9 @@
     "label_role": "Tu rol profesional",
     "text_role": "Tu rol profesional (ej. Investigador, Desarrollador, Geólogo)",
     "review": "Reseña",
-    "update_review": "Actualizar reseña"
+    "update_review": "Actualizar reseña",
+    "success": "¡Éxito!",
+    "error": "¡Error!"
   },
   "create_review": {
     "name": "¡El nombre es obligatorio!",
@@ -853,7 +855,15 @@
     "label_role": "Tu rol profesional",
     "text_role": "Tu rol profesional (ej. Investigador, Desarrollador, Geólogo)",
     "review": "Reseña",
-    "submit_review": "Enviar reseña"
+    "submit_review": "Enviar reseña",
+    "write_review": "Escribe tu reseña aquí..."
+  },
+  "view_review": {
+    "loading...": "Cargando...",
+    "title_review": "Ver una reseña",
+    "text_review": "Comparte tu experiencia con TerraQuake API. Tus opiniones ayudan a otros miembros de la comunidad a evaluar su impacto y utilidad.",
+    "update": "Actualizar",
+    "no_review": "No se encontró ninguna reseña para este usuario."
   },
   "delete_profile": {
     "text_error": "Debes iniciar sesión para eliminar tu cuenta.",
@@ -865,7 +875,9 @@
     "deleted_error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
     "deleting": "Lamentamos mucho verte partir. Eliminar tu cuenta es una acción permanente y eliminará todos tus datos.",
     "feedback": "Si hay algo que podamos hacer para mejorar tu experiencia, nos encantaría recibir tus comentarios antes de que te vayas.",
-    "delete_account": "Eliminar cuenta"
+    "delete_account": "Eliminar cuenta",
+    "delete": "¡Eliminado!",
+    "error": "¡Error!"
   },
   "delete_review": {
     "title_required": "Autenticación requerida",
@@ -877,7 +889,8 @@
     "removes_successfully": "Tu reseña ha sido eliminada con éxito",
     "return_profile": "Volver al perfil",
     "review_wromg": "Algo salió mal. Por favor, inténtalo de nuevo",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "error": "¡Error!"
   },
   "detail_profile": {
     "title_detail": "Detalles de la cuenta",
@@ -922,7 +935,9 @@
     "yes": "Sí",
     "no": "No",
     "update_bio": "Actualizar biografía (opcional)",
-    "save_changes": "Guardar cambios"
+    "save_changes": "Guardar cambios",
+    "success": "¡Éxito!",
+    "error": "¡Error!"
   },
   "dashboard": {
     "admin_dashboard": "Panel de administración",
@@ -1095,5 +1110,24 @@
     "website": "Sitio web",
     "portfolio": "Portafolio",
     "close": "Cerrar"
+  },
+  "profile": {
+    "hello": "Hola,",
+    "profile_dashboard": "Panel de perfil",
+    "text_profile": "Gestiona tu cuenta TerraQuake, actualiza los detalles o genera tokens API.",
+    "back_profile": "Volver al perfil"
+  },
+  "functions_profile": {
+    "edit_profile": "Editar perfil",
+    "review": "Ya has dejado una reseña",
+    "leave_review": "Dejar una reseña",
+    "view_review": "Ver reseña",
+    "delete_profile": "Eliminar perfil"
+  },
+  "generate_token": {
+    "coming_soon": "¡Próximamente!",
+    "text_token": "La función de generación de token API estará disponible pronto.",
+    "generate": "Generar token API",
+    "generate_token": "Generar token"
   }
 }

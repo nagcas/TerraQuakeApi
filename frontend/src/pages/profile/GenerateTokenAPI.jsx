@@ -9,8 +9,8 @@ export default function GenerateTokenAPI() {
   const handleGenerateToken = () => {
     setLoading(true);
     Swal.fire({
-      title: 'Coming Soon!',
-      text: 'API Token generation feature will be available soon.',
+      title: t('generate_token.coming_soon'),
+      text: t('generate_token.text_token'),
       icon: 'info',
       confirmButtonColor: '#ec4899',
     });
@@ -20,13 +20,13 @@ export default function GenerateTokenAPI() {
   return (
     <div className='text-center mt-10'>
       <h2 className='text-lg sm:text-xl font-semibold text-purple-400'>
-        Generate API Token
+        {t('generate_token.generate')}
       </h2>
       <button
         onClick={handleGenerateToken}
         className='mt-4 py-2 sm:py-3 px-8 sm:px-10 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer'
       >
-        {loading ? <Spinner /> : <span>Generate Token</span>}
+        {loading ? <Spinner /> : <span>{t('generate_token.generate_token')}</span>}
       </button>
     </div>
   );

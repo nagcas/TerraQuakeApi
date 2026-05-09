@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ViewReview({ userId }) {
   const { t } = useTranslation('translation');
+
   const { testimonials, listAllTestimonials } = useTestimonials();
   const [review, setReview] = useState(null);
   const [updateReview, setUpdateReview] = useState(false);
@@ -45,7 +46,7 @@ export default function ViewReview({ userId }) {
     return (
       <div className='grid col-span-2 my-26 mx-auto gap-6'>
         <Spinner size='4xl' />
-        <p>Loading...</p>
+        <p>{t('view_review.loading')}</p>
       </div>
     );
 
@@ -74,12 +75,11 @@ export default function ViewReview({ userId }) {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h2 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              View a Review
+              {t('view_review.title_review')}
             </h2>
             <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             <p className='text-xl text-left text-white/70 max-w-7xl'>
-              Share your experience with TerraQuake API. Your insights help
-              others in the community evaluate its impact and usefulness.
+              {t('view_review.text_review')}
             </p>
             {review ? (
               <>
@@ -111,7 +111,7 @@ export default function ViewReview({ userId }) {
                           onClick={() => setUpdateReview(true)}
                           className='w-26 border border-pink-400 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer text-sm sm:text-base'
                         >
-                          Update
+                          {t('view_review.update')}
                         </button>
                         <DeleteReview
                           reviewId={review?._id}
@@ -124,7 +124,7 @@ export default function ViewReview({ userId }) {
               </>
             ) : (
               <h2 className='my-6 font-semibold text-red-400'>
-                No review found for this user.
+                {t('view_review.no_review')}
               </h2>
             )}
           </motion.div>

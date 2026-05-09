@@ -61,7 +61,7 @@ export default function DeleteProfile() {
 
       // Show success message after account deletion
       await Swal.fire({
-        title: 'Deleted!',
+        title: t('delete_profile.delete'),
         text:
           response.data.message ||
           t('delete_profile.deleted_success'),
@@ -85,7 +85,7 @@ export default function DeleteProfile() {
         t('delete_profile.deleted_error');
       
       Swal.fire({
-        title: 'Error!',
+        title: t('delete_profile.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',

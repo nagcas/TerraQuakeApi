@@ -66,7 +66,7 @@ export default function Profile() {
             <AvatarUser image={userLogin?.avatar} />
 
             <h1 className='text-2xl sm:text-3xl font-extrabold mt-5 tracking-tight'>
-              Hello,{' '}
+              {t('profile.hello')}{' '}
               <span className='text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400'>
                 {userLogin?.name || 'Anonymous'}
               </span>
@@ -83,11 +83,10 @@ export default function Profile() {
           {/* Right Column */}
           <div className='flex flex-col justify-center items-center bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-sm rounded-2xl shadow-lg border border-purple-500/20 p-6 sm:p-8'>
             <h1 className='text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent'>
-              Profile Dashboard
+              {t('profile.profile_dashboard')}
             </h1>
             <p className='text-gray-400 mt-2 max-w-md text-center text-sm sm:text-base'>
-              Manage your TerraQuake account, update details, or generate API
-              tokens.
+              {t('profile.text_profile')}
             </p>
 
             {/* Functions profile users */}
@@ -100,7 +99,7 @@ export default function Profile() {
                 onClick={() => setActiveSection(null)}
                 className='mt-6 w-48 sm:w-60 py-2 sm:py-3 px-6 sm:px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:scale-105 transition duration-300 cursor-pointer'
               >
-                Back to Profile
+                {t('profile.back_profile')}
               </motion.button>
             )}
           </div>
