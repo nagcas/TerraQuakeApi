@@ -45,7 +45,7 @@ export default function NoAccess() {
             </h1>
             <div className='h-0.5 w-1/3 mx-auto bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 my-4 rounded-full' />
             <h2 className='text-3xl md:text-5xl text-white font-bold mb-6'>
-              Access Denied
+              {t('no_access.access_denied')}
             </h2>
             <p className='text-xl text-white/70 max-w-2xl mx-auto'>
               {t('no_access.description')}

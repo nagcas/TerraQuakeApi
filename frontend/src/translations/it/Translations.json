@@ -622,7 +622,8 @@
     "back_to_home": "Torna alla Home",
     "or": "o",
     "view_profile": "Visualizza profilo",
-    "help": "Hai bisogno di aiuto? Contattaci a"
+    "help": "Hai bisogno di aiuto? Contattaci a",
+    "access_denied": "Accesso Negato"
   },
   "access_restricted": {
     "description": "Devi effettuare l’accesso per accedere a questa sezione. Effettua il login o crea un nuovo account per continuare.",

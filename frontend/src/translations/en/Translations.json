@@ -635,7 +635,8 @@
     "back_to_home": "Back To Home",
     "or": "or",
     "view_profile": "View Profile",
-    "help": "Need help? Contact us at"
+    "help": "Need help? Contact us at",
+    "access_denied": "Access Denied"
   },
   "access_restricted": {
     "description": "You need to be signed in to access this section. Please log in or create a new account to continue.",
