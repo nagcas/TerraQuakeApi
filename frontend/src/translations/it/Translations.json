@@ -613,7 +613,8 @@
   },
   "no_page": {
     "description": "La pagina che stai cercando non esiste",
-    "back_to_home": "Torna alla Home"
+    "back_to_home": "Torna alla Home",
+    "page_not_found": "Pagina non Trovata"
   },
   "no_access": {
     "description": "Non hai il permesso di accedere a quest’area. Questa sezione è riservata solo agli amministratori.",

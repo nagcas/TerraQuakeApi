@@ -626,7 +626,8 @@
   },
   "no_page": {
     "description": "The page you are looking for does not exist",
-    "back_to_home": "Back To Home"
+    "back_to_home": "Back To Home",
+    "page_not_found": "Page Not Found"
   },
   "no_access": {
     "description": "You do not have permission to access this area. This section is restricted to administrators only.",
