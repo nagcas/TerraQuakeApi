@@ -205,7 +205,18 @@
     "confirm_placeholder": "Confirm new password",
     "button_confirm": "Confirm",
     "back_account": "Or go back to your account",
-    "back_profile": "Back to profile"
+    "back_profile": "Back to profile",
+    "old_password_required": "Old password is required!",
+    "password_characters": "Password must be at least 8 characters!",
+    "password_uppercase": "Must contain an uppercase letter!",
+    "password_number": "Must contain a number!",
+    "new_password_required": "New password is required!",
+    "password_match": "Passwords must match!",
+    "passowrd_confirm": "Confirm new password is required!",
+    "success": "Success!",
+    "text_success": "Your password has been successfully changed! Please sign in again.",
+    "error": "Error!",
+    "try_again": "Something went wrong. Please try again."
   },
   "forgot_password": {
     "title": "Forgot Password?",
@@ -213,18 +224,39 @@
     "form_email": "Enter your email",
     "button_send": "Send reset link",
     "back_account": "Or return to your account",
-    "back_sign_in": "Back to Sign In"
+    "back_sign_in": "Back to Sign In",
+    "email_required": "Email is required!",
+    "success": "Success!",
+    "text_success": "If the email exists in our system, a password reset link has been sent.",
+    "try_again": "An error occurred. Please try again.",
+    "error": "Error!"
   },
   "github_auth": {
     "logging": "Logging in with GitHub...",
-    "login_github": "Login with GitHub successful!"
+    "login_github": "Login with GitHub successful!",
+    "title_error": "Error!",
+    "token_error": "No token received. Please try signing in again.",
+    "success": "Success!",
+    "login_git": "Login with GitHub successful!",
+    "profile": "Profile",
+    "missing": "User data missing",
+    "failed_fetch": "Failed to fetch user data"
   },
   "google_auth": {
     "logging": "Logging in with Google...",
-    "login_google": "Login with Google successful!"
+    "login_google": "Login with Google successful!",
+    "login_successfully": "Login Successful!",
+    "login_success": "Login with Google successful!",
+    "login_error": "Authentication Error",
+    "try_again": "Try Again"
   },
   "logout": {
-    "button_logout": "Logout"
+    "button_logout": "Logout",
+    "error_token": "No token found. Please log in again.",
+    "title_logout": "Logged Out!",
+    "logout_successfully": "You have been logged out successfully.",
+    "logout_failure": "Logout failed. Please try again.",
+    "logout_error": "Error!"
   },
   "reset_password": {
     "title": "Reset Password.",
@@ -235,7 +267,19 @@
     "confirm_password_placeholder": "Confirm password",
     "button_reset": "Reset",
     "back_account": "Or go back to your account",
-    "back_sign_in": "Back to Sign In"
+    "back_sign_in": "Back to Sign In",
+    "password_required": "Password is required!",
+    "password_chareacters": "Password must be at least 8 characters!",
+    "password_uppercase": "Must contain an uppercase letter!",
+    "password_number": "Must contain a number!",
+    "password_special": "Password must contain at least one special character!",
+    "password_confirm": "Please confirm your password!",
+    "password_match": "Passwords must match!",
+    "success": "Success!",
+    "text_reset": "Your password has been successfully reset! Please sign in again!",
+    "error": "Error!",
+    "wrong": "Something went wrong"
+
   },
   "sign_in": {
     "title": "Sign In.",
@@ -278,7 +322,27 @@
     "accept_terms_conditions": "Terms and Conditions",
     "button_create_account": "Create your account",
     "have_account": "Already have an account?",
-    "sign_in": "Sign In"
+    "sign_in": "Sign In",
+    "name_required": "Name is required!",
+    "invalid_email": "Invalid email!",
+    "email_required": "Email is required!",
+    "password_required": "Password is required!",
+    "password_characters": "Password must be at least 8 characters!",
+    "password_number": "Must contain a number!",
+    "password_special": "Password must contain at least one special character!",
+    "password_confirm": "Please confirm your password!",
+    "password_match": "Passwords must matchs!",
+    "experience_required": "Experience is required",
+    "student_required": "Please select if you are a student!",
+    "terms_required": "You must accept the Terms and Conditions!",
+    "welcome": "Welcome",
+    "created": "Your account was created and you are now logged in.",
+    "confirm_button": "Go to Profile",
+    "login_failed": "Account created, but automatic login failed. Please sign in.",
+    "almost": "Almost there!",
+    "error": "An error occurred. Please try again.",
+    "title_error": "Error!",
+    "accept": "You must accept the Terms and Conditions!"
   },
   "login_socials": {
     "sign_through": "Or sign in through",

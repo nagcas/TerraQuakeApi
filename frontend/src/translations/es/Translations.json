@@ -204,7 +204,18 @@
     "confirm_placeholder": "Confirmar nueva contraseña",
     "button_confirm": "Confirmar",
     "back_account": "O vuelve a tu cuenta",
-    "back_profile": "Volver al perfil"
+    "back_profile": "Volver al perfil",
+    "old_password_required": "¡La contraseña antigua es obligatoria!",
+    "password_characters": "¡La contraseña debe tener al menos 8 caracteres!",
+    "password_uppercase": "¡Debe contener una letra mayúscula!",
+    "password_number": "¡Debe contener un número!",
+    "new_password_required": "¡La nueva contraseña es obligatoria!",
+    "password_match": "¡Las contraseñas deben coincidir!",
+    "passowrd_confirm": "¡La confirmación de la nueva contraseña es obligatoria!",
+    "success": "¡Éxito!",
+    "text_success": "¡Tu contraseña ha sido cambiada correctamente! Por favor, inicia sesión nuevamente.",
+    "error": "¡Error!",
+    "try_again": "Algo salió mal. Por favor, inténtalo de nuevo."
   },
   "forgot_password": {
     "title": "¿Olvidaste tu contraseña?",
@@ -212,18 +223,39 @@
     "form_email": "Introduce tu correo electrónico",
     "button_send": "Enviar enlace de restablecimiento",
     "back_account": "O vuelve a tu cuenta",
-    "back_sign_in": "Volver a iniciar sesión"
+    "back_sign_in": "Volver a iniciar sesión",
+    "email_required": "¡El correo electrónico es obligatorio!",
+    "success": "¡Éxito!",
+    "text_success": "Si el correo electrónico existe en nuestro sistema, se ha enviado un enlace para restablecer la contraseña.",
+    "try_again": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "error": "¡Error!"
   },
   "github_auth": {
     "logging": "Iniciando sesión con GitHub...",
-    "login_github": "¡Inicio de sesión con GitHub exitoso!"
+    "login_github": "¡Inicio de sesión con GitHub realizado con éxito!",
+    "title_error": "¡Error!",
+    "token_error": "No se recibió ningún token. Por favor, intenta iniciar sesión nuevamente.",
+    "success": "¡Éxito!",
+    "login_git": "¡Inicio de sesión con GitHub realizado con éxito!",
+    "profile": "Perfil",
+    "missing": "Faltan datos del usuario",
+    "failed_fetch": "No se pudieron obtener los datos del usuario"
   },
   "google_auth": {
     "logging": "Iniciando sesión con Google...",
-    "login_google": "¡Inicio de sesión con Google exitoso!"
+    "login_google": "¡Inicio de sesión con Google realizado con éxito!",
+    "login_successfully": "¡Inicio de sesión exitoso!",
+    "login_success": "¡Inicio de sesión con Google realizado con éxito!",
+    "login_error": "Error de autenticación",
+    "try_again": "Intentar de nuevo"
   },
   "logout": {
-    "button_logout": "Cerrar sesión"
+    "button_logout": "Cerrar sesión",
+    "error_token": "No se encontró ningún token. Por favor, inicia sesión nuevamente.",
+    "title_logout": "¡Sesión cerrada!",
+    "logout_successfully": "Has cerrado sesión correctamente.",
+    "logout_failure": "Error al cerrar sesión. Por favor, inténtalo de nuevo.",
+    "logout_error": "¡Error!"
   },
   "reset_password": {
     "title": "Restablecer contraseña.",
@@ -277,7 +309,27 @@
     "accept_terms_conditions": "Términos y Condiciones",
     "button_create_account": "Crear tu cuenta",
     "have_account": "¿Ya tienes una cuenta?",
-    "sign_in": "Iniciar sesión"
+    "sign_in": "Iniciar sesión",
+    "name_required": "¡El nombre es obligatorio!",
+    "invalid_email": "¡Correo electrónico no válido!",
+    "email_required": "¡El correo electrónico es obligatorio!",
+    "password_required": "¡La contraseña es obligatoria!",
+    "password_characters": "¡La contraseña debe tener al menos 8 caracteres!",
+    "password_number": "¡Debe contener un número!",
+    "password_special": "¡La contraseña debe contener al menos un carácter especial!",
+    "password_confirm": "¡Por favor confirma tu contraseña!",
+    "password_match": "¡Las contraseñas deben coincidir!",
+    "experience_required": "La experiencia es obligatoria",
+    "student_required": "¡Selecciona si eres estudiante!",
+    "terms_required": "¡Debes aceptar los Términos y Condiciones!",
+    "welcome": "Bienvenido",
+    "created": "Tu cuenta ha sido creada y ahora has iniciado sesión.",
+    "confirm_button": "Ir al perfil",
+    "login_failed": "Cuenta creada, pero el inicio de sesión automático falló. Por favor inicia sesión.",
+    "almost": "¡Casi listo!",
+    "error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "title_error": "¡Error!",
+    "accept": "¡Debes aceptar los Términos y Condiciones!"
   },
   "login_socials": {
     "sign_through": "O inicia sesión mediante",

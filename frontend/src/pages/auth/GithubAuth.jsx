@@ -28,7 +28,7 @@ export default function GithubAuth() {
       if (message) {
         // Backend returned an error message
         Swal.fire({
-          title: 'Error!',
+          title: t('github_auth.title_error'),
           text: message,
           icon: 'error',
           confirmButtonText: 'Ok',
@@ -36,8 +36,8 @@ export default function GithubAuth() {
       } else {
         // Token is missing without a backend message
         Swal.fire({
-          title: 'Error!',
-          text: 'No token received. Please try signing in again.',
+          title: t('github_auth.title_error'),
+          text: t('github_auth.token_error'),
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => navigate('/signin', { replace: true }));
@@ -62,20 +62,20 @@ export default function GithubAuth() {
           setIsLoggedIn(true);
 
           Swal.fire({
-            title: 'Success!',
-            text: message || 'Login with GitHub successful!',
+            title: t('github_auth.success'),
+            text: message || t('github_auth.login_git'),
             icon: 'success',
-            confirmButtonText: 'Profile',
+            confirmButtonText: t('github_auth.profile'),
           }).then(() => navigate('/profile', { replace: true }));
         } else {
-          throw new Error('User data missing');
+          throw new Error(t('github_auth.missing'));
         }
       })
       .catch((error) => {
         console.error('Axios fetch user error:', error);
         Swal.fire({
           title: 'Error!',
-          text: message || 'Failed to fetch user data',
+          text: message || t('github_auth.failed_fetch'),
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => navigate('/signin', { replace: true }));

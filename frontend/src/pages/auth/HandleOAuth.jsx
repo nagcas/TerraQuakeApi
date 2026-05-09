@@ -60,20 +60,20 @@ export default function HandleOAuth() {
 
       // Redirect after success
       Swal.fire({
-        title: 'Login Successful!',
-        text: message || 'Login with Google successful!',
+        title: t('google_auth.login_successfully'),
+        text: message || t('google_auth.login_success'),
         icon: 'success',
         confirmButtonText: 'Profile',
       }).then(() => {
         navigate('/profile', { replace: true });
       });
     } else if (params.get('error')) {
-      const errorMessage = params.get('error') || 'Authentication failed.';
+      const errorMessage = params.get('error') || '';
       Swal.fire({
-        title: 'Authentication Error',
+        title: t('google_auth.login_error'),
         text: errorMessage,
         icon: 'error',
-        confirmButtonText: 'Try Again',
+        confirmButtonText: t('google_auth.try_agian'),
       }).then(() => {
         navigate('/signin', { replace: true });
       });

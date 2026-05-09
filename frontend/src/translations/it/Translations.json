@@ -204,7 +204,18 @@
     "confirm_placeholder": "Conferma nuova password",
     "button_confirm": "Conferma",
     "back_account": "Oppure torna al tuo account",
-    "back_profile": "Torna al profilo"
+    "back_profile": "Torna al profilo",
+    "old_password_required": "La vecchia password è obbligatoria!",
+    "password_characters": "La password deve contenere almeno 8 caratteri!",
+    "password_uppercase": "Deve contenere una lettera maiuscola!",
+    "password_number": "Deve contenere un numero!",
+    "new_password_required": "La nuova password è obbligatoria!",
+    "password_match": "Le password devono coincidere!",
+    "passowrd_confirm": "La conferma della nuova password è obbligatoria!",
+    "success": "Successo!",
+    "text_success": "La tua password è stata modificata con successo! Effettua nuovamente l'accesso.",
+    "error": "Errore!",
+    "try_again": "Qualcosa è andato storto. Riprova."
   },
   "forgot_password": {
     "title": "Password dimenticata?",
@@ -212,18 +223,39 @@
     "form_email": "Inserisci la tua email",
     "button_send": "Invia link di reset",
     "back_account": "Oppure torna al tuo account",
-    "back_sign_in": "Torna al login"
+    "back_sign_in": "Torna al login",
+    "email_required": "L'email è obbligatoria!",
+    "success": "Successo!",
+    "text_success": "Se l'email esiste nel nostro sistema, è stato inviato un link per reimpostare la password.",
+    "try_again": "Si è verificato un errore. Riprova.",
+    "error": "Errore!"
   },
   "github_auth": {
     "logging": "Accesso con GitHub in corso...",
-    "login_github": "Accesso con GitHub avvenuto con successo!"
+    "login_github": "Accesso con GitHub effettuato con successo!",
+    "title_error": "Errore!",
+    "token_error": "Nessun token ricevuto. Prova ad accedere nuovamente.",
+    "success": "Successo!",
+    "login_git": "Accesso con GitHub effettuato con successo!",
+    "profile": "Profilo",
+    "missing": "Dati utente mancanti",
+    "failed_fetch": "Impossibile recuperare i dati utente"
   },
   "google_auth": {
     "logging": "Accesso con Google in corso...",
-    "login_google": "Accesso con Google avvenuto con successo!"
+    "login_google": "Accesso con Google effettuato con successo!",
+    "login_successfully": "Accesso effettuato con successo!",
+    "login_success": "Accesso con Google effettuato con successo!",
+    "login_error": "Errore di autenticazione",
+    "try_again": "Riprova"
   },
   "logout": {
-    "button_logout": "Disconnetti"
+    "button_logout": "Disconnetti",
+    "error_token": "Nessun token trovato. Effettua nuovamente l'accesso.",
+    "title_logout": "Disconnesso!",
+    "logout_successfully": "Sei stato disconnesso con successo.",
+    "logout_failure": "Disconnessione fallita. Riprova.",
+    "logout_error": "Errore!"
   },
   "reset_password": {
     "title": "Reimposta password.",
@@ -277,7 +309,27 @@
     "accept_terms_conditions": "Termini e Condizioni",
     "button_create_account": "Crea il tuo account",
     "have_account": "Hai già un account?",
-    "sign_in": "Accedi"
+    "sign_in": "Accedi",
+    "name_required": "Il nome è obbligatorio!",
+    "invalid_email": "Email non valida!",
+    "email_required": "L'email è obbligatoria!",
+    "password_required": "La password è obbligatoria!",
+    "password_characters": "La password deve contenere almeno 8 caratteri!",
+    "password_number": "Deve contenere un numero!",
+    "password_special": "La password deve contenere almeno un carattere speciale!",
+    "password_confirm": "Conferma la tua password!",
+    "password_match": "Le password devono coincidere!",
+    "experience_required": "L'esperienza è obbligatoria",
+    "student_required": "Seleziona se sei uno studente!",
+    "terms_required": "Devi accettare i Termini e Condizioni!",
+    "welcome": "Benvenuto",
+    "created": "Il tuo account è stato creato e ora hai effettuato l'accesso.",
+    "confirm_button": "Vai al profilo",
+    "login_failed": "Account creato, ma il login automatico non è riuscito. Effettua l'accesso.",
+    "almost": "Quasi fatto!",
+    "error": "Si è verificato un errore. Riprova.",
+    "title_error": "Errore!",
+    "accept": "Devi accettare i Termini e Condizioni!"
   },
   "login_socials": {
     "sign_through": "Oppure accedi tramite",

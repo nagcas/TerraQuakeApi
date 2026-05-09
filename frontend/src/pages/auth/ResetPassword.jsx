@@ -27,16 +27,16 @@ export default function ResetPassword() {
     .shape({
       password: yup
         .string()
-        .required('Password is required!')
-        .min(8, 'Password must be at least 8 characters!')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!')
-        .matches(/[^A-Za-z0-9]/),
+        .required(t('reset_password.password_required'))
+        .min(8, t('reset_password.password_caracters'))
+        .matches(/[A-Z]/, t('reset_password.password_uppercase'))
+        .matches(/\d/, t('reset_password.password_number'))
+        .matches(/[^A-Za-z0-9]/, t('reset_password.password_special')),
 
       confirmPassword: yup
         .string()
-        .required('Please confirm your password!')
-        .oneOf([yup.ref('password')], 'Passwords must match!'),
+        .required(t('reset_password.password_confirm'))
+        .oneOf([yup.ref('password')], t('reset_password.password_match')),
     })
     .required();
 
@@ -60,8 +60,8 @@ export default function ResetPassword() {
       .post(`/auth/reset-password/${token}`, formData)
       .then((res) => {
         Swal.fire({
-          title: 'Success!',
-          text: 'Your password has been successfully reset! Please sign in again!',
+          title: t('reset_password.success'),
+          text: t('reset_password.text_reset'),
           icon: 'success',
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -73,8 +73,8 @@ export default function ResetPassword() {
       })
       .catch((err) => {
         Swal.fire({
-          title: 'Error!',
-          text: err.response?.data?.message || 'Something went wrong',
+          title: t('reset_password.error'),
+          text: err.response?.data?.message || t('reset_password.wrong'),
           icon: 'error',
           confirmButtonText: 'Ok',
         });

@@ -19,7 +19,7 @@ export default function Logout() {
       setLoading(true);
 
       if (!token) {
-        throw new Error('No token found. Please log in again.');
+        throw new Error(t('logout.error_token'));
       }
 
       const res = await axios.post(
@@ -34,8 +34,8 @@ export default function Logout() {
       );
 
       Swal.fire({
-        title: 'Logged Out!',
-        text: res.data.message || 'You have been logged out successfully.',
+        title: t('title_logout'),
+        text: res.data.message || t('logout.logout_successfully'),
         icon: 'success',
         confirmButtonColor: '#9333ea',
       }).then(() => {
@@ -53,10 +53,10 @@ export default function Logout() {
         error?.response?.data?.message ||
         error?.response?.data?.error ||
         error.message ||
-        'Logout failed. Please try again.';
+        t('logout.logout_failure');
 
       Swal.fire({
-        title: 'Error!',
+        title: t('logout.logout_error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',

@@ -17,7 +17,7 @@ export default function forgotPassword() {
   const [loading, setLoading] = useState(false);
   const forgotPasswordSchema = yup
     .object({
-      email: yup.string().email().required('Email is required!'),
+      email: yup.string().email().required(t('forgot_password.email_required')),
     })
     .required();
 
@@ -48,8 +48,8 @@ export default function forgotPassword() {
           payload.email
         );
         Swal.fire({
-          title: 'Success!',
-          text: 'If the email exists in our system, a password reset link has been sent.',
+          title: t('forgot_password.success'),
+          text: t('forgot_password.text_success'),
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then(() => {
@@ -64,9 +64,9 @@ export default function forgotPassword() {
           error?.response?.data?.errors?.[0]?.msg || // express-validator array
           error?.response?.data?.error || // fallback
           error?.message || // axios/node error message
-          'An error occurred. Please try again.';
+          t('forgot_password.try_again');
         Swal.fire({
-          title: 'Error!',
+          title: t('forgot_password.error'),
           text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Ok',

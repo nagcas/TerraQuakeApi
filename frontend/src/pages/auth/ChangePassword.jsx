@@ -31,24 +31,24 @@ export default function ChangePassword() {
     .shape({
       passwordOld: yup
         .string()
-        .required('Old password is required!')
-        .min(8, 'Password must be at least 8 characters!')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!')
+        .required(t('change_password.old_password_required'))
+        .min(8, t('change_password.password_characters'))
+        .matches(/[A-Z]/, t('change_password.password_uppercase'))
+        .matches(/\d/, t('change_password.password_number'))
         .matches(/[^A-Za-z0-9]/),
 
       passwordNew: yup
         .string()
-        .required('New password is required!')
-        .min(8, 'Password must be at least 8 characters!')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!')
+        .required(t('change_password.new_password_required'))
+        .min(8, t('change_password.password_characters'))
+        .matches(/[A-Z]/, t('change_password.password_uppercase'))
+        .matches(/\d/, t('change_password.password_number'))
         .matches(/[^A-Za-z0-9]/),
 
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref('passwordNew'), null], 'Passwords must match!')
-        .required('Confirm new password is required!'),
+        .oneOf([yup.ref('passwordNew'), null], t('change_password.password_match'))
+        .required(t('change_password.password_confirm')),
     })
     .required();
 
@@ -91,8 +91,8 @@ export default function ChangePassword() {
       })
       .then((res) => {
         Swal.fire({
-          title: 'Success!',
-          text: 'Your password has been successfully changed! Please sign in again.',
+          title: t('change_password.success'),
+          text: t('change_password.text_success'),
           icon: 'success',
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -104,10 +104,10 @@ export default function ChangePassword() {
       })
       .catch((error) => {
         Swal.fire({
-          title: 'Error!',
+          title: t('change_password.error'),
           text:
             error.response?.data?.message ||
-            'Something went wrong. Please try again.',
+            t('change_password.try_again'),
           icon: 'error',
           confirmButtonText: 'Ok',
         });

@@ -23,36 +23,36 @@ export default function SignUp() {
 
   const signUpSchema = yup
     .object({
-      name: yup.string().required('Name is required!'),
+      name: yup.string().required(t('sign_up.name_required')),
 
       email: yup
         .string()
-        .email('Invalid email!')
-        .required('Email is required!'),
+        .email(t('sign_up.invalid_email'))
+        .required(t('sign_up.email_required')),
 
       password: yup
         .string()
-        .required('Password is required!')
-        .min(8, 'Password must be at least 8 characters!')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter!')
-        .matches(/\d/, 'Must contain a number!')
+        .required(t('sign_up.password_required'))
+        .min(8, '')
+        .matches(/[A-Z]/, t('sign_up.password_characters'))
+        .matches(/\d/, t('sign_up.password_number'))
         .matches(
           /[^A-Za-z0-9]/,
-          'Password must contain at least one special character!'
+          t('sign_up.password_special')
         ),
 
       confirmPassword: yup
         .string()
-        .required('Please confirm your password!')
-        .oneOf([yup.ref('password')], 'Passwords must match!'),
+        .required(t('sign_up.password_confirm'))
+        .oneOf([yup.ref('password')], t('sign_up.password_match')),
 
-      experience: yup.string().required('Experience is required!'),
+      experience: yup.string().required(t('sign_up.experience_required')),
 
-      student: yup.string().required('Please select if you are a student!'),
+      student: yup.string().required(t('sign_up.student_required')),
 
       terms: yup
         .bool()
-        .oneOf([true], 'You must accept the Terms and Conditions!'),
+        .oneOf([true], t('sign_up.terms_required')),
     })
     .required();
 
@@ -104,10 +104,10 @@ export default function SignUp() {
           localStorage.setItem('token', response.data.token);
 
           Swal.fire({
-            title: 'Welcome!',
-            text: 'Your account was created and you are now logged in.',
+            title: t('sign_up.welcome'),
+            text: t('sign_up.created'),
             icon: 'success',
-            confirmButtonText: 'Go to Profile',
+            confirmButtonText: t('sign_up.confirm_button'),
           }).then(() => {
             setLoading(false);
             navigate('/profile', { replace: true });
@@ -117,13 +117,13 @@ export default function SignUp() {
           const errorMessage =
             loginErr?.response?.data?.message ||
             loginErr?.response?.data?.error ||
-            'Account created, but automatic login failed. Please sign in.';
+            t('sign_up.login_failed');
 
           Swal.fire({
-            title: 'Almost there!',
+            title: t('sign_up.almost'),
             text: errorMessage,
             icon: 'warning',
-            confirmButtonText: 'Sign In',
+            confirmButtonText: t('sign_up.sign_in'),
           }).then(() => {
             setLoading(false);
             navigate('/signin', { replace: true });
@@ -137,10 +137,10 @@ export default function SignUp() {
           error?.response?.data?.errors?.[0]?.msg || // express-validator array
           error?.response?.data?.error || // fallback
           error?.message || // axios/node error message
-          'An error occurred. Please try again.';
+          t('sign_up.error');
 
         Swal.fire({
-          title: 'Error!',
+          title: t('sign_up.title_error'),
           text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Ok',
@@ -350,7 +350,7 @@ export default function SignUp() {
                       type='checkbox'
                       id='terms'
                       {...register('terms', {
-                        required: 'You must accept the Terms and Conditions!',
+                        required: t('sign_up.accept'),
                       })}
                       className='mt-1 w-6 h-6 text-purple-600 bg-gray-800 border-gray-600 rounded focus:ring-purple-500 cursor-pointer'
                     />
