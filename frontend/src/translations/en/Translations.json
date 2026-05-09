@@ -936,5 +936,177 @@
     "no": "No",
     "update_bio": "Update Bio (optional)",
     "save_changes": "Save Changes"
+  },
+  "dashboard": {
+    "admin_dashboard": "Admin Dashboard",
+    "welcome": "Welcome back,",
+    "statistics": "Statistics",
+    "users": "Users",
+    "posts": "Posts",
+    "messages": "Messages",
+    "registered_emails": "Registered Emails",
+    "newsletters": "Newsletters",
+    "faqs": "Faqs",
+    "reviews": "Reviews",
+    "quick_actions": "Quick Actions",
+    "profile": "Profile",
+    "blog": "Blog",
+    "view_reports": "view_reports"
+  },
+  "lists_newsletters": {
+    "emails": "Total Emails:",
+    "assets": "Total Assets:",
+    "cancelled": "Total Cancelled:",
+    "manage_emails": "Manage Emails"
+  },
+  "lists_faqs": {
+    "faq": "Total Faq:",
+    "view": "Total Faq View:",
+    "manage_faq": "Manage Faq"
+  },
+  "table_faqs": {
+    "back": "Back to Dashboard",
+    "tabular_faq": "Manage Faqs - Tabular View.",
+    "new_faq": "New Faq",
+    "question": "Question",
+    "answer": "Answer",
+    "date": "Date",
+    "deleted": "Deleted",
+    "options": "Options",
+    "search": "Search by question..."
+  },
+  "list_messages": {
+    "messages": "Total Messages:",
+    "unread": "Unread:",
+    "week": "This Week:",
+    "manage_messages": "Manage Messages"
+  },
+  "table_messages": {
+    "back": "Back to Dashboard",
+    "manage_messages": "Manage Messages - Tabular View.",
+    "answer_message": "Answer message",
+    "name": "Name",
+    "lastname": "Lastname",
+    "email": "Email",
+    "answered": "Answered",
+    "date": "Date", 
+    "options": "Options",
+    "search": "Search by email..."
+  },
+  "list_newsletters": {
+    "subscribers": "Subscribers:",
+    "sent_today": "Sent_Today:",
+    "open_rate": "Open Rate:",
+    "manage_newsletter": "Manage Newsletter"
+  },
+  "list_posts": {
+    "posts": "Total Posts:",
+    "published": "Published:",
+    "drafts": "Drafts:",
+    "manage_posts": "Manage Posts"
+  },
+  "table_posts": {
+    "back": "Back to Dashboard",
+    "manage_posts": "Manage Posts - Tabular View.",
+    "new_post": "New Post",
+    "author": "Author",
+    "date": "Date",
+    "title": "Title",
+    "deleted": "Deleted",
+    "options": "Options",
+    "search": "Search by title..."
+  },
+  "list_reviews": {
+    "reviews": "Total Reviews:",
+    "published": "Published:",
+    "manage_reviews": "Manage Reviews"
+  },
+  "statistics": {
+    "api_calls": "API Calls Today:",
+    "server": "Server Uptime:",
+    "active": "Active Sessions:",
+    "points": "Data Points:"
+  },
+  "users": {
+    "error": "Error!",
+    "deleted": "Deleted account.",
+    "you_sure": "Are you sure?",
+    "revert": "You won't be able to revert this!",
+    "confirm_deleted": "yes, detete it!",
+    "deleted_success": "Deleted!",
+    "account_deleted": "Account has been deleted successfully.",
+    "confirm": "Home page",
+    "try_again": "An error occurred. Please try again.",
+    "delete_user": "Delete User:",
+    "text_deleted": "You are about to deactivate this user account. This is a reversible action and the user can be restored at any time.",
+    "text_confirm": "Please confirm that you want to proceed with the temporary deactivation of this user.",
+    "button_confirm": "Delete account",
+    "close": "Close"
+  },
+  "list_users": {
+    "users": "Total Users:",
+    "today": "Active Today:",
+    "week": "New This Week:",
+    "manage_users": "Manage Users"
+  },
+  "table_users": {
+    "back": "Back to Dashboard",
+    "manage_users": "Manage Users - Tabular View.",
+    "new_users": "New User",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "deleted": "Deleted",
+    "terms": "Terms",
+    "options": "Options",
+    "yes": "Yes",
+    "search": "Search by name..."
+  },
+  "update_user": {
+    "name_required": "Name is required!",
+    "email_invalid": "Invalid email!",
+    "email_required": "Email is required!",
+    "experience_required": "Experience is required!",
+    "student_required": "Student field is required!",
+    "deleted_required": "Deleted field is required!",
+    "error": "Error!",
+    "text_error": "User data is not defined!",
+    "success": "Success!",
+    "text_success": "User updated successfully!",
+    "error_occurred": "An error occurred",
+    "update_user": "Update User",
+    "label_name": "Update Name",
+    "label_email": "Update Email",
+    "label_location": "Update Location (optional)",
+    "label_website": "Update Website (optional)",
+    "label_portfolio": "Update Portfolio (optional)",
+    "label_github": "Update GitHub (optional)",
+    "label_linkedin": "Update LinkedIn (optional)",
+    "experience": "Experience",
+    "select": "Select",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "expert": "Expert",
+    "student": "Student",
+    "yes": "Yes",
+    "no": "No",
+    "update_bio": "Update Bio (optional)",
+    "deleted": "Deleted",
+    "save": "Save",
+    "close": "Close"
+  },
+  "view_user": {
+    "user_info": "User Info",
+    "json_data": "JSON Data:",
+    "classic_data": "Classic data:",
+    "name": "Name",
+    "email": "Email",
+    "experience": "Experience",
+    "student": "Student",
+    "bio": "Bio",
+    "location": "Location",
+    "website": "Website",
+    "portfolio": "Portfolio",
+    "close": "Close"
   }
 }

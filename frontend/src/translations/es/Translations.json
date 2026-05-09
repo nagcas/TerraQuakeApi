@@ -923,5 +923,177 @@
     "no": "No",
     "update_bio": "Actualizar biografía (opcional)",
     "save_changes": "Guardar cambios"
+  },
+  "dashboard": {
+    "admin_dashboard": "Panel de administración",
+    "welcome": "Bienvenido de nuevo,",
+    "statistics": "Estadísticas",
+    "users": "Usuarios",
+    "posts": "Publicaciones",
+    "messages": "Mensajes",
+    "registered_emails": "Correos registrados",
+    "newsletters": "Boletines",
+    "faqs": "Preguntas frecuentes",
+    "reviews": "Reseñas",
+    "quick_actions": "Acciones rápidas",
+    "profile": "Perfil",
+    "blog": "Blog",
+    "view_reports": "Ver reportes"
+  },
+  "lists_newsletters": {
+    "emails": "Correos totales:",
+    "assets": "Activos totales:",
+    "cancelled": "Total cancelados:",
+    "manage_emails": "Gestionar correos"
+  },
+  "lists_faqs": {
+    "faq": "Preguntas frecuentes totales:",
+    "view": "Total de visualizaciones FAQ:",
+    "manage_faq": "Gestionar FAQ"
+  },
+  "table_faqs": {
+    "back": "Volver al panel",
+    "tabular_faq": "Gestionar FAQ - Vista tabular.",
+    "new_faq": "Nueva FAQ",
+    "question": "Pregunta",
+    "answer": "Respuesta",
+    "date": "Fecha",
+    "deleted": "Eliminado",
+    "options": "Opciones",
+    "search": "Buscar por pregunta..."
+  },
+  "list_messages": {
+    "messages": "Mensajes totales:",
+    "unread": "No leídos:",
+    "week": "Esta semana:",
+    "manage_messages": "Gestionar mensajes"
+  },
+  "table_messages": {
+    "back": "Volver al panel",
+    "manage_messages": "Gestionar mensajes - Vista tabular.",
+    "answer_message": "Responder mensaje",
+    "name": "Nombre",
+    "lastname": "Apellido",
+    "email": "Correo electrónico",
+    "answered": "Respondido",
+    "date": "Fecha",
+    "options": "Opciones",
+    "search": "Buscar por correo electrónico..."
+  },
+  "list_newsletters": {
+    "subscribers": "Suscriptores:",
+    "sent_today": "Enviados hoy:",
+    "open_rate": "Tasa de apertura:",
+    "manage_newsletter": "Gestionar boletín"
+  },
+  "list_posts": {
+    "posts": "Publicaciones totales:",
+    "published": "Publicadas:",
+    "drafts": "Borradores:",
+    "manage_posts": "Gestionar publicaciones"
+  },
+  "table_posts": {
+    "back": "Volver al panel",
+    "manage_posts": "Gestionar publicaciones - Vista tabular.",
+    "new_post": "Nueva publicación",
+    "author": "Autor",
+    "date": "Fecha",
+    "title": "Título",
+    "deleted": "Eliminado",
+    "options": "Opciones",
+    "search": "Buscar por título..."
+  },
+  "list_reviews": {
+    "reviews": "Reseñas totales:",
+    "published": "Publicadas:",
+    "manage_reviews": "Gestionar reseñas"
+  },
+  "statistics": {
+    "api_calls": "Llamadas API hoy:",
+    "server": "Tiempo activo del servidor:",
+    "active": "Sesiones activas:",
+    "points": "Puntos de datos:"
+  },
+  "users": {
+    "error": "¡Error!",
+    "deleted": "Cuenta eliminada.",
+    "you_sure": "¿Estás seguro?",
+    "revert": "¡No podrás revertir esta acción!",
+    "confirm_deleted": "¡Sí, eliminar!",
+    "deleted_success": "¡Eliminado!",
+    "account_deleted": "La cuenta ha sido eliminada correctamente.",
+    "confirm": "Página principal",
+    "try_again": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "delete_user": "Eliminar usuario:",
+    "text_deleted": "Estás a punto de desactivar esta cuenta de usuario. Esta es una acción reversible y el usuario puede ser restaurado en cualquier momento.",
+    "text_confirm": "Confirma que deseas proceder con la desactivación temporal de este usuario.",
+    "button_confirm": "Eliminar cuenta",
+    "close": "Cerrar"
+  },
+  "list_users": {
+    "users": "Usuarios totales:",
+    "today": "Activos hoy:",
+    "week": "Nuevos esta semana:",
+    "manage_users": "Gestionar usuarios"
+  },
+  "table_users": {
+    "back": "Volver al panel",
+    "manage_users": "Gestionar usuarios - Vista tabular.",
+    "new_users": "Nuevo usuario",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "deleted": "Eliminado",
+    "terms": "Términos",
+    "options": "Opciones",
+    "yes": "Si",
+    "search": "Buscar por nombre..."
+  },
+  "update_user": {
+    "name_required": "¡El nombre es obligatorio!",
+    "email_invalid": "¡Correo electrónico no válido!",
+    "email_required": "¡El correo electrónico es obligatorio!",
+    "experience_required": "¡La experiencia es obligatoria!",
+    "student_required": "¡El campo estudiante es obligatorio!",
+    "deleted_required": "¡El campo eliminado es obligatorio!",
+    "error": "¡Error!",
+    "text_error": "¡Los datos del usuario no están definidos!",
+    "success": "¡Éxito!",
+    "text_success": "¡Usuario actualizado correctamente!",
+    "error_occurred": "Ocurrió un error",
+    "update_user": "Actualizar usuario",
+    "label_name": "Actualizar nombre",
+    "label_email": "Actualizar correo electrónico",
+    "label_location": "Actualizar ubicación (opcional)",
+    "label_website": "Actualizar sitio web (opcional)",
+    "label_portfolio": "Actualizar portafolio (opcional)",
+    "label_github": "Actualizar GitHub (opcional)",
+    "label_linkedin": "Actualizar LinkedIn (opcional)",
+    "experience": "Experiencia",
+    "select": "Seleccionar",
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "expert": "Experto",
+    "student": "Estudiante",
+    "yes": "Sí",
+    "no": "No",
+    "update_bio": "Actualizar biografía (opcional)",
+    "deleted": "Eliminado",
+    "save": "Guardar",
+    "close": "Cerrar"
+  },
+  "view_user": {
+    "user_info": "Información del usuario",
+    "json_data": "Datos JSON:",
+    "classic_data": "Datos clásicos:",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "experience": "Experiencia",
+    "student": "Estudiante",
+    "bio": "Biografía",
+    "location": "Ubicación",
+    "website": "Sitio web",
+    "portfolio": "Portafolio",
+    "close": "Cerrar"
   }
 }

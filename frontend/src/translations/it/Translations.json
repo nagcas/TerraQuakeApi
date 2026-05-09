@@ -923,5 +923,177 @@
     "no": "No",
     "update_bio": "Aggiorna bio (opzionale)",
     "save_changes": "Salva modifiche"
+  },
+  "dashboard": {
+    "admin_dashboard": "Dashboard amministratore",
+    "welcome": "Bentornato,",
+    "statistics": "Statistiche",
+    "users": "Utenti",
+    "posts": "Post",
+    "messages": "Messaggi",
+    "registered_emails": "Email registrate",
+    "newsletters": "Newsletter",
+    "faqs": "FAQ",
+    "reviews": "Recensioni",
+    "quick_actions": "Azioni rapide",
+    "profile": "Profilo",
+    "blog": "Blog",
+    "view_reports": "Visualizza report"
+  },
+  "lists_newsletters": {
+    "emails": "Email totali:",
+    "assets": "Asset totali:",
+    "cancelled": "Totale cancellati:",
+    "manage_emails": "Gestisci email"
+  },
+  "lists_faqs": {
+    "faq": "FAQ totali:",
+    "view": "Visualizzazioni FAQ totali:",
+    "manage_faq": "Gestisci FAQ"
+  },
+  "table_faqs": {
+    "back": "Torna alla dashboard",
+    "tabular_faq": "Gestisci FAQ - Vista tabellare.",
+    "new_faq": "Nuova FAQ",
+    "question": "Domanda",
+    "answer": "Risposta",
+    "date": "Data",
+    "deleted": "Eliminato",
+    "options": "Opzioni",
+    "search": "Cerca per domanda..."
+  },
+  "list_messages": {
+    "messages": "Messaggi totali:",
+    "unread": "Non letti:",
+    "week": "Questa settimana:",
+    "manage_messages": "Gestisci messaggi"
+  },
+  "table_messages": {
+    "back": "Torna alla dashboard",
+    "manage_messages": "Gestisci messaggi - Vista tabellare.",
+    "answer_message": "Rispondi al messaggio",
+    "name": "Nome",
+    "lastname": "Cognome",
+    "email": "Email",
+    "answered": "Risposto",
+    "date": "Data",
+    "options": "Opzioni",
+    "search": "Cerca per email..."
+  },
+  "list_newsletters": {
+    "subscribers": "Iscritti:",
+    "sent_today": "Inviate oggi:",
+    "open_rate": "Tasso di apertura:",
+    "manage_newsletter": "Gestisci newsletter"
+  },
+  "list_posts": {
+    "posts": "Post totali:",
+    "published": "Pubblicati:",
+    "drafts": "Bozze:",
+    "manage_posts": "Gestisci post"
+  },
+  "table_posts": {
+    "back": "Torna alla dashboard",
+    "manage_posts": "Gestisci post - Vista tabellare.",
+    "new_post": "Nuovo post",
+    "author": "Autore",
+    "date": "Data",
+    "title": "Titolo",
+    "deleted": "Eliminato",
+    "options": "Opzioni",
+    "search": "Cerca per titolo..."
+  },
+  "list_reviews": {
+    "reviews": "Recensioni totali:",
+    "published": "Pubblicate:",
+    "manage_reviews": "Gestisci recensioni"
+  },
+  "statistics": {
+    "api_calls": "Chiamate API oggi:",
+    "server": "Tempo attività server:",
+    "active": "Sessioni attive:",
+    "points": "Punti dati:"
+  },
+  "users": {
+    "error": "Errore!",
+    "deleted": "Account eliminato.",
+    "you_sure": "Sei sicuro?",
+    "revert": "Non potrai annullare questa azione!",
+    "confirm_deleted": "Sì, eliminalo!",
+    "deleted_success": "Eliminato!",
+    "account_deleted": "L'account è stato eliminato con successo.",
+    "confirm": "Pagina principale",
+    "try_again": "Si è verificato un errore. Riprova.",
+    "delete_user": "Elimina utente:",
+    "text_deleted": "Stai per disattivare questo account utente. Questa è un'azione reversibile e l'utente può essere ripristinato in qualsiasi momento.",
+    "text_confirm": "Conferma di voler procedere con la disattivazione temporanea di questo utente.",
+    "button_confirm": "Elimina account",
+    "close": "Chiudi"
+  },
+  "list_users": {
+    "users": "Utenti totali:",
+    "today": "Attivi oggi:",
+    "week": "Nuovi questa settimana:",
+    "manage_users": "Gestisci utenti"
+  },
+  "table_users": {
+    "back": "Torna alla dashboard",
+    "manage_users": "Gestisci utenti - Vista tabellare.",
+    "new_users": "Nuovo utente",
+    "name": "Nome",
+    "email": "Email",
+    "role": "Ruolo",
+    "deleted": "Eliminato",
+    "terms": "Termini",
+    "options": "Opzioni",
+    "yes": "Si",
+    "search": "Cerca per nome..."
+  },
+  "update_user": {
+    "name_required": "Il nome è obbligatorio!",
+    "email_invalid": "Email non valida!",
+    "email_required": "L'email è obbligatoria!",
+    "experience_required": "L'esperienza è obbligatoria!",
+    "student_required": "Il campo studente è obbligatorio!",
+    "deleted_required": "Il campo eliminato è obbligatorio!",
+    "error": "Errore!",
+    "text_error": "I dati utente non sono definiti!",
+    "success": "Successo!",
+    "text_success": "Utente aggiornato con successo!",
+    "error_occurred": "Si è verificato un errore",
+    "update_user": "Aggiorna utente",
+    "label_name": "Aggiorna nome",
+    "label_email": "Aggiorna email",
+    "label_location": "Aggiorna posizione (opzionale)",
+    "label_website": "Aggiorna sito web (opzionale)",
+    "label_portfolio": "Aggiorna portfolio (opzionale)",
+    "label_github": "Aggiorna GitHub (opzionale)",
+    "label_linkedin": "Aggiorna LinkedIn (opzionale)",
+    "experience": "Esperienza",
+    "select": "Seleziona",
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "expert": "Esperto",
+    "student": "Studente",
+    "yes": "Sì",
+    "no": "No",
+    "update_bio": "Aggiorna bio (opzionale)",
+    "deleted": "Eliminato",
+    "save": "Salva",
+    "close": "Chiudi"
+  },
+  "view_user": {
+    "user_info": "Informazioni utente",
+    "json_data": "Dati JSON:",
+    "classic_data": "Dati classici:",
+    "name": "Nome",
+    "email": "Email",
+    "experience": "Esperienza",
+    "student": "Studente",
+    "bio": "Bio",
+    "location": "Posizione",
+    "website": "Sito web",
+    "portfolio": "Portfolio",
+    "close": "Chiudi"
   }
 }

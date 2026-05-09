@@ -4,8 +4,11 @@ import { FaXmark } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
 import axios from '@/config/Axios.js';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteUser({ users, setUsers }) {
+  const { t } = useTranslation('translation');
+
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -21,8 +24,8 @@ export default function DeleteUser({ users, setUsers }) {
       // If no token is found, show an error alert
       if (!token) {
         Swal.fire({
-          title: 'Error!',
-          text: 'Deteled account.',
+          title: t('users.error'),
+          text: t('users.deleted'),
           icon: 'error',
           confirmButtonText: 'Ok',
         });
@@ -32,13 +35,13 @@ export default function DeleteUser({ users, setUsers }) {
 
       // Ask for confirmation before performing the delete request
       const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: t('users.you_sure'),
+        text: t('users.revert'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: t('users.confirm_deleted'),
       });
 
       // If the user cancels, stop the process
@@ -56,10 +59,10 @@ export default function DeleteUser({ users, setUsers }) {
 
       // Show success message after account deletion
       await Swal.fire({
-        title: 'Deleted!',
-        text: response.data.message || 'Account has been deleted successfully.',
+        title: t('users.deleted_success'),
+        text: response.data.message || t('users.account_deleted'),
         icon: 'success',
-        confirmButtonText: 'Home page',
+        confirmButtonText: t('users.confirm'),
       });
 
       // Update the list
@@ -76,9 +79,9 @@ export default function DeleteUser({ users, setUsers }) {
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        'An error occurred. Please try again.';
+        t('users_try_again');
       Swal.fire({
-        title: 'Error!',
+        title: t('users.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',
@@ -118,7 +121,7 @@ export default function DeleteUser({ users, setUsers }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  Delete User: {users?.name}
+                  {t('users.delete_user')} {users?.name}
                 </h2>
 
                 <button
@@ -132,12 +135,10 @@ export default function DeleteUser({ users, setUsers }) {
               {/* Body */}
               <div className='flex flex-col items-center gap-4 mt-20'>
                 <p className='text-2xl text-center pt-5 text-gray-300'>
-                  You are about to deactivate this user account. This is a
-                  reversible action and the user can be restored at any time.
+                  {t('users.text_deleted')}
                 </p>
                 <p className='text-xl text-center text-gray-300'>
-                  Please confirm that you want to proceed with the temporary
-                  deactivation of this user.
+                  {t('users.text_confirm')}
                 </p>
               </div>
 
@@ -152,7 +153,7 @@ export default function DeleteUser({ users, setUsers }) {
                         ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.03]'}`}
                   aria-label='Delete your account'
                 >
-                  {loading ? <Spinner /> : 'Delete account'}
+                  {loading ? <Spinner /> : t('users.button_confirm')}
                 </button>
 
                 <button
@@ -162,7 +163,7 @@ export default function DeleteUser({ users, setUsers }) {
                     rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                     hover:scale-[1.03] hover:bg-white/[0.12]'
                 >
-                  Close
+                  {t('users.close')}
                 </button>
               </div>
             </motion.div>

@@ -8,8 +8,11 @@ import ViewMessage from './ViewMessage';
 import DeleteMessage from './DeleteMessage';
 import useMessages from '@/hooks/useMessages';
 import Pagination from '@/components/utils/Pagination';
+import { useTranslation } from 'react-i18next';
 
 export default function TableMessages() {
+  const { t } = useTranslation('translation');
+
   const location = useLocation();
   const { page = 1, limit = 20 } = location.state || {};
 
@@ -47,7 +50,7 @@ export default function TableMessages() {
               to='/admin'
               className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
             >
-              ← Back to Dashboard
+              ← {t('table_messages.back')}
             </Link>
           </div>
 
@@ -59,7 +62,7 @@ export default function TableMessages() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              Manage Messages - Tabular View.
+              {t('table_messages.manage_messages')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
           </motion.div>
@@ -76,11 +79,11 @@ export default function TableMessages() {
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
                   type='text'
-                  placeholder='Search by email...'
+                  placeholder={t('table_messages.search')}
                   className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
                 />
                 <button className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'>
-                  Answer message
+                  {t('table_messages.answer_message')}
                 </button>
               </div>
 
@@ -92,22 +95,22 @@ export default function TableMessages() {
                         Id
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Name
+                        {t('table_messages.name')}
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Lastname
+                        {t('table_messages.lastname')}
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Email
+                        {t('table_messages.email')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Answered
+                        {t('table_messages.answered')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Date
+                        {t('table_messages.date')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Options
+                        {t('table_messages.options')}
                       </th>
                     </tr>
                   </thead>

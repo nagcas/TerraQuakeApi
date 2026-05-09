@@ -8,19 +8,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import { Context } from '@/components/modules/Context';
+import { useTranslation } from 'react-i18next';
 
 export default function UpdateUser({ users, setUsers }) {
+  const { t } = useTranslation('translation');
+
   const { userLogin } = useContext(Context);
 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const updateUserSchema = yup.object({
-    name: yup.string().required('Name is required'),
-    email: yup.string().email('Invalid email').required('Email is required'),
-    experience: yup.string().required('Experience is required'),
-    student: yup.string().required('Student field is required'),
-    deleted: yup.string().required('Deleted field is required'),
+    name: yup.string().required(t('update_user.name_required')),
+    email: yup.string().email(t('email_invalid')).required(t('email_required')),
+    experience: yup.string().required(t('experience_required')),
+    student: yup.string().required(t('student_required')),
+    deleted: yup.string().required(t('deleted_required')),
     bio: yup.string(),
   });
 
@@ -52,8 +55,8 @@ export default function UpdateUser({ users, setUsers }) {
   const handleUpdateUser = async (data) => {
     if (!users?._id) {
       Swal.fire({
-        title: 'Error',
-        text: 'User data is not defined',
+        title: t('update_user.error'),
+        text: t('update_user.text_error'),
         icon: 'error',
       });
       return;
@@ -71,8 +74,8 @@ export default function UpdateUser({ users, setUsers }) {
       const updatedUser = response.data.payload || response.data;
 
       Swal.fire({
-        title: 'Success',
-        text: 'User updated successfully',
+        title: t('update_user.success'),
+        text: t('update_user.text_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
       });
@@ -89,11 +92,11 @@ export default function UpdateUser({ users, setUsers }) {
       setIsOpen(false);
     } catch (error) {
       Swal.fire({
-        title: 'Error',
+        title: t('update_user.error'),
         text:
           error?.response?.data?.message ||
           error?.response?.data?.errors?.[0]?.msg ||
-          'An error occurred',
+          t('update_user.error_occurred'),
         icon: 'error',
       });
     } finally {
@@ -131,7 +134,7 @@ export default function UpdateUser({ users, setUsers }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  Update User
+                  {t('update_user.update_user')}
                 </h2>
 
                 <button
@@ -150,16 +153,34 @@ export default function UpdateUser({ users, setUsers }) {
                 >
                   {/* Input component */}
                   {[
-                    { label: 'Update Name', field: 'name' },
-                    { label: 'Update Email', field: 'email' },
-                    { label: 'Update Location (optional)', field: 'location' },
-                    { label: 'Update Website (optional)', field: 'website' },
+                    { 
+                      label: t('update_user.label_name'), 
+                      field: 'name' 
+                    },
+                    { 
+                      label: t('update_user.label_email'), 
+                      field: 'email' 
+                    },
+                    { 
+                      label: t('update_user.label_location'),
+                      field: 'location' 
+                    },
+                    { 
+                      label: t('update_user.label_website'), 
+                      field: 'website' 
+                    },
                     {
-                      label: 'Update Portfolio (optional)',
+                      label: t('update_user.label_portfolio'),
                       field: 'portfolio',
                     },
-                    { label: 'Update GitHub (optional)', field: 'github' },
-                    { label: 'Update LinkedIn (optional)', field: 'linkedin' },
+                    { 
+                      label: t('update_user.label_github'), 
+                      field: 'github' 
+                    },
+                    { 
+                      label: t('update_user.label_linkedin'), 
+                      field: 'linkedin' 
+                    },
                   ].map(({ label, field }) => (
                     <div key={field}>
                       <label className='text-white text-sm font-semibold mb-2 block'>
@@ -178,7 +199,7 @@ export default function UpdateUser({ users, setUsers }) {
                   {/* Experience */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
-                      Experience
+                      {t('update_user.experience')}
                     </label>
                     <select
                       {...register('experience')}
@@ -188,25 +209,25 @@ export default function UpdateUser({ users, setUsers }) {
                         value=''
                         className='bg-gray-900 text-gray-400'
                       >
-                        Select
+                        {t('update_user.select')}
                       </option>
                       <option
                         value='Beginner'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Beginner
+                        {t('update_user.beginner')}
                       </option>
                       <option
                         value='Intermediate'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Intermediate
+                        {t('update_user.intermediate')}
                       </option>
                       <option
                         value='Expert'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Expert
+                        {t('update_user.expert')}
                       </option>
                     </select>
                     <p className='text-red-400 text-xs pt-1'>
@@ -217,7 +238,7 @@ export default function UpdateUser({ users, setUsers }) {
                   {/* Student */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
-                      Student
+                      {t('update_user.student')}
                     </label>
                     <select
                       {...register('student')}
@@ -227,19 +248,19 @@ export default function UpdateUser({ users, setUsers }) {
                         value=''
                         className='bg-gray-900 text-gray-400'
                       >
-                        Select
+                        {t('update_user.select')}
                       </option>
                       <option
                         value='Yes'
                         className='bg-gray-900 text-gray-400'
                       >
-                        Yes
+                        {t('update_user.yes')}
                       </option>
                       <option
                         value='No'
                         className='bg-gray-900 text-gray-400'
                       >
-                        No
+                        {t('update_user.no')}
                       </option>
                     </select>
                     <p className='text-red-400 text-xs pt-1'>
@@ -250,7 +271,7 @@ export default function UpdateUser({ users, setUsers }) {
                   {/* Bio */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
-                      Update Bio (optional)
+                      {t('update_user.update_bio')}
                     </label>
                     <textarea
                       {...register('bio')}
@@ -262,7 +283,7 @@ export default function UpdateUser({ users, setUsers }) {
                   {/* Deleted */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
-                      Deleted
+                      {t('update_user.deleted')}
                     </label>
                     <select
                       {...register('deleted')}
@@ -272,19 +293,19 @@ export default function UpdateUser({ users, setUsers }) {
                         
                         className='bg-gray-900 text-gray-400'
                       >
-                        Select
+                        {t('update_user.select')}
                       </option>
                       <option
                         value={true}
                         className='bg-gray-900 text-gray-400'
                       >
-                        Yes
+                        {t('update_user.yes')}
                       </option>
                       <option
                         value={false}
                         className='bg-gray-900 text-gray-400'
                       >
-                        No
+                        {t('update_user.no')}
                       </option>
                     </select>
                     <p className='text-red-400 text-xs pt-1'>
@@ -302,7 +323,7 @@ export default function UpdateUser({ users, setUsers }) {
                         transition-all duration-300 cursor-pointer 
                         ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.03]'}`}
                     >
-                      {loading ? <Spinner /> : 'Save'}
+                      {loading ? <Spinner /> : t('update_user.save')}
                     </button>
 
                     <button
@@ -312,7 +333,7 @@ export default function UpdateUser({ users, setUsers }) {
                         rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                         hover:scale-[1.03] hover:bg-white/[0.12]'
                     >
-                      Close
+                      {t('update_user.close')}
                     </button>
                   </div>
                 </form>

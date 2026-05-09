@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaRegEye, FaXmark } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 
 export default function ViewUser({ users }) {
+  const { t } = useTranslation('translation');
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => setIsOpen(!isOpen);
@@ -35,7 +38,7 @@ export default function ViewUser({ users }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  User Info
+                  {t('view_user.user_info')}
                 </h2>
 
                 <button
@@ -50,25 +53,58 @@ export default function ViewUser({ users }) {
               <div className='p-8 max-h-[70vh] overflow-y-auto'>
                 <pre className='p-6 text-sm mb-6'>
                   <p className='p-4 font-semibold text-white text-2xl'>
-                    JSON Data:
+                    {t('view_user.json_data')}
                   </p>
                   {JSON.stringify(users, null, 2)}
                 </pre>
                 <p className='p-4 font-semibold text-white text-2xl'>
-                  Classic Data:
+                  {t('view_user.classic_data')}
                 </p>
                 {[
-                  { label: 'Id', value: users?._id },
-                  { label: 'Name', value: users?.name },
-                  { label: 'Email', value: users?.email },
-                  { label: 'Experience', value: users?.experience },
-                  { label: 'Student', value: users?.student },
-                  { label: 'Bio', value: users?.bio },
-                  { label: 'Location', value: users?.location },
-                  { label: 'Website', value: users?.website },
-                  { label: 'Portfolio', value: users?.portfolio },
-                  { label: 'GitHub', value: users?.github },
-                  { label: 'LinkedIn', value: users?.linkedin },
+                  { 
+                    label: 'Id', 
+                    value: users?._id 
+                  },
+                  { 
+                    label: t('view_user.name'), 
+                    value: users?.name 
+                  },
+                  { 
+                    label: t('view_user.email'), 
+                    value: users?.email 
+                  },
+                  { 
+                    label: t('view_user.experience'), 
+                    value: users?.experience 
+                  },
+                  { 
+                    label: t('view_user.student'), 
+                    value: users?.student 
+                  },
+                  { 
+                    label: t('view_user.bio'), 
+                    value: users?.bio 
+                  },
+                  { 
+                    label: t('view_user.location'), 
+                    value: users?.location 
+                  },
+                  { 
+                    label: t('view_user.website'), 
+                    value: users?.website 
+                  },
+                  { 
+                    label: t('view_user.portfolio'), 
+                    value: users?.portfolio 
+                  },
+                  { 
+                    label: 'GitHub', 
+                    value: users?.github 
+                  },
+                  { 
+                    label: 'LinkedIn', 
+                    value: users?.linkedin 
+                  },
                 ].map(({ label, value }) => (
                   <p
                     key={label}
@@ -89,7 +125,7 @@ export default function ViewUser({ users }) {
                     rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                     hover:scale-[1.03] hover:bg-white/[0.12]'
                 >
-                  Close
+                  {t('view_user.close')}
                 </button>
               </div>
             </motion.div>

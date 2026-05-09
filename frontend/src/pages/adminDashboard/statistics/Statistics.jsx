@@ -1,22 +1,26 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 
 export default function Statistics() {
+  const { t } = useTranslation('translation');
+
   return (
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
-        API Calls Today:{' '}
+        {t('statistics.api_calls')}{' '}
         <span className='text-purple-400 font-semibold'>12,456</span>
       </div>
       <div className='text-sm text-white/70'>
-        Server Uptime:{' '}
+        {t('statistics.server')}{' '}
         <span className='text-green-400 font-semibold'>99.9%</span>
       </div>
       <div className='text-sm text-white/70'>
-        Active Sessions:{' '}
+        {t('statistics.active')}{' '}
         <span className='text-blue-400 font-semibold'>234</span>
       </div>
       <div className='text-sm text-white/70'>
-        Data Points: <span className='text-yellow-400 font-semibold'>2.3M</span>
+        {t('statistics.points')}{' '}
+        <span className='text-yellow-400 font-semibold'>2.3M</span>
       </div>
     </div>
   )

@@ -8,8 +8,11 @@ import UpdateUser from './UpdateUser';
 import DeleteUser from './DeleteUser';
 import Pagination from '@/components/utils/Pagination';
 import useUsers from '@/hooks/useUsers';
+import { useTranslation } from 'react-i18next';
 
 export default function TableUsers() {
+  const { t } = useTranslation('translation');
+
   const location = useLocation();
    const { page = 1, limit = 20 } = location.state || {};
 
@@ -48,7 +51,7 @@ export default function TableUsers() {
               to='/admin'
               className='relative z-50 inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 transition-colors duration-200 cursor-pointer'
             >
-              ← Back to Dashboard
+              ← {t('table_users.back')}
             </Link>
           </div>
 
@@ -60,7 +63,7 @@ export default function TableUsers() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <h1 className='text-3xl md:text-5xl font-extrabold text-white mb-4'>
-              Manage Users - Tabular View.
+              {t('table_users.manage_users')}
               <div className='h-0.5 w-1/3 md:w-1/5 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
             </h1>
           </motion.div>
@@ -77,11 +80,11 @@ export default function TableUsers() {
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
                 <input
                   type='text'
-                  placeholder='Search by name...'
+                  placeholder={t('table_users.search')}
                   className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
                 />
                 <button className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'>
-                  New User
+                  {t('table_users.new_users')}
                 </button>
               </div>
 
@@ -93,22 +96,22 @@ export default function TableUsers() {
                         Id
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Name
+                        {t('table_users.name')}
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Email
+                        {t('table_users.email')}
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Role
+                        {t('table_users.role')}
                       </th>
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Deleted
+                        {t('table_users.deleted')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Terms
+                        {t('table_users.terms')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
-                        Options
+                        {t('table_users.options')}
                       </th>
                     </tr>
                   </thead>
@@ -131,7 +134,7 @@ export default function TableUsers() {
                           {item.role.toString()}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.deleted === true ? <span className='text-red-400'>Yes</span> : 'No'}
+                          {item.deleted === true ? <span className='text-red-400'>{t('table_users.yes')}</span> : 'No'}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.terms === true ? 'Yes' : 'No'}

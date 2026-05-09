@@ -16,8 +16,11 @@ import useUsers from '@/hooks/useUsers';
 import usePosts from '@/hooks/usePosts';
 import useMessages from '@/hooks/useMessages';
 import useFaqs from '@/hooks/useFaqs';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminDashboard() {
+  const { t } = useTranslation('translation');
+
   const { userLogin, isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
@@ -93,11 +96,11 @@ export default function AdminDashboard() {
           transition={{ duration: 0.7, delay: 0.1 }}
         >
           <h1 className='text-3xl text-center md:text-5xl text-white font-extrabold tracking-tighter mb-4'>
-            Admin Dashboard
+            {t('dashboard.admin_dashboard')}
             <div className='h-0.5 w-1/3 md:w-1/4 mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 my-2 rounded-full' />
           </h1>
           <p className='text-xl text-center text-white/70'>
-            Welcome back, {userLogin?.name || 'Administrator'}
+            {t('dashboard.welcome')} {userLogin?.name || 'Administrator'}
           </p>
         </motion.div>
 
@@ -110,7 +113,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Statistics</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.statistics')}</h3>
             <Statistics />
           </motion.div>
 
@@ -121,7 +124,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Users</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.users')}</h3>
             <ListUsers
               users={users}
               setUsers={setUsers}
@@ -141,7 +144,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Posts</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.posts')}</h3>
             <ListPosts
               posts={posts}
               totalPosts={totalPosts}
@@ -160,7 +163,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Messages</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.messages')}</h3>
             <ListMessages
               messages={messages}
               totalMessages={totalMessages}
@@ -180,7 +183,7 @@ export default function AdminDashboard() {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             <h3 className='text-xl font-bold text-white mb-4'>
-              Registered Emails
+              {t('dashboard.registered_emails')} 
             </h3>
             <ListEmailNewsletters />
           </motion.div>
@@ -192,7 +195,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Newsletters</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.newsletters')}</h3>
             <ListNewsletters />
           </motion.div>
 
@@ -203,7 +206,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Faqs</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.faqs')}</h3>
             <ListFaqs
               faqs={faqs}
               totalFaqs={totalFaqs}
@@ -222,7 +225,7 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Reviews</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.reviews')}</h3>
             <ListReviews />
           </motion.div>
 
@@ -233,22 +236,22 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <h3 className='text-xl font-bold text-white mb-4'>Quick Actions</h3>
+            <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.quick_actions')}</h3>
             <div className='space-y-3'>
               <button
                 onClick={() => handleProfile()}
                 className='w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
               >
-                Profile
+                {t('dashboard.profile')}
               </button>
               <button
                 onClick={() => handleBlog()}
                 className='w-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'
               >
-                Blog
+                {t('dashboard.blog')}
               </button>
               <button className='w-full bg-gradient-to-r from-green-600 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer'>
-                View Reports
+                {t('dashboard.view_reports')}
               </button>
             </div>
           </motion.div>
