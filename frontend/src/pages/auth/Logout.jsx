@@ -34,7 +34,7 @@ export default function Logout() {
       );
 
       Swal.fire({
-        title: t('title_logout'),
+        title: t('logout.title_logout'),
         text: res.data.message || t('logout.logout_successfully'),
         icon: 'success',
         confirmButtonColor: '#9333ea',
