@@ -212,7 +212,7 @@
     "password_number": "Must contain a number!",
     "new_password_required": "New password is required!",
     "password_match": "Passwords must match!",
-    "passowrd_confirm": "Confirm new password is required!",
+    "password_confirm": "Confirm new password is required!",
     "success": "Success!",
     "text_success": "Your password has been successfully changed! Please sign in again.",
     "error": "Error!",

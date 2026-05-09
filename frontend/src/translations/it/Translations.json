@@ -211,7 +211,7 @@
     "password_number": "Deve contenere un numero!",
     "new_password_required": "La nuova password è obbligatoria!",
     "password_match": "Le password devono coincidere!",
-    "passowrd_confirm": "La conferma della nuova password è obbligatoria!",
+    "password_confirm": "La conferma della nuova password è obbligatoria!",
     "success": "Successo!",
     "text_success": "La tua password è stata modificata con successo! Effettua nuovamente l'accesso.",
     "error": "Errore!",

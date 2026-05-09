@@ -211,7 +211,7 @@
     "password_number": "¡Debe contener un número!",
     "new_password_required": "¡La nueva contraseña es obligatoria!",
     "password_match": "¡Las contraseñas deben coincidir!",
-    "passowrd_confirm": "¡La confirmación de la nueva contraseña es obligatoria!",
+    "password_confirm": "¡La confirmación de la nueva contraseña es obligatoria!",
     "success": "¡Éxito!",
     "text_success": "¡Tu contraseña ha sido cambiada correctamente! Por favor, inicia sesión nuevamente.",
     "error": "¡Error!",
