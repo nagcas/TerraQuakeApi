@@ -149,7 +149,19 @@
     "placeholder_subject": "Breve motivo de tu mensaje",
     "label_message": "Mensaje",
     "placeholder_message": "Mensaje detallado...",
-    "button_send_message": "Enviar Mensaje"
+    "button_send_message": "Enviar Mensaje",
+    "name_required": "¡El nombre es obligatorio!",
+    "lastname_required": "¡El apellido es obligatorio!",
+    "email_invalid": "¡Correo electrónico no válido!",
+    "email_required": "¡El correo electrónico es obligatorio!",
+    "subject_required": "¡El asunto es obligatorio!",
+    "message_required": "¡El mensaje es obligatorio!",
+    "success": "¡Éxito!",
+    "message_sent": "¡Mensaje enviado con éxito! Nos pondremos en contacto contigo.",
+    "great": "¡Genial!",
+    "try_again": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "error": "¡Error!",
+    "confirm_button": "Intentar de nuevo"
   },
   "channels": {
     "title_github": "Abrir un Issue",

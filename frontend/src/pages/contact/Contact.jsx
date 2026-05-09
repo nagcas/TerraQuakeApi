@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import MetaData from '@pages/noPage/MetaData';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import axios from '@config/Axios.js';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Channels from '@/components/channels/Channels';
 import Spinner from '@/components/spinner/Spinner';
 import { useTranslation } from 'react-i18next';
-
-const contactSchema = yup.object({
-  name: yup.string().required('Name is required!'),
-  lastname: yup.string().required('Lastname is required!'),
-  email: yup.string().email('Invalid email!').required('Email is required!'),
-  subject: yup.string().required('Subject is required!'),
-  message: yup.string().required('Message is required!'),
-});
 
 const InputField = ({
   label,
@@ -30,6 +21,7 @@ const InputField = ({
   rows,
 }) => {
   const isTextarea = rows > 0;
+
   const commonClasses =
     'w-full px-5 py-3 border-2 rounded-xl text-white bg-white/5 backdrop-blur-sm border-white/20 focus:border-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none transition-all duration-300 placeholder-white/50';
 
@@ -71,7 +63,34 @@ export default function Contact() {
   const { t } = useTranslation('translation');
 
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  // Validation schema with translations
+  const contactSchema = useMemo(
+    () =>
+      yup.object({
+        name: yup
+          .string()
+          .required(t('contact.name_required')),
+
+        lastname: yup
+          .string()
+          .required(t('contact.lastname_required')),
+
+        email: yup
+          .string()
+          .email(t('contact.email_invalid'))
+          .required(t('contact.email_required')),
+
+        subject: yup
+          .string()
+          .required(t('contact.subject_required')),
+
+        message: yup
+          .string()
+          .required(t('contact.message_required')),
+      }),
+    [t]
+  );
 
   const {
     register,
@@ -89,11 +108,11 @@ export default function Contact() {
       const res = await axios.post(`/contact`, data);
 
       Swal.fire({
-        title: 'Success!',
+        title: t('contact.success'),
         text:
-          res.data.message || "Message sent successfully! We'll be in touch.",
+          res.data.message || t('contact.message_sent'),
         icon: 'success',
-        confirmButtonText: 'Great!',
+        confirmButtonText: t('contact.great'),
         customClass: {
           container: 'z-50', // Ensure Swal is above other elements
         },
@@ -106,13 +125,13 @@ export default function Contact() {
         err?.response?.data?.errors?.[0]?.msg ||
         err?.response?.data?.error ||
         err?.message ||
-        'An error occurred. Please try again.';
+        t('contact.try_again');
 
       Swal.fire({
-        title: 'Error!',
+        title: t('contact.error'),
         text: errorMessage,
         icon: 'error',
-        confirmButtonText: 'Try Again',
+        confirmButtonText: t('contact.confirm_button'),
         customClass: {
           container: 'z-50',
         },

@@ -149,7 +149,19 @@
     "placeholder_subject": "Brief purpose of your message",
     "label_message": "Message",
     "placeholder_message": "Detailed message...",
-    "button_send_message": "Send Message"
+    "button_send_message": "Send Message",
+    "name_required": "Name is required!",
+    "lastname_required": "Lastname is required!",
+    "email_invalid": "Invalid email!",
+    "email_required": "Email is required!",
+    "subject_required": "Subject is required!",
+    "message_required": "Message is required!",
+    "success": "Success!",
+    "message_sent": "Message sent successfully! We'll be in touch.",
+    "great": "Great!",
+    "try_again": "An error occurred. Please try again.",
+    "error": "Error!",
+    "confirm_button": "Try Again"
   },
   "channels": {
     "title_github": "Open an Issue",
