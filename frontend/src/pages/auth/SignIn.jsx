@@ -53,7 +53,7 @@ export default function SignIn() {
 
       Swal.fire({
         title: t('sign_in.success'),
-        text: response.data.message,
+        text: t(`sign_in.${response.data.message}`),
         icon: 'success',
         confirmButtonText: t('sign_in.profile'),
       }).then(() => {
@@ -61,10 +61,16 @@ export default function SignIn() {
         navigate('/profile', { replace: true });
       });
     } catch (error) {
-      const errorMessage =
-        error?.response?.data?.message ||
-        error?.response?.data?.error ||
-        t('sign_in.login_failed');
+      const backendMessage =
+          error?.response?.data?.message;
+
+        const errorMessage =
+          backendMessage
+            ? t(`sign_in.${backendMessage}`)
+            : error?.response?.data?.errors?.[0]?.msg ||
+              error?.response?.data?.error ||
+              error?.message ||
+              t('sign_in.error');
 
       Swal.fire({
         title: t('sign_in.error'),

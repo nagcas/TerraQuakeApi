@@ -56,7 +56,7 @@ export const signUp = ({
             .json(
               buildResponse(
                 req,
-                'Registration successful',
+                'registration_successful',
                 user,
                 null,
                 {}
@@ -67,7 +67,7 @@ export const signUp = ({
         // If user exists and is active, return conflict error
         return handleHttpError(
           res,
-          'User with this email already exists!',
+          'email_exists',
           409
         )
       }
@@ -84,7 +84,14 @@ export const signUp = ({
 
       return res
         .status(201)
-        .json(buildResponse(req, 'Registration successful', user, null, {}))
+        .json(buildResponse(
+          req,
+          'registration_successful',
+          user,
+          null,
+          {}
+        )
+        )
     } catch (error) {
       // Log error to the server console
       console.error('Signup error:', error.message)
@@ -92,11 +99,15 @@ export const signUp = ({
       if (error.code === 11000) {
         return handleHttpError(
           res,
-          'User with this email already exists!',
+          'email_exists',
           409
         )
       }
-      return handleHttpError(res, 'Internal server error', 500)
+      return handleHttpError(
+        res,
+        'server_error',
+        500
+      )
     }
   }
 }
@@ -125,17 +136,16 @@ export const signIn = ({
       if (!user) {
         return handleHttpError(
           res,
-          'User not found. Please register first.',
+          'user_not_found',
           404
         )
       }
 
       // Check if user registered via Google or GitHub
       if (!user.password) {
-        const provider = user.githubId ? 'GitHub' : user.googleId ? 'Google' : 'an external provider'
         return handleHttpError(
           res,
-          `This email is already registered via ${provider}. Please sign in with ${provider}.`,
+          'already_registered',
           400
         )
       }
@@ -143,7 +153,11 @@ export const signIn = ({
       // Compare provided password with hashed one
       const isPasswordValid = await compare(req.body.password, user.password)
       if (!isPasswordValid) {
-        return handleHttpError(res, 'Incorrect password.', 401)
+        return handleHttpError(
+          res,
+          'incorrect_password',
+          401
+        )
       }
 
       // Remove password before returning user data
@@ -151,15 +165,25 @@ export const signIn = ({
 
       // Send success response with JWT token
       return res.status(200).json(
-        buildResponse(req, 'Logged in successfully!', user, null, {
-          token: await tokenSign(user)
-        })
+        buildResponse(
+          req,
+          'login_successfully',
+          user,
+          null,
+          {
+            token: await tokenSign(user)
+          }
+        )
       )
     } catch (error) {
       // Log error to the server console
       console.error('Signin error:', error.message)
       // Handle unexpected errors gracefully
-      handleHttpError(res, 'An internal server error occurred.', 500)
+      handleHttpError(
+        res,
+        'server_error',
+        500
+      )
     }
   }
 }
@@ -282,11 +306,19 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
       const { passwordOld, passwordNew, confirmPassword } = req.body
 
       if (!passwordOld || !passwordNew || !confirmPassword) {
-        return handleHttpError(res, 'All password fields are required', 400)
+        return handleHttpError(
+          res,
+          'All password fields are required',
+          400
+        )
       }
 
       if (passwordNew !== confirmPassword) {
-        return handleHttpError(res, 'Passwords must match', 400)
+        return handleHttpError(
+          res,
+          'Passwords must match',
+          400
+        )
       }
 
       const userId = req.user._id || req.user.id
@@ -295,7 +327,11 @@ export const changePassword = ({ User, handleHttpError, buildResponse, sendChang
 
       const isMatch = await bcrypt.compare(passwordOld, user.password)
       if (!isMatch) {
-        return handleHttpError(res, 'Current password is incorrect', 400)
+        return handleHttpError(
+          res,
+          'Current password is incorrect',
+          400
+        )
       }
 
       const isSame = await bcrypt.compare(passwordNew, user.password)
@@ -353,7 +389,11 @@ export const logout = ({ buildResponse, handleHttpError, invalidateToken }) => {
       const authHeader = req.headers.authorization
 
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return handleHttpError(res, 'No token provided', 400)
+        return handleHttpError(
+          res,
+          'No token provided',
+          400
+        )
       }
 
       const token = authHeader.split(' ')[1]
@@ -378,7 +418,11 @@ export const logout = ({ buildResponse, handleHttpError, invalidateToken }) => {
       // Log error to the server console
       console.error('Logout error:', error.message)
       // Handle unexpected errors gracefully
-      return handleHttpError(res, 'Error during logout', 500)
+      return handleHttpError(
+        res,
+        'Error during logout',
+        500
+      )
     }
   }
 }

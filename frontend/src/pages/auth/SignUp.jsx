@@ -105,7 +105,7 @@ export default function SignUp() {
 
           Swal.fire({
             title: t('sign_up.welcome'),
-            text: t('sign_up.created'),
+            text: t(`sign_up.${response.data.message}`),
             icon: 'success',
             confirmButtonText: t('sign_up.confirm_button'),
           }).then(() => {
@@ -121,7 +121,7 @@ export default function SignUp() {
 
           Swal.fire({
             title: t('sign_up.almost'),
-            text: errorMessage,
+            text: t(`sign_up.${response.data.message}`),
             icon: 'warning',
             confirmButtonText: t('sign_up.sign_in'),
           }).then(() => {
@@ -131,13 +131,16 @@ export default function SignUp() {
         }
       })
       .catch((error) => {
-        // Build a reliable error message from several possible shapes
+        const backendMessage =
+          error?.response?.data?.message;
+
         const errorMessage =
-          error?.response?.data?.message || // your handleHttpError -> message
-          error?.response?.data?.errors?.[0]?.msg || // express-validator array
-          error?.response?.data?.error || // fallback
-          error?.message || // axios/node error message
-          t('sign_up.error');
+          backendMessage
+            ? t(`sign_up.${backendMessage}`)
+            : error?.response?.data?.errors?.[0]?.msg ||
+              error?.response?.data?.error ||
+              error?.message ||
+              t('sign_up.error');
 
         Swal.fire({
           title: t('sign_up.title_error'),

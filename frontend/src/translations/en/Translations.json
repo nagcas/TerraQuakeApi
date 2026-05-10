@@ -309,7 +309,12 @@
     "label_password": "Password",
     "success": "Success!",
     "error": "Error!",
-    "profile": "Profile"
+    "profile": "Profile",
+    "login_successfully": "Login Successful!",
+    "user_not_found": "User not found. Please register first.",
+    "already_registered": "This email is already registered",
+    "incorrect_password": "Incorrect Password",
+    "server_error": "An internal server error occurred"
   },
   "sign_up": {
     "title": "Create account.",
@@ -355,7 +360,10 @@
     "almost": "Almost there!",
     "error": "An error occurred. Please try again.",
     "title_error": "Error!",
-    "accept": "You must accept the Terms and Conditions!"
+    "accept": "You must accept the Terms and Conditions!",
+    "registration_successful": "Registration Successful",
+    "email_exists": "User with this email already exists!",
+    "server_error": "Internal server error!"
   },
   "login_socials": {
     "sign_through": "Or sign in through",
