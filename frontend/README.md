@@ -45,25 +45,25 @@ cd frontend
 2. **Install dependencies**:
 
 ```bash
-npm install
+pnpm install
 ```
 
 3. **Start development server:**
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 4. **Build for production:**
 
 ```bash
-npm run build
+pnpm build
 ```
 
 5. **Preview production build:**
 
 ```bash
-npm run preview
+pnpm preview
 ```
 
 ## Project Structure
@@ -87,7 +87,7 @@ frontend/
 To check code quality:
 
 ```bash
-npm run lint
+pnpm lint
 ```
 
 ## API

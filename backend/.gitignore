@@ -9,6 +9,8 @@ lerna-debug.log*
 
 docker-db
 node_modules
+.pnpm-store
+
 dist
 dist-ssr
 *.local

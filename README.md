@@ -63,12 +63,12 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
 2. Install backend dependencies:
    ```
    cd backend
-   npm install
+   pnpm install
    ```
 3. Install frontend dependencies:
    ```
    cd ../frontend
-   npm install
+   pnpm install
    ```
 4. Set up environment variables:
    - Copy `backend/.env-example` to `backend/.env` and fill in required values (e.g., database URL, API keys).
@@ -77,12 +77,12 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
 5. Run the backend:
    ```
    cd backend
-   npm run dev
+   pnpm start
    ```
 6. Run the frontend (in a new terminal):
    ```
    cd frontend
-   npm run dev
+   pnpm dev
    ```
 
 Visit `http://localhost:5173` for the frontend interface and `http://localhost:5001` for the API endpoints.

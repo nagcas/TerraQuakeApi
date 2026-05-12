@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from '@config/Axios.js';
 import Swal from 'sweetalert2';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
