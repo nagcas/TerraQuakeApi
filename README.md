@@ -19,6 +19,18 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
 
 ---
 
+## 🌍 Support Terraquake API
+
+**Terraquake API** is an open-source project created to provide fast, reliable, and accessible seismic data. Maintaining servers, fetching real-time data, and keeping the API fast and free requires continuous work and infrastructure costs.
+
+If this project has helped you build an app, fetch data, or learn something new, please consider supporting its development! Every coffee keeps the servers running and sparks new features.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X21ZGPMB)
+
+Thank you so much for your generosity and for being part of this journey! 🚀
+
+---
+
 ## Project Overview
 
 - **Backend (TerraQuake API)** — Node.js + Express REST API to serve earthquake data.
