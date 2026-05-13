@@ -1,9 +1,8 @@
 # GitHub Sponsors
-github: [nagcas]
+github: nagcas
 
-# Altri canali di supporto
-# ko_fi: nagcas   # <-- se hai un account Ko-fi
-# buy_me_a_coffee: nagcas  # <-- se hai un account Buy Me a Coffee
+ko_fi: https://ko-fi.com/gianlucachiaravalloti
 
-# URL personalizzato (esempio PayPal)
-custom: ["https://paypal.me/magcas"]
+custom:
+  - https://paypal.me/magcas
+
