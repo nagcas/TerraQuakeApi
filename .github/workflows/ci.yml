@@ -82,6 +82,11 @@ jobs:
       - name: Test
         run: pnpm run test --if-present || true
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+    version: 10
+
   backend:
     name: Backend • build & test
     needs: changes
