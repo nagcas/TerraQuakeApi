@@ -74,20 +74,20 @@ export default function Hero() {
           >
             {!isLoggedIn && (
               <button
-                className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer'
+                className='bg-gradient-to-r from-pink-500 to-purple-600 text-white text-sm font-semibold py-3 px-8 rounded-full hover:scale-105 transition-transform duration-300 cursor-pointer'
                 onClick={() => navigate('/signup')}
               >
                 {t('hero.sign_up')}
               </button>
             )}
             <button
-              className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
+              className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white text-sm font-semibold py-3 px-8 rounded-full cursor-pointer'
               onClick={() => navigate('/explore-data/earthquakes')}
             >
               {t('hero.explore_seismic_events')}
             </button>
             <button
-              className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
+              className='border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white text-sm font-semibold py-3 px-8 rounded-full cursor-pointer'
               onClick={() => window.open(
                 'https://docs.terraquakeapi.com/introduction',
                 '_blank'
