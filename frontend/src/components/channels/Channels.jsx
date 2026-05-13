@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub } from 'react-icons/fi';
-import { FaLinkedin, FaXTwitter } from 'react-icons/fa6';
+import { FaDiscord, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
 import { useTranslation } from 'react-i18next';
 
 export default function Channels() {
@@ -17,10 +17,10 @@ export default function Channels() {
       rel: 'noopener noreferrer',
     },
     {
-      icon: <FaXTwitter className='text-2xl' />, 
-      title: t('channels.title_x'),
-      detail: 'x.com/nagcas',
-      href: 'https://x.com/nagcas',
+      icon: <FaDiscord className='text-2xl' />,
+      title: 'Discord',
+      detail: 'Discord TerraQuakeAPI',
+      href: 'https://discord.gg/JzfsTmWK',
       target: '_blank',
       rel: 'noopener noreferrer',
     },

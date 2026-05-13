@@ -29,7 +29,7 @@ export default function Socials() {
     },
     {
       title: 'Discord',
-      url: 'https://discord.gg/RDBp8KJB',
+      url: 'https://discord.gg/JzfsTmWK',
       icon: <FaDiscord className='text-2xl' />,
     },
     {
