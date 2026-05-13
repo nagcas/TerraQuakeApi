@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { Context } from '../modules/Context';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import KofiButton from '../kofi/KofiButton';
 
 export default function Hero() {
   const { t } = useTranslation('translation');
@@ -114,6 +115,7 @@ export default function Hero() {
             className='w-full p-4 h-auto rounded-2xl border border-gray-600 shadow-2xl transition-transform duration-300 ease-out object-contain filter brightness-110 contrast-160'
           />
         </motion.div>
+        <KofiButton />
       </section>
     </>
   );

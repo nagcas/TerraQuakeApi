@@ -1130,5 +1130,8 @@
     "text_token": "La funzionalità di generazione del token API sarà disponibile presto.",
     "generate": "Genera token API",
     "generate_token": "Genera token"
+  },
+  "kofi": {
+    "support": "Supportami su Ko-fi"
   }
 }
