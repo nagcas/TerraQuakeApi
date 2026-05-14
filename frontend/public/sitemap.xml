@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="sitemaps.org">
   <url>
-    <loc>https://terraquakeapi.com/</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://terraquakeapi.com</loc>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://terraquakeapi.com/home</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://terraquakeapi.com/explore-data/earthquakes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://terraquakeapi.com/explore-data</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://terraquakeapi.com/explore-data/stations</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://terraquakeapi.com/explore-data/table-earthquakes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://terraquakeapi.com/explore-data/table-stations</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://terraquakeapi.com/api-access</loc>
@@ -21,48 +31,53 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://terraquakeapi.com/docs</loc>
+    <loc>https://terraquakeapi.com/docs-earthquakes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://terraquakeapi.com/docs-stations</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://terraquakeapi.com/use-cases</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://terraquakeapi.com/about</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://terraquakeapi.com/contact</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://terraquakeapi.com/signin</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://terraquakeapi.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://terraquakeapi.com/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://terraquakeapi.com/terms-and-conditions</loc>
+    <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://terraquakeapi.com/signup</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://terraquakeapi.com/privacy-policy</loc>
+    <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://terraquakeapi.com/contribute</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://terraquakeapi.com/faq</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://terraquakeapi.com/terms</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
+    <loc>https://terraquakeapi.com/contribute</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

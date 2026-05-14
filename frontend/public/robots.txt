@@ -1,4 +1,41 @@
-User-agent: *
-Allow: /
+# ====================================================================
+# Robots.txt per terraquakeapi.com (React + Node.js + MongoDB)
+# ====================================================================
 
+User-agent: *
+# Blocca le rotte di routing interno di React (pagine non pubbliche)
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /admin/
+
+# Blocca completamente gli endpoint Node.js per evitare chiamate inutili al database MongoDB
+Disallow: /api/
+Disallow: /v1/
+
+# Permetti l'indicizzazione delle pagine statiche React e della documentazione
+Allow: /
+Allow: /docs/
+Allow: /static/
+
+# Blocca i crawler AI per proteggere le risorse del server e la banda di MongoDB
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Anthropic-AI
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Mappa del sito
 Sitemap: https://terraquakeapi.com/sitemap.xml
+
