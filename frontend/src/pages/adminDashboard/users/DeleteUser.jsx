@@ -134,10 +134,10 @@ export default function DeleteUser({ users, setUsers }) {
 
               {/* Body */}
               <div className='flex flex-col items-center gap-4 mt-20'>
-                <p className='text-2xl text-center pt-5 text-gray-300'>
+                <p className='text-2xl text-center p-2 pt-5 text-gray-300'>
                   {t('users.text_deleted')}
                 </p>
-                <p className='text-xl text-center text-gray-300'>
+                <p className='text-xl text-center p-2 text-gray-300'>
                   {t('users.text_confirm')}
                 </p>
               </div>

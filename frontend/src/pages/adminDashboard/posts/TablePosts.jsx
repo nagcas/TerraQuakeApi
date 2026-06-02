@@ -138,7 +138,7 @@ export default function TablePosts() {
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewPost posts={item} />
                           <UpdatePost />
-                          <DeletePost />
+                          <DeletePost posts={item} setPosts={setPosts} />
                           <SharePost />
                         </td>
                       </tr>
