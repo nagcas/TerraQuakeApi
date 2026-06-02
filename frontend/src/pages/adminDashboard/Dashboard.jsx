@@ -43,6 +43,7 @@ export default function AdminDashboard() {
   } = useUsers();
   const {
     posts,
+    setPosts,
     totalPagesPosts,
     totalPosts,
     currentPagePost,
@@ -147,6 +148,7 @@ export default function AdminDashboard() {
             <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.posts')}</h3>
             <ListPosts
               posts={posts}
+              setPosts={setPosts}
               totalPosts={totalPosts}
               totalPagesPosts={totalPagesPosts}
               currentPagePost={currentPagePost}
