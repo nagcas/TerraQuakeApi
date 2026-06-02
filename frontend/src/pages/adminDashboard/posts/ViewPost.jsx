@@ -5,7 +5,6 @@ import { formatDate } from '@/components/utils/FormatDate';
 
 export default function ViewPost({ posts }) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(posts)
 
   const toggleModal = () => setIsOpen(!isOpen);
   return (
@@ -51,7 +50,7 @@ export default function ViewPost({ posts }) {
               <div className='p-8 max-h-[70vh] overflow-y-auto'>
                 <pre className='p-6 text-sm mb-6'>
                   <p className='p-4 font-semibold text-white text-2xl'>
-                    Json post
+                    Json Post
                   </p>
                   {JSON.stringify(posts, null, 2)}
                 </pre>

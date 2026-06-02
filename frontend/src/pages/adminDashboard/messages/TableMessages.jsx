@@ -139,7 +139,7 @@ export default function TableMessages() {
                           {formatDate(item.createdAt)}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
-                          <ViewMessage />
+                          <ViewMessage messages={item} />
                           <DeleteMessage />
                         </td>
                       </tr>
