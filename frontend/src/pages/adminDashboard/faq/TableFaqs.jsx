@@ -135,7 +135,7 @@ export default function TableFaqs() {
                           {item.term === true ? 'Yes' : 'No'}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
-                          <ViewFaq />
+                          <ViewFaq faqs={item} />
                           <UpdateFaq />
                           <DeleteFaq />
                         </td>

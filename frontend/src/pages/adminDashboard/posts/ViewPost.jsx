@@ -16,7 +16,7 @@ export default function ViewPost({ posts }) {
         <FaRegEye />
       </button>
 
-       <AnimatePresence>
+      <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -58,50 +58,50 @@ export default function ViewPost({ posts }) {
                   Classic Post
                 </p>
                 {[
-                  { 
-                    label: 'Id', 
-                    value: posts?._id 
+                  {
+                    label: 'Id',
+                    value: posts?._id,
                   },
-                  { 
-                    label: 'Title', 
-                    value: posts?.title 
+                  {
+                    label: 'Title',
+                    value: posts?.title,
                   },
                   {
                     label: 'Slug',
-                    value: posts?.slug
+                    value: posts?.slug,
                   },
-                  { 
-                    label: 'Excerpt', 
-                    value: posts?.excerpt
+                  {
+                    label: 'Excerpt',
+                    value: posts?.excerpt,
                   },
-                  { 
-                    label: 'Author', 
-                    value: posts?.author.name
+                  {
+                    label: 'Author',
+                    value: posts?.author.name,
                   },
-                  { 
-                    label: 'Categories', 
-                    value: posts?.categories?.join(', ') 
+                  {
+                    label: 'Categories',
+                    value: posts?.categories?.join(', '),
                   },
-                  { 
-                    label: 'Content', 
-                    value: posts?.content 
+                  {
+                    label: 'Content',
+                    value: posts?.content,
                   },
-                  { 
-                    label: 'Read Time', 
-                    value: posts?.readTime 
+                  {
+                    label: 'Read Time',
+                    value: posts?.readTime,
                   },
-                  { 
-                    label: 'Tags', 
-                    value: posts?.tags?.join(', ') 
+                  {
+                    label: 'Tags',
+                    value: posts?.tags?.join(', '),
                   },
                   {
                     label: 'Date',
-                    value: formatDate(posts.createdAt)
+                    value: formatDate(posts.createdAt),
                   },
                   {
                     label: 'Deleted',
-                    value: posts.deleted === true ? 'Yes' : 'No'
-                  }
+                    value: posts.deleted === true ? 'Yes' : 'No',
+                  },
                 ].map(({ label, value }) => (
                   <p
                     key={label}

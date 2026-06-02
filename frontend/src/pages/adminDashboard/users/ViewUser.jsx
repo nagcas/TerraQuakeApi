@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ViewUser({ users }) {
   const { t } = useTranslation('translation');
-  console.log(users)
+  console.log(users);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -62,49 +62,49 @@ export default function ViewUser({ users }) {
                   {t('view_user.classic_data')}
                 </p>
                 {[
-                  { 
-                    label: 'Id', 
-                    value: users?._id 
+                  {
+                    label: 'Id',
+                    value: users?._id,
                   },
-                  { 
-                    label: t('view_user.name'), 
-                    value: users?.name 
+                  {
+                    label: t('view_user.name'),
+                    value: users?.name,
                   },
-                  { 
-                    label: t('view_user.email'), 
-                    value: users?.email 
+                  {
+                    label: t('view_user.email'),
+                    value: users?.email,
                   },
-                  { 
-                    label: t('view_user.experience'), 
-                    value: users?.experience 
+                  {
+                    label: t('view_user.experience'),
+                    value: users?.experience,
                   },
-                  { 
-                    label: t('view_user.student'), 
-                    value: users?.student 
+                  {
+                    label: t('view_user.student'),
+                    value: users?.student,
                   },
-                  { 
-                    label: t('view_user.bio'), 
-                    value: users?.bio 
+                  {
+                    label: t('view_user.bio'),
+                    value: users?.bio,
                   },
-                  { 
-                    label: t('view_user.location'), 
-                    value: users?.location 
+                  {
+                    label: t('view_user.location'),
+                    value: users?.location,
                   },
-                  { 
-                    label: t('view_user.website'), 
-                    value: users?.website 
+                  {
+                    label: t('view_user.website'),
+                    value: users?.website,
                   },
-                  { 
-                    label: t('view_user.portfolio'), 
-                    value: users?.portfolio 
+                  {
+                    label: t('view_user.portfolio'),
+                    value: users?.portfolio,
                   },
-                  { 
-                    label: 'GitHub', 
-                    value: users?.github 
+                  {
+                    label: 'GitHub',
+                    value: users?.github,
                   },
-                  { 
-                    label: 'LinkedIn', 
-                    value: users?.linkedin 
+                  {
+                    label: 'LinkedIn',
+                    value: users?.linkedin,
                   },
                 ].map(({ label, value }) => (
                   <p
