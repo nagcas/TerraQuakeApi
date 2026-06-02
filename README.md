@@ -225,6 +225,45 @@ All endpoints support **pagination**:
 
 ---
 
+# Analytics Microservice (Django + AI)
+
+A new analytics microservice is being introduced to extend TerraQuake API with advanced data processing and seismic intelligence capabilities.
+
+This service is built with Django + Django REST Framework and is responsible for transforming raw seismic events into structured insights, statistics, and machine learning-based analysis.
+
+Architecture Role
+Receives seismic event data from the Node.js backend
+Processes and aggregates events by region, time, and magnitude
+Exposes analytical REST APIs for frontend and external services
+Serves as the foundation for AI-based seismic interpretation models.
+
+## Core Responsibilities
+
+Regional seismic statistics (events per area, magnitude distribution)
+- Temporal analysis (daily, weekly, monthly trends)
+- Detection of seismic clusters and swarms
+- Data enrichment for geographic and depth-based insights
+- Preparation of datasets for AI/ML models
+
+## AI / Machine Learning Integration
+
+The microservice will also integrate Python-based machine learning models to enhance seismic analysis.
+
+Planned capabilities include:
+
+- Anomaly detection on seismic activity patterns
+- Clustering of events based on spatial and temporal proximity
+- Pattern recognition for recurring seismic sequences
+- Support for predictive analytics experiments (research phase)
+
+Technologies planned:
+
+- Scikit-learn (clustering & anomaly detection)
+- Pandas / NumPy (data processing)
+- Future extensions with deep learning models (LSTM / time-series models)
+
+---
+
 ## Author
 
 Dr. Gianluca Chiaravalloti
