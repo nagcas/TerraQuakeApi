@@ -137,7 +137,7 @@ export default function TableFaqs() {
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewFaq faqs={item} />
-                          <UpdateFaq />
+                          <UpdateFaq faqs={item} setFaqs={setFaqs} />
                           <DeleteFaq faqs={item} setFaqs={setFaqs} />
                         </td>
                       </tr>
