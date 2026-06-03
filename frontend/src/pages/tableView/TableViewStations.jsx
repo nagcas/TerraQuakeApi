@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from 'axios';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
@@ -28,7 +28,7 @@ export default function TableViewStations() {
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${BACKEND_URL}/v1/stations?limit=1000`
         );
         const { payload } = response.data;

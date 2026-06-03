@@ -53,7 +53,7 @@ export const createPost = ({
         excerpt: data.excerpt,
         slug,
         author: data.author,
-        categories: data.categories,
+        categories: data.categories || [],
         content: data.content,
         tags: data.tags || [],
         readTime: data.readTime
@@ -75,7 +75,7 @@ export const createPost = ({
 
 /**
  * NOTE: Controller to update an existing post.
- * If the slug is modified, ensures that the new slug remains unique.
+ * Ensures slug uniqueness and returns the updated document populated.
  */
 export const updatePost = ({
   Post,
@@ -86,45 +86,66 @@ export const updatePost = ({
   return async (req, res) => {
     try {
       const postId = req.params.id
+
+      // Validate post ID
       if (!postId) {
         return handleHttpError(res, 'Post ID is required', 400)
       }
 
-      // Extract validated data
+      // Extract validated data from request
       const data = matchedData(req)
-      const updateFields = { ...data }
+      console.log(data)
 
-      // If slug is being updated, regenerate and ensure uniqueness
+      // Prevent empty updates
+      if (!data || Object.keys(data).length === 0) {
+        return handleHttpError(res, 'No valid fields to update', 400)
+      }
+
+      const updateFields = {
+        ...data,
+        updatedAt: new Date()
+      }
+
+      // Handle slug update and ensure uniqueness
       if (data.slug) {
         let newSlug = slugify(data.slug)
         let count = 1
-        while (await Post.findOne({ slug: newSlug, _id: { $ne: postId } })) {
+
+        while (
+          await Post.findOne({
+            slug: newSlug,
+            _id: { $ne: postId }
+          })
+        ) {
           newSlug = `${slugify(data.slug)}-${count}`
           count++
         }
+
         updateFields.slug = newSlug
       }
 
-      // Update modification date
-      updateFields.updatedAt = new Date()
+      // Perform update with $set to avoid accidental replacements
+      const updated = await Post.findOneAndUpdate(
+        { _id: postId },
+        { $set: updateFields },
+        { new: true }
+      ).populate('author')
 
-      // Perform update in the database
-      const updated = await Post.findByIdAndUpdate(postId, updateFields, {
-        new: true
-      })
+      // Handle not found case
       if (!updated) {
         return handleHttpError(res, 'Post not found', 404)
       }
 
-      // Respond with updated post
-      res.json(
-        buildResponse(req, 'Post updated successfully', updated, null, {})
+      // Return updated post
+      return res.json(
+        buildResponse(req, 'Post updated successfully', updated)
       )
     } catch (error) {
-      // Log error to the server console
+      // Log server-side error for debugging
       console.error('Error in updatePost controller:', error.message)
-      // Handle unexpected errors gracefully
-      handleHttpError(
+
+      // Handle HTTP-safe error response
+      return handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
       )

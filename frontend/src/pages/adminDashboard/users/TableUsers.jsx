@@ -14,9 +14,9 @@ export default function TableUsers() {
   const { t } = useTranslation('translation');
 
   const location = useLocation();
-   const { page = 1, limit = 20 } = location.state || {};
+  const { page = 1, limit = 20 } = location.state || {};
 
-   const {
+  const {
     users,
     setUsers,
     totalPagesUsers,
@@ -134,15 +134,27 @@ export default function TableUsers() {
                           {item.role.toString()}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.deleted === true ? <span className='text-red-400'>{t('table_users.yes')}</span> : 'No'}
+                          {item.deleted === true ? (
+                            <span className='text-red-400'>
+                              {t('table_users.yes')}
+                            </span>
+                          ) : (
+                            'No'
+                          )}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.terms === true ? 'Yes' : 'No'}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewUser users={item} />
-                          <UpdateUser users={item} setUsers={setUsers} />
-                          <DeleteUser users={item} setUsers={setUsers} />
+                          <UpdateUser
+                            users={item}
+                            setUsers={setUsers}
+                          />
+                          <DeleteUser
+                            users={item}
+                            setUsers={setUsers}
+                          />
                         </td>
                       </tr>
                     ))}

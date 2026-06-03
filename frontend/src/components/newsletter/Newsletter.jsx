@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +17,7 @@ export default function Newsletter() {
     setMessage('');
 
     try {
-      const response = await axios.post(`/newsletter/subscribe`, {
+      const response = await api.post(`/newsletter/subscribe`, {
         email,
       });
       setMessage(response.data.message);

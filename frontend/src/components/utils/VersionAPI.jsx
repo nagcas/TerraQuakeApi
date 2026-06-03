@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
 import { formatDate } from './FormatDate.js';
 import { useTranslation } from 'react-i18next';

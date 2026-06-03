@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { useNavigate, Link, useParams  } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -55,7 +55,7 @@ export default function ResetPassword() {
       password2: data.confirmPassword,
     };
 
-    axios
+    api
       .post(`/auth/reset-password/${token}`, formData)
       .then((res) => {
         Swal.fire({

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FaXmark } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@/config/Axios.js';
+import api from '@/config/Axios.js';
 
 export default function DeletePost({ posts, setPosts }) {  
     const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +48,7 @@ export default function DeletePost({ posts, setPosts }) {
         }
   
         // Perform account deletion request
-        const response = await axios.delete(`/posts/${posts._id}`, {
+        const response = await api.delete(`/posts/${posts._id}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Send token in authorization header
           },

@@ -1,4 +1,4 @@
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -22,7 +22,7 @@ export default function Logout() {
         throw new Error(t('logout.error_token'));
       }
 
-      const res = await axios.post(
+      const res = await api.post(
         `/auth/logout`,
         {},
         {

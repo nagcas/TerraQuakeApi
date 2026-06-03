@@ -1,7 +1,7 @@
 import './Blog.css';
 import { useState, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import MetaData from '@pages/noPage/MetaData';
 import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -57,7 +57,7 @@ export default function Blog() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`/posts`, {
+      const response = await api.get(`/posts`, {
         headers: { 'Content-Type': 'application/json' },
         params: {
           page: currentPage,

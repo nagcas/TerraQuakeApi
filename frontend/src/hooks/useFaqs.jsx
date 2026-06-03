@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import axios from '@/config/Axios.js';
+import { useCallback, useEffect, useState } from 'react';
+import api from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -20,7 +20,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
     setLoadingFaq(true);
     setErrorFaq(null);
     try {
-      const response = await axios.get(`/faqs`, {
+      const response = await api.get(`/faqs`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

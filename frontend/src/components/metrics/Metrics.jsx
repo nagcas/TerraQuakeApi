@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import { useTranslation } from 'react-i18next';
 
 export default function Metrics() {
@@ -18,7 +18,7 @@ export default function Metrics() {
       try {
         if (firstLoad) setLoadingMetrics(true);
 
-        const response = await axios.get('/v1/metrics/json', {
+        const response = await api.get('/v1/metrics/json', {
           headers: { 'Content-Type': 'application/json' },
         });
 

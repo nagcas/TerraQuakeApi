@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import axios from '@/config/Axios.js';
+import api from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Context } from '@/components/modules/Context';
@@ -30,7 +30,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
     setLoadingPost(true);
     setErrorPost(null);
     try {
-      const response = await axios.get(`/posts`, {
+      const response = await api.get(`/posts`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -68,6 +68,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
 
   return {
     posts,
+    setPosts,
     totalPosts,
     totalPagesPosts,
     currentPagePost,

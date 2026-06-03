@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FaXmark } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@/config/Axios.js';
+import api from '@/config/Axios.js';
 import { useTranslation } from 'react-i18next';
 
 export default function DeleteUser({ users, setUsers }) {
@@ -51,7 +51,7 @@ export default function DeleteUser({ users, setUsers }) {
       }
 
       // Perform account deletion request
-      const response = await axios.delete(`/users/${users._id}`, {
+      const response = await api.delete(`/users/${users._id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in authorization header
         },

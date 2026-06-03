@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../noPage/MetaData';
-import axios from '@/config/Axios.js';
+import api from '@/config/Axios.js';
 import { useTranslation } from 'react-i18next';
 
 export default function DeleteReview({ reviewId, refetchTestimonials }) {
@@ -42,7 +42,7 @@ export default function DeleteReview({ reviewId, refetchTestimonials }) {
         return;
       }
 
-      const response = await axios.delete(
+      const response = await api.delete(
         `/testimonials/${reviewId}`,
         {
           headers: {

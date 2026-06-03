@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -80,7 +80,7 @@ export default function SignUp() {
       terms: data.terms,
     };
 
-    axios
+    api
       .post('auth/signup', formData)
       .then(async (res) => {
         // After successful sign-up, automatically sign the user in

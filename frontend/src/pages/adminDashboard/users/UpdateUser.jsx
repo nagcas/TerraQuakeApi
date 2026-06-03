@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaRotate, FaXmark } from 'react-icons/fa6';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -67,11 +67,11 @@ export default function UpdateUser({ users, setUsers }) {
 
       const token = localStorage.getItem('token');
 
-      const response = await axios.patch(`/users/${users._id}`, data, {
+      const response = await api.patch(`/users/${users._id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const updatedUser = response.data.payload || response.data;
+      const updatedUser = response?.data.payload;
 
       Swal.fire({
         title: t('update_user.success'),

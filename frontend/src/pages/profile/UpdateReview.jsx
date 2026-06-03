@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../noPage/MetaData';
 import { motion } from 'framer-motion';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -71,7 +71,7 @@ export default function UpdateReview({
       };
 
       // Send update request to backend
-      const response = await axios.patch(
+      const response = await api.patch(
         `/testimonials/${reviewId}`,
         payloadReview,
         {

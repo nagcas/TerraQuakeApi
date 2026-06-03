@@ -1,6 +1,6 @@
 import { Context } from '@/components/modules/Context';
 import React, { useContext, useState, useEffect } from 'react';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import MetaData from '../noPage/MetaData';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -85,7 +85,7 @@ export default function ChangePassword() {
       confirmPassword: data.confirmPassword,
     };
 
-    axios
+    api
       .post('/auth/change-password', formData, {
         headers: { Authorization: `Bearer ${token}` },
       })

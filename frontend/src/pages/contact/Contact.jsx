@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Channels from '@/components/channels/Channels';
@@ -105,7 +105,7 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      const res = await axios.post(`/contact`, data);
+      const res = await api.post(`/contact`, data);
 
       Swal.fire({
         title: t('contact.success'),

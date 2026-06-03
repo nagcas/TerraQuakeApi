@@ -2,7 +2,7 @@ import { Context } from '@/components/modules/Context';
 import { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Spinner from '@/components/spinner/Spinner';
 import { useTranslation } from 'react-i18next';
 
@@ -49,7 +49,7 @@ export default function GithubAuth() {
     localStorage.setItem('token', token);
 
     // Fetch user data from backend using the token
-    axios
+    api
       .get(`/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })

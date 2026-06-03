@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from 'axios';
 import { motion } from 'framer-motion';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import MetaData from '../noPage/MetaData';
@@ -29,7 +29,7 @@ export default function TableViewEarthquakes() {
   useEffect(() => {
     const fetchEarthquakes = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${BACKEND_URL}/v1/earthquakes/recent?limit=1000`
         );
         const { payload } = response.data;

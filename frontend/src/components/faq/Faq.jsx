@@ -3,7 +3,7 @@ import BackToTopButton from '../utils/BackToTopButton';
 import { motion } from 'framer-motion';
 import FaqItem from './FaqItem';
 import { useEffect, useState } from 'react';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Spinner from '../spinner/Spinner';
 import Pagination from '../utils/Pagination';
 import Swal from 'sweetalert2';
@@ -24,7 +24,7 @@ export default function Faq() {
   const fetchAllFaq = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/faqs', {
+      const response = await api.get('/faqs', {
         headers: {
           'Content-Type': 'application/json',
         },

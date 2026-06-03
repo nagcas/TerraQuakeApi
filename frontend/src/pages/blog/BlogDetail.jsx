@@ -16,7 +16,7 @@ import remarkGfm from 'remark-gfm';
 import 'prismjs/themes/prism-tomorrow.css';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { formatDate } from '@/components/utils/FormatDate.js';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ export default function BlogDetail() {
     const fetchPost = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`/posts/${slug}`, {
+        const response = await api.get(`/posts/${slug}`, {
           headers: { 'Content-Type': 'application/json' },
         });
 

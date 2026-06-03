@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import axios from '@/config/Axios.js';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import api from '@/config/Axios.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Context } from '@/components/modules/Context';
@@ -30,7 +30,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
     setLoadingMessage(true);
     setErrorMessage(null);
     try {
-      const response = await axios.get(`/contact`, {
+      const response = await api.get(`/contact`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

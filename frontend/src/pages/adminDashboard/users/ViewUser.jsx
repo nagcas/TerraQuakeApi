@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 export default function ViewUser({ users }) {
   const { t } = useTranslation('translation');
-  console.log(users);
 
   const [isOpen, setIsOpen] = useState(false);
 

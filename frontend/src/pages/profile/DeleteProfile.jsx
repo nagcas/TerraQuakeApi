@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from '@/components/modules/Context';
 import MetaData from '../noPage/MetaData';
 import Spinner from '@/components/spinner/Spinner';
-import axios from '@/config/Axios.js';
+import api from '@/config/Axios.js';
 import { useTranslation } from 'react-i18next';
 
 export default function DeleteProfile() {
@@ -53,7 +53,7 @@ export default function DeleteProfile() {
       }
 
       // Perform account deletion request
-      const response = await axios.delete(`/users/me`, {
+      const response = await api.delete(`/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in authorization header
         },

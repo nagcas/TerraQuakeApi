@@ -75,6 +75,9 @@ export const validatorUpdatePost = [
   // Validate 'tags': optional, must be an array if provided
   check('tags').optional().isArray(),
 
+  // Validate 'readTime'
+  check('readTime').optional().isString(),
+
   // Final middleware: handle validation results
   (req, res, next) => validateResults(req, res, next)
 ]

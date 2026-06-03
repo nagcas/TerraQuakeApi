@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import MetaData from '@pages/noPage/MetaData';
 import BackToTopButton from '@/components/utils/BackToTopButton';
 import { motion } from 'framer-motion';
@@ -40,7 +40,7 @@ export default function SignIn() {
     try {
       setLoading(true);
 
-      const response = await axios.post('/auth/signin', data, {
+      const response = await api.post('/auth/signin', data, {
         headers: { 'Content-Type': 'application/json' },
       });
 

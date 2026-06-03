@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from '@config/Axios.js';
+import api from '@config/Axios.js';
 import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -35,7 +35,7 @@ export default function forgotPassword() {
     const formData = {
       email: data.email,
     };
-    axios
+    api
       .post('/auth/forgot-password', formData, {
         headers: {
           'Content-Type': 'application/json',

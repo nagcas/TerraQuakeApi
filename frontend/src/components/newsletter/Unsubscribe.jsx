@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from 'axios';
 import MetaData from '@/pages/noPage/MetaData';
 import BackToTopButton from '../utils/BackToTopButton';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,7 @@ export default function Unsubscribe() {
   useEffect(() => {
     const fetchUnsubscribe = async () => {
       try {
-        const res = await axios.get(
+        const res = await api.get(
           `${import.meta.env.VITE_URL_BACKEND}/newsletter/unsubscribe`,
           { params: { token, email } }
         );
