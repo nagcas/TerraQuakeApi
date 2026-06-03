@@ -137,14 +137,22 @@ export default function TablePosts() {
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewPost posts={item} />
-                          <UpdatePost 
-                            posts={item} 
-                            setPosts={setPosts} 
-                          />
-                          <DeletePost 
-                            posts={item} 
-                            setPosts={setPosts} 
-                          />
+                          {item.deleted === false ? (
+                            <UpdatePost 
+                              posts={item} 
+                              setPosts={setPosts} 
+                            />
+                          ) : (
+                            <pre className='me-4'>--</pre>
+                          )}
+                          {item.deleted === false ? (
+                            <DeletePost 
+                              posts={item} 
+                              setPosts={setPosts} 
+                            />
+                          ) : (
+                            <pre className='me-4'>--</pre>
+                          )}
                           <SharePost />
                         </td>
                       </tr>
