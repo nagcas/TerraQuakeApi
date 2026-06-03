@@ -11,6 +11,7 @@ import { formatDate } from '@/components/utils/FormatDate.js';
 import usePosts from '@/hooks/usePosts';
 import Pagination from '@/components/utils/Pagination';
 import { useTranslation } from 'react-i18next';
+import CreatePost from './CreatePost';
 
 export default function TablePosts() {
   const { t } = useTranslation('translation');
@@ -29,6 +30,8 @@ export default function TablePosts() {
     loadingPost,
     errorPost,
   } = usePosts(page, limit);
+
+  console.log(posts)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -85,9 +88,7 @@ export default function TablePosts() {
                   placeholder={t('table_posts.search')}
                   className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
                 />
-                <button className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'>
-                  {t('table_posts.new_post')}
-                </button>
+                <CreatePost setPosts={setPosts} />
               </div>
 
               <div className='overflow-x-auto border border-white/5 bg-white/[0.03] bg-opacity-50 rounded-lg'>
@@ -143,7 +144,7 @@ export default function TablePosts() {
                               setPosts={setPosts} 
                             />
                           ) : (
-                            <pre className='me-4'>--</pre>
+                            <pre className='px-4'>--</pre>
                           )}
                           {item.deleted === false ? (
                             <DeletePost 
@@ -151,7 +152,7 @@ export default function TablePosts() {
                               setPosts={setPosts} 
                             />
                           ) : (
-                            <pre className='me-4'>--</pre>
+                            <pre className='px-4'>--</pre>
                           )}
                           <SharePost />
                         </td>
