@@ -18,6 +18,7 @@ export default function TableMessages() {
 
   const {
     messages,
+    setMessages,
     totalPagesMessages,
     totalMessages,
     currentPageMessage,
@@ -110,6 +111,9 @@ export default function TableMessages() {
                         {t('table_messages.date')}
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
+                        {t('table_messages.deleted')}
+                      </th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
                         {t('table_messages.options')}
                       </th>
                     </tr>
@@ -138,9 +142,12 @@ export default function TableMessages() {
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {formatDate(item.createdAt)}
                         </td>
+                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                          {item.deleted === true ? 'Yes' : 'No'}
+                        </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewMessage messages={item} />
-                          <DeleteMessage />
+                          <DeleteMessage messages={item} setMessages={setMessages} />
                         </td>
                       </tr>
                     ))}

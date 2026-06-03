@@ -68,6 +68,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
 
   return {
     messages,
+    setMessages,
     totalMessages,
     totalPagesMessages,
     currentPageMessage,

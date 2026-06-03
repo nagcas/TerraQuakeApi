@@ -993,6 +993,7 @@
     "email": "Correo electrónico",
     "answered": "Respondido",
     "date": "Fecha",
+    "deleted": "Eliminado",
     "options": "Opciones",
     "search": "Buscar por correo electrónico..."
   },
