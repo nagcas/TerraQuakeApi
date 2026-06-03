@@ -8,13 +8,15 @@ export const validatorCreatePost = [
   check('title')
     .exists()
     .notEmpty()
-    .isLength({ min: 3, max: 200 }),
+    .isLength({ min: 3, max: 200 })
+    .withMessage('Please enter a valid title (3–200 characters).'),
 
   // Validate 'excerpt': required, not empty, length between 10 and 300 characters
   check('excerpt')
     .exists()
     .notEmpty()
-    .isLength({ min: 10, max: 300 }),
+    .isLength({ min: 10, max: 300 })
+    .withMessage('Please enter a valid excerpt (10–300 characters).'),
 
   // Validate 'slug': optional, length between 3 and 100 characters
   check('slug')
@@ -29,13 +31,16 @@ export const validatorCreatePost = [
 
   // Validate 'categories': required, must be an array with at least one item
   check('categories')
-    .isArray({ min: 1 }),
+    .optional()
+    .isArray({ min: 1 })
+    .withMessage('Please enter a categories (min. 1).'),
 
   // Validate 'content': required, not empty, length at least 10 characters
   check('content')
     .exists()
     .notEmpty()
-    .isLength({ min: 10 }),
+    .isLength({ min: 10 })
+    .withMessage('Please enter a valid content (min. 10 characters).'),
 
   // Validate 'tags': optional, must be an array if provided
   check('tags')
