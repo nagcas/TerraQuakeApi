@@ -147,7 +147,11 @@ export default function TableMessages() {
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewMessage messages={item} />
-                          <DeleteMessage messages={item} setMessages={setMessages} />
+                          {item.deleted === false ?
+                            <DeleteMessage messages={item} setMessages={setMessages} />
+                          : 
+                            <pre className='mx-4'>--</pre>
+                          }
                         </td>
                       </tr>
                     ))}
