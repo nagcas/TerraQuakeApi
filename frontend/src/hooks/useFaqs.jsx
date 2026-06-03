@@ -58,6 +58,7 @@ export default function useMessages(initialPage = 1, initialLimit = 5) {
 
   return {
     faqs,
+    setFaqs,
     totalFaqs,
     totalPagesFaqs,
     currentPageFaq,

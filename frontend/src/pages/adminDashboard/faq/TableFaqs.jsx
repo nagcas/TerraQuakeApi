@@ -20,6 +20,7 @@ export default function TableFaqs() {
 
   const {
     faqs,
+    setFaqs,
     totalPagesFaqs,
     totalFaqs,
     currentPageFaq,
@@ -137,7 +138,7 @@ export default function TableFaqs() {
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewFaq faqs={item} />
                           <UpdateFaq />
-                          <DeleteFaq />
+                          <DeleteFaq faqs={item} setFaqs={setFaqs} />
                         </td>
                       </tr>
                     ))}
