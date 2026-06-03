@@ -166,7 +166,8 @@ export const deletePost = ({ Post, handleHttpError }) => {
         return handleHttpError(res, 'Invalid post ID format', 400)
       }
 
-      const deleted = await Post.findByIdAndDelete(postId)
+      // Soft delete via mongoose-delete
+      const deleted = await Post.delete({ _id: postId })
 
       if (!deleted) {
         return handleHttpError(res, 'Post not found', 404)
@@ -204,15 +205,15 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       // Build filters only if provided
       const filter = {}
       if (title) filter.title = { $regex: title, $options: 'i' }
-      if (category) { filter.categories = { $regex: new RegExp(`^${category}$`, 'i') } }
+      if (category) { filter.categories = { $in: [new RegExp(category, 'i')] } }
       if (tags) filter.tags = { $regex: tags, $options: 'i' }
 
       // Count total documents
       const totalPosts = await Post.countDocuments(filter)
 
       // Fetch filtered or all posts
-      const posts = await Post.find(filter)
-        .populate('author', 'name')
+      const posts = await Post.findWithDeleted(filter)
+        .populate('author')
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
