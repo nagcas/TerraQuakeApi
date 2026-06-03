@@ -147,14 +147,22 @@ export default function TableUsers() {
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewUser users={item} />
-                          <UpdateUser
-                            users={item}
-                            setUsers={setUsers}
-                          />
-                          <DeleteUser
-                            users={item}
-                            setUsers={setUsers}
-                          />
+                          {item.deleted === false ? (
+                            <UpdateUser
+                              users={item}
+                              setUsers={setUsers}
+                            />
+                          ) : (
+                            <pre className='mx-4'>--</pre>
+                          )}
+                          {item.deleted === false ? (
+                            <DeleteUser
+                              users={item}
+                              setUsers={setUsers}
+                            />
+                          ) : (
+                            <pre className='mx-4'>--</pre>
+                          )}
                         </td>
                       </tr>
                     ))}
