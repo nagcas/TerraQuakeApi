@@ -24,12 +24,13 @@ export default function CreatePost({ setPosts }) {
     () =>
       yup.object({
         title: yup.string().required(t('update_user.name_required')),
-        excerpt: yup.string().required(t('email_required')),
-        author: yup.string().required(t('experience_required')),
-       categories: yup.string().required(t('student_required')),
-        content: yup.string().required(t('student_required')),
-        readTime: yup.string().required(t('student_required')),
+        excerpt: yup.string().required(t('update_user.email_required')),
+        author: yup.string().required(t('update_user.experience_required')),
+        categories: yup.string().required(t('update_user.student_required')),
+        content: yup.string().required(t('update_user.student_required')),
+        readTime: yup.string().required(t('update_user.student_required')),
         tags: yup.string(),
+        published: yup.boolean().required(t('update_user.student_required')),
       }),
     [t],
   );
@@ -52,6 +53,7 @@ export default function CreatePost({ setPosts }) {
       content: '',
       readTime: '',
       tags: [],
+      published: '',
     });
   }, [reset]);
 
@@ -237,6 +239,36 @@ export default function CreatePost({ setPosts }) {
                       </p>
                     </div>
                   ))}
+
+                  {/* Published */}
+                  <div>
+                    <label className='text-white text-sm font-semibold mb-2 block'>
+                      Published
+                    </label>
+                    <select
+                      {...register('published', {
+                        setValueAs: (value) => value === 'true',
+                      })}
+                      className='w-full px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-purple-500'
+                    >
+                      <option
+                        value='true'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        {t('update_user.yes')}
+                      </option>
+
+                      <option
+                        value='false'
+                        className='bg-gray-900 text-gray-400'
+                      >
+                        {t('update_user.no')}
+                      </option>
+                    </select>
+                    <p className='text-red-400 text-xs pt-1'>
+                      {errors.deleted?.message}
+                    </p>
+                  </div>
 
                   {/* Footer */}
                   <div className='flex justify-end gap-4 pt-4'>
