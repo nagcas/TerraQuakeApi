@@ -204,15 +204,10 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       const skip = (page - 1) * limit
 
       // Build filters only if provided
-      const filter = {
-        published: true
-      }
+      const filter = {}
       if (title) filter.title = { $regex: title, $options: 'i' }
       if (category) { filter.categories = { $in: [new RegExp(category, 'i')] } }
       if (tags) filter.tags = { $regex: tags, $options: 'i' }
-
-      // Count total documents
-      const totalPosts = await Post.countDocuments(filter)
 
       // Fetch filtered or all posts
       const posts = await Post.findWithDeleted(filter)
@@ -222,6 +217,20 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         .limit(limit)
         .lean()
 
+      // Count total documents
+      const filtered = {
+        published: true,
+        deleted: false
+      }
+      const totalPosts = await Post.countDocuments(filtered)
+
+      const totalPostsNotFiltered = await Post.countDocuments()
+
+      const filteredDrafts = {
+        published: false
+      }
+      const totalPostsDrafts = await Post.countDocuments(filteredDrafts)
+
       const totalPages = Math.ceil(totalPosts / limit)
       const hasMore = page < totalPages
 
@@ -229,6 +238,8 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       res.json(
         buildResponse(req, 'Posts retrieved successfully', {
           totalPosts,
+          totalPostsNotFiltered,
+          totalPostsDrafts,
           posts,
           pagination: {
             page,
