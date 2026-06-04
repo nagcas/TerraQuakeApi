@@ -31,8 +31,6 @@ export default function TablePosts() {
     errorPost,
   } = usePosts(page, limit);
 
-  console.log(posts)
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPagePost]);
