@@ -52,6 +52,9 @@ export const validatorCreatePost = [
     .optional()
     .isString(),
 
+  // Validate 'published'
+  check('published').optional().isBoolean(),
+
   // Final middleware: handle validation results
   (req, res, next) => validateResults(req, res, next)
 ]
@@ -82,6 +85,9 @@ export const validatorUpdatePost = [
 
   // Validate 'readTime'
   check('readTime').optional().isString(),
+
+  // Validate 'published'
+  check('published').optional().isBoolean(),
 
   // Final middleware: handle validation results
   (req, res, next) => validateResults(req, res, next)

@@ -95,7 +95,6 @@ export const updatePost = ({
 
       // Extract validated data from request
       const data = matchedData(req)
-      console.log(data)
 
       // Prevent empty updates
       if (!data || Object.keys(data).length === 0) {
