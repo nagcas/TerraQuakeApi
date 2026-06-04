@@ -1,5 +1,5 @@
 import express from 'express'
-import { createPost, updatePost, deletePost, listAllPosts, listOnePostSlug } from '../controllers/postController.js'
+import { createPost, updatePost, deletePost, listAllPosts, listOnePostSlug, restorePost } from '../controllers/postController.js'
 import { validatorCreatePost, validatorUpdatePost } from '../validators/postValidators.js'
 import Post from '../models/postModel.js'
 import { matchedData } from 'express-validator'
@@ -33,6 +33,10 @@ router.get('/', listAllPosts({ Post, buildResponse, handleHttpError }))
 // NOTE: Route: Get a post by slug
 // Defining a route to display a single post with a specific slug
 router.get('/:slug', listOnePostSlug({ Post, buildResponse, handleHttpError }))
+
+// NOTE: Route: Restore post delete
+// Requires user authentication
+router.patch('/:id/restore', adminMiddleware, restorePost({ Post, buildResponse, handleHttpError }))
 
 // Export the post router to be used in the main app
 export default router
