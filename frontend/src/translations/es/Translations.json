@@ -1073,6 +1073,7 @@
     },
     "table_posts": 
     {
+        "create_post": "Crear nueva publicación",
         "back": "Volver al panel",
         "manage_posts": "Gestionar publicaciones - Vista tabular.",
         "new_post": "Nueva publicación",
@@ -1219,6 +1220,7 @@
     "view_post": 
     {
         "title": "Publicación",
+        "view_post": "Ver publicación",
         "json_post": "Publicación JSON",
         "classic_post": "Publicación Clásica",
         "label_title": "Título",
@@ -1291,5 +1293,9 @@
     "kofi": 
     {
         "support": "Apóyame en Ko-fi"
+    },
+    "share_post": 
+    {
+        "confirm_button": "Compartir publicación"
     }
 }

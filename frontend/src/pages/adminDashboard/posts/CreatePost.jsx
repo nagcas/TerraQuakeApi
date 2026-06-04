@@ -144,6 +144,7 @@ export default function CreatePost({ setPosts }) {
       <button
         onClick={toggleModal}
         className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+        title={t('table_posts.create_post')}
       >
         {t('table_posts.new_post')}
       </button>

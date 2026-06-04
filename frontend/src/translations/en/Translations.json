@@ -1094,6 +1094,7 @@
     },
     "table_posts": 
     {
+        "create_post": "Create new post",
         "back": "Back to Dashboard",
         "manage_posts": "Manage Posts - Tabular View.",
         "new_post": "New Post",
@@ -1240,6 +1241,7 @@
     "view_post": 
     {
         "title": "Post",
+        "view_post": "View post",
         "json_post": "Json Post",
         "classic_post": "Classic Post",
         "label_title": "Title",
@@ -1312,5 +1314,9 @@
     "kofi": 
     {
         "support": "Support me on Ko-fi"
+    },
+    "share_post": 
+    {
+        "confirm_button": "Share post"
     }
 }

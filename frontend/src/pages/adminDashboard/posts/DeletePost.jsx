@@ -95,6 +95,7 @@ export default function DeletePost({ posts, setPosts }) {
       <button
         onClick={toggleModal}
         className='px-2 py-1 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl hover:scale-[1.02] hover:bg-purple-400 transition-all duration-300 cursor-pointer'
+        title={t('delete_post.button_confirm')}
       >
         <FaXmark />
       </button>

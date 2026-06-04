@@ -126,6 +126,7 @@ export default function UpdatePost({ posts, setPosts }) {
       <button
         onClick={toggleModal}
         className='px-2 py-1 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl hover:scale-[1.03] hover:bg-purple-500/20 transition-all duration-300 cursor-pointer'
+        title={t('update_post.update_post')}
       >
         <FaRotate />
       </button>

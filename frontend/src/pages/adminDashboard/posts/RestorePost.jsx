@@ -99,6 +99,7 @@ export default function RestorePost({ posts, setPosts }) {
       <button
         onClick={toggleModal}
         className='px-2 py-1 bg-green-500/20 text-green-400 rounded-xl hover:bg-green-500/30 transition cursor-pointer'
+        title={t('restore_post.button_confirm')}
       >
         <FaRotateLeft />
       </button>
