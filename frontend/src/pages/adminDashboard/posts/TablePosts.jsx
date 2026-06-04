@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import Spinner from '@/components/spinner/Spinner';
@@ -12,9 +12,12 @@ import usePosts from '@/hooks/usePosts';
 import Pagination from '@/components/utils/Pagination';
 import { useTranslation } from 'react-i18next';
 import CreatePost from './CreatePost';
+import FilterPosts from './FilterPosts';
 
 export default function TablePosts() {
   const { t } = useTranslation('translation');
+
+  const [search, setSearch] = useState('');
 
   const location = useLocation();
   const { page = 1, limit = 20 } = location.state || {};
@@ -34,6 +37,19 @@ export default function TablePosts() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPagePost]);
+
+  const filteredPosts = useMemo(() => {
+    if (!search) return posts;
+
+    const q = search.toLowerCase();
+
+    return posts.filter((post) => {
+      return (
+        post.title?.toLowerCase().includes(q) ||
+        post.author?.name?.toLowerCase().includes(q)
+      );
+    });
+  }, [posts, search]);
 
   return (
     <>
@@ -81,11 +97,7 @@ export default function TablePosts() {
           {!loadingPost && !errorPost && (
             <>
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
-                <input
-                  type='text'
-                  placeholder={t('table_posts.search')}
-                  className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
-                />
+                <FilterPosts search={search} setSearch={setSearch} />
                 <CreatePost setPosts={setPosts} />
               </div>
 
@@ -117,7 +129,7 @@ export default function TablePosts() {
                     </tr>
                   </thead>
                   <tbody className='divide-y divide-gray-800'>
-                    {posts.map((item) => (
+                    {filteredPosts.map((item) => (
                       <tr
                         key={item._id}
                         className=' hover:bg-purple-500/10 transition-colors'
