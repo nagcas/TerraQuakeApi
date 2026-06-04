@@ -53,7 +53,7 @@ export default function CreatePost({ setPosts }) {
       content: '',
       readTime: '',
       tags: [],
-      published: '',
+      published: false,
     });
   }, [reset]);
 
