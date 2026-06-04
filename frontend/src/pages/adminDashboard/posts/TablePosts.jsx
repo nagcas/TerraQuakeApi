@@ -13,6 +13,7 @@ import Pagination from '@/components/utils/Pagination';
 import { useTranslation } from 'react-i18next';
 import CreatePost from './CreatePost';
 import FilterPosts from './FilterPosts';
+import RestorePost from './RestorePost';
 
 export default function TablePosts() {
   const { t } = useTranslation('translation');
@@ -97,7 +98,10 @@ export default function TablePosts() {
           {!loadingPost && !errorPost && (
             <>
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
-                <FilterPosts search={search} setSearch={setSearch} />
+                <FilterPosts
+                  search={search}
+                  setSearch={setSearch}
+                />
                 <CreatePost setPosts={setPosts} />
               </div>
 
@@ -147,30 +151,62 @@ export default function TablePosts() {
                           {item.title.slice(0, 15)}...
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.deleted === true ? 'Yes' : 'No'}
+                          {item.deleted === true ? (
+                            <span className='text-red-400'>
+                              {t('table_posts.yes')}
+                            </span>
+                          ) : (
+                            <span>{t('table_posts.no')}</span>
+                          )}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.published === true ? 'Yes' : 'No'}
+                          {item.published === true ? (
+                            <span className='text-green-400'>
+                              {t('table_posts.yes')}
+                            </span>
+                          ) : (
+                            <span>{t('table_posts.no')}</span>
+                          )}
                         </td>
-                        <td className='flex gap-4 text-sm px-6 py-4'>
-                          <ViewPost posts={item} />
-                          {item.deleted === false ? (
-                            <UpdatePost
-                              posts={item}
-                              setPosts={setPosts}
-                            />
-                          ) : (
-                            <pre className='px-4'>--</pre>
-                          )}
-                          {item.deleted === false ? (
-                            <DeletePost
-                              posts={item}
-                              setPosts={setPosts}
-                            />
-                          ) : (
-                            <pre className='px-4'>--</pre>
-                          )}
-                          <SharePost posts={item} />
+                        <td className='px-2 py-4'>
+                          <div className='flex items-center gap-2'>
+                            <ViewPost posts={item} />
+
+                            <div className='w-10 flex justify-center'>
+                              {item.deleted === false ? (
+                                <UpdatePost
+                                  posts={item}
+                                  setPosts={setPosts}
+                                />
+                              ) : (
+                                <span className='text-gray-500'>--</span>
+                              )}
+                            </div>
+
+                            <div className='w-10 flex justify-center'>
+                              {item.deleted === false ? (
+                                <DeletePost
+                                  posts={item}
+                                  setPosts={setPosts}
+                                />
+                              ) : (
+                                <span className='text-gray-500'>--</span>
+                              )}
+                            </div>
+
+                            <div className='w-10 flex justify-center'>
+                              {item.deleted === true ? (
+                                <RestorePost
+                                  posts={item}
+                                  setPosts={setPosts}
+                                />
+                              ) : (
+                                <span className='text-gray-500'>--</span>
+                              )}
+                            </div>
+
+                            <SharePost posts={item} />
+                          </div>
                         </td>
                       </tr>
                     ))}

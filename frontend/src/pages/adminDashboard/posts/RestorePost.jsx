@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FaXmark } from 'react-icons/fa6';
+import api from '@/config/Axios.js';
 import Swal from 'sweetalert2';
 import Spinner from '@/components/spinner/Spinner';
-import api from '@/config/Axios.js';
+import { FaRotateLeft, FaXmark } from 'react-icons/fa6';
 import { useTranslation } from 'react-i18next';
 
-export default function DeletePost({ posts, setPosts }) {
+export default function RestorePost({ posts, setPosts }) {
   const { t } = useTranslation('translation');
 
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function DeletePost({ posts, setPosts }) {
 
   const toggleModal = () => setIsOpen(!isOpen);
 
-  const handleDelete = async () => {
+  const handleRestore = async () => {
     try {
       setLoading(true);
 
@@ -24,8 +24,8 @@ export default function DeletePost({ posts, setPosts }) {
       // If no token is found, show an error alert
       if (!token) {
         Swal.fire({
-          title: t('delete_post.error'),
-          text: t('delete_post.text_error'),
+          title: t('restore_post.error'),
+          text: t('restore_post.text_error'),
           icon: 'error',
           confirmButtonText: 'Ok',
         });
@@ -35,13 +35,13 @@ export default function DeletePost({ posts, setPosts }) {
 
       // Ask for confirmation before performing the delete request
       const result = await Swal.fire({
-        title: t('delete_post.you_sure'),
-        text: t('delete_post.revert'),
+        title: t('restore_post.you_sure'),
+        text: t('restore_post.revert'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: t('delete_post.confirm_deleted'),
+        confirmButtonText: t('restore_post.confirm_deleted'),
       });
 
       // If the user cancels, stop the process
@@ -50,24 +50,28 @@ export default function DeletePost({ posts, setPosts }) {
         return;
       }
 
-      // Perform post deletion request
-      const response = await api.delete(`/posts/${posts._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Send token in authorization header
+      const response = await api.patch(
+        `/posts/${posts._id}/restore`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       // Show success message after post deletion
       await Swal.fire({
-        title: t('delete_post.deleted'),
+        title: t('restore_post.deleted'),
         text: response.data.message,
         icon: 'success',
-        confirmButtonText: t('delete_post.tabular_view'),
+        confirmButtonText: t('restore_post.tabular_view'),
       });
 
-      // Update the list
+      const restore = response.data.payload || response.data;
+
       setPosts((prev) =>
-        prev.map((u) => (u._id === posts._id ? { ...u, deleted: true } : u)),
+        prev.map((p) => (p._id === restore._id ? restore : p)),
       );
     } catch (error) {
       // Handle possible errors and display them
@@ -76,9 +80,9 @@ export default function DeletePost({ posts, setPosts }) {
         error?.response?.data?.errors?.[0]?.msg ||
         error?.response?.data?.error ||
         error?.message ||
-        t('delete_post.try_again');
+        t('restore_post.try_again');
       Swal.fire({
-        title: t('delete_post.error'),
+        title: t('restore_post.error'),
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok',
@@ -94,9 +98,9 @@ export default function DeletePost({ posts, setPosts }) {
     <>
       <button
         onClick={toggleModal}
-        className='px-2 py-1 border border-white/5 bg-white/[0.03] rounded-2xl shadow-2xl hover:scale-[1.02] hover:bg-purple-400 transition-all duration-300 cursor-pointer'
+        className='px-2 py-1 bg-green-500/20 text-green-400 rounded-xl hover:bg-green-500/30 transition cursor-pointer'
       >
-        <FaXmark />
+        <FaRotateLeft />
       </button>
 
       <AnimatePresence>
@@ -118,7 +122,7 @@ export default function DeletePost({ posts, setPosts }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  {t('delete_post.title')} {posts?._id}
+                  {t('restore_post.title')} {posts?._id}
                 </h2>
 
                 <button
@@ -132,35 +136,35 @@ export default function DeletePost({ posts, setPosts }) {
               {/* Body */}
               <div className='flex flex-col items-center gap-4 mt-20'>
                 <p className='text-2xl text-center p-2 pt-5 text-gray-300'>
-                  {t('delete_post.text_deleted')}
+                  {t('restore_post.text_deleted')}
                 </p>
                 <p className='text-xl text-center p-2 text-gray-300'>
-                  {t('delete_post.text_confirm')}
+                  {t('restore_post.text_confirm')}
                 </p>
               </div>
 
               {/* Footer */}
               <div className='flex justify-end p-6 gap-4 pt-4'>
                 <button
-                  onClick={handleDelete}
+                  onClick={handleRestore}
                   disabled={loading}
                   className={`px-6 py-2 text-md font-semibold  rounded-full border border-white/5 
-                          bg-gradient-to-r from-purple-600 to-pink-500 text-white 
-                          transition-all duration-300 cursor-pointer 
-                          ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.03]'}`}
+                              bg-gradient-to-r from-purple-600 to-pink-500 text-white 
+                              transition-all duration-300 cursor-pointer 
+                              ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.03]'}`}
                   aria-label='Delete post'
                 >
-                  {loading ? <Spinner /> : t('delete_post.button_confirm')}
+                  {loading ? <Spinner /> : t('restore_post.button_confirm')}
                 </button>
 
                 <button
                   type='button'
                   onClick={toggleModal}
                   className='px-6 py-2 text-md border border-white/5 bg-white/[0.06] 
-                      rounded-full shadow-xl transition-all duration-300 cursor-pointer 
-                      hover:scale-[1.03] hover:bg-white/[0.12]'
+                          rounded-full shadow-xl transition-all duration-300 cursor-pointer 
+                          hover:scale-[1.03] hover:bg-white/[0.12]'
                 >
-                  {t('delete_post.close')}
+                  {t('restore_post.close')}
                 </button>
               </div>
             </motion.div>
