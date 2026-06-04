@@ -137,28 +137,28 @@ export default function TablePosts() {
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.deleted === true ? 'Yes' : 'No'}
                         </td>
-                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.published === true ? 'Yes' : 'No'}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewPost posts={item} />
                           {item.deleted === false ? (
-                            <UpdatePost 
-                              posts={item} 
-                              setPosts={setPosts} 
+                            <UpdatePost
+                              posts={item}
+                              setPosts={setPosts}
                             />
                           ) : (
                             <pre className='px-4'>--</pre>
                           )}
                           {item.deleted === false ? (
-                            <DeletePost 
-                              posts={item} 
-                              setPosts={setPosts} 
+                            <DeletePost
+                              posts={item}
+                              setPosts={setPosts}
                             />
                           ) : (
                             <pre className='px-4'>--</pre>
                           )}
-                          <SharePost />
+                          <SharePost posts={item} />
                         </td>
                       </tr>
                     ))}

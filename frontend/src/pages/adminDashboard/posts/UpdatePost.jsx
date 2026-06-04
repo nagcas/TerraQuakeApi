@@ -19,13 +19,17 @@ export default function UpdatePost({ posts, setPosts }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const updatePostSchema = yup.object({
-    title: yup.string().required(t('update_user.name_required')),
-    excerpt: yup.string().required(t('email_required')),
-    author: yup.string().required(t('experience_required')),
-    categories: yup.array().of(yup.string()).required(t('student_required')),
-    content: yup.string().required(t('student_required')),
-    readTime: yup.string().required(t('student_required')),
-    tags: yup.array().of(yup.string()).required(t('student_required')),
+    title: yup.string().required(t('update_post.title_required')),
+    excerpt: yup.string().required(t('update_post.excerpt_required')),
+    author: yup.string().required(t('update_post.author_required')),
+    categories: yup
+      .array()
+      .of(yup.string())
+      .required(t('update_post.categories_required')),
+    content: yup.string().required(t('update_post.content_required')),
+    readTime: yup.string().required(t('update_post.read_time_required')),
+    tags: yup.array().of(yup.string()).required(t('update_post.tags_required')),
+    published: yup.boolean().required(t('update_post.published_required')),
   });
 
   const {
@@ -46,14 +50,15 @@ export default function UpdatePost({ posts, setPosts }) {
       content: posts?.content || '',
       readTime: posts?.readTime || '',
       tags: posts?.tags || [],
+      published: posts?.published || '',
     });
   }, [posts, reset]);
 
   const handleUpdatePost = async (data) => {
     if (!posts?._id) {
       Swal.fire({
-        title: t('update_user.error'),
-        text: t('update_user.text_error'),
+        title: t('update_post.error'),
+        text: t('update_post.text_error'),
         icon: 'error',
       });
       return;
@@ -77,6 +82,8 @@ export default function UpdatePost({ posts, setPosts }) {
             : data.tags,
       };
 
+      console.log(payload);
+
       const response = await api.patch(`/posts/${posts._id}`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -84,8 +91,8 @@ export default function UpdatePost({ posts, setPosts }) {
       const updatedPost = response.data.payload || response.data;
 
       Swal.fire({
-        title: t('update_user.success'),
-        text: t('update_user.text_success'),
+        title: t('update_post.success'),
+        text: t('update_post.text_success'),
         icon: 'success',
         confirmButtonText: 'Ok',
       });
@@ -102,11 +109,11 @@ export default function UpdatePost({ posts, setPosts }) {
       setIsOpen(false);
     } catch (error) {
       Swal.fire({
-        title: t('update_user.error'),
+        title: t('update_post.error'),
         text:
           error?.response?.data?.message ||
           error?.response?.data?.errors?.[0]?.msg ||
-          t('update_user.error_occurred'),
+          t('update_post.error_occurred'),
         icon: 'error',
       });
     } finally {
@@ -144,7 +151,7 @@ export default function UpdatePost({ posts, setPosts }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  {t('update_user.update_user')}
+                  {t('update_post.update_post')} id: {posts._id}
                 </h2>
 
                 <button
@@ -164,37 +171,37 @@ export default function UpdatePost({ posts, setPosts }) {
                   {/* Input component */}
                   {[
                     {
-                      label: 'Title',
+                      label: t('update_post.label_title'),
                       field: 'title',
                       value: posts?.title,
                     },
                     {
-                      label: 'Excerpt',
+                      label: t('update_post.label_excerpt'),
                       field: 'excerpt',
                       value: posts?.excerpt,
                     },
                     {
-                      label: 'Author',
+                      label: t('update_post.label_author'),
                       field: 'author',
                       value: posts?.author?._id,
                     },
                     {
-                      label: 'Categories',
+                      label: t('update_post.label_categories'),
                       field: 'categories',
                       value: posts?.categories,
                     },
                     {
-                      label: 'Content',
+                      label: t('update_post.label_content'),
                       field: 'content',
                       value: posts?.content,
                     },
                     {
-                      label: 'Read Time',
+                      label: t('update_post.label_read_time'),
                       field: 'readTime',
                       value: posts?.readTime,
                     },
                     {
-                      label: 'Tags',
+                      label: t('update_post.label_tags'),
                       field: 'tags',
                       value: posts?.tags,
                     },
@@ -226,10 +233,10 @@ export default function UpdatePost({ posts, setPosts }) {
                   {/* Published */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
-                      {t('update_user.deleted')}
+                      {t('update_post.published')}
                     </label>
                     <select
-                      {...register('public', {
+                      {...register('published', {
                         setValueAs: (value) => value === 'true',
                       })}
                       className='w-full px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-purple-500'
@@ -238,18 +245,18 @@ export default function UpdatePost({ posts, setPosts }) {
                         value='true'
                         className='bg-gray-900 text-gray-400'
                       >
-                        {t('update_user.yes')}
+                        {t('update_post.yes')}
                       </option>
 
                       <option
                         value='false'
                         className='bg-gray-900 text-gray-400'
                       >
-                        {t('update_user.no')}
+                        {t('update_post.no')}
                       </option>
                     </select>
                     <p className='text-red-400 text-xs pt-1'>
-                      {errors.deleted?.message}
+                      {errors.published?.message}
                     </p>
                   </div>
 
@@ -263,7 +270,7 @@ export default function UpdatePost({ posts, setPosts }) {
                         transition-all duration-300 cursor-pointer 
                         ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.03]'}`}
                     >
-                      {loading ? <Spinner /> : t('update_user.save')}
+                      {loading ? <Spinner /> : t('update_post.save')}
                     </button>
 
                     <button
@@ -273,7 +280,7 @@ export default function UpdatePost({ posts, setPosts }) {
                         rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                         hover:scale-[1.03] hover:bg-white/[0.12]'
                     >
-                      {t('update_user.close')}
+                      {t('update_post.close')}
                     </button>
                   </div>
                 </form>

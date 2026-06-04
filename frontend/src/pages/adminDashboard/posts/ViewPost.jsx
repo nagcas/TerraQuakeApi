@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaRegEye, FaXmark } from 'react-icons/fa6';
 import { formatDate } from '@/components/utils/FormatDate';
+import { useTranslation } from 'react-i18next';
 
 export default function ViewPost({ posts }) {
+  const { t } = useTranslation('translation');
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => setIsOpen(!isOpen);
@@ -35,7 +38,7 @@ export default function ViewPost({ posts }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  Post
+                  {t('view_post.title')} id: {posts._id}
                 </h2>
 
                 <button
@@ -50,12 +53,12 @@ export default function ViewPost({ posts }) {
               <div className='p-8 max-h-[70vh] overflow-y-auto'>
                 <pre className='p-6 text-sm mb-6'>
                   <p className='p-4 font-semibold text-white text-2xl'>
-                    Json Post
+                    {t('view_post.json_post')}
                   </p>
                   {JSON.stringify(posts, null, 2)}
                 </pre>
                 <p className='p-4 font-semibold text-white text-2xl'>
-                  Classic Post
+                  {t('view_post.classic_post')}
                 </p>
                 {[
                   {
@@ -63,44 +66,48 @@ export default function ViewPost({ posts }) {
                     value: posts?._id,
                   },
                   {
-                    label: 'Title',
+                    label: t('view_post.label_title'),
                     value: posts?.title,
                   },
                   {
-                    label: 'Slug',
+                    label: t('view_post.label_slug'),
                     value: posts?.slug,
                   },
                   {
-                    label: 'Excerpt',
+                    label: t('view_post.label_excerpt'),
                     value: posts?.excerpt,
                   },
                   {
-                    label: 'Author',
+                    label: t('view_post.label_author'),
                     value: posts?.author.name,
                   },
                   {
-                    label: 'Categories',
+                    label: t('view_post.label_categories'),
                     value: posts?.categories?.join(', '),
                   },
                   {
-                    label: 'Content',
+                    label: t('view_post.label_content'),
                     value: posts?.content,
                   },
                   {
-                    label: 'Read Time',
+                    label: t('view_post.label_read_time'),
                     value: posts?.readTime,
                   },
                   {
-                    label: 'Tags',
+                    label: t('view_post.label_tags'),
                     value: posts?.tags?.join(', '),
                   },
                   {
-                    label: 'Date',
+                    label: t('view_post.label_date'),
                     value: formatDate(posts.createdAt),
                   },
                   {
-                    label: 'Deleted',
+                    label: t('view_post.label_deleted'),
                     value: posts.deleted === true ? 'Yes' : 'No',
+                  },
+                  {
+                    label: t('view_post.label_published'),
+                    value: posts.published === true ? 'Yes' : 'No',
                   },
                 ].map(({ label, value }) => (
                   <p
@@ -122,7 +129,7 @@ export default function ViewPost({ posts }) {
                     rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                     hover:scale-[1.03] hover:bg-white/[0.12]'
                 >
-                  Close
+                  {t('view_post.close')}
                 </button>
               </div>
             </motion.div>
