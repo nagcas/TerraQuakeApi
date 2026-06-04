@@ -197,7 +197,7 @@ export default function Blog() {
           ) : posts.length > 0 ? (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
               {posts
-                .filter(post => post.deleted === false && post.published === true)
+                .filter(post => post.deleted !== true && post.published === true)
                 .map((post) => (
                 <article
                   key={post._id}
