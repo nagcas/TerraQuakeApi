@@ -46,7 +46,6 @@ export default function UpdatePost({ posts, setPosts }) {
       content: posts?.content || '',
       readTime: posts?.readTime || '',
       tags: posts?.tags || [],
-      deleted: posts?.deleted || false,
     });
   }, [posts, reset]);
 
@@ -93,7 +92,7 @@ export default function UpdatePost({ posts, setPosts }) {
 
       // Update the list
       setPosts((prev) =>
-        prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
+        prev.map((p) => (p._id === updatedPost._id ? updatedPost : p)),
       );
 
       // Reset form
@@ -224,26 +223,26 @@ export default function UpdatePost({ posts, setPosts }) {
                     </div>
                   ))}
 
-                  {/* Deleted */}
+                  {/* Published */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
                       {t('update_user.deleted')}
                     </label>
                     <select
-                      {...register('deleted')}
+                      {...register('public', {
+                        setValueAs: (value) => value === 'true',
+                      })}
                       className='w-full px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-purple-500'
                     >
-                      <option className='bg-gray-900 text-gray-400'>
-                        {t('update_user.select')}
-                      </option>
                       <option
-                        value={true}
+                        value='true'
                         className='bg-gray-900 text-gray-400'
                       >
                         {t('update_user.yes')}
                       </option>
+
                       <option
-                        value={false}
+                        value='false'
                         className='bg-gray-900 text-gray-400'
                       >
                         {t('update_user.no')}
