@@ -209,7 +209,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       if (tags) filter.tags = { $regex: tags, $options: 'i' }
 
       // Fetch filtered or all posts
-      const posts = await Post.findWithDeleted(filter)
+      const posts = await Post.find(filter)
         .populate('author')
         .sort({ [sort]: sortDirection })
         .skip(skip)
@@ -316,6 +316,60 @@ export const listOnePostSlug = ({ Post, buildResponse, handleHttpError }) => {
       console.error('Error in listOnePostSlug controller:', error.message)
       // Handle unexpected errors gracefully
       handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
+  }
+}
+
+// NOTE: Restore soft-deleted post
+export const restorePost = ({
+  Post,
+  handleHttpError,
+  buildResponse
+}) => {
+  return async (req, res) => {
+    try {
+      // Extract post ID from request parameters
+      const postId = req.params.id
+      console.log(postId)
+
+      // Validate post ID presence
+      if (!postId) {
+        return handleHttpError(res, 'Post ID is required', 400)
+      }
+
+      // Find post including soft-deleted ones and populate author data
+      const post = await Post.findById(postId).populate('author')
+
+      // Handle case where post does not exist
+      if (!post) {
+        return handleHttpError(res, 'Post not found', 404)
+      }
+
+      // Prevent restoring an already active post
+      if (post.deleted === false) {
+        return handleHttpError(res, 'Post is already active', 400)
+      }
+
+      // Restore the post by setting deleted flag to false
+      post.deleted = false
+      post.updatedAt = new Date()
+
+      // Persist changes to database
+      await post.save()
+
+      // Return success response with restored post
+      return res.json(
+        buildResponse(req, 'Post restored successfully', post)
+      )
+    } catch (error) {
+      // Log server-side error for debugging
+      console.error('Error restoring post:', error.message)
+
+      // Return safe HTTP error response
+      return handleHttpError(
         res,
         error.message.includes('HTTP error') ? error.message : undefined
       )
