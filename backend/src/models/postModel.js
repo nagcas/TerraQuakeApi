@@ -57,7 +57,7 @@ const postSchema = new mongoose.Schema({
   collection: 'posts'
 })
 
-postSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
+postSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: false })
 
 const Post = mongoose.model('Post', postSchema)
 
