@@ -333,7 +333,6 @@ export const restorePost = ({
     try {
       // Extract post ID from request parameters
       const postId = req.params.id
-      console.log(postId)
 
       // Validate post ID presence
       if (!postId) {
