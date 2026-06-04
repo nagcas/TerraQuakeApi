@@ -46,6 +46,8 @@ export default function AdminDashboard() {
     setPosts,
     totalPagesPosts,
     totalPosts,
+    totalPostsNotFiltered,
+    totalPostsDrafts,
     currentPagePost,
     setCurrentPagePost,
     postsPerPage,
@@ -150,6 +152,8 @@ export default function AdminDashboard() {
               posts={posts}
               setPosts={setPosts}
               totalPosts={totalPosts}
+              totalPostsNotFiltered={totalPostsNotFiltered}
+              totalPostsDrafts={totalPostsDrafts}
               totalPagesPosts={totalPagesPosts}
               currentPagePost={currentPagePost}
               postsPerPage={postsPerPage}
