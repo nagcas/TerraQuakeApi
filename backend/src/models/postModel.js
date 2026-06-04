@@ -45,7 +45,12 @@ const postSchema = new mongoose.Schema({
       type: String,
       trim: true
     }
-  ]
+  ],
+  published: {
+    type: Boolean,
+    default: false,
+    required: true
+  }
 }, {
   timestamps: true,
   versionKey: false,
