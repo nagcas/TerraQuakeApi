@@ -56,7 +56,8 @@ export const createPost = ({
         categories: data.categories || [],
         content: data.content,
         tags: data.tags || [],
-        readTime: data.readTime
+        readTime: data.readTime,
+        published: data.published
       })
 
       // Respond with created post
@@ -203,7 +204,9 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       const skip = (page - 1) * limit
 
       // Build filters only if provided
-      const filter = {}
+      const filter = {
+        published: true
+      }
       if (title) filter.title = { $regex: title, $options: 'i' }
       if (category) { filter.categories = { $in: [new RegExp(category, 'i')] } }
       if (tags) filter.tags = { $regex: tags, $options: 'i' }
