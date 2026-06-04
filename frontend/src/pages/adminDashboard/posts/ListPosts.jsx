@@ -6,6 +6,8 @@ export default function ListPosts({
   posts,
   setPosts,
   totalPosts,
+  totalPostsNotFiltered,
+  totalPostsDrafts,
   totalPagesPosts,
   currentPagePost,
   postsPerPage,
@@ -27,15 +29,15 @@ export default function ListPosts({
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
         {t('list_posts.posts')}{' '}
-        <span className='text-purple-400 font-semibold'>{totalPosts}</span>
+        <span className='text-purple-400 font-semibold'>{totalPostsNotFiltered}</span>
       </div>
       <div className='text-sm text-white/70'>
         {t('list_posts.published')}{' '}
-        <span className='text-green-400 font-semibold'>...</span>
+        <span className='text-green-400 font-semibold'>{totalPosts}</span>
       </div>
       <div className='text-sm text-white/70'>
         {t('list_posts.drafts')}{' '}
-        <span className='text-yellow-400 font-semibold'>...</span>
+        <span className='text-yellow-400 font-semibold'>{totalPostsDrafts}</span>
       </div>
       <button
         onClick={() => handleTablePosts()}
