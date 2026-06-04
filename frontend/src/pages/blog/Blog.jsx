@@ -69,9 +69,7 @@ export default function Blog() {
       const { payload } = response.data;
 
       if (!payload || !payload.posts) {
-        throw new Error(
-          t('blog.no_articles')
-        );
+        throw new Error(t('blog.no_articles'));
       }
 
       setPosts(payload.posts);
@@ -198,7 +196,9 @@ export default function Blog() {
             </div>
           ) : posts.length > 0 ? (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
-              {posts.map((post) => (
+              {posts
+                .filter(post => post.deleted === false && post.published === true)
+                .map((post) => (
                 <article
                   key={post._id}
                   className='border border-white/5 bg-white/[0.03] rounded-3xl shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:scale-105 group'
@@ -269,16 +269,15 @@ export default function Blog() {
                     </span>
                   </div>
                 </article>
-              ))}
+                ))
+              }
             </div>
           ) : (
             <div className='text-center py-20'>
               <h2 className='text-2xl text-white font-bold'>
                 {t('blog.no_posts')}
               </h2>
-              <p className='text-gray-400 mt-2'>
-                {t('blog.check_later')}
-              </p>
+              <p className='text-gray-400 mt-2'>{t('blog.check_later')}</p>
             </div>
           )}
 
