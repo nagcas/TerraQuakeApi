@@ -36,7 +36,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const hasMore = page < totalPages
 
       // Retrieve all users for monthly analysis (without pagination)
-      const allUsers = await User.findWithDeleted().lean()
+      const allUsers = await User.findWithDeleted().lean().sort({ [sort]: sortDirection }).limit(limit).skip(skip)
 
       const months = {
         January: 0,
