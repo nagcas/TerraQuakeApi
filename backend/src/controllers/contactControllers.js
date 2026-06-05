@@ -69,7 +69,7 @@ export const listAllContacts = ({ Contact, buildResponse, handleHttpError }) => 
       const totalContacts = await Contact.countDocuments(filter)
 
       // Get filtered + paginated contacts
-      const contacts = await Contact.findWithDeleted(filter)
+      const contacts = await Contact.find(filter)
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
