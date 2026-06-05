@@ -20,6 +20,11 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       // Count including soft-deleted users
       const totalUsers = await User.countDocumentsWithDeleted(filter)
 
+      const filteredDeleted = {
+        deleted: true
+      }
+      const totalUsersDeleted = await User.countDocuments(filteredDeleted)
+
       // Fetch filtered or all users
       const users = await User.findWithDeleted(filter)
         .sort({ [sort]: sortDirection })
@@ -30,10 +35,38 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const totalPages = Math.ceil(totalUsers / limit)
       const hasMore = page < totalPages
 
+      // Retrieve all users for monthly analysis (without pagination)
+      const allUsers = await User.findWithDeleted({}, 'createdAt').lean()
+
+      const months = {
+        January: 0,
+        February: 0,
+        March: 0,
+        April: 0,
+        May: 0,
+        June: 0,
+        July: 0,
+        August: 0,
+        September: 0,
+        October: 0,
+        November: 0,
+        December: 0
+      }
+
+      allUsers.forEach((entry) => {
+        const monthIndex = new Date(entry.createdAt).getMonth() // 0 - 11
+        const monthNames = Object.keys(months)
+        const monthName = monthNames[monthIndex]
+
+        months[monthName]++
+      })
+
       // Respond with paginated posts
       res.json(
         buildResponse(req, 'Users retrieved successfully', {
           users,
+          totalUsersDeleted,
+          usersByMonths: months,
           pagination: {
             page,
             totalPages,
