@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 export default function VersionAPI() {
   const { t } = useTranslation('translation');
 
-  const [api, setApi] = useState(null);
+  const [apiInfo, setApiInfo] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -17,10 +17,10 @@ export default function VersionAPI() {
   const fetchVersion = async () => {
     setLoading(true);
     try {
-      const response = await axios('/v1/test', {
+      const response = await api.get('/v1/test', {
         headers: { 'Content-Type': 'application/json' },
       });
-      setApi(response.data);
+      setApiInfo(response.data);
     } catch (error) {
       console.error('Error fetching API version:', error.response?.data || error.message);
     } finally {
@@ -29,7 +29,7 @@ export default function VersionAPI() {
   };
 
   if (loading) return <Spinner />;
-  if (!api) return null;
+  if (!apiInfo) return null;
 
   return (
     <section className="my-8 px-4">
@@ -44,28 +44,28 @@ export default function VersionAPI() {
             <p className="text-xs uppercase text-purple-300/70 tracking-wider">
               {t('version.version')}
             </p>
-            <p className="text-lg font-bold text-purple-300">{api.version}</p>
+            <p className="text-lg font-bold text-purple-300">{apiInfo.version}</p>
           </div>
 
           <div className="bg-purple-400/10 py-3 px-4 rounded-md">
             <p className="text-xs uppercase text-purple-300/70 tracking-wider">
               {t('version.last_update')}
             </p>
-            <p className="text-sm sm:text-base font-medium">{formatDate(api.date)}</p>
+            <p className="text-sm sm:text-base font-medium">{formatDate(apiInfo.date)}</p>
           </div>
 
           <div className="bg-purple-400/10 py-3 px-4 rounded-md">
             <p className="text-xs uppercase text-purple-300/70 tracking-wider">
               {t('version.author')}
             </p>
-            <p className="text-sm sm:text-base font-medium">{api.author}</p>
+            <p className="text-sm sm:text-base font-medium">{apiInfo.author}</p>
           </div>
 
           <div className="bg-purple-400/10 py-3 px-4 rounded-md">
             <p className="text-xs uppercase text-purple-300/70 tracking-wider">
               {t('version.project')}
             </p>
-            <p className="text-sm sm:text-base font-medium">{api.project?.slice(16, 28) || 'N/A'}</p>
+            <p className="text-sm sm:text-base font-medium">{apiInfo.project?.slice(16, 28) || 'N/A'}</p>
           </div>
         </div>
       </div>
