@@ -35,6 +35,8 @@ export default function AdminDashboard() {
     setUsers,
     totalPagesUsers,
     totalUsers,
+    totalUsersDeleted,
+    usersMonths,
     currentPageUser,
     setCurrentPageUser,
     usersPerPage,
@@ -132,6 +134,8 @@ export default function AdminDashboard() {
               users={users}
               setUsers={setUsers}
               totalUsers={totalUsers}
+              totalUsersDeleted={totalUsersDeleted}
+              usersMonths={usersMonths}
               totalPagesUsers={totalPagesUsers}
               currentPageUser={currentPageUser}
               usersPerPage={usersPerPage}

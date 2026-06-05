@@ -9,6 +9,7 @@ import DeleteUser from './DeleteUser';
 import Pagination from '@/components/utils/Pagination';
 import useUsers from '@/hooks/useUsers';
 import { useTranslation } from 'react-i18next';
+import StatisticUsers from './StatisticUsers';
 
 export default function TableUsers() {
   const { t } = useTranslation('translation');
@@ -21,6 +22,7 @@ export default function TableUsers() {
     setUsers,
     totalPagesUsers,
     totalUsers,
+    usersMonths,
     currentPageUser,
     setCurrentPageUser,
     usersPerPage,
@@ -83,6 +85,7 @@ export default function TableUsers() {
                   placeholder={t('table_users.search')}
                   className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
                 />
+                <StatisticUsers usersMonths={usersMonths} />
                 <button className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'>
                   {t('table_users.new_users')}
                 </button>

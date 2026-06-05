@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 export default function ListUsers({
   setUsers,
   totalUsers,
+  usersMonths,
+  totalUsersDeleted,
   totalPagesUsers,
   currentPageUser,
   usersPerPage,
@@ -29,8 +31,8 @@ export default function ListUsers({
         <span className='text-purple-400 font-semibold'>{totalUsers}</span>
       </div>
       <div className='text-sm text-white/70'>
-        {t('list_users.today')}{' '} 
-        <span className='text-green-400 font-semibold'>...</span>
+        {t('list_users.deleted')}{' '} 
+        <span className='text-green-400 font-semibold'>{totalUsers - totalUsersDeleted}</span>
       </div>
       <div className='text-sm text-white/70'>
         {t('list_users.week')}{' '} 

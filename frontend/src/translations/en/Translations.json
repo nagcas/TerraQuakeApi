@@ -1141,7 +1141,7 @@
     "list_users": 
     {
         "users": "Total Users:",
-        "today": "Active Today:",
+        "deleted": "Deleted users:",
         "week": "New This Week:",
         "manage_users": "Manage Users"
     },
@@ -1318,5 +1318,11 @@
     "share_post": 
     {
         "confirm_button": "Share post"
+    },
+    "statistics_user":
+    {
+       "title_button": "Statistics",
+       "title": "Statistics Users",
+       "close": "Close"
     }
 }

@@ -1297,5 +1297,11 @@
     "share_post": 
     {
         "confirm_button": "Condividi post"
+    },
+    "statistics_user": 
+    {
+        "title_button": "Statistiche",
+        "title": "Statistiche utenti",
+        "close": "Chiudi"
     }
 }

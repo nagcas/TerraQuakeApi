@@ -1297,5 +1297,11 @@
     "share_post": 
     {
         "confirm_button": "Compartir publicación"
+    },
+    "statistics_user": 
+    {
+        "title_button": "Estadísticas",
+        "title": "Estadísticas de usuarios",
+        "close": "Cerrar"
     }
 }

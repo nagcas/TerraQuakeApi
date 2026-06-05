@@ -15,6 +15,8 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
   const [currentPageUser, setCurrentPageUser] = useState(initialPage);
   const [totalPagesUsers, setTotalPagesUsers] = useState(null);
   const [totalUsers, setTotalUsers] = useState(0);
+  const [totalUsersDeleted, setTotalUserDeleted] = useState(0)
+  const [usersMonths, setUsersMonths] = useState({});
   const [usersPerPage, setUsersPerPage] = useState(initialLimit);
 
   const token = localStorage.getItem('token');
@@ -45,7 +47,9 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
 
       setUsers(payload.users);
       setTotalPagesUsers(payload.pagination.totalPages);
+      setTotalUserDeleted(payload.totalUsersDeleted);
       setTotalUsers(payload.pagination.totalResults);
+      setUsersMonths(payload.usersByMonths);
     } catch (error) {
       setErrorUser(error);
 
@@ -70,7 +74,9 @@ export default function useUsers(initialPage = 1, initialLimit = 20) {
     users,
     setUsers,
     totalUsers,
+    totalUsersDeleted,
     totalPagesUsers,
+    usersMonths,
     currentPageUser,
     setCurrentPageUser,
     usersPerPage,
