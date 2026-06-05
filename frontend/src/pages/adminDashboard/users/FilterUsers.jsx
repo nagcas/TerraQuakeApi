@@ -1,7 +1,15 @@
-import React from 'react'
+import { useTranslation } from 'react-i18next';
 
-export default function FilterUsers() {
+export default function FilterUsers({ search, setSearch }) {
+  const { t } = useTranslation('translation');
+
   return (
-    <div>Filter</div>
-  )
+    <input
+      type="text"
+      placeholder={t('table_users.search')}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
+    />
+  );
 }

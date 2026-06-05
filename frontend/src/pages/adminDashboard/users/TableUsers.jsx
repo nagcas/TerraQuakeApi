@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import Spinner from '@/components/spinner/Spinner';
@@ -10,15 +10,19 @@ import Pagination from '@/components/utils/Pagination';
 import useUsers from '@/hooks/useUsers';
 import { useTranslation } from 'react-i18next';
 import StatisticUsers from './StatisticUsers';
+import FilterUsers from './FilterUsers';
 
 export default function TableUsers() {
   const { t } = useTranslation('translation');
+
+  const [search, setSearch] = useState('');
 
   const location = useLocation();
   const { page = 1, limit = 20 } = location.state || {};
 
   const {
     users,
+    allUsers,
     setUsers,
     totalPagesUsers,
     totalUsers,
@@ -33,6 +37,20 @@ export default function TableUsers() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPageUser]);
+
+  const filteredUsers = useMemo(() => {
+    const list = allUsers ?? [];
+
+    const q = search.toLowerCase().trim();
+
+    if (!q) return list;
+
+    return list.filter(
+      (user) =>
+        user.name?.toLowerCase().includes(q) ||
+        user.email?.toLowerCase().includes(q),
+    );
+  }, [allUsers, search]);
 
   return (
     <>
@@ -80,10 +98,9 @@ export default function TableUsers() {
           {!loadingUser && !errorUser && (
             <>
               <div className='flex flex-col lg:flex-row gap-6 justify-between items-center mb-4'>
-                <input
-                  type='text'
-                  placeholder={t('table_users.search')}
-                  className='w-2/3 p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500'
+                <FilterUsers
+                  search={search}
+                  setSearch={setSearch}
                 />
                 <StatisticUsers usersMonths={usersMonths} />
                 <button className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'>
@@ -119,7 +136,7 @@ export default function TableUsers() {
                     </tr>
                   </thead>
                   <tbody className='divide-y divide-gray-800'>
-                    {users.map((item) => (
+                    {filteredUsers.map((item) => (
                       <tr
                         key={item._id}
                         className='hover:bg-purple-500/10 transition-colors'
@@ -134,7 +151,7 @@ export default function TableUsers() {
                           {item.email}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.role.toString()}
+                          {item.role ?? 'user'}
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.deleted === true ? (

@@ -36,7 +36,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const hasMore = page < totalPages
 
       // Retrieve all users for monthly analysis (without pagination)
-      const allUsers = await User.findWithDeleted({}, 'createdAt').lean()
+      const allUsers = await User.findWithDeleted().lean()
 
       const months = {
         January: 0,
@@ -67,6 +67,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
           users,
           totalUsersDeleted,
           usersByMonths: months,
+          allUsers,
           pagination: {
             page,
             totalPages,
