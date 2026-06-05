@@ -104,7 +104,7 @@ usersSchema.pre('save', async function (next) {
 })
 
 // Soft delete plugin
-usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
+usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: false })
 
 const User = model('users', usersSchema)
 

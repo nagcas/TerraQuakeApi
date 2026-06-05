@@ -54,7 +54,7 @@ const contactsSchema = new Schema(
 // Plugin soft-delete
 contactsSchema.plugin(mongooseDelete, {
   deletedAt: true,
-  overrideMethods: 'all'
+  overrideMethods: false
 })
 
 // Creating the contact model based on the contactsSchema schema

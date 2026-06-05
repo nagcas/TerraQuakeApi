@@ -18,7 +18,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       if (name) filter.name = { $regex: name, $options: 'i' }
 
       // Count including soft-deleted users
-      const totalUsers = await User.countDocumentsWithDeleted(filter)
+      const totalUsers = await User.countDocuments(filter)
 
       const filteredDeleted = {
         deleted: true
@@ -26,7 +26,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const totalUsersDeleted = await User.countDocuments(filteredDeleted)
 
       // Fetch filtered or all users
-      const users = await User.findWithDeleted(filter)
+      const users = await User.find(filter)
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
@@ -36,7 +36,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const hasMore = page < totalPages
 
       // Retrieve all users for monthly analysis (without pagination)
-      const allUsers = await User.findWithDeleted().lean().sort({ [sort]: sortDirection }).limit(limit).skip(skip)
+      const allUsers = await User.find().lean().sort({ [sort]: sortDirection }).limit(limit).skip(skip)
 
       const months = {
         January: 0,
