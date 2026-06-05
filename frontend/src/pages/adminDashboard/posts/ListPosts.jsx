@@ -8,6 +8,7 @@ export default function ListPosts({
   totalPosts,
   totalPostsNotFiltered,
   totalPostsDrafts,
+  postsMonths,
   totalPagesPosts,
   currentPagePost,
   postsPerPage,

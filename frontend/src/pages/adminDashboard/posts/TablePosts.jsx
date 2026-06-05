@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import CreatePost from './CreatePost';
 import FilterPosts from './FilterPosts';
 import RestorePost from './RestorePost';
+import StatisticPosts from './StatisticPosts';
 
 export default function TablePosts() {
   const { t } = useTranslation('translation');
@@ -28,6 +29,7 @@ export default function TablePosts() {
     setPosts,
     totalPagesPosts,
     totalPosts,
+    postsMonths,
     currentPagePost,
     setCurrentPagePost,
     postsPerPage,
@@ -102,6 +104,7 @@ export default function TablePosts() {
                   search={search}
                   setSearch={setSearch}
                 />
+                <StatisticPosts postsMonths={postsMonths} />
                 <CreatePost setPosts={setPosts} />
               </div>
 

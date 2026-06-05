@@ -1298,7 +1298,13 @@
     {
         "confirm_button": "Compartir publicación"
     },
-    "statistics_user": 
+    "statistics_users": 
+    {
+        "title_button": "Estadísticas",
+        "title": "Estadísticas de usuarios",
+        "close": "Cerrar"
+    },
+    "statistics_posts": 
     {
         "title_button": "Estadísticas",
         "title": "Estadísticas de usuarios",

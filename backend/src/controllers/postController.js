@@ -230,6 +230,32 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       }
       const totalPostsDrafts = await Post.countDocuments(filteredDrafts)
 
+      // Retrieve all posts for monthly analysis (without pagination)
+      const allPosts = await Post.find({}, 'createdAt').lean()
+
+      const months = {
+        January: 0,
+        February: 0,
+        March: 0,
+        April: 0,
+        May: 0,
+        June: 0,
+        July: 0,
+        August: 0,
+        September: 0,
+        October: 0,
+        November: 0,
+        December: 0
+      }
+
+      allPosts.forEach((entry) => {
+        const monthIndex = new Date(entry.createdAt).getMonth() // 0 - 11
+        const monthNames = Object.keys(months)
+        const monthName = monthNames[monthIndex]
+
+        months[monthName]++
+      })
+
       const totalPages = Math.ceil(totalPosts / limit)
       const hasMore = page < totalPages
 
@@ -240,6 +266,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
           totalPostsNotFiltered,
           totalPostsDrafts,
           posts,
+          postsByMonths: months,
           pagination: {
             page,
             totalPages,

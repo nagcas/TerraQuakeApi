@@ -18,9 +18,9 @@ export default function StatisticUsers({ usersMonths }) {
       <button
         onClick={toggleModal}
         className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
-        title='Statistics'
+        title={t('statistics_users.title')}
       >
-        {t('statistics_user.title_button')}
+        {t('statistics_users.title_button')}
       </button>
 
       <AnimatePresence>
@@ -42,7 +42,7 @@ export default function StatisticUsers({ usersMonths }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  {t('statistics_user.title')}
+                  {t('statistics_users.title')}
                 </h2>
 
                 <button
@@ -91,7 +91,7 @@ export default function StatisticUsers({ usersMonths }) {
                                        rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                                        hover:scale-[1.03] hover:bg-white/[0.12]'
                 >
-                  {t('statistics_user.close')}
+                  {t('statistics_users.close')}
                 </button>
               </div>
             </motion.div>

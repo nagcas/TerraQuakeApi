@@ -17,6 +17,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
   const [totalPosts, setTotalPosts] = useState(0);
   const [totalPostsNotFiltered, setTotalPostsNotFiltered] = useState(0);
   const [totalPostsDrafts, setTotalPostsDrafts] = useState(0);
+  const [postsMonths, setPostsMonths] = useState({});
   const [postsPerPage, setPostsPerPage] = useState(initialLimit);
 
   const token = localStorage.getItem('token');
@@ -50,6 +51,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
       setTotalPosts(payload.pagination.totalResults);
       setTotalPostsNotFiltered(payload.totalPostsNotFiltered)
       setTotalPostsDrafts(payload.totalPostsDrafts)
+      setPostsMonths(payload.postsByMonths)
     } catch (error) {
       setErrorPost(error);
 
@@ -77,6 +79,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
     totalPagesPosts,
     totalPostsNotFiltered,
     totalPostsDrafts,
+    postsMonths,
     currentPagePost,
     setCurrentPagePost,
     postsPerPage,
