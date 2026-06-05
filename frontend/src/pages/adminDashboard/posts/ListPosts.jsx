@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ListPosts({
   posts,
+  allPosts,
   setPosts,
   totalPosts,
   totalPostsNotFiltered,

@@ -26,6 +26,7 @@ export default function TablePosts() {
 
   const {
     posts,
+    allPosts,
     setPosts,
     totalPagesPosts,
     totalPosts,
@@ -42,17 +43,18 @@ export default function TablePosts() {
   }, [currentPagePost]);
 
   const filteredPosts = useMemo(() => {
-    if (!search) return posts;
+    const list = allPosts ?? [];
 
-    const q = search.toLowerCase();
+    const q = search.toLowerCase().trim();
 
-    return posts.filter((post) => {
-      return (
+    if (!q) return list;
+
+    return list.filter(
+      (post) =>
         post.title?.toLowerCase().includes(q) ||
-        post.author?.name?.toLowerCase().includes(q)
-      );
-    });
-  }, [posts, search]);
+        post.author?.name?.toLowerCase().includes(q),
+    );
+  }, [allPosts, search]);
 
   return (
     <>

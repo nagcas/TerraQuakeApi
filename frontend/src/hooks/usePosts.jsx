@@ -18,6 +18,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
   const [totalPostsNotFiltered, setTotalPostsNotFiltered] = useState(0);
   const [totalPostsDrafts, setTotalPostsDrafts] = useState(0);
   const [postsMonths, setPostsMonths] = useState({});
+  const [allPosts, setAllPosts] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(initialLimit);
 
   const token = localStorage.getItem('token');
@@ -49,9 +50,10 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
       setPosts(payload.posts);
       setTotalPagesPosts(payload.pagination.totalPages);
       setTotalPosts(payload.pagination.totalResults);
-      setTotalPostsNotFiltered(payload.totalPostsNotFiltered)
-      setTotalPostsDrafts(payload.totalPostsDrafts)
-      setPostsMonths(payload.postsByMonths)
+      setTotalPostsNotFiltered(payload.totalPostsNotFiltered);
+      setTotalPostsDrafts(payload.totalPostsDrafts);
+      setPostsMonths(payload.postsByMonths);
+      setAllPosts(payload.allPosts);
     } catch (error) {
       setErrorPost(error);
 
@@ -74,6 +76,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
 
   return {
     posts,
+    allPosts,
     setPosts,
     totalPosts,
     totalPagesPosts,

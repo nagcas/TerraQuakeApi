@@ -231,7 +231,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       const totalPostsDrafts = await Post.countDocuments(filteredDrafts)
 
       // Retrieve all posts for monthly analysis (without pagination)
-      const allPosts = await Post.find({}, 'createdAt').lean()
+      const allPosts = await Post.find().lean().sort({ [sort]: sortDirection }).populate('author')
 
       const months = {
         January: 0,
@@ -266,6 +266,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
           totalPostsNotFiltered,
           totalPostsDrafts,
           posts,
+          allPosts,
           postsByMonths: months,
           pagination: {
             page,
