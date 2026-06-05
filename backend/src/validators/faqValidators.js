@@ -19,6 +19,12 @@ export const validatorFaq = [
     .notEmpty()
     .withMessage('Please provide a valid answer.'),
 
+  // Validate 'language' field:
+  check('language')
+    .optional()
+    .notEmpty()
+    .withMessage('Please provide a valid answer.'),
+
   // Final middleware: handle and return validation results
   (req, res, next) => validateResults(req, res, next)
 ]

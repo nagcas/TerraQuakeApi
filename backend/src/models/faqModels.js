@@ -9,6 +9,9 @@ const faqSchema = new Schema(
     },
     answer: {
       type: String
+    },
+    language: {
+      type: String
     }
   },
   {
@@ -21,7 +24,7 @@ const faqSchema = new Schema(
 // Plugin soft-delete
 faqSchema.plugin(mongooseDelete, {
   deletedAt: true,
-  overrideMethods: 'all'
+  overrideMethods: false
 })
 
 // Creating the contact model based on the contactsSchema schema

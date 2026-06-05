@@ -1034,7 +1034,8 @@
         "date": "Data",
         "deleted": "Eliminato",
         "options": "Opzioni",
-        "search": "Cerca per domanda..."
+        "search": "Cerca per domanda...",
+        "language": "Linguaggio"
     },
     "list_messages": 
     {

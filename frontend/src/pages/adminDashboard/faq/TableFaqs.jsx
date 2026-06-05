@@ -109,6 +109,9 @@ export default function TableFaqs() {
                       <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
                         {t('table_faqs.deleted')}
                       </th>
+                      <th className='cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
+                        {t('table_faqs.language')}
+                      </th>
                       <th className='px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'>
                         {t('table_faqs.options')}
                       </th>
@@ -124,7 +127,7 @@ export default function TableFaqs() {
                           {item._id.slice(0, 6)}...
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.question.slice(0, 30)}...
+                          {item.question.slice(0, 20)}...
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {formatDate(item.createdAt)}
@@ -134,6 +137,9 @@ export default function TableFaqs() {
                         </td>
                         <td className='text-sm px-6 py-4 whitespace-nowrap'>
                           {item.term === true ? 'Yes' : 'No'}
+                        </td>
+                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                          {item.language}
                         </td>
                         <td className='flex gap-4 text-sm px-6 py-4'>
                           <ViewFaq faqs={item} />

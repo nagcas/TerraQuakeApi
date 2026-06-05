@@ -71,6 +71,10 @@ export default function ViewFaq({ faqs }) {
                     value: faqs?.answer,
                   },
                   {
+                    label: 'Language',
+                    value: faqs?.language,
+                  },
+                  {
                     label: 'Date',
                     value: formatDate(faqs.createdAt),
                   },

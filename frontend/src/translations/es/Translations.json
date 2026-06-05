@@ -1034,7 +1034,8 @@
         "date": "Fecha",
         "deleted": "Eliminado",
         "options": "Opciones",
-        "search": "Buscar por pregunta..."
+        "search": "Buscar por pregunta...",
+        "language": "Idiama"
     },
     "list_messages": 
     {

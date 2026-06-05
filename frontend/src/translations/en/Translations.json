@@ -1055,7 +1055,8 @@
         "date": "Date",
         "deleted": "Deleted",
         "options": "Options",
-        "search": "Search by question..."
+        "search": "Search by question...",
+        "language": "Language"
     },
     "list_messages": 
     {
