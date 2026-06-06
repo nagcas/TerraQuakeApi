@@ -1158,7 +1158,13 @@
         "terms": "Terms",
         "options": "Options",
         "yes": "Yes",
-        "search": "Search by name or email..."
+        "no": "No",
+        "search": "Search by name or email...",
+        "button_search": "Search",
+        "search_error": "This field is required",
+        "empty_search": "Please enter a value",
+        "not_found": "No results found",
+        "view_users": "View all users"
     },
     "update_user": 
     {

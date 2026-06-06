@@ -1137,7 +1137,13 @@
         "terms": "Términos",
         "options": "Opciones",
         "yes": "Si",
-        "search": "Buscar por nombre o correo electrónico..."
+        "no": "No",
+        "search": "Buscar por nombre o correo electrónico...",
+        "button_search": "Buscar",
+        "search_error": "Campo obligatorio",
+        "empty_search": "Introduce un valor",
+        "not_found": "No hay resultados disponibles",
+        "view_users": "Ver todos los usuarios"
     },
     "update_user": 
     {
