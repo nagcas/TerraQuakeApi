@@ -6,7 +6,7 @@ import { sendDeleteAccountConfirmation } from '../libs/sendDeleteAccountConfirma
 export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { name } = req.query
+      const { search } = req.query
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 50
       const sort = req.query.sort || 'createdAt'
@@ -15,7 +15,12 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
 
       // Build filters only if provided
       const filter = {}
-      if (name) filter.name = { $regex: name, $options: 'i' }
+      if (search) {
+        filter.$or = [
+          { name: { $regex: search, $options: 'i' } },
+          { email: { $regex: search, $options: 'i' } }
+        ]
+      }
 
       // Count including soft-deleted users
       const totalUsers = await User.countDocuments(filter)
@@ -36,7 +41,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const hasMore = page < totalPages
 
       // Retrieve all users for monthly analysis (without pagination)
-      const allUsers = await User.find().lean().sort({ [sort]: sortDirection }).limit(limit).skip(skip)
+      const usersForStats = await User.find(filter).lean()
 
       const months = {
         January: 0,
@@ -53,7 +58,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
         December: 0
       }
 
-      allUsers.forEach((entry) => {
+      usersForStats.forEach((entry) => {
         const monthIndex = new Date(entry.createdAt).getMonth() // 0 - 11
         const monthNames = Object.keys(months)
         const monthName = monthNames[monthIndex]
@@ -67,7 +72,6 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
           users,
           totalUsersDeleted,
           usersByMonths: months,
-          allUsers,
           pagination: {
             page,
             totalPages,
