@@ -32,7 +32,6 @@ export default function AdminDashboard() {
   // Hooks
   const {
     users,
-    allUsers,
     setUsers,
     totalPagesUsers,
     totalUsers,
@@ -135,7 +134,6 @@ export default function AdminDashboard() {
             <h3 className='text-xl font-bold text-white mb-4'>{t('dashboard.users')}</h3>
             <ListUsers
               users={users}
-              allUsers={allUsers}
               setUsers={setUsers}
               totalUsers={totalUsers}
               totalUsersDeleted={totalUsersDeleted}

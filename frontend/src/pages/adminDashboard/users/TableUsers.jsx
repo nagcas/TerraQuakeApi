@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import Spinner from '@/components/spinner/Spinner';
@@ -16,13 +16,15 @@ export default function TableUsers() {
   const { t } = useTranslation('translation');
 
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  console.log(search);
 
   const location = useLocation();
   const { page = 1, limit = 20 } = location.state || {};
 
   const {
     users,
-    allUsers,
     setUsers,
     totalPagesUsers,
     totalUsers,
@@ -32,25 +34,19 @@ export default function TableUsers() {
     usersPerPage,
     loadingUser,
     errorUser,
-  } = useUsers(page, limit);
+  } = useUsers(page, limit, debouncedSearch);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPageUser]);
 
-  const filteredUsers = useMemo(() => {
-    const list = allUsers ?? [];
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
 
-    const q = search.toLowerCase().trim();
-
-    if (!q) return list;
-
-    return list.filter(
-      (user) =>
-        user.name?.toLowerCase().includes(q) ||
-        user.email?.toLowerCase().includes(q),
-    );
-  }, [allUsers, search]);
+    return () => clearTimeout(timeout);
+  }, [search]);
 
   return (
     <>
@@ -136,56 +132,73 @@ export default function TableUsers() {
                     </tr>
                   </thead>
                   <tbody className='divide-y divide-gray-800'>
-                    {filteredUsers.map((item) => (
-                      <tr
-                        key={item._id}
-                        className='hover:bg-purple-500/10 transition-colors'
-                      >
-                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item._id.slice(0, 6)}...
-                        </td>
-                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.name}
-                        </td>
-                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.email}
-                        </td>
-                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.role ?? 'user'}
-                        </td>
-                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.deleted === true ? (
-                            <span className='text-red-400'>
-                              {t('table_users.yes')}
-                            </span>
-                          ) : (
-                            'No'
-                          )}
-                        </td>
-                        <td className='text-sm px-6 py-4 whitespace-nowrap'>
-                          {item.terms === true ? 'Yes' : 'No'}
-                        </td>
-                        <td className='flex gap-4 text-sm px-6 py-4'>
-                          <ViewUser users={item} />
-                          {item.deleted === false ? (
-                            <UpdateUser
-                              users={item}
-                              setUsers={setUsers}
-                            />
-                          ) : (
-                            <pre className='mx-4'>--</pre>
-                          )}
-                          {item.deleted === false ? (
-                            <DeleteUser
-                              users={item}
-                              setUsers={setUsers}
-                            />
-                          ) : (
-                            <pre className='mx-4'>--</pre>
-                          )}
+                    {users.length > 0 ? (
+                      users.map((item) => (
+                        <tr
+                          key={item._id}
+                          className='hover:bg-purple-500/10 transition-colors'
+                        >
+                          <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                            {item._id.slice(0, 6)}...
+                          </td>
+                          <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                            {item.name}
+                          </td>
+                          <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                            {item.email}
+                          </td>
+                          <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                            {item.role ?? 'user'}
+                          </td>
+                          <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                            {item.deleted === true ? (
+                              <span className='text-red-400'>
+                                {t('table_users.yes')}
+                              </span>
+                            ) : (
+                              t('table_users.no')
+                            )}
+                          </td>
+                          <td className='text-sm px-6 py-4 whitespace-nowrap'>
+                            {item.terms === true ? 'Yes' : 'No'}
+                          </td>
+                          <td className='flex gap-4 text-sm px-6 py-4'>
+                            <ViewUser users={item} />
+                            {item.deleted === false ? (
+                              <UpdateUser
+                                users={item}
+                                setUsers={setUsers}
+                              />
+                            ) : (
+                              <pre className='mx-4'>--</pre>
+                            )}
+                            {item.deleted === false ? (
+                              <DeleteUser
+                                users={item}
+                                setUsers={setUsers}
+                              />
+                            ) : (
+                              <pre className='mx-4'>--</pre>
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan='7'
+                          className='text-center py-10 text-gray-400'
+                        >
+                          <p>{t('table_users.not_found')}</p>
+                          <button
+                            onClick={() => setSearch('')}
+                            className='mt-4 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition'
+                          >
+                            {t('table_users.view_users')}
+                          </button>
                         </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>
