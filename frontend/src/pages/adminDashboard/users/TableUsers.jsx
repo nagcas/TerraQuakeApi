@@ -98,6 +98,12 @@ export default function TableUsers() {
                   search={search}
                   setSearch={setSearch}
                 />
+                <button
+                  onClick={() => setSearch('')}
+                  className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+                >
+                  {t('table_users.view_users')}
+                </button>
                 <StatisticUsers usersMonths={usersMonths} />
                 <button className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'>
                   {t('table_users.new_users')}
@@ -192,7 +198,7 @@ export default function TableUsers() {
                           <p>{t('table_users.not_found')}</p>
                           <button
                             onClick={() => setSearch('')}
-                            className='mt-4 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition'
+                            className='mt-4 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition cursor-pointer'
                           >
                             {t('table_users.view_users')}
                           </button>

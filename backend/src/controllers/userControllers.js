@@ -26,7 +26,7 @@ export const listAllUsers = ({ User, buildResponse, handleHttpError }) => {
       const totalUsers = await User.countDocuments(filter)
 
       const filteredDeleted = {
-        deleted: true
+        deleted: false
       }
       const totalUsersDeleted = await User.countDocuments(filteredDeleted)
 

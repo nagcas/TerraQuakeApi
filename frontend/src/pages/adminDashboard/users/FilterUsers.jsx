@@ -30,7 +30,7 @@ export default function FilterUsers({ setSearch }) {
             setInput(e.target.value);
             if (error) setError('');
           }}
-          className={`w-2xl p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500
+          className={`w-xl p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500
           ${error
               ? 'border-red-400 ring-red-400'
               : 'border-gray-700' 
