@@ -6,7 +6,7 @@ export default function ListPosts({
   posts,
   setPosts,
   totalPosts,
-  totalPostsNotFiltered,
+  totalPostsPublished,
   totalPostsDrafts,
   postsMonths,
   totalPagesPosts,
@@ -30,11 +30,11 @@ export default function ListPosts({
     <div className='space-y-3'>
       <div className='text-sm text-white/70'>
         {t('list_posts.posts')}{' '}
-        <span className='text-purple-400 font-semibold'>{totalPostsNotFiltered}</span>
+        <span className='text-purple-400 font-semibold'>{totalPosts}</span>
       </div>
       <div className='text-sm text-white/70'>
         {t('list_posts.published')}{' '}
-        <span className='text-green-400 font-semibold'>{totalPosts}</span>
+        <span className='text-green-400 font-semibold'>{totalPostsPublished}</span>
       </div>
       <div className='text-sm text-white/70'>
         {t('list_posts.drafts')}{' '}

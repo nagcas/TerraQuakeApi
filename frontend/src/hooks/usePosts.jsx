@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Context } from '@/components/modules/Context';
 
-export default function usePosts(initialPage = 1, initialLimit = 20) {
+export default function usePosts(initialPage = 1, initialLimit = 20, search) {
   const { isLoggedIn } = useContext(Context);
 
   const navigate = useNavigate();
@@ -15,10 +15,9 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
   const [currentPagePost, setCurrentPagePost] = useState(initialPage);
   const [totalPagesPosts, setTotalPagesPosts] = useState(null);
   const [totalPosts, setTotalPosts] = useState(0);
-  const [totalPostsNotFiltered, setTotalPostsNotFiltered] = useState(0);
+  const [totalPostsPublished, setTotalPostsPublished] = useState(0);
   const [totalPostsDrafts, setTotalPostsDrafts] = useState(0);
   const [postsMonths, setPostsMonths] = useState({});
-  const [allPosts, setAllPosts] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(initialLimit);
 
   const token = localStorage.getItem('token');
@@ -42,6 +41,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
         params: {
           page: currentPagePost,
           limit: postsPerPage,
+          search: search,
         },
       });
 
@@ -49,11 +49,10 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
 
       setPosts(payload.posts);
       setTotalPagesPosts(payload.pagination.totalPages);
+      setTotalPostsPublished(payload.totalPostsPublished);
       setTotalPosts(payload.pagination.totalResults);
-      setTotalPostsNotFiltered(payload.totalPostsNotFiltered);
       setTotalPostsDrafts(payload.totalPostsDrafts);
       setPostsMonths(payload.postsByMonths);
-      setAllPosts(payload.allPosts);
     } catch (error) {
       setErrorPost(error);
 
@@ -68,7 +67,7 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
     } finally {
       setLoadingPost(false);
     }
-  }, [currentPagePost, postsPerPage, token, navigate]);
+  }, [currentPagePost, postsPerPage, token, navigate, search]);
 
   useEffect(() => {
     listAllPosts();
@@ -76,11 +75,10 @@ export default function usePosts(initialPage = 1, initialLimit = 20) {
 
   return {
     posts,
-    allPosts,
     setPosts,
     totalPosts,
     totalPagesPosts,
-    totalPostsNotFiltered,
+    totalPostsPublished,
     totalPostsDrafts,
     postsMonths,
     currentPagePost,

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import Spinner from '@/components/spinner/Spinner';
@@ -20,13 +20,13 @@ export default function TablePosts() {
   const { t } = useTranslation('translation');
 
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
 
   const location = useLocation();
   const { page = 1, limit = 20 } = location.state || {};
 
   const {
     posts,
-    allPosts,
     setPosts,
     totalPagesPosts,
     totalPosts,
@@ -36,25 +36,19 @@ export default function TablePosts() {
     postsPerPage,
     loadingPost,
     errorPost,
-  } = usePosts(page, limit);
+  } = usePosts(page, limit, debouncedSearch);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPagePost]);
 
-  const filteredPosts = useMemo(() => {
-    const list = allPosts ?? [];
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
 
-    const q = search.toLowerCase().trim();
-
-    if (!q) return list;
-
-    return list.filter(
-      (post) =>
-        post.title?.toLowerCase().includes(q) ||
-        post.author?.name?.toLowerCase().includes(q),
-    );
-  }, [allPosts, search]);
+    return () => clearTimeout(timeout);
+  }, [search]);
 
   return (
     <>
@@ -106,6 +100,12 @@ export default function TablePosts() {
                   search={search}
                   setSearch={setSearch}
                 />
+                <button
+                  onClick={() => setSearch('')}
+                  className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
+                >
+                  {t('table_posts.view_posts')}
+                </button>
                 <StatisticPosts postsMonths={postsMonths} />
                 <CreatePost setPosts={setPosts} />
               </div>
@@ -138,7 +138,8 @@ export default function TablePosts() {
                     </tr>
                   </thead>
                   <tbody className='divide-y divide-gray-800'>
-                    {filteredPosts.map((item) => (
+                    {posts.length > 0 ? (
+                      posts.map((item) => (
                       <tr
                         key={item._id}
                         className=' hover:bg-purple-500/10 transition-colors'
@@ -214,7 +215,23 @@ export default function TablePosts() {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan='7'
+                          className='text-center py-10 text-gray-400'
+                        >
+                          <p>{t('table_posts.not_found')}</p>
+                          <button
+                            onClick={() => setSearch('')}
+                            className='mt-4 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition cursor-pointer'
+                          >
+                            {t('table_posts.view_posts')}
+                          </button>
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

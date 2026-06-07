@@ -23,14 +23,14 @@ export default function CreatePost({ setPosts }) {
   const postSchema = useMemo(
     () =>
       yup.object({
-        title: yup.string().required(t('update_user.name_required')),
-        excerpt: yup.string().required(t('update_user.email_required')),
-        author: yup.string().required(t('update_user.experience_required')),
-        categories: yup.string().required(t('update_user.student_required')),
-        content: yup.string().required(t('update_user.student_required')),
-        readTime: yup.string().required(t('update_user.student_required')),
-        tags: yup.string(),
-        published: yup.boolean().required(t('update_user.student_required')),
+        title: yup.string().required(t('create_post.title_required')),
+        excerpt: yup.string().required(t('create_post.excerpt_required')),
+        author: yup.string().required(t('create_post.author_required')),
+        categories: yup.string().required(t('create_post.categories_required')),
+        content: yup.string().required(t('create_post.content_required')),
+        readTime: yup.string().required(t('create_post.read_time_required')),
+        tags: yup.string().required(t('create_post.tags_required')),
+        published: yup.boolean().required(t('create_post.published_required')),
       }),
     [t],
   );
@@ -83,10 +83,10 @@ export default function CreatePost({ setPosts }) {
       const createPost = response.data.payload || response.data;
 
       Swal.fire({
-        title: t('contact.success'),
-        text: response.data.message || t('contact.message_sent'),
+        title: t('create_post.success'),
+        text: response.data.message || t('create_post.message_sent'),
         icon: 'success',
-        confirmButtonText: t('contact.great'),
+        confirmButtonText: t('create_post.great'),
         customClass: {
           container: 'z-50', // Ensure Swal is above other elements
         },
@@ -107,13 +107,13 @@ export default function CreatePost({ setPosts }) {
         err?.response?.data?.errors?.[0]?.msg ||
         err?.response?.data?.error ||
         err?.message ||
-        t('contact.try_again');
+        t('create_post.try_again');
 
       Swal.fire({
-        title: t('contact.error'),
+        title: t('create_post.error'),
         text: errorMessage,
         icon: 'error',
-        confirmButtonText: t('contact.confirm_button'),
+        confirmButtonText: t('create_post.confirm_button'),
         customClass: {
           container: 'z-50',
         },
@@ -144,9 +144,9 @@ export default function CreatePost({ setPosts }) {
       <button
         onClick={toggleModal}
         className='py-2 px-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors cursor-pointer'
-        title={t('table_posts.create_post')}
+        title={t('create_post.create_post')}
       >
-        {t('table_posts.new_post')}
+        {t('create_post.create_post')}
       </button>
 
       <AnimatePresence>
@@ -168,7 +168,7 @@ export default function CreatePost({ setPosts }) {
               {/* Header */}
               <header className='p-5 bg-purple-400/20 border-b border-white/10 flex justify-between items-center'>
                 <h2 className='text-white uppercase tracking-wider text-sm font-semibold'>
-                  {t('update_user.update_user')}
+                  {t('create_post.create_post')}
                 </h2>
 
                 <button
@@ -188,32 +188,32 @@ export default function CreatePost({ setPosts }) {
                   {/* Input component */}
                   {[
                     {
-                      label: 'Title',
+                      label: t('create_post.label_title'),
                       field: 'title',
                     },
                     {
-                      label: 'Excerpt',
+                      label: t('create_post.label_excerpt'),
                       field: 'excerpt',
                     },
                     {
-                      label: 'Author',
+                      label: t('create_post.label_author'),
                       field: 'author',
                       value: userLogin?._id,
                     },
                     {
-                      label: 'Categories',
+                      label: t('create_post.label_categories'),
                       field: 'categories',
                     },
                     {
-                      label: 'Content',
+                      label: t('create_post.label_content'),
                       field: 'content',
                     },
                     {
-                      label: 'Read Time',
+                      label: t('create_post.label_read_time'),
                       field: 'readTime',
                     },
                     {
-                      label: 'Tags',
+                      label: t('create_post.label_tags'),
                       field: 'tags',
                     },
                   ].map(({ label, value, field }) => (
@@ -244,7 +244,7 @@ export default function CreatePost({ setPosts }) {
                   {/* Published */}
                   <div>
                     <label className='text-white text-sm font-semibold mb-2 block'>
-                      Published
+                      {t('create_post.published')}
                     </label>
                     <select
                       {...register('published', {
@@ -256,14 +256,14 @@ export default function CreatePost({ setPosts }) {
                         value='true'
                         className='bg-gray-900 text-gray-400'
                       >
-                        {t('update_user.yes')}
+                        {t('create_post.yes')}
                       </option>
 
                       <option
                         value='false'
                         className='bg-gray-900 text-gray-400'
                       >
-                        {t('update_user.no')}
+                        {t('create_post.no')}
                       </option>
                     </select>
                     <p className='text-red-400 text-xs pt-1'>
@@ -281,7 +281,7 @@ export default function CreatePost({ setPosts }) {
                          transition-all duration-300 cursor-pointer 
                          ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:scale-[1.03]'}`}
                     >
-                      {loading ? <Spinner /> : t('update_user.save')}
+                      {loading ? <Spinner /> : t('create_post.save')}
                     </button>
 
                     <button
@@ -291,7 +291,7 @@ export default function CreatePost({ setPosts }) {
                          rounded-full shadow-xl transition-all duration-300 cursor-pointer 
                          hover:scale-[1.03] hover:bg-white/[0.12]'
                     >
-                      {t('update_user.close')}
+                      {t('create_post.close')}
                     </button>
                   </div>
                 </form>
