@@ -18,8 +18,6 @@ export default function TableUsers() {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
-  console.log(search);
-
   const location = useLocation();
   const { page = 1, limit = 20 } = location.state || {};
 
