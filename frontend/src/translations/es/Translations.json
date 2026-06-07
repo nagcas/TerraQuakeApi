@@ -1086,7 +1086,12 @@
         "options": "Opciones",
         "search": "Buscar por título o autor...",
         "yes": "Si",
-        "no": "No"
+        "no": "No",
+         "button_search": "Buscar",
+        "search_error": "Este campo es obligatorio",
+        "empty_search": "Por favor, introduce un valor",
+        "not_found": "No se encontraron resultados",
+        "view_posts": "Todas los posts"
     },
     "list_reviews": 
     {
@@ -1143,7 +1148,7 @@
         "search_error": "Campo obligatorio",
         "empty_search": "Introduce un valor",
         "not_found": "No hay resultados disponibles",
-        "view_users": "Ver todos los usuarios"
+        "view_users": "Usuarios"
     },
     "update_user": 
     {
@@ -1314,7 +1319,41 @@
     "statistics_posts": 
     {
         "title_button": "Estadísticas",
-        "title": "Estadísticas de usuarios",
+        "title": "Publicar estadísticas",
         "close": "Cerrar"
+    },
+    "create_post": {
+        "title_required": "¡El título es obligatorio!",
+        "excerpt_required": "¡El extracto es obligatorio!",
+        "author_required": "¡El autor es obligatorio!",
+        "categories_required": "¡Las categorías son obligatorias!",
+        "content_required": "¡El contenido es obligatorio!",
+        "read_time_required": "¡El tiempo de lectura es obligatorio!",
+        "tags_required": "¡Las etiquetas son obligatorias!",
+        "published_required": "¡El estado de publicación es obligatorio!",
+        "error": "¡Error!",
+        "text_error": "¡Los datos de la publicación no están definidos!",
+        "success": "¡Éxito!",
+        "text_success": "¡Publicación actualizada correctamente!",
+        "error_occurred": "Ha ocurrido un error",
+        "update_post": "Actualizar Publicación",
+        "label_title": "Título",
+        "label_excerpt": "Extracto",
+        "label_author": "Autor",
+        "label_categories": "Categorías",
+        "label_content": "Contenido",
+        "label_read_time": "Tiempo de lectura",
+        "label_tags": "Etiquetas",
+        "label_published": "Publicado",
+        "published": "Publicado",
+        "yes": "Sí",
+        "no": "No",
+        "save": "Guardar",
+        "close": "Cerrar",
+        "message_sent": "¡Publicación creada correctamente!",
+        "great": "¡Genial!",
+        "try_again": "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
+        "confirm_button": "Intentar de nuevo",
+        "create_post": "Crear post"
     }
 }

@@ -1086,7 +1086,12 @@
         "options": "Opzioni",
         "search": "Cerca per titolo o autore...",
         "yes": "Si",
-        "no": "No"
+        "no": "No",
+         "button_search": "Cerca",
+        "search_error": "Questo campo è obbligatorio",
+        "empty_search": "Inserisci un valore",
+        "not_found": "Nessun risultato trovato",
+        "view_posts": "Tutti i post"
     },
     "list_reviews": 
     {
@@ -1143,7 +1148,7 @@
         "search_error": "Campo obbligatorio",
         "empty_search": "Inserisci un valore",
         "not_found": "Nessun risultato trovato",
-        "view_users": "Visualizza tutti gli utenti"
+        "view_users": "Utenti"
     },
     "update_user": 
     {
@@ -1314,7 +1319,41 @@
     "statistics_posts": 
     {
         "title_button": "Statistiche",
-        "title": "Statistiche utenti",
+        "title": "Statistiche articoli",
         "close": "Chiudi"
+    },
+    "create_post": {
+        "title_required": "Il titolo è obbligatorio!",
+        "excerpt_required": "L'estratto è obbligatorio!",
+        "author_required": "L'autore è obbligatorio!",
+        "categories_required": "Le categorie sono obbligatorie!",
+        "content_required": "Il contenuto è obbligatorio!",
+        "read_time_required": "Il tempo di lettura è obbligatorio!",
+        "tags_required": "I tag sono obbligatori!",
+        "published_required": "Lo stato di pubblicazione è obbligatorio!",
+        "error": "Errore!",
+        "text_error": "I dati del post non sono definiti!",
+        "success": "Successo!",
+        "text_success": "Post aggiornato con successo!",
+        "error_occurred": "Si è verificato un errore",
+        "update_post": "Aggiorna Post",
+        "label_title": "Titolo",
+        "label_excerpt": "Estratto",
+        "label_author": "Autore",
+        "label_categories": "Categorie",
+        "label_content": "Contenuto",
+        "label_read_time": "Tempo di lettura",
+        "label_tags": "Tag",
+        "label_published": "Pubblicato",
+        "published": "Pubblicato",
+        "yes": "Sì",
+        "no": "No",
+        "save": "Salva",
+        "close": "Chiudi",
+        "message_sent": "Post creato con successo!",
+        "great": "Ottimo!",
+        "try_again": "Si è verificato un errore. Riprova.",
+        "confirm_button": "Riprova",
+        "create_post": "Crea Post"
     }
 }

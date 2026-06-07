@@ -1105,9 +1105,14 @@
         "deleted": "Deleted",
         "published": "Published",
         "options": "Options",
-        "search": "Search by title or author...",
+        "search": "Search by title...",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "button_search": "Search",
+        "search_error": "This field is required",
+        "empty_search": "Please enter a value",
+        "not_found": "No results found",
+        "view_posts": "All posts"
     },
     "list_reviews": 
     {
@@ -1164,7 +1169,7 @@
         "search_error": "This field is required",
         "empty_search": "Please enter a value",
         "not_found": "No results found",
-        "view_users": "View all users"
+        "view_users": "All users"
     },
     "update_user": 
     {
@@ -1335,7 +1340,42 @@
     "statistics_posts":
     {
        "title_button": "Statistics",
-       "title": "Statistics Users",
+       "title": "Posts statistics",
        "close": "Close"
+    },
+    "create_post": 
+    {
+        "title_required": "Name is required!",
+        "excerpt_required": "Excerpt is required!",
+        "author_required": "Author is required!",
+        "categories_required": "Categories is required!",
+        "content_required": "Content is required!",
+        "read_time_required": "Read Time is required!",
+        "tags_required": "Tags is required!",
+        "published_required": "Published is required!",
+        "error": "Error!",
+        "text_error": "Post data is not defined!",
+        "success": "Success!",
+        "text_success": "Post updated successfully!",
+        "error_occurred": "An error occurred",
+        "update_post": "Update Post",
+        "label_title": "Title",
+        "label_excerpt": "Excerpt",
+        "label_author": "Author",
+        "label_categories": "Categories",
+        "label_content": "Content",
+        "label_read_time": "Read Time",
+        "label_tags": "Tags",
+        "label_published": "Published",
+        "published": "Published",
+        "yes": "Yes",
+        "no": "No",
+        "save": "Save",
+        "close": "Close",
+        "message_sent": "Post created successfully!",
+        "great": "Great!",
+        "try_again": "An error occurred. Please try again.",
+        "confirm_button": "Try Again",
+        "create_post": "Create post"
     }
 }
