@@ -137,9 +137,7 @@ export const updatePost = ({
       }
 
       // Return updated post
-      return res.json(
-        buildResponse(req, 'Post updated successfully', updated)
-      )
+      return res.json(buildResponse(req, 'Post updated successfully', updated))
     } catch (error) {
       // Log server-side error for debugging
       console.error('Error in updatePost controller:', error.message)
@@ -195,7 +193,7 @@ export const deletePost = ({ Post, handleHttpError }) => {
 export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { title, category, tags } = req.query
+      const { search } = req.query
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 9
       const sort = req.query.sort || 'createdAt'
@@ -204,9 +202,21 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
 
       // Build filters only if provided
       const filter = {}
-      if (title) filter.title = { $regex: title, $options: 'i' }
-      if (category) { filter.categories = { $in: [new RegExp(category, 'i')] } }
-      if (tags) filter.tags = { $regex: tags, $options: 'i' }
+      if (search) {
+        filter.$or = [
+          { title: { $regex: search, $options: 'i' } }
+        ]
+      }
+
+      // Count including soft-deleted users
+      const totalPosts = await Post.countDocuments(filter)
+
+      // Count total documents
+      const filteredPublished = {
+        published: true,
+        deleted: false
+      }
+      const totalPostsPublished = await Post.countDocuments(filteredPublished)
 
       // Fetch filtered or all posts
       const posts = await Post.find(filter)
@@ -216,22 +226,18 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         .limit(limit)
         .lean()
 
-      // Count total documents
-      const filtered = {
-        published: true,
-        deleted: false
-      }
-      const totalPosts = await Post.countDocuments(filtered)
-
-      const totalPostsNotFiltered = await Post.countDocuments()
-
       const filteredDrafts = {
         published: false
       }
       const totalPostsDrafts = await Post.countDocuments(filteredDrafts)
 
       // Retrieve all posts for monthly analysis (without pagination)
-      const allPosts = await Post.find().lean().sort({ [sort]: sortDirection }).skip(skip).limit(limit).populate('author')
+      const postsForStats = await Post.find()
+        .lean()
+        .sort({ [sort]: sortDirection })
+        .skip(skip)
+        .limit(limit)
+        .populate('author')
 
       const months = {
         January: 0,
@@ -248,7 +254,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         December: 0
       }
 
-      allPosts.forEach((entry) => {
+      postsForStats.forEach((entry) => {
         const monthIndex = new Date(entry.createdAt).getMonth() // 0 - 11
         const monthNames = Object.keys(months)
         const monthName = monthNames[monthIndex]
@@ -262,11 +268,9 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
       // Respond with paginated posts
       res.json(
         buildResponse(req, 'Posts retrieved successfully', {
-          totalPosts,
-          totalPostsNotFiltered,
-          totalPostsDrafts,
           posts,
-          allPosts,
+          totalPostsPublished,
+          totalPostsDrafts,
           postsByMonths: months,
           pagination: {
             page,
@@ -335,7 +339,11 @@ export const listOnePostSlug = ({ Post, buildResponse, handleHttpError }) => {
         .lean()
 
       if (!post) {
-        return handleHttpError(res, `No post found with slug: ${postSlug}`, 404)
+        return handleHttpError(
+          res,
+          `No post found with slug: ${postSlug}`,
+          404
+        )
       }
 
       res.json(buildResponse(req, 'Get one post', post, null, {}))
@@ -352,11 +360,7 @@ export const listOnePostSlug = ({ Post, buildResponse, handleHttpError }) => {
 }
 
 // NOTE: Restore soft-deleted post
-export const restorePost = ({
-  Post,
-  handleHttpError,
-  buildResponse
-}) => {
+export const restorePost = ({ Post, handleHttpError, buildResponse }) => {
   return async (req, res) => {
     try {
       // Extract post ID from request parameters
@@ -388,9 +392,7 @@ export const restorePost = ({
       await post.save()
 
       // Return success response with restored post
-      return res.json(
-        buildResponse(req, 'Post restored successfully', post)
-      )
+      return res.json(buildResponse(req, 'Post restored successfully', post))
     } catch (error) {
       // Log server-side error for debugging
       console.error('Error restoring post:', error.message)
