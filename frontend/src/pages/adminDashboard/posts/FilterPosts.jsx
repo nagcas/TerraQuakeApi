@@ -21,7 +21,7 @@ export default function FilterPosts({ setSearch }) {
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex gap-2 items-center">
+      <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
         <input
           type="text"
           placeholder={error ? t('table_posts.search_error') : t('table_posts.search')}
@@ -30,7 +30,7 @@ export default function FilterPosts({ setSearch }) {
             setInput(e.target.value);
             if (error) setError('');
           }}
-          className={`w-xl p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500
+          className={`w-sm p-2 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500
           ${error
               ? 'border-red-400 ring-red-400'
               : 'border-gray-700' 
