@@ -104,7 +104,7 @@ export default function DeleteFaq({ faqs, setFaqs }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className='fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center'
+            className='mt-20 fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center'
           >
             <motion.div
               initial={{ y: 40, opacity: 0 }}
