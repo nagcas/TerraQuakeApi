@@ -1,5 +1,5 @@
-import { check } from 'express-validator'
-import { validateResults } from '../utils/handleValidator.js'
+import { check } from 'express-validator';
+import { validateResults } from '../utils/handleValidator.js';
 
 // NOTE: Validator for testimonial form submissions
 // Ensures all required fields exist and meet length/format requirements
@@ -19,17 +19,11 @@ export const validatorTestimonial = [
     .withMessage('Please enter a valid email address.'),
 
   // Validate 'role' field: required, not empty
-  check('role')
-    .exists()
-    .notEmpty()
-    .withMessage('Please enter a role.'),
+  check('role').exists().notEmpty().withMessage('Please enter a role.'),
 
   // Validate 'message' field: required, not empty
-  check('message')
-    .exists()
-    .notEmpty()
-    .withMessage('Please enter a message.'),
+  check('message').exists().notEmpty().withMessage('Please enter a message.'),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];

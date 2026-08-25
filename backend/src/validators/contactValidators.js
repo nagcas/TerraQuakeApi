@@ -1,5 +1,5 @@
-import { check } from 'express-validator'
-import { validateResults } from '../utils/handleValidator.js'
+import { check } from 'express-validator';
+import { validateResults } from '../utils/handleValidator.js';
 
 // NOTE: Validator for contact form submissions
 // Ensures all required fields exist and meet length/format requirements
@@ -26,20 +26,14 @@ export const validatorContact = [
     .withMessage('Please enter a valid email address.'),
 
   // Validate 'subject' field: required, not empty
-  check('subject')
-    .exists()
-    .notEmpty()
-    .withMessage('Please enter a subject.'),
+  check('subject').exists().notEmpty().withMessage('Please enter a subject.'),
 
   // Validate 'message' field: required, not empty
-  check('message')
-    .exists()
-    .notEmpty()
-    .withMessage('Please enter a message.'),
+  check('message').exists().notEmpty().withMessage('Please enter a message.'),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for answers to messages or tickets
 // Ensures 'answer' field exists and has at least 3 characters
@@ -51,5 +45,5 @@ export const validatorAnswer = [
     .withMessage('Please enter a valid answer (min 3 characters).'),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];

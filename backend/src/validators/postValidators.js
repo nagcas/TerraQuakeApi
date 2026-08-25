@@ -1,5 +1,5 @@
-import { check } from 'express-validator'
-import { validateResults } from '../utils/handleValidator.js'
+import { check } from 'express-validator';
+import { validateResults } from '../utils/handleValidator.js';
 
 // NOTE: Validator for creating a new post
 // Ensures all required fields are present and meet length/type requirements
@@ -19,15 +19,10 @@ export const validatorCreatePost = [
     .withMessage('Please enter a valid excerpt (10–300 characters).'),
 
   // Validate 'slug': optional, length between 3 and 100 characters
-  check('slug')
-    .optional()
-    .isLength({ min: 3, max: 100 }),
+  check('slug').optional().isLength({ min: 3, max: 100 }),
 
   // Validate 'author': required, must be a valid MongoDB ObjectId
-  check('author')
-    .exists()
-    .notEmpty()
-    .isMongoId(),
+  check('author').exists().notEmpty().isMongoId(),
 
   // Validate 'categories': required, must be an array with at least one item
   check('categories')
@@ -43,21 +38,17 @@ export const validatorCreatePost = [
     .withMessage('Please enter a valid content (min. 10 characters).'),
 
   // Validate 'tags': optional, must be an array if provided
-  check('tags')
-    .optional()
-    .isArray(),
+  check('tags').optional().isArray(),
 
   // Validate 'readTime'
-  check('readTime')
-    .optional()
-    .isString(),
+  check('readTime').optional().isString(),
 
   // Validate 'published'
   check('published').optional().isBoolean(),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for updating a post
 // All fields are optional but must meet validation rules if provided
@@ -90,5 +81,5 @@ export const validatorUpdatePost = [
   check('published').optional().isBoolean(),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];

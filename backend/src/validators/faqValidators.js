@@ -1,5 +1,5 @@
-import { check } from 'express-validator'
-import { validateResults } from '../utils/handleValidator.js'
+import { check } from 'express-validator';
+import { validateResults } from '../utils/handleValidator.js';
 
 /**
  * NOTE: Validator for FAQ submissions.
@@ -26,5 +26,5 @@ export const validatorFaq = [
     .withMessage('Please provide a valid answer.'),
 
   // Final middleware: handle and return validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];

@@ -1,5 +1,5 @@
-import { check } from 'express-validator'
-import { validateResults } from '../utils/handleValidator.js'
+import { check } from 'express-validator';
+import { validateResults } from '../utils/handleValidator.js';
 
 // NOTE: Validator for user sign-up
 // Ensures all required fields exist and meet validation rules
@@ -60,14 +60,14 @@ export const validatorSignUp = [
     .withMessage('Terms field is required.')
     .custom((value) => {
       if (value !== true && value !== 'true' && value !== 1 && value !== 'on') {
-        throw new Error('You must accept the Terms and Conditions.')
+        throw new Error('You must accept the Terms and Conditions.');
       }
-      return true
+      return true;
     }),
 
   // Final middleware: handle validation results
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for user sign-in
 // Checks required fields for login
@@ -86,8 +86,8 @@ export const validatorSignIn = [
     .isLength({ min: 8, max: 16 })
     .withMessage('Password must be between 8 and 16 characters long.'),
 
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for forgot password request
 // Requires a valid email
@@ -97,8 +97,8 @@ export const validatorForgotPassword = [
     .notEmpty()
     .isEmail()
     .withMessage('Please enter a valid email address.'),
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for resetting password
 // Checks both passwords and ensures they match
@@ -125,8 +125,8 @@ export const validatorResetPassword = [
     .custom((value, { req }) => value === req.body.password1)
     .withMessage('Passwords must match.'),
 
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for changing password
 // Requires old password and validates new password with confirmation
@@ -161,14 +161,14 @@ export const validatorChangePassword = [
     .custom((value, { req }) => value === req.body.passwordNew)
     .withMessage('Passwords must match.'),
 
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for getting a specific user item by ID
 export const validatorGetItem = [
   check('userId').exists().notEmpty().isMongoId(),
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for updating current user data
 export const validatorUpdateCurrentUserData = [
@@ -247,8 +247,8 @@ export const validatorUpdateCurrentUserData = [
     .isURL()
     .withMessage('Linkedin must be a valid URL.'),
 
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for updating a user's role by ID
 export const validatorUpdateRoleById = [
@@ -257,8 +257,8 @@ export const validatorUpdateRoleById = [
     .isIn(['admin', 'user', 'contributor'])
     .withMessage('Role must be either admin, user, or contributor.'),
 
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
 
 // NOTE: Validator for updating a user's role by ID
 export const validatorUpdateDeleted = [
@@ -267,5 +267,5 @@ export const validatorUpdateDeleted = [
     .withMessage('Deleted field is required.')
     .isIn(['true', 'false']),
 
-  (req, res, next) => validateResults(req, res, next)
-]
+  (req, res, next) => validateResults(req, res, next),
+];
