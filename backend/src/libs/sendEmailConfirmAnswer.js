@@ -1,7 +1,7 @@
-import { client } from '../config/mailgunConfig.js'
-import dotenv from 'dotenv'
+import { client } from '../config/mailgunConfig.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Send confirmation email after admin replies to a user's contact message
 export const sendEmailConfirmAnswer = async (updatedContact) => {
@@ -44,19 +44,19 @@ export const sendEmailConfirmAnswer = async (updatedContact) => {
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
         </p>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: updatedContact.email,
       subject: '💬 You’ve received a reply from TerraQuake API',
-      html
-    })
+      html,
+    });
 
-    console.log('Reply email sent:', result)
-    return result
+    console.log('Reply email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending reply email:', error)
-    throw error
+    console.error('Error sending reply email:', error);
+    throw error;
   }
-}
+};

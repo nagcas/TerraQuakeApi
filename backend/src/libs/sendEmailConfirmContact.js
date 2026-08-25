@@ -1,7 +1,7 @@
-import { client } from '../config/mailgunConfig.js'
-import dotenv from 'dotenv'
+import { client } from '../config/mailgunConfig.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Send confirmation email after user contacts support
 export const sendEmailConfirmContact = async (contact) => {
@@ -41,19 +41,19 @@ export const sendEmailConfirmContact = async (contact) => {
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
         </p>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: contact.email,
       subject: '📩 We’ve received your message!',
-      html
-    })
+      html,
+    });
 
-    console.log('Message email sent:', result)
-    return result
+    console.log('Message email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending message email:', error)
-    throw error
+    console.error('Error sending message email:', error);
+    throw error;
   }
-}
+};

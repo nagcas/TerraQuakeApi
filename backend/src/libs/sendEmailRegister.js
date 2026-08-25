@@ -1,7 +1,7 @@
-import { client } from '../config/mailgunConfig.js'
-import dotenv from 'dotenv'
+import { client } from '../config/mailgunConfig.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Send email register user
 export const sendEmailRegister = async (user) => {
@@ -36,19 +36,19 @@ export const sendEmailRegister = async (user) => {
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
         </p>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🎉 Welcome to TerraQuake API!',
-      html
-    })
+      html,
+    });
 
-    console.log('Registration email sent:', result)
-    return result
+    console.log('Registration email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending registration email:', error)
-    throw error
+    console.error('Error sending registration email:', error);
+    throw error;
   }
-}
+};

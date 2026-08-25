@@ -1,7 +1,7 @@
-import { client } from '../config/mailgunConfig.js'
-import dotenv from 'dotenv'
+import { client } from '../config/mailgunConfig.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Send email change password user
 export const sendChangePassword = async (user) => {
@@ -131,18 +131,18 @@ export const sendChangePassword = async (user) => {
         </table>
       </body>
       </html>
-    `
+    `;
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '🔒 Your TerraQuake API Password Has Been Changed',
-      html
-    })
+      html,
+    });
 
-    console.log('Change password email sent:', result)
-    return result
+    console.log('Change password email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending change password email:', error)
-    throw error
+    console.error('Error sending change password email:', error);
+    throw error;
   }
-}
+};

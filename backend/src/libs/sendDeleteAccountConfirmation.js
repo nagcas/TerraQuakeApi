@@ -1,7 +1,7 @@
-import { client } from '../config/mailgunConfig.js'
-import dotenv from 'dotenv'
+import { client } from '../config/mailgunConfig.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Send email delete account user
 export const sendDeleteAccountConfirmation = async (user) => {
@@ -36,19 +36,19 @@ export const sendDeleteAccountConfirmation = async (user) => {
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
         </p>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: user.email,
       subject: '👋 Your TerraQuake API Account Has Been Deleted',
-      html
-    })
+      html,
+    });
 
-    console.log('Delete account confirmation email sent:', result)
-    return result
+    console.log('Delete account confirmation email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending delete account confirmation email:', error)
-    throw error
+    console.error('Error sending delete account confirmation email:', error);
+    throw error;
   }
-}
+};

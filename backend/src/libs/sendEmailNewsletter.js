@@ -1,19 +1,19 @@
-import crypto from 'crypto'
-import { client } from '../config/mailgunConfig.js'
-import dotenv from 'dotenv'
+import crypto from 'crypto';
+import { client } from '../config/mailgunConfig.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Generate unsubscribe token
 export const generateUnsubscribeToken = (email) => {
   return crypto
     .createHmac(
       'sha256',
-      process.env.NEWSLETTER_SUBSCRIBE_SECRET || 'default_secret'
+      process.env.NEWSLETTER_SUBSCRIBE_SECRET || 'default_secret',
     )
     .update(email)
-    .digest('hex')
-}
+    .digest('hex');
+};
 
 // NOTE: Send confirmation email after newsletter subscription
 export const sendConfirmationEmail = async (email, unsubscribeLink) => {
@@ -47,33 +47,33 @@ export const sendConfirmationEmail = async (email, unsubscribeLink) => {
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
         </p>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: email,
       subject: '🌍 Welcome to TerraQuake API Newsletter!',
-      html
-    })
+      html,
+    });
 
-    console.log('Confirmation email sent:', result)
-    return result
+    console.log('Confirmation email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending confirmation email:', error)
-    throw error
+    console.error('Error sending confirmation email:', error);
+    throw error;
   }
-}
+};
 
 // NOTE: Send bulk newsletter to all subscribers
 export const sendBulkNewsletter = async (
   subscribers,
   subject,
   content,
-  generateUnsubscribeLink
+  generateUnsubscribeLink,
 ) => {
   try {
     for (const subscriber of subscribers) {
-      const unsubscribeLink = generateUnsubscribeLink(subscriber.email)
+      const unsubscribeLink = generateUnsubscribeLink(subscriber.email);
 
       const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; color: #333;">
@@ -97,23 +97,23 @@ export const sendBulkNewsletter = async (
             The <span style="color: #A48DC7;">TerraQuake API</span> Team
           </p>
         </div>
-      `
+      `;
 
       await client.messages.create(process.env.MAILGUN_DOMAIN, {
         from: `TerraQuake API <support${process.env.MAILGUN_DOMAIN}>`,
         to: subscriber.email,
         subject,
-        html
-      })
+        html,
+      });
     }
 
-    console.log('Bulk newsletter sent successfully')
-    return true
+    console.log('Bulk newsletter sent successfully');
+    return true;
   } catch (error) {
-    console.error('Error sending bulk newsletter:', error)
-    return false
+    console.error('Error sending bulk newsletter:', error);
+    return false;
   }
-}
+};
 
 // NOTE: Send unsubscribe confirmation email after newsletter cancellation
 export const sendUnsubscribeEmail = async (email) => {
@@ -139,19 +139,19 @@ export const sendUnsubscribeEmail = async (email) => {
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
         </p>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `TerraQuake API <support@${process.env.MAILGUN_DOMAIN}>`,
       to: email,
       subject: '✅ You’ve unsubscribed from TerraQuake API Newsletter',
-      html
-    })
+      html,
+    });
 
-    console.log('Unsubscribe confirmation email sent:', result)
-    return result
+    console.log('Unsubscribe confirmation email sent:', result);
+    return result;
   } catch (error) {
-    console.error('Error sending unsubscribe email:', error)
-    throw error
+    console.error('Error sending unsubscribe email:', error);
+    throw error;
   }
-}
+};
