@@ -18,25 +18,30 @@ export const getStart = ({ buildResponse, handleHttpError }) => {
         contact: 'terraquakeapi@gmail.com',
         web: 'https://terraquakeapi.com',
         status: 'stable',
-        environment: process.env.NODE_ENV || 'development'
-      }
+        environment: process.env.NODE_ENV || 'development',
+      };
 
       // Build standardized success response
-      const response = buildResponse(req, 'Server started successfully', null, null, apiInfo)
+      const response = buildResponse(
+        req,
+        'Server started successfully',
+        null,
+        null,
+        apiInfo,
+      );
 
-      return res.status(200).json(response)
+      return res.status(200).json(response);
     } catch (error) {
       // Log error to the server console
-      console.error('Error in getStart controller:', error.message)
+      console.error('Error in getStart controller:', error.message);
 
       // Safely extract message
-      const message =
-        error?.message?.includes('HTTP error')
-          ? error.message
-          : 'Unexpected error while starting the server'
+      const message = error?.message?.includes('HTTP error')
+        ? error.message
+        : 'Unexpected error while starting the server';
 
       // Handle unexpected errors gracefully
-      return handleHttpError(res, message, 500)
+      return handleHttpError(res, message, 500);
     }
-  }
-}
+  };
+};

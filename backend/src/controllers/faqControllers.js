@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 /**
  * NOTE: Controller: Create a new faq.
@@ -11,26 +11,26 @@ import mongoose from 'mongoose'
 export const createFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { question, answer } = req.body
+      const { question, answer } = req.body;
 
-      const faq = new Faq({ question, answer })
+      const faq = new Faq({ question, answer });
 
-      const newFaq = await faq.save()
+      const newFaq = await faq.save();
 
       res.json(
-        buildResponse(req, 'Faq created successfully', newFaq, null, {})
-      )
+        buildResponse(req, 'Faq created successfully', newFaq, null, {}),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('error in the faq controller:', error.message)
+      console.error('error in the faq controller:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller: Retrieve all faq.
@@ -43,24 +43,24 @@ export const createFaq = ({ Faq, buildResponse, handleHttpError }) => {
 export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const page = parseInt(req.query.page) || 1
-      const limit = parseInt(req.query.limit) || 10
-      const sort = req.query.sort || 'createdAt'
-      const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1
-      const skip = (page - 1) * limit
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const sort = req.query.sort || 'createdAt';
+      const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1;
+      const skip = (page - 1) * limit;
 
       // Count total documents
-      const totalFaq = await Faq.countDocuments()
+      const totalFaq = await Faq.countDocuments();
 
       // Get filtered + paginated faq
       const faqs = await Faq.find()
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
-        .lean()
+        .lean();
 
-      const totalPages = Math.ceil(totalFaq / limit)
-      const hasMore = page < totalPages
+      const totalPages = Math.ceil(totalFaq / limit);
+      const hasMore = page < totalPages;
 
       res.json(
         buildResponse(req, 'Faq retrieved successfully', {
@@ -71,20 +71,21 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
             totalPages,
             limit,
             hasMore,
-            totalResults: totalFaq
-          }
-        })
-      )
+            totalResults: totalFaq,
+          },
+        }),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('Error in the faq controller.', error.message)
+      console.error('Error in the faq controller.', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
-        res, error.message.includes('HTTP error') ? error.message : undefined
-      )
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller: Retrieve a single faq by ID.
@@ -96,38 +97,30 @@ export const listAllFaq = ({ Faq, buildResponse, handleHttpError }) => {
 export const listOneFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const faqId = req.params.id
+      const faqId = req.params.id;
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
-        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
+        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400);
       }
 
-      const faq = await Faq.findById(faqId)
+      const faq = await Faq.findById(faqId);
 
       if (!faq) {
-        return handleHttpError(res, `No faq found with ID: ${faqId}`, 404)
+        return handleHttpError(res, `No faq found with ID: ${faqId}`, 404);
       }
 
-      res.json(
-        buildResponse(
-          req,
-          'Faq retrived successfully',
-          faq,
-          null,
-          {}
-        )
-      )
+      res.json(buildResponse(req, 'Faq retrived successfully', faq, null, {}));
     } catch (error) {
       // Log error to the server console
-      console.error('Error in the faq controller', error.message)
+      console.error('Error in the faq controller', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller: Update a FAQ by ID.
@@ -139,48 +132,42 @@ export const listOneFaq = ({ Faq, buildResponse, handleHttpError }) => {
 export const updateFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { question, answer } = req.body
-      const faqId = req.params.id
+      const { question, answer } = req.body;
+      const faqId = req.params.id;
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
-        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
+        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400);
       }
 
       const updateFaq = await Faq.findByIdAndUpdate(
         faqId,
         {
           question,
-          answer
+          answer,
         },
         {
-          new: true
-        }
-      )
+          new: true,
+        },
+      );
 
       if (!updateFaq) {
-        return handleHttpError(res, 'Faq not found', 404)
+        return handleHttpError(res, 'Faq not found', 404);
       }
 
       res.json(
-        buildResponse(
-          req,
-          'Faq updated successfully',
-          updateFaq,
-          null,
-          {}
-        )
-      )
+        buildResponse(req, 'Faq updated successfully', updateFaq, null, {}),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('Error in the faq controller:', error.message)
+      console.error('Error in the faq controller:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller: Soft-delete a faq by ID.
@@ -191,31 +178,29 @@ export const updateFaq = ({ Faq, buildResponse, handleHttpError }) => {
 export const deleteFaq = ({ Faq, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const faqId = req.params.id
+      const faqId = req.params.id;
 
       if (!mongoose.Types.ObjectId.isValid(faqId)) {
-        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400)
+        return handleHttpError(res, `Invalid faq ID: ${faqId}`, 400);
       }
 
       // Soft delete using mongoose-delete
-      const deleted = await Faq.delete({ _id: faqId }) // plugin handles deletedAt & overrideMethods
+      const deleted = await Faq.delete({ _id: faqId }); // plugin handles deletedAt & overrideMethods
 
       if (!deleted) {
-        return handleHttpError(res, 'Faq not found', 404)
+        return handleHttpError(res, 'Faq not found', 404);
       }
 
       // Respond with success message
-      res.json(
-        buildResponse(req, 'Faq deleted successfully', faqId, null, {})
-      )
+      res.json(buildResponse(req, 'Faq deleted successfully', faqId, null, {}));
     } catch (error) {
       // Log error to the server console
-      console.error('Error in the faq controller:', error.message)
+      console.error('Error in the faq controller:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};

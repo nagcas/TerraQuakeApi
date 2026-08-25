@@ -1,30 +1,30 @@
 // For making HTTP requests to GitHub's OAuth API
-import axios from 'axios'
+import axios from 'axios';
 // For generating JWT tokens after authentication
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 // Mongoose model for user data
-import User from '../models/userModels.js'
+import User from '../models/userModels.js';
 // For loading environment variables from .env
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
 // Load environment variables
-dotenv.config()
+dotenv.config();
 
 // Define frontend URL based on environment (development or production)
 const FRONTEND_URL =
   process.env.DEV_ENV === 'production'
     ? process.env.FRONTEND_PRODUCTION
-    : process.env.FRONTEND_DEVELOPMENT
+    : process.env.FRONTEND_DEVELOPMENT;
 
 // Destructure required environment variables
-const { GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID, JWT_SECRET } = process.env
+const { GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID, JWT_SECRET } = process.env;
 
 // NOTE: GitHub OAuth controller
 // Handles authentication using GitHub's OAuth 2.0 flow
 export const githubAuthController = ({ buildResponse, handleHttpError }) => {
   return async (req, res) => {
-    const code = req.query.code
-    if (!code) return handleHttpError(res, 'Code is required', 400)
+    const code = req.query.code;
+    if (!code) return handleHttpError(res, 'Code is required', 400);
 
     try {
       // Step 1: Exchange code for access token
@@ -34,49 +34,49 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
           client_id: GITHUB_CLIENT_ID,
           client_secret: GITHUB_CLIENT_SECRET,
           code,
-          redirect_uri: process.env.GITHUB_CALLBACK_URL
+          redirect_uri: process.env.GITHUB_CALLBACK_URL,
         },
-        { headers: { accept: 'application/json' } }
-      )
+        { headers: { accept: 'application/json' } },
+      );
 
-      const accessToken = tokenRes.data.access_token
+      const accessToken = tokenRes.data.access_token;
 
       // Step 2: Get GitHub user profile
       const userRes = await axios.get('https://api.github.com/user', {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      const githubUser = userRes.data
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const githubUser = userRes.data;
 
       // Step 3: Get verified primary email
-      let primaryEmail = null
+      let primaryEmail = null;
       try {
         const emailsRes = await axios.get(
           'https://api.github.com/user/emails',
           {
-            headers: { Authorization: `Bearer ${accessToken}` }
-          }
-        )
-        const emails = emailsRes.data
-        const primary = emails.find((email) => email.primary && email.verified)
-        primaryEmail = primary ? primary.email : emails[0]?.email || null
+            headers: { Authorization: `Bearer ${accessToken}` },
+          },
+        );
+        const emails = emailsRes.data;
+        const primary = emails.find((email) => email.primary && email.verified);
+        primaryEmail = primary ? primary.email : emails[0]?.email || null;
       } catch (emailErr) {
-        console.warn('Unable to fetch emails from GitHub:', emailErr.message)
+        console.warn('Unable to fetch emails from GitHub:', emailErr.message);
       }
 
       // Step 4: Check if the email already exists
       if (primaryEmail) {
-        const existingUser = await User.findOne({ email: primaryEmail })
+        const existingUser = await User.findOne({ email: primaryEmail });
 
         if (existingUser && !existingUser.githubId) {
           // Return JSON error handled by frontend Swal
           return res.redirect(
-            `${FRONTEND_URL}/auth/error?message=An account with this email already exists. Please log in using your original provider (Google or email/password).`
-          )
+            `${FRONTEND_URL}/auth/error?message=An account with this email already exists. Please log in using your original provider (Google or email/password).`,
+          );
         }
       }
 
       // Step 5: Find or create user via GitHub ID
-      let user = await User.findOne({ githubId: githubUser.id })
+      let user = await User.findOne({ githubId: githubUser.id });
       if (!user) {
         user = await User.create({
           githubId: githubUser.id.toString(),
@@ -94,12 +94,12 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
           linkedin: '',
           bio: '',
           terms: true,
-          role: 'user'
-        })
+          role: 'user',
+        });
       }
 
       // Step 6: Generate JWT
-      const tokenId = `${user._id}_${Date.now()}_${Math.random().toString(36).substring(7)}`
+      const tokenId = `${user._id}_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 
       const token = jwt.sign(
         {
@@ -109,21 +109,21 @@ export const githubAuthController = ({ buildResponse, handleHttpError }) => {
           avatar: user.avatar,
           role: user.role || ['user'],
           jti: tokenId,
-          iat: Math.floor(Date.now() / 1000)
+          iat: Math.floor(Date.now() / 1000),
         },
         JWT_SECRET,
-        { expiresIn: '7d' }
-      )
+        { expiresIn: '7d' },
+      );
 
       // Step 7: Redirect to frontend with token
-      return res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}`)
+      return res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}`);
     } catch (error) {
       // Log error to the server console
-      console.error('GitHub auth error:', error.message)
+      console.error('GitHub auth error:', error.message);
       // Handle unexpected errors gracefully
       return res.redirect(
-        `${FRONTEND_URL}/auth/error?message=GitHub authentication failed. Please try again.`
-      )
+        `${FRONTEND_URL}/auth/error?message=GitHub authentication failed. Please try again.`,
+      );
     }
-  }
-}
+  };
+};

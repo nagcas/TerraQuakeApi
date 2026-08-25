@@ -2,157 +2,181 @@ import {
   sendConfirmationEmail,
   generateUnsubscribeToken,
   sendBulkNewsletter,
-  sendUnsubscribeEmail
-} from '../libs/sendEmailNewsletter.js'
-import dotenv from 'dotenv'
+  sendUnsubscribeEmail,
+} from '../libs/sendEmailNewsletter.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-const URL = process.env.FRONTEND_DEVELOPMENT
+const URL = process.env.FRONTEND_DEVELOPMENT;
 
 // NOTE: Subscribe
 export const subscribe = ({ Newsletter, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { email } = req.body
+      const { email } = req.body;
 
-      if (!email) return res.status(400).json({ error: 'Email is required' })
+      if (!email) return res.status(400).json({ error: 'Email is required' });
 
-      let subscriber = await Newsletter.findOne({ email })
+      let subscriber = await Newsletter.findOne({ email });
 
       if (subscriber) {
         if (subscriber.isSubscribed) {
-          return res.status(400).json({ error: 'Email is already subscribed' })
+          return res.status(400).json({ error: 'Email is already subscribed' });
         }
-        subscriber.isSubscribed = true
-        subscriber.subscribedAt = new Date()
-        subscriber.unsubscribedAt = null
-        await subscriber.save()
+        subscriber.isSubscribed = true;
+        subscriber.subscribedAt = new Date();
+        subscriber.unsubscribedAt = null;
+        await subscriber.save();
       } else {
-        subscriber = new Newsletter({ email })
-        await subscriber.save()
+        subscriber = new Newsletter({ email });
+        await subscriber.save();
       }
 
-      const unsubscribeToken = generateUnsubscribeToken(email)
-      const unsubscribeLink = `${URL}/newsletter/unsubscribe?token=${unsubscribeToken}&email=${email}`
+      const unsubscribeToken = generateUnsubscribeToken(email);
+      const unsubscribeLink = `${URL}/newsletter/unsubscribe?token=${unsubscribeToken}&email=${email}`;
 
-      const emailSent = await sendConfirmationEmail(email, unsubscribeLink)
+      const emailSent = await sendConfirmationEmail(email, unsubscribeLink);
       if (!emailSent) {
         return res
           .status(500)
-          .json({ error: 'Failed to send confirmation email' })
+          .json({ error: 'Failed to send confirmation email' });
       }
 
       res.json(
-        buildResponse(req, 'Successfully subscribed to newsletter', subscriber, {})
-      )
+        buildResponse(
+          req,
+          'Successfully subscribed to newsletter',
+          subscriber,
+          {},
+        ),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('Subscription error:', error.message)
+      console.error('Subscription error:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 // NOTE: Unsubscribe (return HTML page)
 export const unsubscribe = ({ Newsletter, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { token, email } = req.query
-      const expectedToken = generateUnsubscribeToken(email)
+      const { token, email } = req.query;
+      const expectedToken = generateUnsubscribeToken(email);
 
       if (token !== expectedToken) {
-        return res.status(400).send('Invalid unsubscribe link')
+        return res.status(400).send('Invalid unsubscribe link');
       }
 
-      const subscriber = await Newsletter.findOne({ email })
+      const subscriber = await Newsletter.findOne({ email });
       if (!subscriber) {
-        return res.status(404).send('Email not found')
+        return res.status(404).send('Email not found');
       }
 
-      subscriber.isSubscribed = false
-      subscriber.unsubscribedAt = new Date()
-      await subscriber.save()
+      subscriber.isSubscribed = false;
+      subscriber.unsubscribedAt = new Date();
+      await subscriber.save();
 
-      const emailSent = await sendUnsubscribeEmail(email)
+      const emailSent = await sendUnsubscribeEmail(email);
       if (!emailSent) {
         return res
           .status(500)
-          .json({ error: 'Failed to send confirmation unsubscribe email' })
+          .json({ error: 'Failed to send confirmation unsubscribe email' });
       }
 
       res.json(
-        buildResponse(req, 'Successfully unsubscribed from newsletter', subscriber, null, {})
-      )
+        buildResponse(
+          req,
+          'Successfully unsubscribed from newsletter',
+          subscriber,
+          null,
+          {},
+        ),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('Subscription error:', error.message)
+      console.error('Subscription error:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 // NOTE: Send Newsletter
-export const sendNewsletter = ({ Newsletter, buildResponse, handleHttpError }) => {
+export const sendNewsletter = ({
+  Newsletter,
+  buildResponse,
+  handleHttpError,
+}) => {
   return async (req, res) => {
     try {
-      const { subject, content } = req.body
-      const subscribers = await Newsletter.find({ isSubscribed: true })
+      const { subject, content } = req.body;
+      const subscribers = await Newsletter.find({ isSubscribed: true });
 
       const generateUnsubscribeLink = (email) => {
-        const token = generateUnsubscribeToken(email)
+        const token = generateUnsubscribeToken(email);
         return `${req.protocol}://${req.get(
-          'host'
-        )}/newsletter/unsubscribe?token=${token}&email=${email}`
-      }
+          'host',
+        )}/newsletter/unsubscribe?token=${token}&email=${email}`;
+      };
 
       await sendBulkNewsletter(
         subscribers,
         subject,
         content,
-        generateUnsubscribeLink
-      )
+        generateUnsubscribeLink,
+      );
 
       res.json(
-        buildResponse(req, `Newsletter sent to ${subscribers.length} subscribes`, null, {})
-      )
+        buildResponse(
+          req,
+          `Newsletter sent to ${subscribers.length} subscribes`,
+          null,
+          {},
+        ),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('Send newsletter error:', error.message)
+      console.error('Send newsletter error:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 // NOTE: Get Subscriber Count
-export const getSubscriberCount = ({ Newsletter, buildResponse, handleHttpError }) => {
+export const getSubscriberCount = ({
+  Newsletter,
+  buildResponse,
+  handleHttpError,
+}) => {
   return async (req, res) => {
     try {
-      const totalEmails = await Newsletter.countDocuments({ isSubscribed: true })
+      const totalEmails = await Newsletter.countDocuments({
+        isSubscribed: true,
+      });
 
-      res.json(
-        buildResponse(req, 'Newsletter count', totalEmails, null, {})
-      )
+      res.json(buildResponse(req, 'Newsletter count', totalEmails, null, {}));
     } catch (error) {
       // Log error to the server console
-      console.error('Get subscriber count error:', error.message)
+      console.error('Get subscriber count error:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};

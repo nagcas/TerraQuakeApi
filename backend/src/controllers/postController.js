@@ -1,31 +1,31 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 /**
  * NOTE: Converts a given string into a URL-friendly slug.
  * Example: "Hello World!" → "hello-world"
  */
-function slugify (text) {
+function slugify(text) {
   return text
     .toString()
     .toLowerCase()
     .replace(/\s+/g, '-') // Replace spaces with dashes
     .replace(/[^a-z0-9-]/g, '') // Remove invalid characters
     .replace(/-+/g, '-') // Collapse multiple dashes
-    .replace(/^-+|-+$/g, '') // Trim dashes from start and end
+    .replace(/^-+|-+$/g, ''); // Trim dashes from start and end
 }
 
 /**
  * NOTE: Ensures that a generated slug is unique by appending an incremental counter
  * if another post with the same slug already exists.
  */
-async function getUniqueSlug (baseSlug, Post) {
-  let slug = baseSlug
-  let count = 1
+async function getUniqueSlug(baseSlug, Post) {
+  let slug = baseSlug;
+  let count = 1;
   while (await Post.findOne({ slug })) {
-    slug = `${baseSlug}-${count}`
-    count++
+    slug = `${baseSlug}-${count}`;
+    count++;
   }
-  return slug
+  return slug;
 }
 
 /**
@@ -36,16 +36,16 @@ export const createPost = ({
   Post,
   buildResponse,
   handleHttpError,
-  matchedData
+  matchedData,
 }) => {
   return async (req, res) => {
     try {
       // Extract only validated data from request
-      const data = matchedData(req)
+      const data = matchedData(req);
 
       // Generate slug (use title if slug is not provided)
-      let slug = data.slug ? slugify(data.slug) : slugify(data.title)
-      slug = await getUniqueSlug(slug, Post)
+      let slug = data.slug ? slugify(data.slug) : slugify(data.title);
+      slug = await getUniqueSlug(slug, Post);
 
       // Create and save new post
       const post = await Post.create({
@@ -57,22 +57,22 @@ export const createPost = ({
         content: data.content,
         tags: data.tags || [],
         readTime: data.readTime,
-        published: data.published
-      })
+        published: data.published,
+      });
 
       // Respond with created post
-      res.json(buildResponse(req, 'Post created successfully', post, null, {}))
+      res.json(buildResponse(req, 'Post created successfully', post, null, {}));
     } catch (error) {
       // Log error to the server console
-      console.error('Error in createPost controller:', error.message)
+      console.error('Error in createPost controller:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller to update an existing post.
@@ -82,74 +82,74 @@ export const updatePost = ({
   Post,
   buildResponse,
   handleHttpError,
-  matchedData
+  matchedData,
 }) => {
   return async (req, res) => {
     try {
-      const postId = req.params.id
+      const postId = req.params.id;
 
       // Validate post ID
       if (!postId) {
-        return handleHttpError(res, 'Post ID is required', 400)
+        return handleHttpError(res, 'Post ID is required', 400);
       }
 
       // Extract validated data from request
-      const data = matchedData(req)
+      const data = matchedData(req);
 
       // Prevent empty updates
       if (!data || Object.keys(data).length === 0) {
-        return handleHttpError(res, 'No valid fields to update', 400)
+        return handleHttpError(res, 'No valid fields to update', 400);
       }
 
       const updateFields = {
         ...data,
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      };
 
       // Handle slug update and ensure uniqueness
       if (data.slug) {
-        let newSlug = slugify(data.slug)
-        let count = 1
+        let newSlug = slugify(data.slug);
+        let count = 1;
 
         while (
           await Post.findOne({
             slug: newSlug,
-            _id: { $ne: postId }
+            _id: { $ne: postId },
           })
         ) {
-          newSlug = `${slugify(data.slug)}-${count}`
-          count++
+          newSlug = `${slugify(data.slug)}-${count}`;
+          count++;
         }
 
-        updateFields.slug = newSlug
+        updateFields.slug = newSlug;
       }
 
       // Perform update with $set to avoid accidental replacements
       const updated = await Post.findOneAndUpdate(
         { _id: postId },
         { $set: updateFields },
-        { new: true }
-      ).populate('author')
+        { new: true },
+      ).populate('author');
 
       // Handle not found case
       if (!updated) {
-        return handleHttpError(res, 'Post not found', 404)
+        return handleHttpError(res, 'Post not found', 404);
       }
 
       // Return updated post
-      return res.json(buildResponse(req, 'Post updated successfully', updated))
+      return res.json(buildResponse(req, 'Post updated successfully', updated));
     } catch (error) {
       // Log server-side error for debugging
-      console.error('Error in updatePost controller:', error.message)
+      console.error('Error in updatePost controller:', error.message);
 
       // Handle HTTP-safe error response
       return handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller to delete a post by its ID.
@@ -158,32 +158,32 @@ export const updatePost = ({
 export const deletePost = ({ Post, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const postId = req.params.id
+      const postId = req.params.id;
 
       if (!postId || !postId.match(/^[a-fA-F0-9]{24}$/)) {
-        return handleHttpError(res, 'Invalid post ID format', 400)
+        return handleHttpError(res, 'Invalid post ID format', 400);
       }
 
       // Soft delete via mongoose-delete
-      const deleted = await Post.delete({ _id: postId })
+      const deleted = await Post.delete({ _id: postId });
 
       if (!deleted) {
-        return handleHttpError(res, 'Post not found', 404)
+        return handleHttpError(res, 'Post not found', 404);
       }
 
       res.json({
         success: true,
         message: 'Post deleted successfully',
-        postId: deleted._id
-      })
+        postId: deleted._id,
+      });
     } catch (error) {
       // Log error to the server console
-      console.error('Error in deletePost controller:', error.message)
+      console.error('Error in deletePost controller:', error.message);
       // Handle unexpected errors gracefully
-      handleHttpError(res, error.message)
+      handleHttpError(res, error.message);
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller to retrieve all posts.
@@ -193,30 +193,28 @@ export const deletePost = ({ Post, handleHttpError }) => {
 export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const { search } = req.query
-      const page = parseInt(req.query.page) || 1
-      const limit = parseInt(req.query.limit) || 9
-      const sort = req.query.sort || 'createdAt'
-      const sortDirection = req.query.sortDirection === 'asc' ? 1 : -1
-      const skip = (page - 1) * limit
+      const { search } = req.query;
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 9;
+      const sort = req.query.sort || 'createdAt';
+      const sortDirection = req.query.sortDirection === 'asc' ? 1 : -1;
+      const skip = (page - 1) * limit;
 
       // Build filters only if provided
-      const filter = {}
+      const filter = {};
       if (search) {
-        filter.$or = [
-          { title: { $regex: search, $options: 'i' } }
-        ]
+        filter.$or = [{ title: { $regex: search, $options: 'i' } }];
       }
 
       // Count including soft-deleted users
-      const totalPosts = await Post.countDocuments(filter)
+      const totalPosts = await Post.countDocuments(filter);
 
       // Count total documents
       const filteredPublished = {
         published: true,
-        deleted: false
-      }
-      const totalPostsPublished = await Post.countDocuments(filteredPublished)
+        deleted: false,
+      };
+      const totalPostsPublished = await Post.countDocuments(filteredPublished);
 
       // Fetch filtered or all posts
       const posts = await Post.find(filter)
@@ -224,12 +222,12 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
-        .lean()
+        .lean();
 
       const filteredDrafts = {
-        published: false
-      }
-      const totalPostsDrafts = await Post.countDocuments(filteredDrafts)
+        published: false,
+      };
+      const totalPostsDrafts = await Post.countDocuments(filteredDrafts);
 
       // Retrieve all posts for monthly analysis (without pagination)
       const postsForStats = await Post.find()
@@ -237,7 +235,7 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         .sort({ [sort]: sortDirection })
         .skip(skip)
         .limit(limit)
-        .populate('author')
+        .populate('author');
 
       const months = {
         January: 0,
@@ -251,19 +249,19 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
         September: 0,
         October: 0,
         November: 0,
-        December: 0
-      }
+        December: 0,
+      };
 
       postsForStats.forEach((entry) => {
-        const monthIndex = new Date(entry.createdAt).getMonth() // 0 - 11
-        const monthNames = Object.keys(months)
-        const monthName = monthNames[monthIndex]
+        const monthIndex = new Date(entry.createdAt).getMonth(); // 0 - 11
+        const monthNames = Object.keys(months);
+        const monthName = monthNames[monthIndex];
 
-        months[monthName]++
-      })
+        months[monthName]++;
+      });
 
-      const totalPages = Math.ceil(totalPosts / limit)
-      const hasMore = page < totalPages
+      const totalPages = Math.ceil(totalPosts / limit);
+      const hasMore = page < totalPages;
 
       // Respond with paginated posts
       res.json(
@@ -277,21 +275,21 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
             totalPages,
             limit,
             hasMore,
-            totalResults: totalPosts
-          }
-        })
-      )
+            totalResults: totalPosts,
+          },
+        }),
+      );
     } catch (error) {
       // Log error to the server console
-      console.error('Error in listAllPosts:', error.message)
+      console.error('Error in listAllPosts:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller to retrieve a single post by its ID.
@@ -300,29 +298,29 @@ export const listAllPosts = ({ Post, buildResponse, handleHttpError }) => {
 export const listOnePost = ({ Post, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const postId = req.params.id
+      const postId = req.params.id;
 
       if (!mongoose.Types.ObjectId.isValid(postId)) {
-        return handleHttpError(res, `Invalid post ID: ${postId}`, 400)
+        return handleHttpError(res, `Invalid post ID: ${postId}`, 400);
       }
 
-      const post = await Post.findById(postId)
+      const post = await Post.findById(postId);
 
       if (!post) {
-        return handleHttpError(res, `No post found with ID: ${postId}`, 404)
+        return handleHttpError(res, `No post found with ID: ${postId}`, 404);
       }
-      res.json(buildResponse(req, 'Get one post', post, null, {}))
+      res.json(buildResponse(req, 'Get one post', post, null, {}));
     } catch (error) {
       // Log error to the server console
-      console.error('Error in listOnePost controller:', error.message)
+      console.error('Error in listOnePost controller:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 /**
  * NOTE: Controller to retrieve a single post by slug.
@@ -331,77 +329,77 @@ export const listOnePost = ({ Post, buildResponse, handleHttpError }) => {
 export const listOnePostSlug = ({ Post, buildResponse, handleHttpError }) => {
   return async (req, res) => {
     try {
-      const postSlug = req.params.slug
+      const postSlug = req.params.slug;
 
       // Cerca il post per slug
       const post = await Post.findOne({ slug: postSlug })
         .populate('author', 'name')
-        .lean()
+        .lean();
 
       if (!post) {
         return handleHttpError(
           res,
           `No post found with slug: ${postSlug}`,
-          404
-        )
+          404,
+        );
       }
 
-      res.json(buildResponse(req, 'Get one post', post, null, {}))
+      res.json(buildResponse(req, 'Get one post', post, null, {}));
     } catch (error) {
       // Log error to the server console
-      console.error('Error in listOnePostSlug controller:', error.message)
+      console.error('Error in listOnePostSlug controller:', error.message);
       // Handle unexpected errors gracefully
       handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
 
 // NOTE: Restore soft-deleted post
 export const restorePost = ({ Post, handleHttpError, buildResponse }) => {
   return async (req, res) => {
     try {
       // Extract post ID from request parameters
-      const postId = req.params.id
+      const postId = req.params.id;
 
       // Validate post ID presence
       if (!postId) {
-        return handleHttpError(res, 'Post ID is required', 400)
+        return handleHttpError(res, 'Post ID is required', 400);
       }
 
       // Find post including soft-deleted ones and populate author data
-      const post = await Post.findById(postId).populate('author')
+      const post = await Post.findById(postId).populate('author');
 
       // Handle case where post does not exist
       if (!post) {
-        return handleHttpError(res, 'Post not found', 404)
+        return handleHttpError(res, 'Post not found', 404);
       }
 
       // Prevent restoring an already active post
       if (post.deleted === false) {
-        return handleHttpError(res, 'Post is already active', 400)
+        return handleHttpError(res, 'Post is already active', 400);
       }
 
       // Restore the post by setting deleted flag to false
-      post.deleted = false
-      post.updatedAt = new Date()
+      post.deleted = false;
+      post.updatedAt = new Date();
 
       // Persist changes to database
-      await post.save()
+      await post.save();
 
       // Return success response with restored post
-      return res.json(buildResponse(req, 'Post restored successfully', post))
+      return res.json(buildResponse(req, 'Post restored successfully', post));
     } catch (error) {
       // Log server-side error for debugging
-      console.error('Error restoring post:', error.message)
+      console.error('Error restoring post:', error.message);
 
       // Return safe HTTP error response
       return handleHttpError(
         res,
-        error.message.includes('HTTP error') ? error.message : undefined
-      )
+        error.message.includes('HTTP error') ? error.message : undefined,
+      );
     }
-  }
-}
+  };
+};
