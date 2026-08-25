@@ -8,11 +8,11 @@
 // - The capped maximum if value exceeds max
 // - The default value if parameter is missing
 // - null if the value is invalid (caller should handle with 400 Bad Request)
-export function getPositiveInt (q, key, { min = 1, max, def } = {}) {
-  const raw = q?.[key]
-  if (raw === undefined || raw === null || raw === '') return def
-  const n = Number(raw)
-  if (!Number.isFinite(n) || n < min) return null // caller should return 400 error
-  if (max && n > max) return max // cap at max
-  return Math.floor(n)
+export function getPositiveInt(q, key, { min = 1, max, def } = {}) {
+  const raw = q?.[key];
+  if (raw === undefined || raw === null || raw === '') return def;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < min) return null; // caller should return 400 error
+  if (max && n > max) return max; // cap at max
+  return Math.floor(n);
 }

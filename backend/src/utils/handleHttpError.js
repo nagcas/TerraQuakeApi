@@ -5,7 +5,7 @@
 const handleHttpError = (
   res,
   message = 'Internal server error. Your request cannot be processed at this time',
-  code = 500
+  code = 500,
 ) => {
   res.status(code).json({
     success: false,
@@ -13,9 +13,9 @@ const handleHttpError = (
     message,
     meta: {
       // NOTE: Timestamp of when the error occurred
-      timestamp: new Date().toISOString()
-    }
-  })
-}
+      timestamp: new Date().toISOString(),
+    },
+  });
+};
 
-export default handleHttpError
+export default handleHttpError;
