@@ -1,131 +1,132 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import expressListEndpoints from 'express-list-endpoints'
-import passport from 'passport'
-import './config/passportConfig.js'
-import mongoSanitize from 'express-mongo-sanitize'
-import xss from 'xss-clean'
-import hpp from 'hpp'
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import expressListEndpoints from 'express-list-endpoints';
+import passport from 'passport';
+import './config/passportConfig.js';
+import mongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
+import hpp from 'hpp';
 
-import routeAuth from './routes/authRoutes.js'
-import routeUsers from './routes/usersRoutes.js'
-import routeContact from './routes/contactRoutes.js'
-import routeGetStart from './routes/testRoutes.js'
-import routeEarthquakes from './routes/earthquakesRoutes.js'
-import routeStation from './routes/stationsRoutes.js'
-import routeDocsTerraQuakeApi from './routes/docsTerraQuakeApiRoutes.js'
-import routeGitHub from './routes/githubAuthRoutes.js'
-import routeMetrics from './routes/metricsRouters.js'
-import routeTestimonial from './routes/testimonialsRoutes.js'
-import postRoutes from './routes/postRoutes.js'
-import newsletterRoutes from './routes/newsletterRoutes.js'
-import adminRoutes from './routes/admin.js'
-import routeFaq from './routes/faqRoutes.js'
+import routeAuth from './routes/authRoutes.js';
+import routeUsers from './routes/usersRoutes.js';
+import routeContact from './routes/contactRoutes.js';
+import routeGetStart from './routes/testRoutes.js';
+import routeEarthquakes from './routes/earthquakesRoutes.js';
+import routeStation from './routes/stationsRoutes.js';
+import routeDocsTerraQuakeApi from './routes/docsTerraQuakeApiRoutes.js';
+import routeGitHub from './routes/githubAuthRoutes.js';
+import routeMetrics from './routes/metricsRouters.js';
+import routeTestimonial from './routes/testimonialsRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+import newsletterRoutes from './routes/newsletterRoutes.js';
+import adminRoutes from './routes/admin.js';
+import routeFaq from './routes/faqRoutes.js';
 
-import dbConnect from './config/mongoConfig.js'
-import { authenticateUser } from './middleware/authMiddleware.js'
+import dbConnect from './config/mongoConfig.js';
+import { authenticateUser } from './middleware/authMiddleware.js';
 import {
   apiLimiter,
   authLimiter,
-  contactLimiter
-} from './middleware/rateLimiter.js'
-import { metricsMiddleware } from './middleware/metrics.js'
+  contactLimiter,
+} from './middleware/rateLimiter.js';
+import { metricsMiddleware } from './middleware/metrics.js';
 
-import dns from 'dns'
+import dns from 'dns';
 
-if (process.env.DEV_ENV === 'development') dns.setServers(['8.8.8.8', '1.1.1.1'])
+if (process.env.DEV_ENV === 'development')
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
 
-dotenv.config()
-const devEnv = process.env.DEV_ENV || 'development'
-console.log('DB_URI:', process.env.DB_URI)
-const app = express()
+dotenv.config();
+const devEnv = process.env.DEV_ENV || 'development';
+console.log('DB_URI:', process.env.DB_URI);
+const app = express();
 
 // 🔹 Trust proxy
-app.set('trust proxy', 1)
+app.set('trust proxy', 1);
 
 // === PASSPORT ===
-app.use(passport.initialize())
+app.use(passport.initialize());
 
 // === SECURITY MIDDLEWARE ===
-app.use(helmet({ contentSecurityPolicy: false }))
-app.use(mongoSanitize())
-app.use(xss())
-app.use(hpp())
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp());
 
 // === BODY PARSER ===
-app.use(express.json({ limit: '10kb' }))
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true }));
 
 // === METRICS MIDDLEWARE ===
-app.use(metricsMiddleware)
+app.use(metricsMiddleware);
 
 // === GLOBAL CORS per endpoint protetti ===
 app.use(
   cors({
     origin: [process.env.FRONTEND_PRODUCTION, process.env.FRONTEND_DEVELOPMENT],
-    credentials: true
-  })
-)
+    credentials: true,
+  }),
+);
 
 // === ROUTES ===
 
 // Public route: earthquakes data, accessible from any origin
-app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes)
-app.use('/v1/stations', cors({ origin: '*' }), apiLimiter, routeStation)
-app.use('/v1/docs', cors({ origin: '*' }), apiLimiter, routeDocsTerraQuakeApi)
+app.use('/v1/earthquakes', cors({ origin: '*' }), apiLimiter, routeEarthquakes);
+app.use('/v1/stations', cors({ origin: '*' }), apiLimiter, routeStation);
+app.use('/v1/docs', cors({ origin: '*' }), apiLimiter, routeDocsTerraQuakeApi);
 
 // Protected routes
-app.use('/v1/test', apiLimiter, routeGetStart)
-app.use('/v1', routeMetrics)
-app.use('/auth', authLimiter, routeAuth)
-app.use('/auth/github', authLimiter, routeGitHub)
+app.use('/v1/test', apiLimiter, routeGetStart);
+app.use('/v1', routeMetrics);
+app.use('/auth', authLimiter, routeAuth);
+app.use('/auth/github', authLimiter, routeGitHub);
 // app.use('/users', authLimiter, authenticateUser, routeUsers)
-app.use('/users', authenticateUser, routeUsers)
-app.use('/contact', contactLimiter, routeContact)
-app.use('/faqs', routeFaq)
-app.use('/testimonials', routeTestimonial)
+app.use('/users', authenticateUser, routeUsers);
+app.use('/contact', contactLimiter, routeContact);
+app.use('/faqs', routeFaq);
+app.use('/testimonials', routeTestimonial);
 
 // Public routes
-app.use('/newsletter', newsletterRoutes)
-app.use('/posts', postRoutes)
+app.use('/newsletter', newsletterRoutes);
+app.use('/posts', postRoutes);
 
 // Admin routes (protected)
-app.use('/admin', adminRoutes)
+app.use('/admin', adminRoutes);
 
 // === ERROR HANDLER ===
 app.use((err, req, res, next) => {
-  console.error('Error:', err.message)
+  console.error('Error:', err.message);
   res.status(err.status || 500).json({
     success: false,
-    message: devEnv === 'development' ? err.message : 'Internal Server Error'
-  })
-})
+    message: devEnv === 'development' ? err.message : 'Internal Server Error',
+  });
+});
 
 // === START SERVER ===
-const port = process.env.PORT || 5000
-const urlBackend = process.env.BACKEND_URL || 'http://localhost:5001'
+const port = process.env.PORT || 5000;
+const urlBackend = process.env.BACKEND_URL || 'http://localhost:5001';
 
 const startServer = async () => {
   try {
-    console.clear()
+    console.clear();
 
-    await dbConnect()
+    await dbConnect();
 
-    console.log('DB connesso, avvio server...')
+    console.log('DB connesso, avvio server...');
 
     app.listen(port, () => {
-      console.log(`Server running in ${devEnv} environment`)
-      console.log(`Started at: ${urlBackend}`)
-      console.log(`Test endpoint: ${urlBackend}/v1/test`)
-      console.table(expressListEndpoints(app))
-    })
+      console.log(`Server running in ${devEnv} environment`);
+      console.log(`Started at: ${urlBackend}`);
+      console.log(`Test endpoint: ${urlBackend}/v1/test`);
+      console.table(expressListEndpoints(app));
+    });
   } catch (error) {
-    console.error('Server startup error:', error)
-    process.exit(1)
+    console.error('Server startup error:', error);
+    process.exit(1);
   }
-}
+};
 
-startServer()
+startServer();
