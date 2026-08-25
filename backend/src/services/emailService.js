@@ -1,16 +1,16 @@
-import crypto from 'crypto'
-import { client } from '../config/mailgunConfig.js'
+import crypto from 'crypto';
+import { client } from '../config/mailgunConfig.js';
 
 // NOTE: Token generator
 export const generateUnsubscribeToken = (email) => {
   return crypto
     .createHmac(
       'sha256',
-      process.env.NEWSLETTER_SUBSCRIBE_SECRET || 'default_secret'
+      process.env.NEWSLETTER_SUBSCRIBE_SECRET || 'default_secret',
     )
     .update(email)
-    .digest('hex')
-}
+    .digest('hex');
+};
 
 // NOTE: Confirmation email
 export const sendConfirmationEmail = async (email, unsubscribeLink) => {
@@ -32,34 +32,34 @@ export const sendConfirmationEmail = async (email, unsubscribeLink) => {
            Unsubscribe
         </a>
       </div>
-    `
+    `;
 
     const result = await client.messages.create(process.env.MAILGUN_DOMAIN, {
       from: `"TerraQuake API" <support@${process.env.MAILGUN_DOMAIN}>`,
       to: email,
       subject: 'Welcome to TerraQuake API Newsletter',
-      html
-    })
+      html,
+    });
 
-    console.log('✅ Confirmation email sent:', result)
-    return true
+    console.log('✅ Confirmation email sent:', result);
+    return true;
   } catch (error) {
     // Log error to the server console
-    console.error('Email sending failed:', error.message)
-    return false
+    console.error('Email sending failed:', error.message);
+    return false;
   }
-}
+};
 
 // NOTE: Bulk newsletter
 export const sendBulkNewsletter = async (
   subscribers,
   subject,
   content,
-  generateUnsubscribeLink
+  generateUnsubscribeLink,
 ) => {
   try {
     for (const subscriber of subscribers) {
-      const unsubscribeLink = generateUnsubscribeLink(subscriber.email)
+      const unsubscribeLink = generateUnsubscribeLink(subscriber.email);
 
       await client.messages.create(process.env.MAILGUN_DOMAIN, {
         from: `"TerraQuake API" <support@${process.env.MAILGUN_DOMAIN}>`,
@@ -80,15 +80,15 @@ export const sendBulkNewsletter = async (
               <a href="${unsubscribeLink}" style="color:red;">unsubscribe here</a>.
             </p>
           </div>
-        `
-      })
+        `,
+      });
     }
 
-    console.log('✅ Bulk newsletter sent')
-    return true
+    console.log('✅ Bulk newsletter sent');
+    return true;
   } catch (error) {
     // Log error to the server console
-    console.error('Bulk email sending failed:', error.message)
-    return false
+    console.error('Bulk email sending failed:', error.message);
+    return false;
   }
-}
+};
