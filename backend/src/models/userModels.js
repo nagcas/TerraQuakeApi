@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose'
-import MongooseDelete from 'mongoose-delete'
-import { encrypt } from '../utils/handlePassword.js'
+import { Schema, model } from 'mongoose';
+import MongooseDelete from 'mongoose-delete';
+import { encrypt } from '../utils/handlePassword.js';
 
 // NOTE: Schema user
 const usersSchema = new Schema(
@@ -10,102 +10,102 @@ const usersSchema = new Schema(
       unique: true,
       sparse: true, // Ignores null/undefined values, required for users without a Google login
       trim: true,
-      default: undefined // Avoid saving empty string
+      default: undefined, // Avoid saving empty string
     },
     githubId: {
       type: String,
       unique: true,
       sparse: true, // Ignores null/undefined values
       trim: true,
-      default: undefined
+      default: undefined,
     },
     name: {
       type: String,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
       unique: true,
-      trim: true
+      trim: true,
     },
     password: {
       type: String,
-      select: false
+      select: false,
     },
     avatar: {
       type: String,
-      trim: true
+      trim: true,
     },
     role: {
       type: String,
       enum: ['user', 'admin'],
-      default: 'user'
+      default: 'user',
     },
     experience: {
       type: String,
       default: '',
-      trim: true
+      trim: true,
     },
     student: {
       type: String,
       default: 'No',
-      trim: true
+      trim: true,
     },
     terms: {
       type: Boolean,
-      default: false
+      default: false,
     },
     githubProfileUrl: {
       type: String,
-      default: ''
+      default: '',
     },
     bio: {
       type: String,
-      default: ''
+      default: '',
     },
     location: {
       type: String,
       default: '',
-      trim: true
+      trim: true,
     },
     website: {
       type: String,
       default: '',
-      trim: true
+      trim: true,
     },
     portfolio: {
       type: String,
       default: '',
-      trim: true
+      trim: true,
     },
     github: {
       type: String,
       default: '',
-      trim: true
+      trim: true,
     },
     linkedin: {
       type: String,
       default: '',
-      trim: true
-    }
+      trim: true,
+    },
   },
   {
     timestamps: true,
     versionKey: false,
-    collection: 'users'
-  }
-)
+    collection: 'users',
+  },
+);
 
 // Encrypt password before saving
 usersSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next()
-  this.password = await encrypt(this.password)
-  next()
-})
+  if (!this.isModified('password')) return next();
+  this.password = await encrypt(this.password);
+  next();
+});
 
 // Soft delete plugin
-usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: false })
+usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: false });
 
-const User = model('users', usersSchema)
+const User = model('users', usersSchema);
 
-export default User
+export default User;

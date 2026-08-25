@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose'
-import mongooseDelete from 'mongoose-delete'
+import { Schema, model } from 'mongoose';
+import mongooseDelete from 'mongoose-delete';
 
 // NOTE: Schema contact
 const contactsSchema = new Schema(
@@ -7,58 +7,55 @@ const contactsSchema = new Schema(
     name: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     lastname: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
       trim: true,
       required: true,
-      match: [
-        /^\S+@\S+\.\S+$/,
-        'Please provide a valid email address'
-      ]
+      match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
     },
     subject: {
       type: String,
       required: [true, 'Subject is required'],
-      trim: true
+      trim: true,
     },
     message: {
       type: String,
-      required: [true, 'Message is required']
+      required: [true, 'Message is required'],
     },
     answer: {
-      type: String
+      type: String,
     },
     answered: {
       type: Boolean,
-      default: false
+      default: false,
     },
     createdAt: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
     versionKey: false,
-    collection: 'contacts'
-  }
-)
+    collection: 'contacts',
+  },
+);
 
 // Plugin soft-delete
 contactsSchema.plugin(mongooseDelete, {
   deletedAt: true,
-  overrideMethods: false
-})
+  overrideMethods: false,
+});
 
 // Creating the contact model based on the contactsSchema schema
-const Contact = model('contacts', contactsSchema)
+const Contact = model('contacts', contactsSchema);
 
 // Exporting the contact model
-export default Contact
+export default Contact;
