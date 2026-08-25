@@ -1,80 +1,81 @@
-import rateLimit from 'express-rate-limit'
-import dotenv from 'dotenv'
+import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 // NOTE: Load rate limit configuration from environment variables
 // WINDOW_MS = time window in milliseconds (e.g., 1000 = 1 second)
 // RATE_LIMIT = maximum number of requests allowed per IP in that time window
-const WINDOW_MS = Number(process.env.WINDOW_MS) || 1000
-const LIMIT = Number(process.env.RATE_LIMIT) || 100
+const WINDOW_MS = Number(process.env.WINDOW_MS) || 1000;
+const LIMIT = Number(process.env.RATE_LIMIT) || 100;
 
 // Fixed window approach using HashMap { ip: { count: number, windowStart: number } }
-const buckets = new Map()
+const buckets = new Map();
 
 // Cleanup expired buckets to prevent memory leaks
 setInterval(() => {
-  const now = Date.now()
+  const now = Date.now();
   for (const [ip, bucket] of buckets) {
     if (now - bucket.windowStart > WINDOW_MS) {
-      buckets.delete(ip)
+      buckets.delete(ip);
     }
   }
-}, WINDOW_MS)
+}, WINDOW_MS);
 
 export const rateLimiter = (req, res, next) => {
-  const now = Date.now()
-  const ip = req.ip || req.connection?.remoteAddress || 'unknown'
+  const now = Date.now();
+  const ip = req.ip || req.connection?.remoteAddress || 'unknown';
 
-  let bucket = buckets.get(ip)
+  let bucket = buckets.get(ip);
 
   if (!bucket || now - bucket.windowStart >= WINDOW_MS) {
-    bucket = { count: 0, windowStart: now }
-    buckets.set(ip, bucket)
+    bucket = { count: 0, windowStart: now };
+    buckets.set(ip, bucket);
   }
 
-  bucket.count += 1
+  bucket.count += 1;
 
-  const resetInMs = WINDOW_MS - (now - bucket.windowStart)
-  const resetAt = Math.ceil((now + Math.max(resetInMs, 0)) / 1000)
-  const remaining = Math.max(LIMIT - bucket.count, 0)
+  const resetInMs = WINDOW_MS - (now - bucket.windowStart);
+  const resetAt = Math.ceil((now + Math.max(resetInMs, 0)) / 1000);
+  const remaining = Math.max(LIMIT - bucket.count, 0);
 
   // NOTE: Rate limit headers
-  res.setHeader('X-RateLimit-Limit', String(LIMIT))
-  res.setHeader('X-RateLimit-Remaining', String(remaining))
-  res.setHeader('X-RateLimit-Reset', String(resetAt))
+  res.setHeader('X-RateLimit-Limit', String(LIMIT));
+  res.setHeader('X-RateLimit-Remaining', String(remaining));
+  res.setHeader('X-RateLimit-Reset', String(resetAt));
 
   if (bucket.count > LIMIT) {
     // rejecting the requests of people who abuse the ratelimts
-    res.setHeader('Retry-After', String(Math.ceil(resetInMs / 1000)))
+    res.setHeader('Retry-After', String(Math.ceil(resetInMs / 1000)));
     return res.status(429).json({
       success: false,
       status: 429,
-      message: 'Rate limit exceeded: max 100 requests per second. Please slow down boi, cache responses where possible, and retry after the reset window.',
+      message:
+        'Rate limit exceeded: max 100 requests per second. Please slow down boi, cache responses where possible, and retry after the reset window.',
       meta: {
-        timestamp: new Date().toISOString()
-      }
-    })
+        timestamp: new Date().toISOString(),
+      },
+    });
   }
 
-  next()
-}
+  next();
+};
 
-export default rateLimiter
+export default rateLimiter;
 
 // NOTE: Generic configuration for APIs
 export const apiLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 100, // max requests per IP
-  message: { message: 'Too many requests, please try again later.' }
-})
+  message: { message: 'Too many requests, please try again later.' },
+});
 
 // NOTE: Dedicated configuration only for authentication endpoints
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 50, // stricter limit for login to prevent brute force
-  message: { message: 'Too many login attempts, please try again later.' }
-})
+  message: { message: 'Too many login attempts, please try again later.' },
+});
 
 // NOTE: Contact form rate limiter
 export const contactLimiter = rateLimit({
@@ -85,6 +86,6 @@ export const contactLimiter = rateLimit({
   message: {
     success: false,
     status: 429,
-    message: 'Too many contact requests. Please try again later.'
-  }
-})
+    message: 'Too many contact requests. Please try again later.',
+  },
+});

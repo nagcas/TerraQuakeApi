@@ -1,6 +1,6 @@
-import { verifyToken } from '../utils/handleJwt.js'
-import handleHttpError from '../utils/handleHttpError.js'
-import User from '../models/userModels.js'
+import { verifyToken } from '../utils/handleJwt.js';
+import handleHttpError from '../utils/handleHttpError.js';
+import User from '../models/userModels.js';
 
 /**
  * JWT Authentication Middleware
@@ -10,58 +10,58 @@ import User from '../models/userModels.js'
  */
 export const authMiddleware = async (req, res, next) => {
   try {
-    const token = req.get('Authorization')?.split(' ')[1]
+    const token = req.get('Authorization')?.split(' ')[1];
 
     if (!token) {
-      return handleHttpError(res, 'Authorization token missing', 401)
+      return handleHttpError(res, 'Authorization token missing', 401);
     }
 
     // Verify JWT token (includes blacklist check and expiration validation)
-    const decoded = await verifyToken(token)
+    const decoded = await verifyToken(token);
     if (!decoded) {
       return handleHttpError(
         res,
         'Invalid, expired, or revoked token. Please log in again.',
-        401
-      )
+        401,
+      );
     }
 
     // Fetch user from DB to verify account exists and is active
-    const user = await User.findById(decoded._id).select('-password')
+    const user = await User.findById(decoded._id).select('-password');
 
     if (!user) {
       return handleHttpError(
         res,
         'User account not found or has been deleted.',
-        404
-      )
+        404,
+      );
     }
 
     // Attach user object and token to request
-    req.user = user
-    req.token = token
-    req.tokenDecoded = decoded
+    req.user = user;
+    req.token = token;
+    req.tokenDecoded = decoded;
 
-    next()
+    next();
   } catch (error) {
     // Log error to the server console
-    console.error('Authentication error:', error)
+    console.error('Authentication error:', error);
 
     if (error.name === 'JsonWebTokenError') {
-      return handleHttpError(res, 'Malformed or invalid token', 401)
+      return handleHttpError(res, 'Malformed or invalid token', 401);
     }
 
     if (error.name === 'TokenExpiredError') {
       return handleHttpError(
         res,
         'Token has expired. Please log in again.',
-        401
-      )
+        401,
+      );
     }
 
-    handleHttpError(res, 'Internal server error during authentication', 500)
+    handleHttpError(res, 'Internal server error during authentication', 500);
   }
-}
+};
 
 /**
  * Admin Role Check Middleware
@@ -73,7 +73,7 @@ export const requireAdmin = async (req, res, next) => {
   try {
     // Ensure user is authenticated first
     if (!req.user) {
-      return handleHttpError(res, 'Authentication required', 401)
+      return handleHttpError(res, 'Authentication required', 401);
     }
 
     // Check if user has admin role
@@ -81,14 +81,14 @@ export const requireAdmin = async (req, res, next) => {
       return handleHttpError(
         res,
         'Access denied. Admin privileges required.',
-        403
-      )
+        403,
+      );
     }
 
-    next()
+    next();
   } catch (error) {
     // Log error to the server console
-    console.error('Admin role check error:', error)
-    handleHttpError(res, 'Internal server error during role verification', 500)
+    console.error('Admin role check error:', error);
+    handleHttpError(res, 'Internal server error during role verification', 500);
   }
-}
+};
