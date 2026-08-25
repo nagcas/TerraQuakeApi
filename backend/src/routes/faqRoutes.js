@@ -1,49 +1,67 @@
-import express from 'express'
+import express from 'express';
 import {
   createFaq,
   deleteFaq,
-  listAllFaq, listOneFaq, updateFaq
-} from '../controllers/faqControllers.js'
-import Faq from '../models/faqModels.js'
-import { adminMiddleware } from '../middleware/adminMiddlewares.js'
-import { buildResponse } from '../utils/buildResponse.js'
-import handleHttpError from '../utils/handleHttpError.js'
+  listAllFaq,
+  listOneFaq,
+  updateFaq,
+} from '../controllers/faqControllers.js';
+import Faq from '../models/faqModels.js';
+import { adminMiddleware } from '../middleware/adminMiddlewares.js';
+import { buildResponse } from '../utils/buildResponse.js';
+import handleHttpError from '../utils/handleHttpError.js';
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @route POST /create-faq
  * @desc Create a new FAQ entry.
  * @access Private (Admin only)
  */
-router.post('/', adminMiddleware, createFaq({ Faq, buildResponse, handleHttpError }))
+router.post(
+  '/',
+  adminMiddleware,
+  createFaq({ Faq, buildResponse, handleHttpError }),
+);
 
 /**
  * @route GET /list-all-faq
  * @desc Retrieve all FAQ entries from the database.
  * @access Public
  */
-router.get('/', listAllFaq({ Faq, buildResponse, handleHttpError }))
+router.get('/', listAllFaq({ Faq, buildResponse, handleHttpError }));
 
 /**
  * @route GET /list-one-faq/:id
  * @desc Retrieve a single FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.get('/:id', adminMiddleware, listOneFaq({ Faq, buildResponse, handleHttpError }))
+router.get(
+  '/:id',
+  adminMiddleware,
+  listOneFaq({ Faq, buildResponse, handleHttpError }),
+);
 
 /**
  * @route PATCH /update-faq/:id
  * @desc Update an existing FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.patch('/:id', adminMiddleware, updateFaq({ Faq, buildResponse, handleHttpError }))
+router.patch(
+  '/:id',
+  adminMiddleware,
+  updateFaq({ Faq, buildResponse, handleHttpError }),
+);
 
 /**
  * @route DELETE /delete-faq/:id
  * @desc Delete an FAQ entry by its ID.
  * @access Private (Admin only)
  */
-router.delete('/:id', adminMiddleware, deleteFaq({ Faq, buildResponse, handleHttpError }))
+router.delete(
+  '/:id',
+  adminMiddleware,
+  deleteFaq({ Faq, buildResponse, handleHttpError }),
+);
 
-export default router
+export default router;

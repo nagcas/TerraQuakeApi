@@ -1,8 +1,8 @@
-import express from 'express'
-import { authMiddleware, requireAdmin } from '../middleware/authJwt.js'
-import { buildResponse } from '../utils/buildResponse.js'
+import express from 'express';
+import { authMiddleware, requireAdmin } from '../middleware/authJwt.js';
+import { buildResponse } from '../utils/buildResponse.js';
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * Admin Routes
@@ -22,26 +22,26 @@ router.get('/stats', authMiddleware, requireAdmin, (req, res) => {
           id: req.user._id,
           email: req.user.email,
           role: req.user.role,
-          name: req.user.name
+          name: req.user.name,
         },
         stats: {
           timestamp: new Date().toISOString(),
-          serverStatus: 'operational'
-        }
+          serverStatus: 'operational',
+        },
       },
-      'Admin dashboard data retrieved successfully'
-    )
+      'Admin dashboard data retrieved successfully',
+    );
 
-    res.status(200).json(response)
+    res.status(200).json(response);
   } catch (error) {
     // Log error to the server console
-    console.error('Admin stats error:', error.message)
+    console.error('Admin stats error:', error.message);
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve admin statistics'
-    })
+      message: 'Failed to retrieve admin statistics',
+    });
   }
-})
+});
 
 // Admin dashboard info route
 router.get('/dashboard', authMiddleware, requireAdmin, (req, res) => {
@@ -54,23 +54,23 @@ router.get('/dashboard', authMiddleware, requireAdmin, (req, res) => {
           email: req.user.email,
           role: req.user.role,
           name: req.user.name,
-          createdAt: req.user.createdAt
+          createdAt: req.user.createdAt,
         },
-        permissions: ['read', 'write', 'delete', 'admin']
+        permissions: ['read', 'write', 'delete', 'admin'],
       },
-      'Admin dashboard access confirmed'
-    )
+      'Admin dashboard access confirmed',
+    );
 
-    res.status(200).json(response)
+    res.status(200).json(response);
   } catch (error) {
     // Log error to the server console
-    console.error('Admin dashboard error:', error.message)
+    console.error('Admin dashboard error:', error.message);
     res.status(500).json({
       success: false,
-      message: 'Failed to access admin dashboard'
-    })
+      message: 'Failed to access admin dashboard',
+    });
   }
-})
+});
 
 // Admin system info route
 router.get('/system', authMiddleware, requireAdmin, (req, res) => {
@@ -81,22 +81,22 @@ router.get('/system', authMiddleware, requireAdmin, (req, res) => {
           uptime: process.uptime(),
           memory: process.memoryUsage(),
           nodeVersion: process.version,
-          platform: process.platform
+          platform: process.platform,
         },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
-      'System information retrieved'
-    )
+      'System information retrieved',
+    );
 
-    res.status(200).json(response)
+    res.status(200).json(response);
   } catch (error) {
     // Log error to the server console
-    console.error('Admin system info error:', error.message)
+    console.error('Admin system info error:', error.message);
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve system information'
-    })
+      message: 'Failed to retrieve system information',
+    });
   }
-})
+});
 
-export default router
+export default router;
